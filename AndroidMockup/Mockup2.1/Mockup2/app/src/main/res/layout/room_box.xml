@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp" android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/roomName" android:textColor="#060404" android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/statusImg"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp" />
+
+    <TextView
+        android:text="Vorlesung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/roomInfo"
+        android:backgroundTint="@android:color/darker_gray"
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@+id/roomName"
+        android:layout_alignStart="@+id/roomName" />
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/mapmarker"
+        android:id="@+id/navButton"
+        android:elevation="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp"
+        android:layout_alignTop="@+id/roomName"
+        android:layout_alignBottom="@+id/roomInfo" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/statusImg"
+        android:background="@drawable/circle_gray"
+        android:adjustViewBounds="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="11dp" />
+</RelativeLayout >
