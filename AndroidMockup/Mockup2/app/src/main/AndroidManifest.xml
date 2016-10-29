@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -19,9 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
-        <activity
             android:name=".Freundesliste"
             android:label="@string/title_activity_freundesliste"
             android:parentActivityName=".MainActivity"
@@ -30,6 +28,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.swe.gruppe4.mockup2.MainActivity" />
         </activity>
+        <activity
+            android:name=".BaseActivity"
+            android:label="@string/title_activity_base"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

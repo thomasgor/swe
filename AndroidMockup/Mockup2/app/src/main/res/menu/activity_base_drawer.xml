@@ -5,27 +5,27 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_raeume"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Räume" />
+            android:title="@string/rooms" />
         <item
             android:id="@+id/nav_freundesliste"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Freundesliste" />
+            android:title="@string/friendlist" />
         <item
             android:id="@+id/nav_einstellungen"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Einstellungen" />
+            android:title="@string/settings" />
     </group>
 
-    <item android:title="Professor">
+    <item android:title="@string/getMaster">
         <menu>
             <item
                 android:id="@+id/nav_professor_stundenplan"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Stundenplan" />
+                android:title="@string/timetable" />
         </menu>
     </item>
 
