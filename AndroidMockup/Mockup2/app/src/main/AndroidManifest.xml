@@ -36,6 +36,10 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RoomsActivity" />
+        <activity android:name=".RoomActivity"
+            android:label="@string/title_activity_rooms"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
