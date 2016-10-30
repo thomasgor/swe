@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "80422340921",
+    "project_id": "firebase-mockup2"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80422340921:android:941d402a8512dd9e",
+        "android_client_info": {
+          "package_name": "com.swe.gruppe4.mockup2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80422340921-t1j9ia280tsr1ktn7i9onpkvclvc2sap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.swe.gruppe4.mockup2",
+            "certificate_hash": "8F0C0CB25BAC2724455DF657A1934DCB99831C02"
+          }
+        },
+        {
+          "client_id": "80422340921-4mae00b33lf3ht57cbmuj0jia1155emr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyaT_lqUGLDAtBH3u9_iSNshfxFsojVug"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
