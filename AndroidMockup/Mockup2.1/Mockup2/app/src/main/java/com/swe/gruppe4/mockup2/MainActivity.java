@@ -1,7 +1,12 @@
 package com.swe.gruppe4.mockup2;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuItemView;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +19,13 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,10 +33,16 @@ public class MainActivity extends AppCompatActivity
     private Button qrScanner;
     private ListView roomView;
     private RoomAdapter roomAdapter;
+    private TextView profileName;
+    private DrawerLayout mDrawerLayout;
+    private TextView profileEmail;
+    private ImageView profileImage;
+    private String profileImageURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         qrScanner = (Button) findViewById(R.id.button);
         qrScanner.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +65,20 @@ public class MainActivity extends AppCompatActivity
         spec.setIndicator("Karte");
         host.addTab(spec);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView profileName = (TextView)header.findViewById(R.id.profileName);
+        TextView profileEmail = (TextView)header.findViewById(R.id.profileEmail);
+        ImageView profileImage = (ImageView) header.findViewById(R.id.profileImage);
+
+        Bundle profileInfo = getIntent().getExtras();
+        profileName.setText(profileInfo.get("profileName").toString());
+        profileEmail.setText(profileInfo.get("profileEmail").toString());
+        String profileImageURL = profileInfo.get("profilePicture").toString();
+
+        new LoadProfileImage(profileImage).execute(profileImageURL);
 
         roomView = (ListView) findViewById(R.id.current_room);
         roomAdapter = new RoomAdapter(getApplicationContext(), R.layout.current_room_box);
@@ -66,8 +95,6 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -117,7 +144,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(),Freundesliste.class);
             startActivity(intent);
         } else if (id == R.id.nav_professor_stundenplan) {
-            Intent intent = new Intent(getApplicationContext(), AddLectureActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LectureListActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_raeume) {
@@ -132,4 +159,34 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public LoadProfileImage(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
 }
+
+

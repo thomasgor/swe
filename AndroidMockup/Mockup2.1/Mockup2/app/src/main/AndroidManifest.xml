@@ -3,9 +3,9 @@
     package="com.swe.gruppe4.mockup2">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
         android:allowBackup="true"
@@ -44,6 +44,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+        android:name=".LectureListActivity"
+        android:label="Veranstaltungen"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddLectureActivity"></activity>
         <activity
             android:name=".RoomActivity"
             android:label="@string/title_activity_room"
