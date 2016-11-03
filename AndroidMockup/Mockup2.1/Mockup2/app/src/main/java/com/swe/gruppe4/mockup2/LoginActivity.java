@@ -239,10 +239,17 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
 
 
     private void onSignInClicked() {
-        if (!mGoogleApiClient.isConnecting()) {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.putExtra("profileName","Max Mustermann");
+        intent.putExtra("profileEmail","max@mustermann.de");
+        intent.putExtra("profilePicture","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg");
+        startActivity(intent);
+        finish();
+
+        /*if (!mGoogleApiClient.isConnecting()) {
             mShouldResolve = true;
             resolveSignInError();
-        }
+        }*/
     }
 
 
