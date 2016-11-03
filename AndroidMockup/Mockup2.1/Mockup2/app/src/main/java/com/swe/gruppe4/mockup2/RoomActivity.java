@@ -81,10 +81,10 @@ public class RoomActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*//noinspection SimplifiableIfStatement
+        if (id == R.id.filter_tags) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

@@ -55,7 +55,7 @@
                     <ListView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/current_room"
+                        android:id="@+id/roomList"
                         android:choiceMode="singleChoice"/>
 
                 </LinearLayout>

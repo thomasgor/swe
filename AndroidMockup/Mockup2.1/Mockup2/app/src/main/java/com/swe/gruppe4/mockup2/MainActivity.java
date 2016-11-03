@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity
         qrScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"Scanner started",Toast.LENGTH_SHORT).show();;
+                Intent intent = new Intent(getApplicationContext(),EmptyActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         setSupportActionBar(toolbar);
@@ -80,14 +82,14 @@ public class MainActivity extends AppCompatActivity
 
         new LoadProfileImage(profileImage).execute(profileImageURL);
 
-        roomView = (ListView) findViewById(R.id.current_room);
-        roomAdapter = new RoomAdapter(getApplicationContext(), R.layout.current_room_box);
+        roomView = (ListView) findViewById(R.id.roomList);
+        roomAdapter = new RoomAdapter(getApplicationContext(), R.layout.room_box);
         roomView.setAdapter(roomAdapter);
         roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        roomAdapter.add(new Room("G101",R.drawable.circle_green,"12/40 belegt",true));
-        roomAdapter.add(new Room("G103",R.drawable.circle_green,"8/23 belegt",true));
-        roomAdapter.add(new Room("G102",R.drawable.circle_yellow,"25/30 belegt",true));
-        roomAdapter.add(new Room("G111",R.drawable.circle_yellow,"17/32 belegt",true));
+        roomAdapter.add(new Room("G101",R.drawable.circle_green,"12/40 belegt",false));
+        roomAdapter.add(new Room("G103",R.drawable.circle_green,"8/23 belegt",false));
+        roomAdapter.add(new Room("G102",R.drawable.circle_yellow,"25/30 belegt",false));
+        roomAdapter.add(new Room("G111",R.drawable.circle_yellow,"17/32 belegt",false));
         roomAdapter.notifyDataSetChanged();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -114,20 +116,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -138,7 +126,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_einstellungen) {
-            Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
+            Intent intent = new Intent(getApplicationContext(),Settings2Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_freundesliste) {
             Intent intent = new Intent(getApplicationContext(),Freundesliste.class);

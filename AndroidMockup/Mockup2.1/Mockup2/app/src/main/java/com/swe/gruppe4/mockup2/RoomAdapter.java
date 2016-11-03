@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,9 +45,15 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         Room roomObj = getItem(position);
         if (convertView == null && !roomObj.flag) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.room_box, parent, false);
-        } else if(convertView == null){
+        } else if(convertView == null && roomObj.flag){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.current_room_box, parent, false);
         }
+        /*if(roomObj.flag){
+            ImageView leaveButton = (ImageView) convertView.findViewById(R.id.leaveRoom);
+            ImageView refreshButton = (ImageView) convertView.findViewById(R.id.refreshSession);
+            leaveButton.setImageResource(R.drawable.ic_menu_send);
+            refreshButton.setImageResource(android.R.drawable.ic_menu_rotate);
+        }*/
         TextView roomName = (TextView) convertView.findViewById(R.id.roomName);
         assert roomObj != null;
         roomName.setText(roomObj.getRoomName());
@@ -54,6 +61,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         roomInfo.setText(roomObj.getRoomInfo());
         ImageView statusIcon = (ImageView) convertView.findViewById(R.id.statusImg);
         statusIcon.setImageResource(roomObj.getStatus());
+
         return convertView;
     }
 }

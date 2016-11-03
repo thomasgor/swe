@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.R.drawable.ic_menu_delete;
+
 /**
  * Created by Kiesa on 29.10.2016.
  */
@@ -51,6 +53,10 @@ public class LectureAdapter extends ArrayAdapter<Lecture> {
         lectureDate.setText(lectureObj.getLectureDate());
         TextView lectureRoom = (TextView) convertView.findViewById(R.id.lecture_room);
         lectureRoom.setText(lectureObj.getLectureRoom());
+        ImageView editButton = (ImageView) convertView.findViewById(R.id.imageView2);
+        ImageView deleteButton = (ImageView) convertView.findViewById(R.id.imageView3);
+        editButton.setImageResource(android.R.drawable.ic_menu_edit);
+        deleteButton.setImageResource(android.R.drawable.ic_menu_delete);
         return convertView;
     }
 

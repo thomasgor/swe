@@ -13,4 +13,46 @@
     tools:context="com.swe.gruppe4.mockup2.Settings2Activity"
     tools:showIn="@layout/app_bar_settings2">
 
+    <CheckBox
+        android:text="Benachrichtigungen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkBox"
+        android:layout_alignParentStart="true"
+        android:id="@+id/checkBox2" />
+
+    <CheckBox
+        android:text="Anonymer Modus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/checkBox2"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText"
+        android:hint="Masterpasswort"
+        android:layout_width="200dp" />
+
+    <TextView
+        android:text="FreeSpace Version 0ae30-15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Bestätigen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:id="@+id/button3"
+        android:layout_alignTop="@+id/editText"
+        android:layout_toEndOf="@+id/editText" />
 </RelativeLayout>

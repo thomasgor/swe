@@ -45,17 +45,28 @@
             </intent-filter>
         </activity>
         <activity
-        android:name=".LectureListActivity"
-        android:label="Veranstaltungen"
-        android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddLectureActivity"></activity>
+            android:name=".LectureListActivity"
+            android:label="Veranstaltungen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddLectureActivity" />
         <activity
             android:name=".RoomActivity"
             android:label="@string/title_activity_room"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TagsFilterActivity"
+        <activity
+            android:name=".TagsFilterActivity"
             android:label="@string/title_activity_filter_tags" />
+        <activity
+            android:name=".Settings2Activity"
+            android:label="@string/title_activity_settings2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EmptyActivity" />
+        <activity
+            android:name=".ActiveSessionActivity"
+            android:label="@string/title_activity_active_session"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RoomDetailsActivity"></activity>
     </application>
 
 </manifest>

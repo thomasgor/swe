@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mockup2</string>
+    <string name="app_name">FreeSpace</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -105,11 +105,13 @@
     <string name="getMaster">Professor</string>
     <string name="timetable">Stundenplan</string>
     <string name="profile_pic">Profilbild</string>
-    <string name="title_activity_room">RoomActivity</string>
+    <string name="title_activity_room">Räume suchen</string>
     <string name="rooms_filter">Raumfilter</string>
     <string name="empty_rooms">Nur Leere Räume</string>
     <string name="filter_friends">Räume mit Freunden</string>
     <string name="clickable_tags">Tags</string>
     <string name="title_activity_tags_filter">Tags Filtern</string>
     <string name="title_activity_filter_tags">Tags Filtern</string>
+    <string name="title_activity_settings2">Einstellungen</string>
+    <string name="title_activity_active_session">FreeSpace</string>
 </resources>
