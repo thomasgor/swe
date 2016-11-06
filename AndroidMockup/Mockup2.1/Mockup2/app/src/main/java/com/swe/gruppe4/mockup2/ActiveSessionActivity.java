@@ -32,7 +32,7 @@ public class ActiveSessionActivity extends AppCompatActivity
         roomView.setAdapter(roomAdapter);
         roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         for(int i=0; i< 1;i++){
-            roomAdapter.add(new Room("G10"+i,R.drawable.circle_green,"#präsentation",true));
+            roomAdapter.add(new Room("G10"+i,R.drawable.circle_green,"Aktiv bis 12:00 Uhr\n#präsentation",true));
         }
         roomAdapter.notifyDataSetChanged();
 

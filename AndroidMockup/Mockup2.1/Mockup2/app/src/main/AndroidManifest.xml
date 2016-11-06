@@ -66,7 +66,8 @@
             android:name=".ActiveSessionActivity"
             android:label="@string/title_activity_active_session"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RoomDetailsActivity"></activity>
+        <activity android:name=".RoomDetailsActivity" />
+        <activity android:name=".AddFriendsActivity"></activity>
     </application>
 
 </manifest>

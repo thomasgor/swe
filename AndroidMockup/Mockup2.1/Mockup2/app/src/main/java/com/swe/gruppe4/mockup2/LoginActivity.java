@@ -246,6 +246,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
         startActivity(intent);
         finish();
 
+        /*Intent intent = new Intent(getApplicationContext(), RoomDetailsActivity.class);
+        startActivity(intent);*/
+
         /*if (!mGoogleApiClient.isConnecting()) {
             mShouldResolve = true;
             resolveSignInError();

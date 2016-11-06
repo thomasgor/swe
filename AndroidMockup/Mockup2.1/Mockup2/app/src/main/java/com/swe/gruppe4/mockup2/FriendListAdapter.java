@@ -56,6 +56,9 @@ class FriendListAdapter extends ArrayAdapter<PrivateContact> {
         roomName.setText(friendObj.getFriendRoom());
         ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
         profilePicture.setImageResource(friendObj.getProfilePicture());
+        ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
+        deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);
+        //deleteFriend.setOnClickListener();
         return convertView;
     }
 }

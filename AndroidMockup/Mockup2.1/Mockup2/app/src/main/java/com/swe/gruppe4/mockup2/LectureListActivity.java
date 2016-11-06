@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class LectureListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,6 +54,20 @@ public class LectureListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        showDialog();
+
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder build = new AlertDialog.Builder(LectureListActivity.this);
+        build.setCancelable(false);
+
+        build.setMessage("Möchten Sie die Veranstaltung wirklich löschen?");
+
+        build.setPositiveButton("Ja", null);
+        build.setNegativeButton("Nein", null);
+        AlertDialog alert1 = build.create();
+        alert1.show();
     }
 
     @Override

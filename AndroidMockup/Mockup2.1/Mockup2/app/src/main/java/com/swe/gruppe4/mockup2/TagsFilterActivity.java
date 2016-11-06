@@ -29,6 +29,9 @@ public class TagsFilterActivity extends AppCompatActivity {
         if(actionBar!=null){
             actionBar.setDisplayShowTitleEnabled(true);
         }
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
     }
 
     @Override
