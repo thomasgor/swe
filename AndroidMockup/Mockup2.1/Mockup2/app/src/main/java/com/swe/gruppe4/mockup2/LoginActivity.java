@@ -1,6 +1,7 @@
 package com.swe.gruppe4.mockup2;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.content.pm.PackageManager;
@@ -239,12 +240,17 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
 
 
     private void onSignInClicked() {
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        /*Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         intent.putExtra("profileName","Max Mustermann");
         intent.putExtra("profileEmail","max@mustermann.de");
         intent.putExtra("profilePicture","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg");
         startActivity(intent);
-        finish();
+        finish();*/
+
+        ProgressDialog pd1 = new ProgressDialog(this);
+        pd1.setTitle("Laden...");
+        pd1.setMessage("Bitte warten...");
+        pd1.show();
 
         /*Intent intent = new Intent(getApplicationContext(), RoomDetailsActivity.class);
         startActivity(intent);*/

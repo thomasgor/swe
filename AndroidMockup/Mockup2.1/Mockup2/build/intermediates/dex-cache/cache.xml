@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="bd7eba2a4c7c03dbe4aa3756837fc1acb47cb811">
+        sha1="b1ac166ea8aabbbf7975eefaf5a9d48210c164f8">
         <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a777c21dc088db0ffbed1e23102056453faf6e3a\classes.dex" />
     </item>
     <item
@@ -331,7 +331,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="578d274d091881007ca5035f615dd563c45a80f5">
+        sha1="b747f60de20ea51f0cecab49ca0cbf090aa9cb74">
         <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f13b1c740461e24407b172ea35d818c2b1e28e29\classes.dex" />
     </item>
     <item
