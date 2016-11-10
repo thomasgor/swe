@@ -13,13 +13,13 @@
     tools:context="com.swe.gruppe4.mockup2.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <Button
+    <Button style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/button"
-        android:background="@drawable/qrscanner"
+        android:background="@drawable/qrbutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="80dp"
+        android:layout_width="210dp" />
 
     <TabHost
         android:layout_width="200dip"

@@ -6,4 +6,5 @@
     <color name="colorPrimaryProf">#b5b13f</color>
     <color name="colorPrimaryDarkProf">#989f30</color>
     <color name="colorAccentProf">#405dff</color>
+    <color name="navIcons">#000000</color>
 </resources>

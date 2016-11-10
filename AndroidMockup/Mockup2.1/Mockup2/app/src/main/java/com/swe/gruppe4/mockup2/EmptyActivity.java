@@ -20,7 +20,7 @@ public class EmptyActivity extends AppCompatActivity {
         AlertDialog.Builder build = new AlertDialog.Builder(EmptyActivity.this);
         build.setCancelable(false);
         build.setTitle("G101");
-        build.setMessage("12/24 Leuten\n#Gruppenarbeit");
+        build.setMessage("12/24 Leute\nTag: Gruppenarbeit");
 
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
