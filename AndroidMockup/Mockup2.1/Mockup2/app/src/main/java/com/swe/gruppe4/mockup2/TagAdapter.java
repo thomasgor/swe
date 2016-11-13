@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class TagAdapter extends ArrayAdapter<Tag> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.tag_box, parent, false);
         }
 
-        CheckBox tag = (CheckBox) convertView.findViewById(R.id.tagCheckBox);
+        RadioButton tag = (RadioButton) convertView.findViewById(R.id.tagCheckBox);
 
         assert tagObj != null;
         tag.setText(tagObj.tagName);
