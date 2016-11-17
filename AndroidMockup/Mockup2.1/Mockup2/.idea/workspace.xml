@@ -10,110 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ad9d4fc-f2df-411d-91e7-030c01deb09c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/mipmap-hdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/mipmap-mdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/gradle/wrapper/gradle-wrapper.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/gradle.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/runConfigurations.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/proguard-rules.pro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/androidTest/java/gruppe4/swe/com/freespace/ExampleInstrumentedTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/AndroidManifest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/java/gruppe4/swe/com/freespace/ActiveSessionActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/java/gruppe4/swe/com/freespace/BaseActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/java/gruppe4/swe/com/freespace/MainActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/java/gruppe4/swe/com/freespace/Room.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/java/gruppe4/swe/com/freespace/RoomAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable-v21/ic_menu_camera.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable-v21/ic_menu_gallery.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable-v21/ic_menu_manage.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable-v21/ic_menu_send.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable-v21/ic_menu_share.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable-v21/ic_menu_slideshow.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/drawable/side_nav_bar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/activity_active_session.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/activity_base.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/activity_main.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/app_bar_base.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/content_active_session.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/content_base.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/content_main.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/layout/nav_header_base.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/menu/activity_base_drawer.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/menu/base.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values-v21/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values-w820dp/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values/colors.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values/drawables.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/main/res/values/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/app/src/test/java/gruppe4/swe/com/freespace/ExampleUnitTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/gradle.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/gradlew" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/gradlew.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../FreeSpace/settings.gradle" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_active_session.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_freundesliste.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_lecture_list.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_room.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/nav_header_settings2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_active_session_drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_freundesliste_drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_lecture_list_drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_main_drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_room_drawer.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_settings2_drawer.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/mockable-android-25.jar" afterPath="$PROJECT_DIR$/build/generated/mockable-android-25.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/ActiveSessionActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/ActiveSessionActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/BaseActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/BaseActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/Freundesliste.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/Freundesliste.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/LectureListActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/LectureListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/RoomActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/RoomActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/Settings2Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/swe/gruppe4/mockup2/Settings2Activity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_active_session.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_active_session.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_freundesliste.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_freundesliste.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_lecture_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_lecture_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_room.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_room.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_settings2.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_settings2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_base.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_base.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/activity_base_drawer.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/activity_base_drawer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/compiler.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/encodings.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/gradle.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/misc.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/modules.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/runConfigurations.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/runConfigurations.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../Mockup2/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../../Mockup2/.idea/vcs.xml" />
     </list>
     <ignored path="Mockup2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -2737,12 +2634,19 @@
       <option name="project" value="LOCAL" />
       <updated>1478196671355</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="MD: Android aufgeräumt&#10;Alle Activities haben jetzt den gleichen Drawer, auf den ersten Blick sehen die tausenden Dateien zwar immer noch unübersichtlich aus, aber das wird immer so sein! Wir können jetzt mit dem Code den wir haben die letztendliche App bauen.">
+      <created>1479390515170</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1479390515170</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -2825,7 +2729,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Android Probleme behoben" />
-    <option name="LAST_COMMIT_MESSAGE" value="Android Probleme behoben" />
+    <MESSAGE value="MD: Android aufgeräumt&#10;Alle Activities haben jetzt den gleichen Drawer, auf den ersten Blick sehen die tausenden Dateien zwar immer noch unübersichtlich aus, aber das wird immer so sein! Wir können jetzt mit dem Code den wir haben die letztendliche App bauen." />
+    <option name="LAST_COMMIT_MESSAGE" value="MD: Android aufgeräumt&#10;Alle Activities haben jetzt den gleichen Drawer, auf den ersten Blick sehen die tausenden Dateien zwar immer noch unübersichtlich aus, aber das wird immer so sein! Wir können jetzt mit dem Code den wir haben die letztendliche App bauen." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
