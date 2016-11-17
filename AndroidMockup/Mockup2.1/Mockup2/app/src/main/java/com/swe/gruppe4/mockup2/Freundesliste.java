@@ -1,11 +1,13 @@
 package com.swe.gruppe4.mockup2;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,19 +22,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class Freundesliste extends AppCompatActivity
+public class Freundesliste extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView friendView;
-    private FriendListAdapter friendsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_freundesliste);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        friendView = (ListView) findViewById(R.id.friendList);
-        friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        //inflate your activity layout here!
+        View contentView = inflater.inflate(R.layout.activity_freundesliste, null, false);
+        drawer.addView(contentView, 0);
+
+        ListView friendView = (ListView) findViewById(R.id.friendList);
+        FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
         friendView.setAdapter(friendsAdapter);
         friendView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         for(int i =1; i<10;i++){
@@ -48,33 +51,11 @@ public class Freundesliste extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         showDialogDelete();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.freundesliste, menu);
-        return true;
     }
 
     private void showDialogDelete(){
@@ -108,38 +89,4 @@ public class Freundesliste extends AppCompatActivity
         alert1.show();
     }
 
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_einstellungen) {
-            Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_freundesliste) {
-            Intent intent = new Intent(getApplicationContext(),Freundesliste.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_professor_stundenplan) {
-
-
-        } else if (id == R.id.nav_raeume) {
-            Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_view) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }
