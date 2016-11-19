@@ -40,9 +40,9 @@ public class LectureListActivity extends BaseActivity
         lectureView.setAdapter(lectureAdapter);
         lectureView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lectureAdapter.add(new Lecture("Vorlesung","Mo.24.10.2016 12:00-13:00","G101"));
-        lectureAdapter.add(new Lecture("Vorlesung","Mo.24.10.2016 12:00-13:00","G101"));
-        lectureAdapter.add(new Lecture("Vorlesung","Mo.24.10.2016 12:00-13:00","G101"));
-        lectureAdapter.add(new Lecture("Vorlesung","Mo.24.10.2016 12:00-13:00","G101"));
+        lectureAdapter.add(new Lecture("Vorlesung","Mo.25.10.2016 12:00-13:00","G101"));
+        lectureAdapter.add(new Lecture("Vorlesung","Mo.26.10.2016 12:00-13:00","G101"));
+        lectureAdapter.add(new Lecture("Vorlesung","Mo.27.10.2016 12:00-13:00","G101"));
         lectureAdapter.notifyDataSetChanged();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
