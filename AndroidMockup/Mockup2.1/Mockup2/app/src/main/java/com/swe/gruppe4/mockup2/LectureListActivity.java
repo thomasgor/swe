@@ -1,5 +1,6 @@
 package com.swe.gruppe4.mockup2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +20,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class LectureListActivity extends AppCompatActivity
+public class LectureListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView lectureView;
@@ -26,9 +28,13 @@ public class LectureListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lecture_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        //inflate your activity layout here!
+        View contentView = inflater.inflate(R.layout.activity_lecture_list, null, false);
+        drawer.addView(contentView, 0);
+
         lectureView = (ListView) findViewById(R.id.lectureList);
         lectureAdapter = new LectureAdapter(getApplicationContext(), R.layout.lecture_box);
         lectureView.setAdapter(lectureAdapter);
@@ -46,11 +52,6 @@ public class LectureListActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -68,57 +69,5 @@ public class LectureListActivity extends AppCompatActivity
         build.setNegativeButton("Nein", null);
         AlertDialog alert1 = build.create();
         alert1.show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.lecture_list, menu);
-        return true;
-    }
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_einstellungen) {
-            Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_freundesliste) {
-            Intent intent = new Intent(getApplicationContext(),Freundesliste.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_professor_stundenplan) {
-
-
-        } else if (id == R.id.nav_raeume) {
-            Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (id == R.id.nav_view) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
