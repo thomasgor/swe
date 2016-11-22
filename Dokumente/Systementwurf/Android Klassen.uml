@@ -3,11 +3,12 @@
   <ID>JAVA</ID>
   <OriginalElement>com.swe.gruppe4.mockup2.Objektklassen</OriginalElement>
   <nodes>
-    <node x="765.0" y="534.5">com.swe.gruppe4.mockup2.Objektklassen.Raum.status</node>
-    <node x="906.0" y="523.0">com.swe.gruppe4.mockup2.Objektklassen.Sitzung</node>
-    <node x="859.0871212121211" y="55.0">com.swe.gruppe4.mockup2.Objektklassen.Tag</node>
+    <node x="1098.0" y="534.5">com.swe.gruppe4.mockup2.Objektklassen.Raum.status</node>
+    <node x="765.0" y="523.0">com.swe.gruppe4.mockup2.Objektklassen.Sitzung</node>
     <node x="1239.0" y="545.0">com.swe.gruppe4.mockup2.Objektklassen.Homescreen</node>
-    <node x="609.8371212121211" y="256.0">com.swe.gruppe4.mockup2.Objektklassen.Raum</node>
+    <node x="955.0871212121212" y="55.0">com.swe.gruppe4.mockup2.Objektklassen.Tag</node>
+    <node x="1217.0" y="66.0">com.swe.gruppe4.mockup2.Objektklassen.Verbindung</node>
+    <node x="705.8371212121212" y="256.0">com.swe.gruppe4.mockup2.Objektklassen.Raum</node>
     <node x="0.0" y="534.0">com.swe.gruppe4.mockup2.Objektklassen.Freundschaft</node>
     <node x="177.61818181818182" y="0.0">com.swe.gruppe4.mockup2.Objektklassen.Benutzer</node>
     <node x="1391.75" y="344.5">com.swe.gruppe4.mockup2.Objektklassen.Karte</node>
@@ -21,21 +22,21 @@
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Raum" target="com.swe.gruppe4.mockup2.Objektklassen.Benutzer">
       <point x="-112.25" y="-103.0" />
-      <point x="722.0871212121211" y="231.0" />
+      <point x="818.0871212121212" y="231.0" />
       <point x="600.9515151515152" y="231.0" />
       <point x="169.33333333333337" y="103.0" />
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Freundschaft" target="com.swe.gruppe4.mockup2.Objektklassen.Raum">
       <point x="81.25" y="-59.0" />
       <point x="243.75" y="482.0" />
-      <point x="654.7371212121211" y="482.0" />
-      <point x="-179.6" y="103.0" />
+      <point x="750.7371212121211" y="482.0" />
+      <point x="-179.60000000000002" y="103.0" />
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Veranstaltung" target="com.swe.gruppe4.mockup2.Objektklassen.Raum">
       <point x="100.0" y="-81.0" />
       <point x="645.0" y="492.0" />
-      <point x="744.5371212121212" y="492.0" />
-      <point x="-89.79999999999998" y="103.0" />
+      <point x="840.5371212121213" y="492.0" />
+      <point x="-89.79999999999995" y="103.0" />
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Raum" target="com.swe.gruppe4.mockup2.Objektklassen.Tag">
       <point x="112.25" y="-103.0" />
@@ -44,20 +45,20 @@
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Homescreen" target="com.swe.gruppe4.mockup2.Objektklassen.Raum">
       <point x="-60.75" y="-48.0" />
       <point x="1299.75" y="482.0" />
-      <point x="1013.9371212121213" y="482.0" />
-      <point x="179.60000000000008" y="103.0" />
+      <point x="1109.9371212121214" y="482.0" />
+      <point x="179.60000000000014" y="103.0" />
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Raum.status" target="com.swe.gruppe4.mockup2.Objektklassen.Raum">
       <point x="0.0" y="-58.5" />
-      <point x="825.5" y="492.0" />
-      <point x="834.3371212121212" y="492.0" />
-      <point x="2.8421709430404007E-14" y="103.0" />
+      <point x="1158.5" y="492.0" />
+      <point x="1020.1371212121212" y="492.0" />
+      <point x="89.80000000000007" y="103.0" />
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Sitzung" target="com.swe.gruppe4.mockup2.Objektklassen.Raum">
       <point x="0.0" y="-70.0" />
-      <point x="1062.5" y="492.0" />
-      <point x="924.1371212121212" y="492.0" />
-      <point x="89.80000000000007" y="103.0" />
+      <point x="921.5" y="492.0" />
+      <point x="930.3371212121212" y="492.0" />
+      <point x="0.0" y="103.0" />
     </edge>
     <edge source="com.swe.gruppe4.mockup2.Objektklassen.Freundschaft" target="com.swe.gruppe4.mockup2.Objektklassen.Benutzer">
       <point x="-81.25" y="-59.0" />
@@ -72,14 +73,12 @@
       <point x="0.0" y="103.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.8155619596541787" x="741.0" y="337.0" />
-  <SelectedNodes>
-    <node>com.swe.gruppe4.mockup2.Objektklassen.Sitzung</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic Group" zoom="1.2000000000000002" x="741.9999999999999" y="342.33333333333326" />
+  <SelectedNodes />
   <Categories>
+    <Category>Methods</Category>
     <Category>Constructors</Category>
     <Category>Fields</Category>
-    <Category>Methods</Category>
     <Category>Properties</Category>
     <Category>Inner Classes</Category>
   </Categories>
