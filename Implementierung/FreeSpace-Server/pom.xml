@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.fhaachen.swe.freespace.rest.Server</mainClass>
+                            <mainClass>com.fhaachen.swe.freespace.Server</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -37,7 +37,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.fhaachen.swe.freespace.rest.Server</mainClass>
+                            <mainClass>com.fhaachen.swe.freespace.Server</mainClass>
                         </manifest>
                     </archive>
                     <outputDirectory>${project.build.directory}/../</outputDirectory>
