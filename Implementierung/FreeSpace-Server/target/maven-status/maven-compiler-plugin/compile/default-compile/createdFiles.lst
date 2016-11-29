@@ -1,0 +1,13 @@
+com/fhaachen/swe/freespace/rest/BenutzerREST.class
+com/fhaachen/swe/freespace/rest/TagREST.class
+com/fhaachen/swe/freespace/main/Benutzer.class
+com/fhaachen/swe/freespace/rest/FreundschaftREST.class
+com/fhaachen/swe/freespace/main/Freundschaft.class
+com/fhaachen/swe/freespace/main/Sitzung.class
+com/fhaachen/swe/freespace/rest/RaumREST.class
+com/fhaachen/swe/freespace/main/Veranstaltung.class
+com/fhaachen/swe/freespace/rest/SitzungREST.class
+com/fhaachen/swe/freespace/rest/Server.class
+com/fhaachen/swe/freespace/rest/VeranstaltungREST.class
+com/fhaachen/swe/freespace/main/Raum.class
+com/fhaachen/swe/freespace/main/Tag.class

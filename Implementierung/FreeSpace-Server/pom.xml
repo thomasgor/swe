@@ -40,7 +40,7 @@
                             <mainClass>com.fhaachen.swe.freespace.rest.Server</mainClass>
                         </manifest>
                     </archive>
-                    <outputDirectory>${project.build.directory}/../../</outputDirectory>
+                    <outputDirectory>${project.build.directory}/../</outputDirectory>
                 </configuration>
             </plugin>
 
@@ -87,8 +87,6 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.15.1</version>
         </dependency>
-
-
     </dependencies>
 
 </project>

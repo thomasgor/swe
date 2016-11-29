@@ -12,13 +12,16 @@ import java.util.List;
 @Table("Benutzer")
 public class Benutzer extends Model{
 
-    public static void main(String[] args) {
 
+    public static boolean test(){
+        //Überptüfen ob token und id in DB stehen;
         Base.open("org.sqlite.JDBC", "jdbc:sqlite:./freespace.db", "root", "p@ssw0rd");
-        Benutzer b = Benutzer.findById(4711);
+        List<Benutzer> b = Benutzer.where("id = ? and token=?", "4711", "abc123");
+        System.out.println(b.get(0).toJson(true));
+        return true;
+    }
 
-        System.out.println(b.get("name"));
-        Base.close();
+    public static void main(String[] args) {
     }
 
 }
