@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 public class VeranstaltungREST {
 
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(String json){
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier ensteht die Veranstaltungsliste").build();
@@ -32,7 +31,6 @@ public class VeranstaltungREST {
 
 
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response getVeranstaltungID(@PathParam(value="param") String id, String json){

@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 public class SitzungREST {
 
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSitzung(String json){
 
@@ -28,7 +27,6 @@ public class SitzungREST {
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response deleteSitzungID(@PathParam(value="param") String id, String json){
