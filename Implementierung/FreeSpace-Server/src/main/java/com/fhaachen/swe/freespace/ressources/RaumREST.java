@@ -1,5 +1,7 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.main.Raum;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,8 +17,10 @@ public class RaumREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRaumliste(){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Raumliste").build();
+    public Response getRaum(){
+        String json = Raum.getRaum();
+        return Response.ok(json,MediaType.APPLICATION_JSON).build();
+        //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Raumliste").build();
     }
 
     @GET

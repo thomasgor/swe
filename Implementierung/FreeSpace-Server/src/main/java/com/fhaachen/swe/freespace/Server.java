@@ -46,6 +46,7 @@ public class Server {
             System.out.println("Hit enter to Stop");
             System.in.read();
             httpServer.stop();
+
         }catch (Exception e){
             System.out.println(e);
         }

@@ -1,5 +1,7 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.main.Tag;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,7 +17,12 @@ public class TagREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTagListe(){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier ensteht die Tagliste").build();
+        String json = Tag.getTag();
+
+        if(json != null){
+            return Response.status(Response.Status.OK).entity(json).build();
+        }
+        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Tag liste").build();
     }
 
     @POST

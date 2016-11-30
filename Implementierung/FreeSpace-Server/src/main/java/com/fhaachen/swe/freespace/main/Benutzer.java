@@ -15,7 +15,7 @@ public class Benutzer extends Model{
     static int test = 1234;
     public static boolean test(){
         //Überptüfen ob token und id in DB stehen;
-        Base.open("org.sqlite.JDBC", "jdbc:sqlite:./freespace.db", "root", "p@ssw0rd");
+
         List<Benutzer> b = Benutzer.where("id = ? and token=?", "4711", "abc123");
         System.out.println(b.get(0).toJson(true));
         Base.close();
