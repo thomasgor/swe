@@ -12,12 +12,10 @@ import org.javalite.activejdbc.annotations.Table;
 public class Raum extends Model {
 
     public static String getRaum(){
-        Base.open("org.sqlite.JDBC", "jdbc:sqlite:./freespace.db", "root", "p@ssw0rd");
-
+        Datenbank.connect();
         String json = Raum.findAll().toJson(true);
 
-        Base.close();
+        Datenbank.disconnect();
         return json;
-
     }
 }

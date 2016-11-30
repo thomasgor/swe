@@ -1,6 +1,7 @@
 package com.fhaachen.swe.freespace;
 
 import com.fhaachen.swe.freespace.main.Benutzer;
+import com.fhaachen.swe.freespace.main.Datenbank;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
