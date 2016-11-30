@@ -46,6 +46,7 @@ public class VeranstaltungREST {
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können Veranstaltungen geändert werden!").build();
     }
 
+    @RolesAllowed("professor")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
