@@ -15,14 +15,14 @@ public class RaumREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRaumliste(String json){
+    public Response getRaumliste(){
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Raumliste").build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response getRaumdetails(@PathParam(value="param") String id, String json){
+    public Response getRaumdetails(@PathParam(value="param") String id){
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Raumdetails von " + id).build();
     }
 

@@ -18,7 +18,7 @@ public class VeranstaltungREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVeranstaltungsliste(String json){
+    public Response getVeranstaltungsliste(){
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier ensteht die Veranstaltungsliste").build();
     }
 
@@ -26,14 +26,14 @@ public class VeranstaltungREST {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postVeranstaltung(String json){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können veranstaltungen angelegt werden!").build();
+        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können veranstaltungen angelegt werden!" + json).build();
     }
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response getVeranstaltungID(@PathParam(value="param") String id, String json){
+    public Response getVeranstaltungID(@PathParam(value="param") String id){
         System.out.println("Im in");
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Veranstaltung mit der ID" + id).build();
     }

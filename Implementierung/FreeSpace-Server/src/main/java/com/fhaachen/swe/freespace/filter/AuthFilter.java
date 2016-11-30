@@ -18,7 +18,7 @@ import java.security.Principal;
 /**
  * Created by thomas on 29.11.2016.
  */
-@Provider
+//@Provider
 @PreMatching
 public class AuthFilter implements ContainerRequestFilter {
 

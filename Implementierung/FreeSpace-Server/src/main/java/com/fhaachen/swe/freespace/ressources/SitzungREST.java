@@ -14,7 +14,7 @@ public class SitzungREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSitzung(String json){
+    public Response getSitzung(){
 
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("get Sitzung").build();
     }
