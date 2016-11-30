@@ -1,12 +1,13 @@
 package com.fhaachen.swe.freespace.main;
 
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.Model;
 
 /**
  * Created by thomasgorgels on 30.11.16.
  */
-public class Datenbank {
-    public static void connect(){
+public class Datenbank extends Model {
+    public static void connect1(){
         Base.open("org.sqlite.JDBC", "jdbc:sqlite:./freespace.db", "root", "p@ssw0rd");
     }
 

@@ -7,15 +7,13 @@ import org.javalite.activejdbc.annotations.Table;
 /**
  * Created by thomas on 27.11.2016.
  */
-
 @Table("Raum")
-public class Raum extends Model {
+public class Raum extends Datenbank {
 
     public static String getRaum(){
-        Datenbank.connect();
+        connect();
         String json = Raum.findAll().toJson(true);
-
-        Datenbank.disconnect();
+        disconnect();
         return json;
     }
 }
