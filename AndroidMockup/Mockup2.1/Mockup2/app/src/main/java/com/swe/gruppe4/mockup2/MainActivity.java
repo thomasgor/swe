@@ -48,9 +48,8 @@ public class MainActivity extends BaseActivity
         qrScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),EmptyActivity.class);
+                Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
