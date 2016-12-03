@@ -2,6 +2,7 @@ package com.swe.gruppe4.mockup2;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -32,6 +35,7 @@ import java.io.IOException;
 
 public class QRScanActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
     private Camera mCamera = null;
     private CameraView mCameraView = null;
     BarcodeDetector detector;
@@ -42,21 +46,64 @@ public class QRScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscan);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA);
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            startCamera();
+        }
+
+        ImageButton imgClose = (ImageButton)findViewById(R.id.imgClose);
+        imgClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
+    private void releaseCameraAndPreview() {
+        ///mCameraView.setCamera(null);
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
+        }
+    }
+
+    private void startCamera(){
         try {
             releaseCameraAndPreview();
             mCamera = Camera.open();//you can use open(int) to use different cameras
         } catch (Exception e) {
             Log.d("ERROR", "Failed to get camera: " + e.getMessage());
-            AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
-            build.setCancelable(false);
 
-            build.setTitle("Fehlende Berechtigung");
-            build.setMessage("Bitte gehen Sie in die Einstellungen und erlauben Sie der App, auf die Kamera zuzugreifen.");
 
-            build.setPositiveButton("Verstanden", null);
-            //build.setNegativeButton("Nein", null);
-            AlertDialog alert1 = build.create();
-            alert1.show();
         }
 
         if (mCamera != null) {
@@ -87,6 +134,8 @@ public class QRScanActivity extends AppCompatActivity {
                 AlertDialog alert1 = build.create();
                 alert1.show();
 
+                finish();
+
             } else {
                 detector.setProcessor(new Detector.Processor<Barcode>() {
                     @Override
@@ -103,7 +152,6 @@ public class QRScanActivity extends AppCompatActivity {
                             build.setCancelable(false);
 
                             build.setTitle(barcodes.valueAt(0).displayValue);
-                            //build.setMessage("Probieren Sie bitte, den Scanner noch einmal zu öffnen. Wenn es immer noch nicht klappt, wenden Sie sich bitte an einen Administrator.");
 
                             build.setPositiveButton("Verstanden", null);
                             //build.setNegativeButton("Nein", null);
@@ -114,25 +162,51 @@ public class QRScanActivity extends AppCompatActivity {
                 });
             }
         }
-
-        ImageButton imgClose = (ImageButton)findViewById(R.id.imgClose);
-        imgClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
     }
 
-    private void releaseCameraAndPreview() {
-        ///mCameraView.setCamera(null);
-        if (mCamera != null) {
-            mCamera.release();
-            mCamera = null;
-        }
-    }
     @Override
     public void onBackPressed(){
         super.onBackPressed();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    startCamera();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission
+
+
+                    AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
+                    build.setCancelable(false);
+
+                    build.setTitle("Fehlende Berechtigung");
+                    build.setMessage("Bitte erlauben Sie den Zugriff auf die Kamera, um den QR Scanner nutzen zu können.");
+
+                    build.setPositiveButton("Verstanden", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    //build.setNegativeButton("Nein", null);
+                    AlertDialog alert1 = build.create();
+                    alert1.show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }
