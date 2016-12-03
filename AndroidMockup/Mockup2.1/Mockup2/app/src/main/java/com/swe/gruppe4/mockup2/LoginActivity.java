@@ -44,6 +44,9 @@ public class LoginActivity extends AppCompatActivity implements
 
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        //NUR FÜR TEST!!!!!!
+        startHomeActivityTest();
         //findViewById(R.id.sign_out_button).setOnClickListener(this);
         //findViewById(R.id.disconnect_button).setOnClickListener(this);
 
@@ -73,9 +76,20 @@ public class LoginActivity extends AppCompatActivity implements
         // [END customize_button]
     }
 
+    //FreeSpace uses just the SignIn Button
+    @Override
+    public void onClick(View v) {
+        signIn();
+
+    }
+
+
     @Override
     public void onStart() {
         super.onStart();
+
+        //NUR FÜR TEST!!!!!!
+        startHomeActivityTest();
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
@@ -136,37 +150,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
     // [END signIn]
 
-    // Not used in the FreeSpace App
-    /*
-    // [START signOut]
-    private void signOut() {
-        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        // [START_EXCLUDE]
-                        updateUI(false);
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-    // [END signOut]
 
-    // [START revokeAccess]
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        // [START_EXCLUDE]
-                        updateUI(false);
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
-    // [END revokeAccess]
-
-    */
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -203,21 +187,7 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    //FreeSpace uses just the SignIn Button
-    @Override
-    public void onClick(View v) {
-        //switch (v.getId()) {
-          //  case R.id.sign_in_button:
-                signIn();
-            /*    break;
-            case R.id.sign_out_button:
-                signOut();
-                break;
-            case R.id.disconnect_button:
-                revokeAccess();
-                break;
-        } */
-    }
+
 
     private void startHomeActivity(GoogleSignInAccount acct) {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -233,6 +203,22 @@ public class LoginActivity extends AppCompatActivity implements
         } else {
             pictureURL = "https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg";
         }
+
+        intent.putExtra("profilePicture",pictureURL);
+        startActivity(intent);
+        finish();
+    }
+
+
+
+    private void startHomeActivityTest() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.putExtra("profileName","Max Mustermann");
+        intent.putExtra("profileEmail","max.muster@gmail.com");
+
+        String pictureURL;
+
+            pictureURL = "https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg";
 
         intent.putExtra("profilePicture",pictureURL);
         startActivity(intent);
