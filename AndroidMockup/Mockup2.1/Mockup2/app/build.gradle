@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -41,4 +41,4 @@ dependencies {
 //Android 4.4 funktioniert aber nur unter PlayServices 8.4.0
 //App meldet auf einen Fehler beim Login unter 8.4 funktioniert für unseren Zweck aber trotzdem
 //Fehlermeldung: GoogleService failed to initialize, status: 10, Missing an expected resource:....
-
+//apply plugin: 'com.google.gms.google-services'
