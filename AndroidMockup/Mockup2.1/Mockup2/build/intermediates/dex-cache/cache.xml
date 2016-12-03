@@ -295,7 +295,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="0aa43975169338b99a930b835f8b96da03cba722">
+        sha1="52aff49bd009a2ed84e04e0b12bb45f7c3e57304">
         <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3f641f297a1478d0d7c3cdc41b571f2f9b8e3eaa\classes.dex" />
     </item>
     <item
@@ -331,7 +331,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="c54c55ecde8a70a4bb0bbd5d30109eefc1819af7">
+        sha1="0cb5be00b239ec1be1580767c323a8398413ef9e">
         <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_541eb3208eb947cb3aec5bb10d8720a481d7ee59\classes.dex" />
     </item>
     <item
