@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -96,7 +97,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
 
-        //notification();
+        notification();
 
     }
 
@@ -237,10 +238,11 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
     }
 
     public void notification(){
+        Resources res = getResources();
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_directions_black_24dp)
-                        .setContentTitle("Appname")
+                        .setSmallIcon(R.drawable.ic_stat_notify_appicon)
+                        .setContentTitle(res.getString(R.string.app_name))
                         .setContentText("Ihre Sitzung läuft in 5 Minuten aus");
 // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
@@ -310,6 +312,8 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener,
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
+        } else {
+            login();
         }
     }
 
