@@ -10,7 +10,7 @@ public class Verbindung {
 
 
 
-    public Sitzung getActiveSession(){
+    public Sitzung getSitzung(){
         //DUMMY! Später dann vom Server holen.
         Benutzer[] benutzer = new Benutzer[10];
         for(int i = 0; i < 3; i++){
