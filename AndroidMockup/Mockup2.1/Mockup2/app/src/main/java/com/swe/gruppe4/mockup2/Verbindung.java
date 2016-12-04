@@ -60,4 +60,19 @@ public class Verbindung {
     public void sitzungDelete(int id){
         //TODO: Daten an Server senden
     }
+	
+        ArrayList<Freundschaft> freunde = new ArrayList<Freundschaft>();
+        Benutzer[] benutzer = new Benutzer[10];
+        for(int i = 0; i < 3; i++){
+            Benutzer tmp = new Benutzer(i,"abc@def.com","Peter","Pan","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",false);
+            benutzer[i]=tmp;
+        }
+        Raum room =  new Raum(4711,"W014",6,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.mockup2.Objektklassen.Tag(1,"Hallo Welt"), benutzer);
+
+        freunde.add(new Freundschaft(new Benutzer(1,"abc@def.com","Pan","Peter","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",false), true, room));
+        freunde.add(new Freundschaft(new Benutzer(2,"abc@def.com","Beutlin","Frodo","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",false), true, room));
+        freunde.add(new Freundschaft(new Benutzer(3,"abc@def.com","Potter","Harry","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",false), true, room));
+        return freunde;
+    }
+    //TODO: Daten vom Server statt DummyDaten
 }

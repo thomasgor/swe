@@ -21,6 +21,8 @@ import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.swe.gruppe4.mockup2.Objektklassen.*;
+import java.util.ArrayList;
 
 public class Freundesliste extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,8 +40,9 @@ public class Freundesliste extends BaseActivity
         FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
         friendView.setAdapter(friendsAdapter);
         friendView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        for(int i =1; i<10;i++){
-            friendsAdapter.add(new PrivateContact("Student"+i,R.drawable.profilepicture,""));
+        Verbindung verbindung = new Verbindung();
+        for(Freundschaft f:freunde){
+            friendsAdapter.add(f);
         }
         friendsAdapter.notifyDataSetChanged();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
