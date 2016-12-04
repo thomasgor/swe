@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
+
 public class EmptyActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,10 @@ public class EmptyActivity extends AppCompatActivity {
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                Verbindung connect = new Verbindung();
+                Sitzung data = connect.sitzungGet();
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
+                intent.putExtra("sitzung",data);
                 startActivity(intent);
                 //finish();
             }

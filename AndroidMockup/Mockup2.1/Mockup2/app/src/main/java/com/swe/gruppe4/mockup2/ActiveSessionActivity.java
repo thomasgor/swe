@@ -10,10 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
+import com.swe.gruppe4.mockup2.Objektklassen.Raum;
+import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,16 +38,42 @@ public class ActiveSessionActivity extends BaseActivity
         drawer.addView(contentView, 0);
 
         ImageView imgRoom = (ImageView) findViewById(R.id.img_room_photo);
-        new ActiveSessionActivity.LoadRoomImage(imgRoom).execute("http://i.imgur.com/LyzIuVj.jpg");
+
+        //Daten holen
+        Sitzung data = (Sitzung) getIntent().getSerializableExtra("sitzung");
+        Raum raum = data.getRaum();
+
+        TextView raumName = (TextView) findViewById(R.id.txt_room_number);
+        raumName.setText(raum.getRaumname());
+
+        TextView tag = (TextView) findViewById(R.id.txt_tag);
+        tag.setText(raum.getTag().getName());
+
+        new ActiveSessionActivity.LoadRoomImage(imgRoom, imgRoom.getWidth(),imgRoom.getHeight()).execute(data.getRaum().getFotoURL());
+        Button setTag = (Button) findViewById(R.id.btn_set_tag);
+        setTag.setEnabled(data.isMyTag());
 
         ListView listPeopleInRoomView = (ListView) findViewById(R.id.list_people_in_room);
-        FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
-        listPeopleInRoomView.setAdapter(friendsAdapter);
+        RaumdetailsLeuteAdapter raumLeuteAdapter = new RaumdetailsLeuteAdapter(getApplicationContext(), R.layout.friends_box);
+        listPeopleInRoomView.setAdapter(raumLeuteAdapter);
         listPeopleInRoomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        for(int i =1; i<10;i++){
-            friendsAdapter.add(new PrivateContact("Student"+i,R.drawable.profilepicture,"G10"+i));
+        int nichtAnonym = 0;
+        for(Benutzer ben : raum.getBenutzer()){
+            nichtAnonym++;
+            raumLeuteAdapter.add(ben);
         }
-        friendsAdapter.notifyDataSetChanged();
+        raumLeuteAdapter.notifyDataSetChanged();
+
+        TextView activeUntil = (TextView) findViewById(R.id.txt_session_active_until);
+        Date untilTime = new Date(data.getEndzeit()*1000);
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(untilTime);
+        activeUntil.setText(getString(R.string.session_active_until_clock, DateFormat.getTimeInstance(DateFormat.SHORT).format(untilTime)));
+
+        TextView leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
+        int max = raum.getTeilnehmer_max();
+        int crnt = raum.getTeilnehmer_aktuell();
+        leute.setText(getString(R.string.people_in_room_cnt,crnt,max,crnt-nichtAnonym));
 
 
 
@@ -57,9 +93,13 @@ public class ActiveSessionActivity extends BaseActivity
 
     private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+        int width;
+        int height;
 
-        LoadRoomImage(ImageView bmImage) {
+        LoadRoomImage(ImageView bmImage, int width, int height) {
             this.bmImage = bmImage;
+            this.width = width;
+            this.height=height;
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -72,11 +112,13 @@ public class ActiveSessionActivity extends BaseActivity
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
+
+
             return mIcon11;
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,50));
         }
     }
 }

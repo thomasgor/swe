@@ -1,5 +1,7 @@
 package com.swe.gruppe4.mockup2.Objektklassen;
 
+import java.io.Serializable;
+
 /**
  * <p>Überschrift: Struktur von Karte </p>
  * <p>Beschreibung:
@@ -11,5 +13,5 @@ package com.swe.gruppe4.mockup2.Objektklassen;
  * @version 1.0
  *          Created on 22.11.2016.
  */
-public class Karte {
+public class Karte implements Serializable {
 }

@@ -1,10 +1,15 @@
 package com.swe.gruppe4.mockup2.Objektklassen;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Merlin on 22.11.2016.
  */
 
-public class Sitzung {
+public class Sitzung implements Serializable{
     private int id;
     private Raum raum;
     private boolean myTag;

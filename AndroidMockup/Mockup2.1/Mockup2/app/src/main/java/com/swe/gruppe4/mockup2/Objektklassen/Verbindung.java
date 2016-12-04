@@ -1,5 +1,7 @@
 package com.swe.gruppe4.mockup2.Objektklassen;
 
+import java.io.Serializable;
+
 /**
  * <p>Überschrift: Struktur von Verbindung </p>
  * <p>Beschreibung:
@@ -11,7 +13,7 @@ package com.swe.gruppe4.mockup2.Objektklassen;
  * @version 1.0
  *          Created on 22.11.2016.
  */
-public final class Verbindung {
+public final class Verbindung implements Serializable{
     private static long id;
     private static String token;
 

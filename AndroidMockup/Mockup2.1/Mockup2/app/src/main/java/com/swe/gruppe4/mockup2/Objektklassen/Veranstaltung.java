@@ -1,10 +1,12 @@
 package com.swe.gruppe4.mockup2.Objektklassen;
 
+import java.io.Serializable;
+
 /**
  * Created by Merlin on 22.11.2016.
  */
 
-public class Veranstaltung {
+public class Veranstaltung implements Serializable {
     private int id;
     private Benutzer dozent;
     private long von;

@@ -1,10 +1,12 @@
 package com.swe.gruppe4.mockup2.Objektklassen;
 
+import java.io.Serializable;
+
 /**
  *
  */
 
-public class Benutzer {
+public class Benutzer implements Serializable {
     private long id;
     private String email;
     private String name;
