@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements
         // Button listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
-        //NUR FÜR TEST!!!!!!
+        //NUR FÜR TEST!!!!!!Für Produktiv einfach auskommentieren
         startHomeActivityTest();
         //findViewById(R.id.sign_out_button).setOnClickListener(this);
         //findViewById(R.id.disconnect_button).setOnClickListener(this);
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements
     public void onStart() {
         super.onStart();
 
-        //NUR FÜR TEST!!!!!!
+        //NUR FÜR TEST!!!!!!Für Produktiv einfach auskommentieren
         startHomeActivityTest();
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
