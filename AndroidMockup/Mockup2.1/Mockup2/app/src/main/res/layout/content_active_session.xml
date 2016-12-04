@@ -84,15 +84,6 @@
             android:layout_below="@+id/btn_session_quit"
             android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:text="Präsentation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_tag"
-            android:layout_alignBaseline="@+id/btn_set_tag"
-            android:layout_alignBottom="@+id/btn_set_tag"
-            android:layout_alignStart="@+id/txt_room_number" />
-
         <ImageView
             android:layout_marginTop="13dp"
             android:layout_below="@+id/txt_room_number"
@@ -141,6 +132,15 @@
             android:id="@+id/txt_people_in_room_cnt"
             android:layout_below="@+id/btn_set_tag"
             android:layout_toEndOf="@+id/txt_people_in_room_label" />
+
+        <TextView
+            android:text="Präsentation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_tag"
+            android:layout_alignBaseline="@+id/btn_set_tag"
+            android:layout_alignBottom="@+id/btn_set_tag"
+            android:layout_centerHorizontal="true" />
         <!--android:minHeight="500dp" />-->
     </RelativeLayout>
 

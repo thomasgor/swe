@@ -1,6 +1,7 @@
 package com.swe.gruppe4.mockup2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -28,6 +29,20 @@ import java.util.GregorianCalendar;
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ImageView imgRoom;
+    Sitzung data;
+    Raum raum;
+    TextView raumName;
+    TextView tag;
+    Button setTag;
+    ListView listPeopleInRoomView;
+    RaumdetailsLeuteAdapter raumLeuteAdapter;
+    TextView activeUntil;
+    Date untilTime;
+    TextView leute;
+    Button erneuern;
+    Button beenden;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,24 +52,49 @@ public class ActiveSessionActivity extends BaseActivity
         View contentView = inflater.inflate(R.layout.activity_active_session, null, false);
         drawer.addView(contentView, 0);
 
-        ImageView imgRoom = (ImageView) findViewById(R.id.img_room_photo);
+        imgRoom = (ImageView) findViewById(R.id.img_room_photo);
 
         //Daten holen
-        Sitzung data = (Sitzung) getIntent().getSerializableExtra("sitzung");
-        Raum raum = data.getRaum();
+        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
+        raum = data.getRaum();
 
-        TextView raumName = (TextView) findViewById(R.id.txt_room_number);
+        setData();
+
+        erneuern = (Button) findViewById(R.id.btn_session_renew);
+        erneuern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data = new Verbindung().sitzungPut(data.getId());
+                setData();
+            }
+        });
+
+        beenden = (Button) findViewById(R.id.btn_session_quit);
+        beenden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Verbindung().sitzungDelete(data.getId());
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
+
+    private void setData(){
+        raumName = (TextView) findViewById(R.id.txt_room_number);
         raumName.setText(raum.getRaumname());
 
-        TextView tag = (TextView) findViewById(R.id.txt_tag);
+        tag = (TextView) findViewById(R.id.txt_tag);
         tag.setText(raum.getTag().getName());
 
         new ActiveSessionActivity.LoadRoomImage(imgRoom, imgRoom.getWidth(),imgRoom.getHeight()).execute(data.getRaum().getFotoURL());
-        Button setTag = (Button) findViewById(R.id.btn_set_tag);
+        setTag = (Button) findViewById(R.id.btn_set_tag);
         setTag.setEnabled(data.isMyTag());
 
-        ListView listPeopleInRoomView = (ListView) findViewById(R.id.list_people_in_room);
-        RaumdetailsLeuteAdapter raumLeuteAdapter = new RaumdetailsLeuteAdapter(getApplicationContext(), R.layout.friends_box);
+        listPeopleInRoomView = (ListView) findViewById(R.id.list_people_in_room);
+        raumLeuteAdapter = new RaumdetailsLeuteAdapter(getApplicationContext(), R.layout.friends_box);
         listPeopleInRoomView.setAdapter(raumLeuteAdapter);
         listPeopleInRoomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         int nichtAnonym = 0;
@@ -64,31 +104,16 @@ public class ActiveSessionActivity extends BaseActivity
         }
         raumLeuteAdapter.notifyDataSetChanged();
 
-        TextView activeUntil = (TextView) findViewById(R.id.txt_session_active_until);
-        Date untilTime = new Date(data.getEndzeit()*1000);
+        activeUntil = (TextView) findViewById(R.id.txt_session_active_until);
+        untilTime = new Date(data.getEndzeit()*1000);
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(untilTime);
         activeUntil.setText(getString(R.string.session_active_until_clock, DateFormat.getTimeInstance(DateFormat.SHORT).format(untilTime)));
 
-        TextView leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
+        leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
         int max = raum.getTeilnehmer_max();
         int crnt = raum.getTeilnehmer_aktuell();
         leute.setText(getString(R.string.people_in_room_cnt,crnt,max,crnt-nichtAnonym));
-
-
-
-        /*ListView roomView = (ListView) findViewById(R.id.current);
-        RoomAdapter roomAdapter = new RoomAdapter(getApplicationContext(), R.layout.current_room_box);
-        roomView.setAdapter(roomAdapter);
-        roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        for (int i = 0; i < 1; i++) {
-            roomAdapter.add(new Room("G10" + i, R.drawable.circle_green, "Aktiv bis 12:00 Uhr\n#präsentation", true));
-        }
-        roomAdapter.notifyDataSetChanged();*/
-
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
