@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
         //NUR FÜR TEST!!!!!!Für Produktiv einfach auskommentieren
-        startHomeActivityTest();
+        //startHomeActivityTest();
         //findViewById(R.id.sign_out_button).setOnClickListener(this);
         //findViewById(R.id.disconnect_button).setOnClickListener(this);
 

@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_home"
             android:title="Home" />
         <item
             android:id="@+id/nav_raeume"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_view_list_black_24dp"
             android:title="Räume" />
         <item
             android:id="@+id/nav_freundesliste"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_people_black_24dp"
             android:title="Freundesliste" />
         <item
             android:id="@+id/nav_einstellungen"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_settings_black_24px"
             android:title="Einstellungen" />
     </group>
 
@@ -24,7 +24,7 @@
         <menu>
             <item
                 android:id="@+id/nav_professor_stundenplan"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_date_range_black_24dp"
                 android:title="Stundenplan" />
         </menu>
     </item>
