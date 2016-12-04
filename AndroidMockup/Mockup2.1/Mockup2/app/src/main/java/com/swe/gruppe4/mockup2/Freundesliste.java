@@ -41,6 +41,7 @@ public class Freundesliste extends BaseActivity
         friendView.setAdapter(friendsAdapter);
         friendView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         Verbindung verbindung = new Verbindung();
+        ArrayList<Freundschaft> freunde = verbindung.freundschaftGet();
         for(Freundschaft f:freunde){
             friendsAdapter.add(f);
         }

@@ -61,6 +61,7 @@ public class Verbindung {
         //TODO: Daten an Server senden
     }
 	
+	public ArrayList<Freundschaft> freundschaftGet() {
         ArrayList<Freundschaft> freunde = new ArrayList<Freundschaft>();
         Benutzer[] benutzer = new Benutzer[10];
         for(int i = 0; i < 3; i++){
