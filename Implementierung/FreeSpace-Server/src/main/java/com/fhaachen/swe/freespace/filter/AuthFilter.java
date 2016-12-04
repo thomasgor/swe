@@ -73,6 +73,7 @@ public class AuthFilter implements ContainerRequestFilter {
             System.out.println("Benutzer authentifiziert");
             return user;
         }else{
+            filterContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             System.out.println("Benutzer nicht authentifiziert");
         }
 
