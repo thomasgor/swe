@@ -36,9 +36,10 @@
 
         <TextView
             android:id="@+id/status"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/signed_out"
+            android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
