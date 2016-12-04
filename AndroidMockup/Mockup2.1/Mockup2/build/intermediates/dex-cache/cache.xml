@@ -3,417 +3,417 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0c6d948e6cb9ea6f535d175fb61ba2930719c0e9">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.0_ddb0bd9ec60253fc42d8fa80de6b43278f902022\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-fitness-8.4.0_38399e23bf5f304c86145ed8dbf1ba279e201391\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="04de44f90606c77f3b28cf44861f306290505aac">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-8.4.0_84006ac3c39b86fa74ab07158f10ac5318b87407\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="665d21a8a069c96b4d9e8b434f5096d865b4e261">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_2848c29cd8ca6877715c8eaf5062f21e370bdaf9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wearable-8.4.0_e507b64469c0bffe9b96b8906a44e02ea3dd5343\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="8bc45ce1f63d1a391fd38b32a201be5a42f9c95d">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.0_479b7fc215a8620a222de8baf31beefb2c6fb069\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-panorama-8.4.0_5a441fb8ca47b2bc844892f0f9b5a058dfc22398\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_e5b85b87875972f8c578b2b3d9efc94c04e1d846\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="4ccbcda5c72027c7f7c14be9ff8640d9cb0d8da0">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.0_aca3ab94b168f7bf65d8d6aa0fe9a0c9738791ca\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-plus-8.4.0_3a4859359429defbefa6becca35f73fbc23f2676\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-ads-8.4.0_8016020764eacfedf46cdf50ea2b0f25ad66581f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="76fb65a4b41ea42dab8a1310ed772a2420c96b52">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.0_6ed91c25437d73e66a729b4c9c23655b3632615e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-auth-8.4.0_43cfdb94f19cea67c177c87a0a6f80b3da21175b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="ee5faf4dee5b6a4364bf51587871047dde7c703a">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_2965f2025de6a64f93fdc638a647fe9dcb0904be\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_ea7085ce299c89b7d905abe9cc9a4e18bf3557d3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.0\support-annotations-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="a22d2cc94da87b254451fa8ed28afc30b4653773">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.0_afcfcf64f4152f84edb3e26027c59ff326d877b3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-cast-8.4.0_8958aa54425d72dcfd4afb2c7040c81f174a8fb2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="53a420cd4f49274db6bd43475f8006ba67ef6bbd">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.0_77fea4e8af839a5eae9b18d963f554dc65c8982e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-safetynet-8.4.0_e92bc57336e730fd8941516a4c9fb18341c2fff9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-nearby-8.4.0_10da7a70ea8b2b630cd4cf33f9efa6aa2efd9aec\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.4.0_8ed915ad00bc5a95c209c77cca203db8a33f64d5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appinvite-8.4.0_a7f968d551caeedac6f4e7778f995506ce043e0a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="26674000177e45447a0326a6ad84612761199a13">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.0_76603f30862178d4352412228a15ec27bd2182bd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-analytics-8.4.0_b5671132aa29eaae341b51e366f007748f54e1c8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="5e497d60f0cb6ce87c458ac5420a46d0fed49bd0">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.0_f58dd54aa960d7f0c9fade158d7b7aac17242082\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wallet-8.4.0_484c91f0f3dd27db8d32a48ab3c5cc10a6adc544\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-measurement-8.4.0_aa0bee709cae226912cc3374052fab317b745480\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-identity-8.4.0_eab3222f8f4153e5f1c0be9f73b68b43d798f7b0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="3b61a70884adaf0be3fc06c70c801e3e6df13133">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_a37cb92b55644905d164f1221370a7b05fb228bf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-vision-8.4.0_5cfe55c96dcddee88269caeef6113711ba411c65\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-gcm-8.4.0_427e02bc878ec6ab9c2ecdae252c4c96f6e480e1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-mediarouter-v7-23.0.0_96df4df8e34bcfdb50de33adc92d33602fc06575\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="14ae3af13a1877580257edff5c54de6a71b88606">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3f641f297a1478d0d7c3cdc41b571f2f9b8e3eaa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="07daa0b6e1d455c82a38422ffe287c18823d339a">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.0_8c368be580003744c78e3f750366421875ac36f5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\jars\libs\internal_impl-25.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="f2e3b9bc1ec25f652e8007ce7774c991e38f6a00">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_2a0e1ed35ba54fa0bb81c957fb4223f492ebfdea\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-games-8.4.0_ef82458c1d0d22ecbc679132e809741952e78d19\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="954a6fd0362b1804a52a4822aea02012bb48525d">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_541eb3208eb947cb3aec5bb10d8720a481d7ee59\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\design\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="26384be22ddc74cfe197ebda9edbc7d1fd8bd537">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.0_13bdb242f3b53395590f1599ba63ddced0d72599\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.4.0_a7296e25cf025b59da8d6fe9ee6dee8fd03cfba0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="d29714cc76b38157e3cbd034c66e1ec808eb4c19">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.0_7d30319009cad0c821869951e292c2cad7094e6a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-location-8.4.0_7f0183e08dd52127aa9319e19273fdc650c7d11b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="75b1f366ff0bbc78f8b1f7cf0dc82e7c53afef6a">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.0_b1d715f7e871458bfe8d2de2149edbb3216132c1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\jars\classes.jar"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.0_4ce15298dd1717c7f852faf741d842dfb87dbd0e\classes.dex" />
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.0_689239f3aceeb1f96d496117348137b60465568b\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_b3e174162124f538cedcbfa6932a16325e614176\classes.dex" />
+        sha1="0c95ce5e836e09137e4458ba2a8e7f0345b605ab">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a777c21dc088db0ffbed1e23102056453faf6e3a\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.4.0\jars\classes.jar"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-drive-8.4.0_0a398e9d96528db4ab30cd3d32b0e7ae1ab03d52\classes.dex" />
+        sha1="53a420cd4f49274db6bd43475f8006ba67ef6bbd">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.0_3b5d0f6479da3ba2a989983e596769f8b9d98009\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\libs\internal_impl-23.0.0.jar"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-location-8.4.0_1106f7850a38471c8cb77b4e970a702264adb246\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wallet-8.4.0_7286c0bda664c7151feb68fa4263c0e31a5b9e48\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d29714cc76b38157e3cbd034c66e1ec808eb4c19">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.0_d81cf61d8a0a1c021fa0fca9d107f0506791f3e4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-fitness-8.4.0_0adb07ff11496120e27eecb383c257ff795a932f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="76fb65a4b41ea42dab8a1310ed772a2420c96b52">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.0_f1cb5a9130a32ef3b8d37dac69e8ec56cb97a8f7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.4.0_add28fb1f9b519c8addd67cc74b9c2001f36b3d0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-8.4.0_ffc8d33cdde9ee9f3d9747b42e9604047588501c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="f2e3b9bc1ec25f652e8007ce7774c991e38f6a00">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_b7d97c835178e954e0d74e7ad74ab0119dde857d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-auth-8.4.0_4e9f606f07c4559db37ba3842b7d15953ac2e401\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-games-8.4.0_308c6aa48ba008d5ed0892e58f972d7b73db8195\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-identity-8.4.0_71200bacaf21426f8979221d941c11381baf4374\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-nearby-8.4.0_b4cf06264bf6e07e0a7b8ae2a90cbf8c096da826\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_2b0810222e22bf365c7f8ac8617330184a06957d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-plus-8.4.0_a4cb198b1401042527141f9a3bc41927a7c8ccbd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-panorama-8.4.0_a25e0a94ccebe4b0ffb21f6e6c77e216eb7b8257\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appinvite-8.4.0_bc1163e9eab9da9a5163cdfacd8c59fc23f2ae1d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-measurement-8.4.0_4489e9521f2c793684ed7c269d2251da68e9ba33\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3b61a70884adaf0be3fc06c70c801e3e6df13133">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_35e91ce305e21b57b390cfefc8de91050c5473cf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.4.0_469ec80e4567beb23df20596142c11baa7feb476\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="75b1f366ff0bbc78f8b1f7cf0dc82e7c53afef6a">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.0_04968cd721317bbc4c03a0c7f93fb94cd66509a1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-safetynet-8.4.0_042cf76926bc8eebcce60a9c3e8be43bc4e5e7fe\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8bc45ce1f63d1a391fd38b32a201be5a42f9c95d">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.0_5f339106217b8baa77d6a0a04395da904f613f55\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\design\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="26384be22ddc74cfe197ebda9edbc7d1fd8bd537">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.0_77593da5cc17b08ffa3d561086ca0d80a22f5df9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\libs\internal_impl-23.0.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
         sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
-        <dex dex="C:\Users\Marco\git\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.0_1f595f441a37876234d766d2ea83bfb0902ef134\classes.dex" />
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.0_d779d1b1604c4cad8ea8ae35b09fcd7867f3b167\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="G:\Dokumente\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.0\support-annotations-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a22d2cc94da87b254451fa8ed28afc30b4653773">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.0_d812cce4e2d587cfcdf3a30be4904c5aa93c6a16\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="07daa0b6e1d455c82a38422ffe287c18823d339a">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.0_66cfc9071fda0f6308b47f086464196f51d10355\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="c03133a6d50297e8110a1c35d57a9fddd400eb69">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f13b1c740461e24407b172ea35d818c2b1e28e29\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-cast-8.4.0_ee866d6b92ab508caea3fd8c6238aa54667c31ed\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-gcm-8.4.0_c2736ddfa5bd3ae60bcfec88a353f6c6660d406d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="665d21a8a069c96b4d9e8b434f5096d865b4e261">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_7f1771f8ae2114ca53b15af84e96afbf48e8c813\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_2809bf7f95ea6fd95986bfd1b7225dbd900ef354\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_658cfc38698b5cf060ac5ff3fa8c4a160ded51c1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wearable-8.4.0_2f6f988a655f2991ec6f834fe042ca32626a273c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.0\jars\libs\internal_impl-25.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="ee5faf4dee5b6a4364bf51587871047dde7c703a">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.0_c8a21b133549294e9d7a00d1e0ca2316da1c0a5b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-drive-8.4.0_af6473bb207c194291e72921440ec8f9dcc7ab15\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-mediarouter-v7-23.0.0_1ba81fa41bd688fc7eb2e242d30520ab36b05218\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-ads-8.4.0_a73ac6f04167d69daf716ec2bccfa29533578b41\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4ccbcda5c72027c7f7c14be9ff8640d9cb0d8da0">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.0_3b01face6a086709ae147d29588ddab339176511\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-vision-8.4.0_e9cd0374c06a48a5f89eade01acd6b3643484f42\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-analytics-8.4.0_ab2600d5baeb02ba1ab366772e6b6eb2cf9b5d8b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="0c6d948e6cb9ea6f535d175fb61ba2930719c0e9">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.0_2ab93b7ac6715e96cb7bc59d889efb3003741427\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5e497d60f0cb6ce87c458ac5420a46d0fed49bd0">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.0_7f04c91bde5327540591035b821ef361a070457d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="26674000177e45447a0326a6ad84612761199a13">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.0_ae746af90fc977664a5335c6d929b208cd1eca7d\classes.dex" />
     </item>
 
 </items>

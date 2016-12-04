@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements
         super.onStart();
 
         //NUR FÜR TEST!!!!!!Für Produktiv einfach auskommentieren
-        startHomeActivityTest();
+        //startHomeActivityTest();
 
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
