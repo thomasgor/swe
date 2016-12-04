@@ -120,6 +120,10 @@
     <string name="session_quit">Sitzung Beenden</string>
     <string name="session_renew">Sitzung erneuern</string>
     <string name="session_active_until">Sitzung aktiv bis:</string>
+    <string name="session_active_until_clock">%1$H:%2$M Uhr</string>
+    <string name="people_in_room_cnt">%1$d/%2$d (%3$d Anonyme)</string>
+    <string name="tag_label">Tag:</string>
+    <string name="set_tag">Tag setzen</string>
 
 
 
@@ -162,4 +166,5 @@
     <string name="desc_id_token_activity">Retrieving an ID Token for the user.</string>
     <string name="desc_auth_code_activity">Demonstrate retrieving an auth code for authorizing your server.</string>
     <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
+    <string name="img_room_photo_content">Bild vom Raum</string>
 </resources>

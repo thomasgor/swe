@@ -27,7 +27,7 @@ public class EmptyActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
@@ -40,7 +40,7 @@ public class EmptyActivity extends AppCompatActivity {
                 intent.putExtra("profileEmail","max@mustermann.de");
                 intent.putExtra("profilePicture","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg");
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
         AlertDialog alert1 = build.create();

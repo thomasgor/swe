@@ -11,41 +11,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.swe.gruppe4.mockup2.RoomDetailsActivity">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="100dp"
-        android:id="@+id/list_people_in_room" />
-
-    <TextView
-        android:text="@string/people_in_room_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/list_people_in_room"
-        android:layout_alignParentStart="true"
-        android:id="@+id/txt_people_in_room_label" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        app:srcCompat="@drawable/img4639"
-        android:id="@+id/img_room_photo"
-        android:scaleType="centerCrop"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="48dp" />
-
     <TextView
         android:text="G101"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_room_number"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif"
         android:textSize="30sp"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_people_in_room"
+        android:layout_below="@+id/txt_people_in_room_label" />
 
     <Button
         android:text="@string/session_quit"
@@ -77,48 +60,67 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="12:00 Uhr"
+        android:text="@string/session_active_until_clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_session_active_until_label"
         android:layout_centerHorizontal="true"
         android:id="@+id/txt_session_active_until" />
 
-    <TextView
-        android:text="5/22 (3 Anonyme)"
-        android:layout_width="wrap_content"
+    <Button
+        android:text="@string/set_tag"
+        android:layout_width="100dp"
+        android:id="@+id/btn_set_tag"
+        android:textSize="12sp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/list_people_in_room"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/txt_people_in_room_cnt" />
-
-    <TextView
-        android:text="Tag:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/txt_people_in_room_label"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp"
-        android:id="@+id/txt_tag_lable" />
+        android:layout_below="@+id/btn_session_quit"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text="Präsentation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txt_tag_lable"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/txt_tag" />
+        android:id="@+id/txt_tag"
+        android:layout_alignBaseline="@+id/btn_set_tag"
+        android:layout_alignBottom="@+id/btn_set_tag"
+        android:layout_alignStart="@+id/txt_room_number" />
 
-    <Button
-        android:text="Tag setzen"
-        android:layout_width="100dp"
-        android:id="@+id/btn_set_tag"
-        android:textSize="10sp"
-        android:layout_height="35dp"
+    <TextView
+        android:text="@string/tag_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_tag_lable"
         android:layout_alignBaseline="@+id/txt_tag"
         android:layout_alignBottom="@+id/txt_tag"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/btn_session_quit"
-        android:layout_marginTop="440dp" />
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/people_in_room_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_people_in_room_label"
+        android:layout_below="@+id/btn_set_tag"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/people_in_room_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_people_in_room_cnt"
+        android:layout_below="@+id/btn_set_tag"
+        android:layout_toEndOf="@+id/btn_session_renew" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@drawable/img4639small"
+        android:id="@+id/img_room_photo"
+        android:scaleType="centerCrop"
+        android:layout_height="200dp"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/txt_room_number"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/img_room_photo_content" />
+
+
 
 </RelativeLayout>

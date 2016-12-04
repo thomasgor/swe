@@ -125,7 +125,7 @@ public class BaseActivity extends AppCompatActivity
     private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
-        public LoadProfileImage(ImageView bmImage) {
+        LoadProfileImage(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 

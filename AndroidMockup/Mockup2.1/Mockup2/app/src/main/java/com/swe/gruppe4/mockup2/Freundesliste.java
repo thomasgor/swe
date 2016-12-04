@@ -39,7 +39,7 @@ public class Freundesliste extends BaseActivity
         friendView.setAdapter(friendsAdapter);
         friendView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         for(int i =1; i<10;i++){
-            friendsAdapter.add(new PrivateContact("Student"+i,R.drawable.profilepicture,"G10"+i));
+            friendsAdapter.add(new PrivateContact("Student"+i,R.drawable.profilepicture,""));
         }
         friendsAdapter.notifyDataSetChanged();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
