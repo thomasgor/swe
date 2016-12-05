@@ -143,7 +143,7 @@ public class BaseActivity extends AppCompatActivity
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,1000));
         }
     }
 }

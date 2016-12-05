@@ -88,11 +88,11 @@
             android:layout_marginTop="13dp"
             android:layout_below="@+id/txt_room_number"
             android:layout_width="match_parent"
-            app:srcCompat="@drawable/img4639small"
+            app:srcCompat="@drawable/ic_hourglass_empty_black_24dp"
             android:id="@+id/img_room_photo"
             android:contentDescription="@string/img_room_photo_content"
             android:layout_height="200dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="center" />
 
 
 

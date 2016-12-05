@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Benutzer benutzer = getItem(position);
+        final Benutzer benutzer = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.friends_box, parent, false);
         }
@@ -52,8 +53,18 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
         nickName.setText(benutzer.getVorname() + " " + benutzer.getName());
         TextView roomName = (TextView) convertView.findViewById(R.id.friend_room);
         roomName.setText("");
-        ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
-        new LoadProfilePicture(profilePicture).execute(benutzer.getFotoURL());
+        final ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
+        ViewTreeObserver viewTree = profilePicture.getViewTreeObserver();
+        viewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                int finalHeight = profilePicture.getMeasuredHeight();
+                int finalWidth = profilePicture.getMeasuredWidth();
+                //print or do some code
+                new LoadProfilePicture(profilePicture, finalWidth,finalHeight).execute(benutzer.getFotoURL());
+                return true;
+            }
+        });
+        //new LoadProfilePicture(profilePicture).execute(benutzer.getFotoURL());
 
         /*ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
         deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);*/
@@ -63,9 +74,12 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
 
     private class LoadProfilePicture extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+        int height, width;
 
-        LoadProfilePicture(ImageView bmImage) {
+        LoadProfilePicture(ImageView bmImage, int height, int width) {
             this.bmImage = bmImage;
+            this.height=height;
+            this.width=width;
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -82,7 +96,8 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+            result = ImageHelper.scaleCenterCrop(result, height,width);
+            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,1000));
         }
     }
 

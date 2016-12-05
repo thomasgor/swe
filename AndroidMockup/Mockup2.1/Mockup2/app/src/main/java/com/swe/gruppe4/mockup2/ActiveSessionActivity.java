@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,6 +47,9 @@ public class ActiveSessionActivity extends BaseActivity
     TextView leute;
     Button erneuern;
     Button beenden;
+
+    int finalHeight;
+    int finalWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +97,19 @@ public class ActiveSessionActivity extends BaseActivity
         tag = (TextView) findViewById(R.id.txt_tag);
         tag.setText(raum.getTag().getName());
 
-        new ActiveSessionActivity.LoadRoomImage(imgRoom, imgRoom.getWidth(),imgRoom.getHeight()).execute(data.getRaum().getFotoURL());
+        ViewTreeObserver viewTree = imgRoom.getViewTreeObserver();
+        viewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                finalHeight = imgRoom.getMeasuredHeight();
+                finalWidth = imgRoom.getMeasuredWidth();
+                //print or do some code
+                new ActiveSessionActivity.LoadRoomImage(imgRoom, finalWidth,finalHeight).execute(data.getRaum().getFotoURL());
+                return true;
+            }
+        });
+
+
+
         setTag = (Button) findViewById(R.id.btn_set_tag);
         setTag.setEnabled(data.isMyTag());
 
@@ -143,8 +163,12 @@ public class ActiveSessionActivity extends BaseActivity
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,50));
+            result = ImageHelper.scaleCenterCrop(result,height,width);
+            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,10));
+            /*Bitmap bmp = ((BitmapDrawable)bmImage.getDrawable()).getBitmap();
+            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(bmp,100));*/
         }
+
     }
 }
 
