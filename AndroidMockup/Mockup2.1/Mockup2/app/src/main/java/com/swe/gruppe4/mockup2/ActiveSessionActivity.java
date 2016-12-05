@@ -94,10 +94,11 @@ public class ActiveSessionActivity extends BaseActivity
 
     private void setData(){
         raumName = (TextView) findViewById(R.id.txt_room_number);
-        raumName.setText(raum.getRaumname());
+        raumName.setText(getString(R.string.room_number, raum.getRaumname()));
 
         tag = (TextView) findViewById(R.id.txt_tag);
         tag.setText(raum.getTag().getName());
+        tag.setText(getString(R.string.tag, raum.getTag().getName()));
 
         Ion.with(getApplicationContext())
                 .load(raum.getFotoURL())

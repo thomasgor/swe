@@ -124,6 +124,8 @@
     <string name="people_in_room_cnt">%1$d/%2$d (%3$d Anonyme)</string>
     <string name="tag_label">Tag:</string>
     <string name="set_tag">Tag setzen</string>
+    <string name="room_number">%1$s</string>
+    <string name="tag">%1$s</string>
 
 
 
