@@ -5,9 +5,11 @@ package com.swe.gruppe4.mockup2;
  */
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.DialogInterface.OnClickListener;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -67,6 +70,15 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
 
         ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
         deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);
+        deleteFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View view) {
+                showDialogDelete(view, friendObj.getBenutzer());
+            }
+        });
+
+
+
 
         Ion.with(this.getContext())
                 .load(friendObj.getBenutzer().getFotoURL())
@@ -78,4 +90,26 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         //deleteFriend.setOnClickListener();
         return convertView;
     }
+
+    private void showDialogDelete(View v, final Benutzer ben){
+        AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
+        build.setCancelable(false);
+        //build.setTitle("Freund wirklich löschen?");
+        build.setMessage("Möchten Sie " + ben.getVorname()+ " " + ben.getName() + " wirklich löschen?");
+        build.setPositiveButton("Ja", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                new Verbindung().freundschaftDelete(ben);
+
+            }
+
+        });
+
+        build.setNegativeButton("Nein", null);
+        AlertDialog alert1 = build.create();
+        alert1.show();
+    }
+
+
 }

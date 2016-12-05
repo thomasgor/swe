@@ -94,4 +94,21 @@ public class Verbindung {
         return freunde;
     }
     //TODO: Daten vom Server statt DummyDaten
+
+    public void freundschaftPost(String email) {
+        //TODO: Daten an Server senden
+
+    }
+
+    public void freundschaftPut(Benutzer benutzer){
+        //TODO: Daten an Server senden
+
+    }
+
+    public void freundschaftDelete(Benutzer benutzer){
+        //TODO: Daten an Server senden
+
+    }
+
+
 }
