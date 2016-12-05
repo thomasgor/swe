@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="76fca9c16290740898751854b557d977c56e9b16">
+        sha1="2707a07bc999e15a94c8a95e1b27704751fdf2ee">
         <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a777c21dc088db0ffbed1e23102056453faf6e3a\classes.dex" />
     </item>
     <item
@@ -45,6 +45,15 @@
         revision="25.0.0"
         sha1="04de44f90606c77f3b28cf44861f306290505aac">
         <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-8.4.0_ffc8d33cdde9ee9f3d9747b42e9604047588501c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.makeramen\roundedimageview\2.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="814fc0c3ec69a944add398217d90077301501a74">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.makeramen-roundedimageview-2.2.1_8742cfc900cf06befc92bc47d61677dc796d2ca9\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -318,6 +327,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Merlin\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.3_4386b5f0c02ea79cd3cb05e328ac8917d1a61a03\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="G:\Dokumente\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.0\support-annotations-25.0.0.jar"
         jumboMode="true"
         optimize="true"
@@ -331,7 +349,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="eb7c4921c6793728fd9535703e66315cc198625c">
+        sha1="e7418f45780fa6495bee7f8c2fd146e91ea77e5c">
         <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f13b1c740461e24407b172ea35d818c2b1e28e29\classes.dex" />
     </item>
     <item
@@ -360,6 +378,24 @@
         revision="25.0.0"
         sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
         <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_2809bf7f95ea6fd95986bfd1b7225dbd900ef354\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.koushikdutta.ion\ion\2.1.9\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e54ea31584406fcc68225a8656f384c333ff2ee">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.koushikdutta.ion-ion-2.1.9_87d4610fb2c7b2403d2e65aaff772f07ee6fbdee\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\exploded-aar\com.koushikdutta.async\androidasync\2.1.9\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="60d0e28fe7ab6da6c03b54cd8ede502284d51a81">
+        <dex dex="C:\Users\Merlin\swe\swe\AndroidMockup\Mockup2.1\Mockup2\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.koushikdutta.async-androidasync-2.1.9_6b4d772dd786899ec9d0474f5e6367317acc1eba\classes.dex" />
     </item>
     <item
         is-multidex="true"

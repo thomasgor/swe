@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
+
 import java.io.InputStream;
 
 public class BaseActivity extends AppCompatActivity
@@ -67,7 +69,13 @@ public class BaseActivity extends AppCompatActivity
         profileName.setText(BaseActivity.profileName);
         profileEmail.setText(BaseActivity.profileEmail);
 
-        new BaseActivity.LoadProfileImage(profileImage).execute(BaseActivity.profileImageUrl);
+        Ion.with(getApplicationContext())
+                .load(BaseActivity.profileImageUrl)
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(profileImage);
 
 
     }
@@ -122,28 +130,4 @@ public class BaseActivity extends AppCompatActivity
         return true;
     }
 
-    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        LoadProfileImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,1000));
-        }
-    }
 }

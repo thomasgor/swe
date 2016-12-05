@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,10 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
 import com.swe.gruppe4.mockup2.Objektklassen.Raum;
 import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
@@ -30,6 +33,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutionException;
 
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,8 +52,6 @@ public class ActiveSessionActivity extends BaseActivity
     Button erneuern;
     Button beenden;
 
-    int finalHeight;
-    int finalWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,17 +99,13 @@ public class ActiveSessionActivity extends BaseActivity
         tag = (TextView) findViewById(R.id.txt_tag);
         tag.setText(raum.getTag().getName());
 
-        ViewTreeObserver viewTree = imgRoom.getViewTreeObserver();
-        viewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                finalHeight = imgRoom.getMeasuredHeight();
-                finalWidth = imgRoom.getMeasuredWidth();
-                //print or do some code
-                new ActiveSessionActivity.LoadRoomImage(imgRoom, finalWidth,finalHeight).execute(data.getRaum().getFotoURL());
-                return true;
-            }
-        });
-
+        Ion.with(getApplicationContext())
+                .load(raum.getFotoURL())
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(imgRoom);
 
 
         setTag = (Button) findViewById(R.id.btn_set_tag);
@@ -136,39 +134,5 @@ public class ActiveSessionActivity extends BaseActivity
         leute.setText(getString(R.string.people_in_room_cnt,crnt,max,crnt-nichtAnonym));
     }
 
-    private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-        int width;
-        int height;
-
-        LoadRoomImage(ImageView bmImage, int width, int height) {
-            this.bmImage = bmImage;
-            this.width = width;
-            this.height=height;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-
-
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            result = ImageHelper.scaleCenterCrop(result,height,width);
-            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,10));
-            /*Bitmap bmp = ((BitmapDrawable)bmImage.getDrawable()).getBitmap();
-            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(bmp,100));*/
-        }
-
-    }
 }
 

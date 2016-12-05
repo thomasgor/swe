@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.mockup2.Objektklassen.*;
 
 /**
@@ -63,49 +65,17 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         final ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
 
 
-        ViewTreeObserver viewTree = profilePicture.getViewTreeObserver();
-        viewTree.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                int finalHeight = profilePicture.getMeasuredHeight();
-                int finalWidth = profilePicture.getMeasuredWidth();
-                //print or do some code
-                new FriendListAdapter.LoadRoomImage(profilePicture, finalHeight, finalWidth).execute(friendObj.getBenutzer().getFotoURL());
-                return true;
-            }
-        });
-
-        //new FriendListAdapter.LoadRoomImage(profilePicture).execute(friendObj.getBenutzer().getFotoURL());
         ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
         deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);
+
+        Ion.with(this.getContext())
+                .load(friendObj.getBenutzer().getFotoURL())
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(profilePicture);
         //deleteFriend.setOnClickListener();
         return convertView;
-    }
-
-    private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-        int height, width;
-
-        LoadRoomImage(ImageView bmImage, int height, int width) {
-            this.bmImage = bmImage;
-            this.height=height;
-            this.width=width;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-        protected void onPostExecute(Bitmap result) {
-            result=ImageHelper.scaleCenterCrop(result,height,width);
-            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,1000));
-        }
     }
 }
