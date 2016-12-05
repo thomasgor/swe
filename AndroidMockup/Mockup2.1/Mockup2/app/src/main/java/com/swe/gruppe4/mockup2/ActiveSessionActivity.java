@@ -2,25 +2,14 @@ package com.swe.gruppe4.mockup2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
@@ -28,12 +17,10 @@ import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
 import com.swe.gruppe4.mockup2.Objektklassen.Raum;
 import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
 
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.concurrent.ExecutionException;
 
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,6 +42,10 @@ public class ActiveSessionActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Daten holen
+        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
+        raum = data.getRaum();
+
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -63,11 +54,6 @@ public class ActiveSessionActivity extends BaseActivity
         drawer.addView(contentView, 0);
 
         imgRoom = (ImageView) findViewById(R.id.img_room_photo);
-
-        //Daten holen
-        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
-        raum = data.getRaum();
-
         setData();
 
         erneuern = (Button) findViewById(R.id.btn_session_renew);
@@ -75,11 +61,12 @@ public class ActiveSessionActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 data = new Verbindung().sitzungPut(data.getId());
+                raum = data.getRaum();
                 setData();
             }
         });
 
-        beenden = (Button) findViewById(R.id.btn_session_quit);
+        beenden = (Button) findViewById(R.id.btn_goto);
         beenden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +82,8 @@ public class ActiveSessionActivity extends BaseActivity
     private void setData(){
         raumName = (TextView) findViewById(R.id.txt_room_number);
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
+
+        getSupportActionBar().setTitle(raum.getRaumname());
 
         tag = (TextView) findViewById(R.id.txt_tag);
         tag.setText(raum.getTag().getName());

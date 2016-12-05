@@ -3,6 +3,7 @@ package com.swe.gruppe4.mockup2;
 import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -30,14 +32,17 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
 
 import java.io.IOException;
 
 public class QRScanActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
+    private static final int CAMERA_REQUEST = 1337;
     private Camera mCamera = null;
     private CameraView mCameraView = null;
+    private ImageButton snapBtn;
     BarcodeDetector detector;
     CameraSource cameraSource;
 
@@ -79,11 +84,65 @@ public class QRScanActivity extends AppCompatActivity {
             startCamera();
         }
 
-        ImageButton imgClose = (ImageButton)findViewById(R.id.imgClose);
+        ImageButton imgClose = (ImageButton) findViewById(R.id.imgClose);
         imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        snapBtn = (ImageButton) findViewById(R.id.button_snap_picture);
+        snapBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    snapBtn.setBackgroundResource(R.drawable.camera_snap_circle_clicked);
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+
+                    qrAnalyze();
+                    snapBtn.setBackgroundResource(R.drawable.camera_snap_circle);
+                }
+                return true;
+            }
+        });
+    }
+
+    private void capture() {
+        mCamera.takePicture(null, null, null, new Camera.PictureCallback() {
+
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                /*Toast.makeText(getApplicationContext(), "Picture Taken",
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();*/
+
+                Bitmap photo = BitmapFactory.decodeByteArray(data, 0,
+                        data.length);
+
+                /*intent.putExtra("image", bmp);
+                setResult(RESULT_OK, intent);
+                camera.stopPreview();
+                if (camera != null) {
+                    camera.release();
+                    mCamera = null;
+                }
+                finish();*/
+
+                BarcodeDetector detector =
+                        new BarcodeDetector.Builder(getApplicationContext())
+                                .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE)
+                                .build();
+
+                Frame frame = new Frame.Builder().setBitmap(photo).build();
+                SparseArray<Barcode> barcodes = detector.detect(frame);
+
+                if (barcodes.size() > 0) {
+                    Barcode thisCode = barcodes.valueAt(0);
+                    showDialog(thisCode.rawValue);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Kein QR-Code gefunden", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -96,7 +155,7 @@ public class QRScanActivity extends AppCompatActivity {
         }
     }
 
-    private void startCamera(){
+    private void startCamera() {
         try {
             releaseCameraAndPreview();
             mCamera = Camera.open();//you can use open(int) to use different cameras
@@ -118,11 +177,6 @@ public class QRScanActivity extends AppCompatActivity {
 
             if (!detector.isOperational()) {
 
-                CameraSource mCameraSource = new CameraSource.Builder(getApplicationContext(), detector)
-                        .setFacing(CameraSource.CAMERA_FACING_BACK)
-                        .setRequestedFps(15.0f)
-                        .build();
-
                 AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
                 build.setCancelable(false);
 
@@ -137,6 +191,45 @@ public class QRScanActivity extends AppCompatActivity {
                 finish();
 
             } else {
+
+                final CameraSource mCameraSource = new CameraSource.Builder(getApplicationContext(), detector)
+                        .setFacing(CameraSource.CAMERA_FACING_BACK)
+                        .setRequestedFps(15.0f)
+                        .build();
+
+                mCameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
+                    @Override
+                    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        try {
+                            mCameraSource.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+                        mCameraSource.stop();
+
+                    }
+                });
+
+
                 detector.setProcessor(new Detector.Processor<Barcode>() {
                     @Override
                     public void release() {
@@ -148,20 +241,68 @@ public class QRScanActivity extends AppCompatActivity {
 
                         if (barcodes.size() != 0) {
 
-                            AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
-                            build.setCancelable(false);
-
-                            build.setTitle(barcodes.valueAt(0).displayValue);
-
-                            build.setPositiveButton("Verstanden", null);
-                            //build.setNegativeButton("Nein", null);
-                            AlertDialog alert1 = build.create();
-                            alert1.show();
+                            showDialog(barcodes.valueAt(0).rawValue);
                         }
                     }
                 });
             }
         }
+    }
+
+    private void qrAnalyze(){
+        capture();
+        /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);*/
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("image");
+
+        }
+    }
+
+    private void showDialog(String title){
+        if(title.equals("W014")){
+            AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
+            build.setCancelable(false);
+            build.setTitle(title);
+            build.setMessage("5/6 Leute\nTag: Lernen");
+
+            build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Verbindung connect = new Verbindung();
+                    Sitzung data = connect.sitzungGet();
+                    Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
+                    intent.putExtra("sitzung",data);
+
+                /*Raum raum = connect.raumGet(4711);
+                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                intent.putExtra("raum",raum);*/
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //Toast.makeText(getApplicationContext(),"Unbekannter QR Code", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            AlertDialog alert1 = build.create();
+            alert1.show();
+        } else {
+            Toast.makeText(getApplicationContext(),"Unbekannter QR Code", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     @Override

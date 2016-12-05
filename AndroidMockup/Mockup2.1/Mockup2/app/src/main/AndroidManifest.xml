@@ -14,7 +14,6 @@
 
     <uses-feature android:name="android.hardware.camera" />
 
-    <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
 
     <application
         android:allowBackup="true"
@@ -80,7 +79,9 @@
         <activity
             android:name=".QRScanActivity"
             android:label="@string/qrscan"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
+            <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
+        </activity>
     </application>
 
 </manifest>

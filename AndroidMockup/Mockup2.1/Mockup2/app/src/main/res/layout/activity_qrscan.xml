@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,6 +13,15 @@
         android:layout_height="match_parent">
 
     </FrameLayout>
+
+    <ImageButton
+        android:background="@drawable/camera_snap_circle"
+        android:id="@+id/button_snap_picture"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="20dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:longClickable="false" />
 
     <ImageButton
         android:layout_width="wrap_content"
