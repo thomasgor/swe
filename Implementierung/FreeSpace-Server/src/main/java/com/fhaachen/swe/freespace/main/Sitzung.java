@@ -17,12 +17,13 @@ public class Sitzung extends Datenbank {
         return json;
     }
 
-    public static boolean hasActiveSession(String id){
-      //  connect();
-    //    boolean hasActiveSession = Sitzung.findById(id).gethasSitzung();
-    //    disconnect();
-    //    return json;
-        return false;
+    public static boolean istTagBesitzer(String userid,String raumid){
+        connect();
+        Long count = Sitzung.count("benutzer = ? and raum = ? and hasTag == 1", userid,raumid);
+
+        disconnect();
+
+        return (count != null && count >0);
     }
 
 }

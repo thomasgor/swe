@@ -42,10 +42,11 @@ public class Raum extends Datenbank {
         return null;//json;
     }
 
-    public static String putRaumID(int raumID,int tagID){
+    public static String putRaumID(String raumID,int tagID){
         connect();
         Raum r = Raum.findById(raumID);
         if(r == null){
+            //Raum nicht vorhanden
             return null;
         }
 

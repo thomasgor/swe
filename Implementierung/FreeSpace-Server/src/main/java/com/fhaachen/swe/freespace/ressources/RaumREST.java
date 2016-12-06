@@ -23,6 +23,7 @@ public class RaumREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRaum(){
+        //TODO: NULL überprüfen
         String json = Raum.getRaum();
         return Response.ok(json,MediaType.APPLICATION_JSON).build();
         //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Raumliste").build();
@@ -32,7 +33,7 @@ public class RaumREST {
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response getRaumdetails(@PathParam(value="param") int id){
-
+        //TODO: NULL überprüfen
         String json = Raum.getRaumdetails(id);
         if(json == null) return Antwort.NOT_FOUND;
 
@@ -46,6 +47,7 @@ public class RaumREST {
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response putRaumdetails(@PathParam(value="param") String id, String json, @Context SecurityContext context) {
+    //TODO: TAG nachladen
 
       /*  System.out.println(json);
         Map tmp = JsonHelper.toMap(json);
@@ -59,25 +61,29 @@ public class RaumREST {
         Map tmp = JsonHelper.toMap(json);
         System.out.println(tmp);
         System.out.println(((Map)tmp.get("tag2")).get("name")); */
-        String tag = JsonHelper.getAttribute(json,"tag");
+
     //    System.out.println(JsonHelper.getAttribute(json,"tag2","name"));
 
+
+        String tag = JsonHelper.getAttribute(json,"tag");
         String username = context.getUserPrincipal().getName(); // BenutzerID
 
-        //TODO: Implemtierung der
-        boolean isAllowed = Sitzung.hasActiveSession(username);
+        boolean isAllowed = Sitzung.istTagBesitzer(username,id);
 
+        // User hat keine Berechtigung tag zu setzen
         if(!isAllowed) {
             //Überliefert dennoch das Raumobjekt
             String s = Raum.getRaumdetails(Integer.parseInt(id));
-            return Response.status(Response.Status.FORBIDDEN).entity(s).build();
+            return Response.status(Response.Status.OK).entity(s).build();
         }
 
-        String answer = Raum.putRaumID(1,Integer.parseInt(tag));
-        
+        String answer = Raum.putRaumID(id,Integer.parseInt(tag));
+
+        //Es existiert kein Raum mit der ID
         if(answer == null){
             return Antwort.NOT_FOUND;
         }
+
         return Response.ok(answer, MediaType.APPLICATION_JSON).build();
     }
 }
