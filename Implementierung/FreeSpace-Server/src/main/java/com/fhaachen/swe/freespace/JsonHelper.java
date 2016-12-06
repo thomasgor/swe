@@ -1,4 +1,4 @@
-package com.fhaachen.swe.freespace.main;
+package com.fhaachen.swe.freespace;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;

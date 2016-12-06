@@ -23,7 +23,6 @@ public class VeranstaltungREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
-        System.out.println(professorID);
         return Response.ok(Veranstaltung.getVeranstaltung(professorID)).build();
     }
 

@@ -1,10 +1,9 @@
 package com.fhaachen.swe.freespace.ressources;
 
 import com.fhaachen.swe.freespace.Antwort;
-import com.fhaachen.swe.freespace.main.JsonHelper;
+import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.main.Raum;
 import com.fhaachen.swe.freespace.main.Sitzung;
-import com.google.gson.JsonObject;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -12,7 +11,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
-import java.util.Map;
 
 /**
  * Created by thomas on 27.11.2016.
