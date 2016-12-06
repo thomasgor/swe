@@ -1,25 +1,30 @@
 package com.fhaachen.swe.freespace.ressources;
 
 import com.fhaachen.swe.freespace.main.Benutzer;
+import com.fhaachen.swe.freespace.main.Veranstaltung;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * Created by thomas on 27.11.2016.
  */
 
 @Path( value = "/veranstaltung")
-@RolesAllowed({"user", "professor"})
+@RolesAllowed("professor")
 public class VeranstaltungREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVeranstaltungsliste(){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier ensteht die Veranstaltungsliste").build();
+    public Response getVeranstaltungsliste(@Context SecurityContext context){
+        String professorID = context.getUserPrincipal().getName();
+        System.out.println(professorID);
+        return Response.ok(Veranstaltung.getVeranstaltung(professorID)).build();
     }
 
     @POST
