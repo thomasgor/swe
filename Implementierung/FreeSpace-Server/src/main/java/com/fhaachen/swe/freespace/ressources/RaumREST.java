@@ -1,11 +1,14 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.main.JsonHelper;
 import com.fhaachen.swe.freespace.main.Raum;
+import com.google.gson.JsonObject;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Map;
 
 /**
  * Created by thomas on 27.11.2016.
@@ -36,8 +39,24 @@ public class RaumREST {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putRaumdetails(@PathParam(value="param") String id, String json){
-        System.out.println(json);
-        return Response.ok(Raum.putRaumID(1,2), MediaType.APPLICATION_JSON).build();
+    public Response putRaumdetails(@PathParam(value="param") String id, String json) {
+
+      /*  System.out.println(json);
+        Map tmp = JsonHelper.toMap(json);
+
+        String tag = String.valueOf(tmp.get("tag"));
+        Map m = (Map)tmp.get("tag2");
+
+        String name = String.valueOf(m.get("name"));
+        System.out.println(name); */
+/*
+        Map tmp = JsonHelper.toMap(json);
+        System.out.println(tmp);
+        System.out.println(((Map)tmp.get("tag2")).get("name")); */
+        String tag = JsonHelper.getAttribute(json,"tag");
+    //    System.out.println(JsonHelper.getAttribute(json,"tag2","name"));
+
+
+        return Response.ok(Raum.putRaumID(1,Integer.parseInt(tag)), MediaType.APPLICATION_JSON).build();
     }
 }
