@@ -10,15 +10,29 @@ import javax.annotation.security.RolesAllowed;
  * Created by thomas on 27.11.2016.
  */
 @Table("Veranstaltung")
-@RolesAllowed({"user", "professor"})
 public class Veranstaltung extends Datenbank {
+    //TODO: Es soll möglich sein ein Tag objekt zu inkludieren
 
-    public static String getVeranstaltung() {
+    public static String getVeranstaltung(String professorID) {
+        String result = "{}";
         connect();
 
-        LazyList veranstaltungen = Veranstaltung.findAll();
-
+        LazyList veranstaltungen = Veranstaltung.find("benutzer=?", professorID);
         disconnect();
+
+        //Es wurden keine Veranstsltungen für den Professor gefunden
+        if(veranstaltungen == null){
+            System.out.println("Keine Veranstaltung von Professor " + professorID);
+            return result;
+        }
+
+        //Es wurden Veranstaltungen gefunden
+        result = veranstaltungen.toJson(true);
+
+        return result;
+    }
+
+    public String includeRaum(String json){
         return "";
     }
 }
