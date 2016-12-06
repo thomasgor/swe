@@ -121,7 +121,11 @@
     <string name="session_renew">Sitzung erneuern</string>
     <string name="session_active_until">Sitzung aktiv bis:</string>
     <string name="session_active_until_clock">%1$s Uhr</string>
-    <string name="people_in_room_cnt">%1$d/%2$d (%3$d Anonyme)</string>
+    <plurals name="people_in_room_cnt_anon">
+        <item quantity="one">(%d Anonymer)</item>
+        <item quantity="other">(%d Anonyme)</item>
+    </plurals>
+    <string name="people_in_room_cnt">%1$d/%2$d %3$s</string>
     <string name="tag_label">Tag:</string>
     <string name="set_tag">Tag setzen</string>
     <string name="room_number">%1$s</string>

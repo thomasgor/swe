@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
 import com.swe.gruppe4.mockup2.Objektklassen.Raum;
 import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
@@ -98,6 +99,7 @@ public class ActiveSessionActivity extends BaseActivity
                 .intoImageView(imgRoom);
 
 
+
         setTag = (Button) findViewById(R.id.btn_set_tag);
         setTag.setEnabled(data.isMyTag());
 
@@ -121,7 +123,7 @@ public class ActiveSessionActivity extends BaseActivity
         leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
         int max = raum.getTeilnehmer_max();
         int crnt = raum.getTeilnehmer_aktuell();
-        leute.setText(getString(R.string.people_in_room_cnt,crnt,max,crnt-nichtAnonym));
+        leute.setText(getString(R.string.people_in_room_cnt,crnt,max,getResources().getQuantityString(R.plurals.people_in_room_cnt_anon,crnt-nichtAnonym,crnt-nichtAnonym)));
     }
 
 }

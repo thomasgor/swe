@@ -67,7 +67,7 @@ public class EmptyActivity extends AppCompatActivity {
             AlertDialog.Builder build = new AlertDialog.Builder(EmptyActivity.this);
             build.setCancelable(false);
             build.setTitle("W014");
-            build.setMessage("5/6 Leute\nTag: Lernen");
+            build.setMessage("5/8 Leute\nTag: Lernen");
 
             build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
                 @Override
