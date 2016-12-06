@@ -91,7 +91,7 @@
       <file leaf-file-name="AuthFilter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
+            <state relative-caret-position="930">
               <caret line="75" column="70" lean-forward="false" selection-start-line="75" selection-start-column="70" selection-end-line="75" selection-end-column="70" />
               <folding />
             </state>
@@ -223,6 +223,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -385,9 +388,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1026,11 +1026,12 @@
       <workItem from="1480675281124" duration="1368000" />
       <workItem from="1480680187690" duration="26000" />
       <workItem from="1480849315031" duration="269000" />
+      <workItem from="1480925309153" duration="26000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35601000" />
+    <option name="totallyTimeSpent" value="35627000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="23" width="1624" height="1027" extended-state="6" />
@@ -1312,13 +1313,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1545">
           <caret line="104" column="170" lean-forward="false" selection-start-line="104" selection-start-column="170" selection-end-line="104" selection-end-column="170" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
+        <state relative-caret-position="930">
           <caret line="75" column="70" lean-forward="false" selection-start-line="75" selection-start-column="70" selection-end-line="75" selection-end-column="70" />
           <folding />
         </state>
