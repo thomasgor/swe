@@ -24,15 +24,31 @@ public class Raum extends Datenbank {
 
     public static String getRaumdetails(int id){
         connect();
-        String json = Raum.findById(id).toJson(true);
-        System.out.println(json);
+        try {
+            Raum r = Raum.findById(id);
+
+            if(r == null) {
+                System.out.println("Der Raum ist null");
+                return null;
+            }
+
+            return r.toJson(true);
+        }
+        catch(Exception e){
+                System.out.println(e.toString());
+        }
+
         disconnect();
-        return json;
+        return null;//json;
     }
 
     public static String putRaumID(int raumID,int tagID){
         connect();
         Raum r = Raum.findById(raumID);
+        if(r == null){
+            return null;
+        }
+
         r.set("tag", tagID);
         r.saveIt();
 
