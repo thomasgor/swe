@@ -1,5 +1,8 @@
 package com.fhaachen.swe.freespace.filter;
 
+import com.fhaachen.swe.freespace.Antwort;
+import com.fhaachen.swe.freespace.main.Benutzer;
+
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.naming.AuthenticationException;
@@ -66,14 +69,15 @@ public class AuthFilter implements ContainerRequestFilter {
         String username = values[0];
         String password = values[1];
 
+
         //Validieren der Benutzerdaten
         User user;
-        if(username.equals("user") && password.equals("password")){
+        if(Benutzer.istBenutzer(username)){
             user = new User(username , "user");
             System.out.println("Benutzer authentifiziert");
             return user;
         }else{
-            filterContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            filterContext.abortWith(Antwort.UNAUTHORIZED);
             System.out.println("Benutzer nicht authentifiziert");
         }
 

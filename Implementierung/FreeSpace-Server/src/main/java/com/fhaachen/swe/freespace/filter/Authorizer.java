@@ -1,5 +1,7 @@
 package com.fhaachen.swe.freespace.filter;
 
+import com.fhaachen.swe.freespace.main.Benutzer;
+
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.security.Principal;
@@ -27,7 +29,10 @@ public class Authorizer implements SecurityContext {
     }
 
     public boolean isUserInRole(String role) {
-        return (role.equals(user.role));
+        System.out.println("suche nach rolle");
+        String rolle = Benutzer.getRolle(user.username);
+        System.out.println("Rolle gefunden: " + rolle);
+        return (role.equals(rolle));
     }
 
     public boolean isSecure() {
