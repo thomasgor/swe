@@ -43,7 +43,6 @@ public class Raum extends Datenbank {
         return json;
     }
 
-
     public void MapFromJSON(String json){
         ObjectMapper mapper = new ObjectMapper();
 

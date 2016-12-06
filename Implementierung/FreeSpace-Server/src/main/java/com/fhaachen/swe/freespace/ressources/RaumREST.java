@@ -6,8 +6,10 @@ import com.google.gson.JsonObject;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.Map;
 
 /**
@@ -39,7 +41,7 @@ public class RaumREST {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putRaumdetails(@PathParam(value="param") String id, String json) {
+    public Response putRaumdetails(@PathParam(value="param") String id, String json, @Context SecurityContext context) {
 
       /*  System.out.println(json);
         Map tmp = JsonHelper.toMap(json);
