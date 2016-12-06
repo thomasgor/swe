@@ -1,7 +1,9 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.main.JsonHelper;
 import com.fhaachen.swe.freespace.main.Raum;
+import com.fhaachen.swe.freespace.main.Sitzung;
 import com.google.gson.JsonObject;
 
 import javax.annotation.security.RolesAllowed;
@@ -32,6 +34,10 @@ public class RaumREST {
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response getRaumdetails(@PathParam(value="param") int id){
+
+        String json = Raum.getRaumdetails(id);
+        if(json == null) return Antwort.NOT_FOUND;
+
         return Response.ok(Raum.getRaumdetails(id), MediaType.APPLICATION_JSON).build();
         //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Raumdetails von " + id).build();
     }
@@ -57,16 +63,23 @@ public class RaumREST {
         System.out.println(((Map)tmp.get("tag2")).get("name")); */
         String tag = JsonHelper.getAttribute(json,"tag");
     //    System.out.println(JsonHelper.getAttribute(json,"tag2","name"));
+
+        String username = context.getUserPrincipal().getName(); // BenutzerID
+
         //TODO: Implemtierung der
-        boolean isForbitten = false;
+        boolean isAllowed = Sitzung.hasActiveSession(username);
 
-        if(isForbitten) {
+        if(!isAllowed) {
+            //Überliefert dennoch das Raumobjekt
             String s = Raum.getRaumdetails(Integer.parseInt(id));
-
             return Response.status(Response.Status.FORBIDDEN).entity(s).build();
         }
 
-
-        return Response.ok(Raum.putRaumID(1,Integer.parseInt(tag)), MediaType.APPLICATION_JSON).build();
+        String answer = Raum.putRaumID(1,Integer.parseInt(tag));
+        
+        if(answer == null){
+            return Antwort.NOT_FOUND;
+        }
+        return Response.ok(answer, MediaType.APPLICATION_JSON).build();
     }
 }
