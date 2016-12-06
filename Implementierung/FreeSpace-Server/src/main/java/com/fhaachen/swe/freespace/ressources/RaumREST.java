@@ -55,6 +55,14 @@ public class RaumREST {
         System.out.println(((Map)tmp.get("tag2")).get("name")); */
         String tag = JsonHelper.getAttribute(json,"tag");
     //    System.out.println(JsonHelper.getAttribute(json,"tag2","name"));
+        //TODO: Implemtierung der
+        boolean isForbitten = false;
+
+        if(isForbitten) {
+            String s = Raum.getRaumdetails(Integer.parseInt(id));
+
+            return Response.status(Response.Status.FORBIDDEN).entity(s).build();
+        }
 
 
         return Response.ok(Raum.putRaumID(1,Integer.parseInt(tag)), MediaType.APPLICATION_JSON).build();
