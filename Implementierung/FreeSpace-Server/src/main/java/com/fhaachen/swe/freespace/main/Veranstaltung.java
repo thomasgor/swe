@@ -6,6 +6,7 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,55 +17,55 @@ public class Veranstaltung extends Datenbank {
     //TODO: Es soll möglich sein ein Tag objekt zu inkludieren
 
     public static String getVeranstaltung(String professorID) {
-        String result = "{}";
+        String result = "[]";
         connect();
 
         LazyList veranstaltungen = Veranstaltung.find("benutzer=?", professorID);
-        disconnect();
-
-        //Es wurden keine Veranstsltungen für den Professor gefunden
-        if(veranstaltungen == null){
-            System.out.println("Keine Veranstaltung von Professor " + professorID);
-            return result;
-        }
 
         //Es wurden Veranstaltungen gefunden
-        result = veranstaltungen.toJson(true);
+        if(veranstaltungen != null){
+            result = veranstaltungen.toJson(true);
+        }
 
+        disconnect();
         return result;
     }
 
-    public String getVeranstaltungId(String id, String professorID){
+    public static String getVeranstaltungId(String id){
         String result = null;
         connect();
-        Veranstaltung v = Veranstaltung.findById(id);
-        disconnect();
 
-        //Es wurde eine Veranstlung gefunden und es ist eine Vom professor!
-        if(v != null && v.get("benutzer").equals(professorID)){
+        Veranstaltung v = Veranstaltung.findById(id);
+        if(v != null){
             result = v.toJson(true);
         }
+
+        disconnect();
         return result;
     }
 
-    public String postVeranstaltung(String json){
+    public boolean istRaumBlockiert(int von, int bis, String raumid){
+        return false;
+    }
+
+    public static String postVeranstaltung(String json, String professorID){
         String result = null;
         connect();
 
         Veranstaltung v = new Veranstaltung();
         Map input = JsonHelper.toMap(json);
         //TODO: Überprüfun ob zu dieser Zeit in diesem Raum bereits eine Veranstaltung vorliegt
-        v.set("benutzer", input.get("benutzer"));
+        v.set("benutzer", Integer.parseInt(professorID));
         v.set("raum", input.get("raum"));
         v.set("name", input.get("name"));
         v.set("bis", input.get("bis"));
         v.set("von", input.get("von"));
+        //v.saveIt(); //Todo: Konnte die Veranstaltung eingefügt werden?
 
-        v.saveIt(); //Todo: Konnte die Veranstaltung eingefügt werden?
-
-
-
+        result = v.toJson(true);
         disconnect();
+
+        System.out.println(result);
         return result;
     }
 

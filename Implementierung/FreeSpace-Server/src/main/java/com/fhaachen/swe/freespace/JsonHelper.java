@@ -25,7 +25,7 @@ public class JsonHelper {
 
     public static String getAttribute(String json, String attibut){
         Map tmp = toMap(json);
-        return String.valueOf(tmp.get("tag"));
+        return String.valueOf(tmp.get(attibut));
     }
 
     public static Object getAttribute(String json, String attibut1, String attibut2){

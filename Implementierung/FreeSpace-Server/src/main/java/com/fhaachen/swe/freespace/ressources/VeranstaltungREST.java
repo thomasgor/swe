@@ -1,5 +1,7 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.Antwort;
+import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.main.Benutzer;
 import com.fhaachen.swe.freespace.main.Veranstaltung;
 
@@ -23,23 +25,37 @@ public class VeranstaltungREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
-        return Response.ok(Veranstaltung.getVeranstaltung(professorID)).build();
+        String response = Veranstaltung.getVeranstaltung(professorID);
+        return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
+
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postVeranstaltung(String json){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können veranstaltungen angelegt werden!" + json).build();
+    public Response postVeranstaltung(String json, @Context SecurityContext context){
+        String professorID = context.getUserPrincipal().getName();
+        String response = Veranstaltung.postVeranstaltung(json, professorID);
+        return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response getVeranstaltungID(@PathParam(value="param") String id){
-        System.out.println("Im in");
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Veranstaltung mit der ID" + id).build();
+    public Response getVeranstaltungID(@PathParam(value="param") String id ,@Context SecurityContext context){
+        String professorID = context.getUserPrincipal().getName();
+        String response = Veranstaltung.getVeranstaltungId(id);
+        String responseProefessorID = JsonHelper.getAttribute(response, "benutzer");
+
+        if(response == null){
+            return Antwort.NOT_FOUND;
+        }
+
+        if(!professorID.equals(responseProefessorID)){
+            System.out.println("Benutzer " + professorID + " hat versucht eine Veranstaltung von "+ responseProefessorID + " zu laden");
+            return Antwort.FORBIDDEN;
+        }
+        return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
     @PUT
