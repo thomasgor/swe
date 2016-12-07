@@ -1,43 +1,29 @@
 package com.fhaachen.swe.freespace.main;
 
+import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 /**
  * Created by thomas on 27.11.2016.
- * Edited by simon on 04.12.2016.
  */
 @Table("Sitzung")
 public class Sitzung extends Datenbank {
 
-    public static String getSitzungsListe() {
+
+    public static String getSitzungById(String id){
         connect();
-        String json = Tag.findAll().toJson(true);
+        String json = Sitzung.findById(id).toJson(true);
         disconnect();
         return json;
     }
 
-    public static String postSitzung(int benutzerID, int raumID, int endzeit) {
+    public static boolean istTagBesitzer(String userid,String raumid){
         connect();
-        String json = Sitzung.createIt("benutzer", benutzerID, "raum", raumID, "endzeit", endzeit).toJson(true);
+        Long count = Sitzung.count("benutzer = ? and raum = ? and hasTag == 1", userid,raumid);
+
         disconnect();
-        return json;
+
+        return (count != null && count >0);
     }
 
-    public static String putSitzung(int benutzerID, int endzeit) {
-        connect();
-        Sitzung sitz = Sitzung.findById(benutzerID);
-        sitz.set("endzeit", endzeit).saveIt();
-        String json = sitz.toJson(true);
-        disconnect();
-        return json;
-    }
-
-    public static String deleteSitzung(int id) {
-        connect();
-        Sitzung sitz = Sitzung.findFirst("benutzer", id);
-        sitz.delete();
-        String json = sitz.toJson(true);
-        disconnect();
-        return json;
-    }
 }
