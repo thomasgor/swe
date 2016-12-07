@@ -1,56 +1,35 @@
 package com.fhaachen.swe.freespace.main;
 
-import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
-
-import javax.xml.ws.WebServiceException;
-import java.util.List;
 
 /**
  * Created by thomas on 27.11.2016.
+ * Edited by simon on 04.12.2016.
  */
 @Table("Benutzer")
 public class Benutzer extends Datenbank{
 
-    public static void getDataFromGoogle(int idToken){
+//  static int test = 1234;
+//  public static boolean test(){
+//      List<Benutzer> b = Benutzer.where("id = ? and token=?", "4711", "abc123");
+//      System.out.println(b.get(0).toJson(true));
+//      Base.close();
+//      return true;
+//  }
 
-
-    }
-
-    public static boolean istProfessor(String id){
+    public static String postBenutzer(String id, String email, String token, String name, String vorname, String foto, int istProfessor) {
         connect();
-        Long count = Benutzer.count("id=? AND istProfessor=1", id);
+        String json = Benutzer.createIt("id", id, "email", email, "token", token, "name", name, "vorname", vorname, "foto", foto, "istProfessor", istProfessor).toJson(true);
         disconnect();
-
-        return(count != null && count >= 1);
+        return json;
     }
 
-    public static String getRolle(String id){
+    public static String putBenutzer(String benutzerID, String email, String token, String name, String vorname, String foto, int istProfessor) {
         connect();
-        Benutzer b = Benutzer.findById(id);
-        String rolle = null;
-
-        if((Integer) b.get("istProfessor") == 1){
-            rolle = "professor";
-        }else if((Integer) b.get("istProfessor") == 0){
-            rolle = "user";
-        }
-
+        Benutzer ben = Benutzer.findFirst("id = ?",benutzerID);
+        ben.set("email", email).set("token", token).set("name", name).set("vorname", vorname).set("foto", foto).set("istProfessor", istProfessor).saveIt();
+        String json = ben.toJson(true);
         disconnect();
-
-        return rolle;
+        return json;
     }
-
-    public static boolean istBenutzer(String id){
-        connect();
-        Long count = Benutzer.count("id=?", id);
-        disconnect();
-        return(count != null && count > 0);
-    }
-
-    public static void main(String[] args) {
-
-    }
-
 }
