@@ -38,4 +38,17 @@ public class JsonHelper {
         return name;
     }
 
+    //Rückgabe:{"foto":"http://fotourl","id":1,"raumnummer":"G101","tag":{"id":1,"name":"Ruhe"},"teilnehmer_max":32}
+    public static String getJsonStringFromMap(Map m){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //   string a = mapper.writeValue();
+            return mapper.writeValueAsString(m);
+
+        }catch(Exception e){
+            return null;
+        }
+       // return "";
+    }
+
 }

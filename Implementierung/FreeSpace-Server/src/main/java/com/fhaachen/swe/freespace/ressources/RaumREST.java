@@ -4,6 +4,7 @@ import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.main.Raum;
 import com.fhaachen.swe.freespace.main.Sitzung;
+import com.fhaachen.swe.freespace.main.Tag;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.util.Map;
 
 /**
  * Created by thomas on 27.11.2016.
@@ -73,6 +75,7 @@ public class RaumREST {
         // User hat keine Berechtigung tag zu setzen
         if(!isAllowed) {
             //Überliefert dennoch das Raumobjekt
+            System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
             String s = Raum.getRaumdetails(Integer.parseInt(id));
             return Response.status(Response.Status.OK).entity(s).build();
         }
