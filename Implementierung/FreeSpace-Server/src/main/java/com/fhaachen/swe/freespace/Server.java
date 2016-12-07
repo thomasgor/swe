@@ -20,7 +20,6 @@ import java.util.List;
  * Created by thomas on 27.11.2016.
  */
 public class Server {
-
     private static URI getBaseURI(){
         return UriBuilder.fromUri("http://localhost/").port(8888).build();
     }
@@ -42,11 +41,16 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        boolean test = true;
         try {
             HttpServer httpServer = startServer();
             System.out.println("Hit enter to Stop");
             System.in.read();
             httpServer.stop();
+
+            if(test == true){
+                //run Testsuite
+            }
 
         }catch (Exception e){
             System.out.println(e);
