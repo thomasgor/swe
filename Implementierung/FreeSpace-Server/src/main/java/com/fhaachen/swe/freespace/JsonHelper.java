@@ -51,4 +51,16 @@ public class JsonHelper {
        // return "";
     }
 
+    public static String getJsonStringFromMap(Map[] m){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //   string a = mapper.writeValue();
+            return mapper.writeValueAsString(m);
+
+        }catch(Exception e){
+            return null;
+        }
+        // return "";
+    }
+
 }
