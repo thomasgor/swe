@@ -1,42 +1,53 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.Antwort;
+import com.fhaachen.swe.freespace.main.JsonHelper;
 import com.fhaachen.swe.freespace.main.Tag;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
  * Created by thomas on 27.11.2016.
+ * Edited by simon on 04.12.2016.
  */
 @Path( value = "/tag")
-@RolesAllowed({"user", "professor"})
 public class TagREST {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTagListe(){
-        String json = Tag.getTag();
-
-        if(json != null){
-            return Response.status(Response.Status.OK).entity(json).build();
+        String answer = Tag.getTagListe();
+        if(answer != "" || answer != null) {
+            return Response.ok(answer, MediaType.APPLICATION_JSON).build();
+        } else {
+            return Antwort.INTERNAL_SERVER_ERROR;
         }
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Tag liste").build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response postTag(String json){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier können Tags erzeugt werden").build();
+        String tagName = JsonHelper.getAttribute(json,"name");
+        String answer = Tag.postTag(tagName);
+        if(answer != "" || answer != null) {
+            return Response.ok(answer, MediaType.APPLICATION_JSON).build();
+        } else {
+            return Antwort.INTERNAL_SERVER_ERROR;
+        }
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response deleteTagID(@PathParam(value="param") String id, String json){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier können tags gelöscht werden" + id).build();
+    public Response deleteTag(@PathParam(value="param") String id){
+        String answer = Tag.deleteTag(Integer.valueOf(id));
+        if(answer != "" || answer != null) {
+            return Response.ok(answer, MediaType.APPLICATION_JSON).build();
+        } else {
+            return Antwort.INTERNAL_SERVER_ERROR;
+        }
     }
 }
