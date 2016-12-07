@@ -1,6 +1,7 @@
 package com.swe.gruppe4.mockup2;
 
 import com.swe.gruppe4.mockup2.Objektklassen.*;
+import com.swe.gruppe4.mockup2.Objektklassen.Tag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -166,6 +167,17 @@ public class Verbindung {
     public void freundschaftDelete(Benutzer benutzer){
         //TODO: Daten an Server senden
 
+    }
+
+    public ArrayList<com.swe.gruppe4.mockup2.Objektklassen.Tag> tagGet() {
+        ArrayList<Tag> tagList = new ArrayList<>();
+
+        //Mokupdaten, später über GET vom Server
+        tagList.add(new Tag(4711,"Präsentation"));
+        tagList.add(new Tag(4712,"Lernen"));
+        tagList.add(new Tag(4713,"Ruhe"));
+
+        return tagList;
     }
 
 
