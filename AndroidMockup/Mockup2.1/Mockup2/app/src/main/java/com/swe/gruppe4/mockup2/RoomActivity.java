@@ -18,11 +18,19 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.swe.gruppe4.mockup2.Objektklassen.Raum;
+
+import java.util.ArrayList;
+
 public class RoomActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView roomView;
     private RoomAdapter roomAdapter;
+
+    ArrayList<Room> orderedRoomList = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +44,13 @@ public class RoomActivity extends BaseActivity
         roomAdapter = new RoomAdapter(getApplicationContext(), R.layout.room_box);
         roomView.setAdapter(roomAdapter);
         roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        for(int i=0; i< 3;i++){
-            roomAdapter.add(new Room("G10"+i,R.drawable.circle_green,"Belegung: 5/22",false));
-        }
-        for(int i=3; i< 6;i++){
-            roomAdapter.add(new Room("G10"+i,R.drawable.circle_yellow,"Belegung: 15/28",false));
-        }
-        for(int i=6; i< 9;i++){
-            roomAdapter.add(new Room("G10"+i,R.drawable.circle_red,"Belegung: 25/30",false));
-        }
-        roomAdapter.notifyDataSetChanged();
 
+        //Interne Funktion um Räume zu ordnen
+        addRoomsInOrder();
+        //Übergebe Liste an Adapter zur Anzeige
+        addRoomsInAdapter();
+
+        roomAdapter.notifyDataSetChanged();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -87,5 +91,48 @@ public class RoomActivity extends BaseActivity
         }*/
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addRoomsInOrder() {
+        //Hole aktuelle Raumliste vom Server
+        Verbindung connection = new Verbindung();
+        ArrayList<Raum> connectionRoomList = connection.raumListeGet();
+        ArrayList<Room> redStateRoomList = new ArrayList<>();
+
+        for (int i = 0; i < connectionRoomList.size(); i++) {
+            Raum tmpRaum = connectionRoomList.get(i);
+            int status = 0;
+
+            //Bestimme Farbe des Raumstatus. Rot > 85%, gelb > 30%, sonst grün
+            if (((double) tmpRaum.getTeilnehmer_aktuell()) /
+                    ((double) tmpRaum.getTeilnehmer_max()) > 0.85) {
+                status = R.drawable.circle_red;
+            } else if (((double) tmpRaum.getTeilnehmer_aktuell()) /
+                    ((double) tmpRaum.getTeilnehmer_max()) > 0.30) {
+                status = R.drawable.circle_yellow;
+            } else {
+                status = R.drawable.circle_green;
+            }
+
+            String roomInfo = "Belegung: " + tmpRaum.getTeilnehmer_aktuell() + "/"
+                    + tmpRaum.getTeilnehmer_max();
+
+            if(status == R.drawable.circle_red) {
+                redStateRoomList.add(redStateRoomList.size(),new Room(tmpRaum.getRaumname(), status, roomInfo, false));
+            } else {
+                orderedRoomList.add(new Room(tmpRaum.getRaumname(), status, roomInfo, false));
+            }
+        }
+
+        //Schiebe volle Räume ans Ende
+        for(int i = 0; i < redStateRoomList.size(); i++) {
+            orderedRoomList.add(redStateRoomList.get(i));
+        }
+    }
+
+    private void addRoomsInAdapter() {
+        for(int i = 0; i < orderedRoomList.size(); i++) {
+            roomAdapter.add(orderedRoomList.get(i));
+        }
     }
 }
