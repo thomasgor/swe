@@ -109,6 +109,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                            @Override
                     public void onClick(DialogInterface dialog, int which) {
                             new Verbindung().freundschaftDelete(ben);
+                               notifyDataSetChanged();
 
                                 }
 

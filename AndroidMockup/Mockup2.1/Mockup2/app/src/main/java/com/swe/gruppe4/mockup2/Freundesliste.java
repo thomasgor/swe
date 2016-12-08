@@ -18,11 +18,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.swe.gruppe4.mockup2.Objektklassen.*;
 import java.util.ArrayList;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class Freundesliste extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +32,7 @@ public class Freundesliste extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<Freundschaft> freunde = new Verbindung().freundschaftGet();
+        Freundschaft data;
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -37,14 +40,31 @@ public class Freundesliste extends BaseActivity
         View contentView = inflater.inflate(R.layout.activity_freundesliste, null, false);
         drawer.addView(contentView, 0);
 
+        ListView requestView = (ListView) findViewById(R.id.friendRequestList);
         ListView friendView = (ListView) findViewById(R.id.friendList);
+
+        FriendRequestAdapter requestAdapter = new FriendRequestAdapter(getApplicationContext(), R.layout.friends_request_box);
         FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
+        requestView.setAdapter(requestAdapter);
         friendView.setAdapter(friendsAdapter);
+        requestView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         friendView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         for(Freundschaft f:freunde){
-            friendsAdapter.add(f);
+            if(f.isStatus() == true)
+                friendsAdapter.add(f);
+            else
+                requestAdapter.add(f);
         }
+        requestAdapter.notifyDataSetChanged();
         friendsAdapter.notifyDataSetChanged();
+        friendView.setClickable(true);
+        friendView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
