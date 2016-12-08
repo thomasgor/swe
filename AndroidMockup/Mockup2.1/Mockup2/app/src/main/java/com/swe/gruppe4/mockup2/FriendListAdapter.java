@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.content.DialogInterface.OnClickListener;
+import android.support.v7.app.AlertDialog;
+import android.content.DialogInterface;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -51,7 +54,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Freundschaft friendObj = getItem(position);
+        final Freundschaft friendObj = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.friends_box, parent, false);
         }
@@ -63,7 +66,12 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         new FriendListAdapter.LoadRoomImage(profilePicture).execute(friendObj.getBenutzer().getFotoURL());
         ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
         deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);
-        //deleteFriend.setOnClickListener();
+        deleteFriend.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                            public void onClick(View view) {
+                                showDialogDelete(view, friendObj.getBenutzer());
+                            }
+                    });
         return convertView;
     }
 
@@ -90,4 +98,24 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
             bmImage.setImageBitmap(result);
         }
     }
+
+    private void showDialogDelete(View v, final Benutzer ben){
+                AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
+                build.setCancelable(false);
+                //build.setTitle("Freund wirklich löschen?");
+                        build.setMessage("Möchten Sie " + ben.getVorname()+ " " + ben.getName() + " wirklich löschen?");
+              build.setPositiveButton("Ja", new DialogInterface.OnClickListener()
+                      {
+                           @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            new Verbindung().freundschaftDelete(ben);
+
+                                }
+
+                        });
+
+                        build.setNegativeButton("Nein", null);
+                AlertDialog alert1 = build.create();
+                alert1.show();
+            }
 }
