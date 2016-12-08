@@ -2,7 +2,11 @@ package com.swe.gruppe4.mockup2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -12,12 +16,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.koushikdutta.ion.Ion;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
 import com.swe.gruppe4.mockup2.Objektklassen.Raum;
 import com.swe.gruppe4.mockup2.Objektklassen.Sitzung;
 
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,13 +43,8 @@ public class ActiveSessionActivity extends BaseActivity
     Button erneuern;
     Button beenden;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Daten holen
-        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
-        raum = data.getRaum();
-
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -55,6 +53,11 @@ public class ActiveSessionActivity extends BaseActivity
         drawer.addView(contentView, 0);
 
         imgRoom = (ImageView) findViewById(R.id.img_room_photo);
+
+        //Daten holen
+        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
+        raum = data.getRaum();
+
         setData();
 
         erneuern = (Button) findViewById(R.id.btn_session_renew);
@@ -62,12 +65,11 @@ public class ActiveSessionActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 data = new Verbindung().sitzungPut(data.getId());
-                raum = data.getRaum();
                 setData();
             }
         });
 
-        beenden = (Button) findViewById(R.id.btn_goto);
+        beenden = (Button) findViewById(R.id.btn_session_quit);
         beenden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,24 +84,12 @@ public class ActiveSessionActivity extends BaseActivity
 
     private void setData(){
         raumName = (TextView) findViewById(R.id.txt_room_number);
-        raumName.setText(getString(R.string.room_number, raum.getRaumname()));
-
-        getSupportActionBar().setTitle(raum.getRaumname());
+        raumName.setText(raum.getRaumname());
 
         tag = (TextView) findViewById(R.id.txt_tag);
         tag.setText(raum.getTag().getName());
-        tag.setText(getString(R.string.tag, raum.getTag().getName()));
 
-        Ion.with(getApplicationContext())
-                .load(raum.getFotoURL())
-                .withBitmap()
-                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
-                .animateIn(android.R.anim.fade_in)
-                .intoImageView(imgRoom);
-
-
-
+        new ActiveSessionActivity.LoadRoomImage(imgRoom, imgRoom.getWidth(),imgRoom.getHeight()).execute(data.getRaum().getFotoURL());
         setTag = (Button) findViewById(R.id.btn_set_tag);
         setTag.setEnabled(data.isMyTag());
 
@@ -123,8 +113,38 @@ public class ActiveSessionActivity extends BaseActivity
         leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
         int max = raum.getTeilnehmer_max();
         int crnt = raum.getTeilnehmer_aktuell();
-        leute.setText(getString(R.string.people_in_room_cnt,crnt,max,getResources().getQuantityString(R.plurals.people_in_room_cnt_anon,crnt-nichtAnonym,crnt-nichtAnonym)));
+        leute.setText(getString(R.string.people_in_room_cnt,crnt,max,crnt-nichtAnonym));
     }
 
+    private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        int width;
+        int height;
+
+        LoadRoomImage(ImageView bmImage, int width, int height) {
+            this.bmImage = bmImage;
+            this.width = width;
+            this.height=height;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(ImageHelper.getRoundedCornerBitmap(result,50));
+        }
+    }
 }
 

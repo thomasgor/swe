@@ -121,15 +121,9 @@
     <string name="session_renew">Sitzung erneuern</string>
     <string name="session_active_until">Sitzung aktiv bis:</string>
     <string name="session_active_until_clock">%1$s Uhr</string>
-    <plurals name="people_in_room_cnt_anon">
-        <item quantity="one">(%d Anonymer)</item>
-        <item quantity="other">(%d Anonyme)</item>
-    </plurals>
-    <string name="people_in_room_cnt">%1$d/%2$d %3$s</string>
+    <string name="people_in_room_cnt">%1$d/%2$d (%3$d Anonyme)</string>
     <string name="tag_label">Tag:</string>
     <string name="set_tag">Tag setzen</string>
-    <string name="room_number">%1$s</string>
-    <string name="tag">%1$s</string>
 
 
 
@@ -173,5 +167,4 @@
     <string name="desc_auth_code_activity">Demonstrate retrieving an auth code for authorizing your server.</string>
     <string name="name_auth_code_activity">ServerAuthCodeActivity</string>
     <string name="img_room_photo_content">Bild vom Raum</string>
-    <string name="btn_goto_text">Gehe zu</string>
 </resources>

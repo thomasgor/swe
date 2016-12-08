@@ -5,25 +5,19 @@ package com.swe.gruppe4.mockup2;
  */
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.content.DialogInterface.OnClickListener;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-
-import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.mockup2.Objektklassen.*;
 
 /**
@@ -57,7 +51,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Freundschaft friendObj = getItem(position);
+        Freundschaft friendObj = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.friends_box, parent, false);
         }
@@ -65,51 +59,35 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         nickName.setText(friendObj.getBenutzer().getVorname() + " " + friendObj.getBenutzer().getName());
         TextView roomName = (TextView) convertView.findViewById(R.id.friend_room);
         roomName.setText(friendObj.getRaum().getRaumname());
-        final ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
-
-
+        ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
+        new FriendListAdapter.LoadRoomImage(profilePicture).execute(friendObj.getBenutzer().getFotoURL());
         ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
         deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);
-        deleteFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-                public void onClick(View view) {
-                showDialogDelete(view, friendObj.getBenutzer());
-            }
-        });
-
-
-
-
-        Ion.with(this.getContext())
-                .load(friendObj.getBenutzer().getFotoURL())
-                .withBitmap()
-                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
-                .animateIn(android.R.anim.fade_in)
-                .intoImageView(profilePicture);
         //deleteFriend.setOnClickListener();
         return convertView;
     }
 
-    private void showDialogDelete(View v, final Benutzer ben){
-        AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
-        build.setCancelable(false);
-        //build.setTitle("Freund wirklich löschen?");
-        build.setMessage("Möchten Sie " + ben.getVorname()+ " " + ben.getName() + " wirklich löschen?");
-        build.setPositiveButton("Ja", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                new Verbindung().freundschaftDelete(ben);
+    private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
+        LoadRoomImage(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
             }
-
-        });
-
-        build.setNegativeButton("Nein", null);
-        AlertDialog alert1 = build.create();
-        alert1.show();
+            return mIcon11;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
-
-
 }

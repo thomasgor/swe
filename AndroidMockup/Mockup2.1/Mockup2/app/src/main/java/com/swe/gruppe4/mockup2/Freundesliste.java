@@ -27,11 +27,8 @@ import java.util.ArrayList;
 public class Freundesliste extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Freundschaft data;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<Freundschaft> freunde = new Verbindung().freundschaftGet();
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -43,7 +40,8 @@ public class Freundesliste extends BaseActivity
         FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
         friendView.setAdapter(friendsAdapter);
         friendView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-
+        Verbindung verbindung = new Verbindung();
+        ArrayList<Freundschaft> freunde = verbindung.freundschaftGet();
         for(Freundschaft f:freunde){
             friendsAdapter.add(f);
         }
@@ -61,9 +59,20 @@ public class Freundesliste extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //showDialogDelete();
+        showDialogDelete();
     }
 
+    private void showDialogDelete(){
+        AlertDialog.Builder build = new AlertDialog.Builder(Freundesliste.this);
+        build.setCancelable(false);
+        //build.setTitle("Freund wirklich löschen?");
+        build.setMessage("Möchten Sie den Freund wirklich löschen?");
+
+        build.setPositiveButton("Ja", null);
+        build.setNegativeButton("Nein", null);
+        AlertDialog alert1 = build.create();
+        alert1.show();
+    }
 
     private void showDialogAdd(){
         AlertDialog.Builder build = new AlertDialog.Builder(Freundesliste.this);
@@ -71,14 +80,12 @@ public class Freundesliste extends BaseActivity
 
         build.setTitle("Freund hinzufügen");
         build.setMessage("Geben Sie bitte die E-Mail Adresse des Freundes den Sie hinzufügen möchten ein.");
-        final EditText email = new EditText(Freundesliste.this);
-        build.setView(email);
+        build.setView(new EditText(Freundesliste.this));
 
         build.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"Anfrage an " + email.getText().toString() + " gesendet", Toast.LENGTH_LONG).show();
-                new Verbindung().freundschaftPost(email.getText().toString());
+                Toast.makeText(getApplicationContext(),"Anfrage gesendet", Toast.LENGTH_LONG).show();
             }
         });
         build.setNegativeButton("Abbrechen", null);

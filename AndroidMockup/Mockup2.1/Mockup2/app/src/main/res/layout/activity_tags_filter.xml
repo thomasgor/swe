@@ -14,7 +14,7 @@
         android:text="Anwenden"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/saveTagsButton"
+        android:id="@+id/saveLectureButton"
         android:layout_marginBottom="17dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

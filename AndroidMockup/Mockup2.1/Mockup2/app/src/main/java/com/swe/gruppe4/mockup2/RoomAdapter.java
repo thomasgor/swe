@@ -27,10 +27,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
     }
 
-    @Override
-    public int getCount() {
-        return roomInfoList.size();
-    }
+
 
     public Room getItem(int index) {
         return this.roomInfoList.get(index);
@@ -38,10 +35,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
     public RoomAdapter(Context context , int textViewResourceId){
         super(context,textViewResourceId);
-    }
-
-    public void clearList() {
-        roomInfoList = new ArrayList<>();
     }
 
     /**
