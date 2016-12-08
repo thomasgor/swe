@@ -2,6 +2,8 @@ package com.swe.gruppe4.mockup2;
 
 import com.swe.gruppe4.mockup2.Objektklassen.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by Merlin on 04.12.2016.
  */

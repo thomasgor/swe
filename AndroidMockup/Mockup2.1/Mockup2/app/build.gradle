@@ -33,7 +33,8 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:support-vector-drawable:25.0.0'
-    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+    compile 'com.google.android.gms:play-services-vision:10.0.1'
     testCompile 'junit:junit:4.12'
 }
 
@@ -41,4 +42,4 @@ dependencies {
 //Android 4.4 funktioniert aber nur unter PlayServices 8.4.0
 //App meldet auf einen Fehler beim Login unter 8.4 funktioniert für unseren Zweck aber trotzdem
 //Fehlermeldung: GoogleService failed to initialize, status: 10, Missing an expected resource:....
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
