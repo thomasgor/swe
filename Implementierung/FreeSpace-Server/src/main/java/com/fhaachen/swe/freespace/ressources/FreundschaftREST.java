@@ -1,5 +1,7 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.Antwort;
+import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.main.Freundschaft;
 import org.javalite.activejdbc.LazyList;
 
@@ -22,27 +24,49 @@ public class FreundschaftREST {
     public Response getFreundschaften(@Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
         String response = Freundschaft.getFreundschaften(benutzerID);
-        return Response.ok(response,MediaType.APPLICATION_JSON).build();
+        if (response != null) {
+            return Response.ok(response, MediaType.APPLICATION_JSON).build();
+        }
+        return Antwort.INTERNAL_SERVER_ERROR;
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postFreundschaft(){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier können freundschaften erstellt werden!").build();
+    public Response postFreundschaft(@Context SecurityContext context, String json){
+        String benutzerID = context.getUserPrincipal().getName();
+        String response = Freundschaft.postFreundschaft(benutzerID, json);
+        if (response != null) {
+            return Antwort.CREATED;
+            //Falls Antwortcode CREATED nicht ausreichend
+            //return Response.ok(response, MediaType.APPLICATION_JSON).build();
+        }
+        return Antwort.INTERNAL_SERVER_ERROR;
     }
+
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putFreundschaftID(@PathParam(value="param") String id){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier können freundschaften geändert werden!").build();
+    public Response putFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context, String json){
+        String benutzerID = context.getUserPrincipal().getName();
+        String response = Freundschaft.putFreundschaft(benutzerID, id, json);
+        if (response != null) {
+            return Response.ok(response, MediaType.APPLICATION_JSON).build();
+        }
+        return Antwort.INTERNAL_SERVER_ERROR;
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response deleteFreundschaftID(@PathParam(value="param") String id){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier können freundschaften gelöscht werden!").build();
+    public Response deleteFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context){
+        String benutzerID = context.getUserPrincipal().getName();
+        String response = Freundschaft.deleteFreundschaft(benutzerID, id);
+        if (response != null) {
+            return Response.ok(response, MediaType.APPLICATION_JSON).build();
+        }
+        return Antwort.INTERNAL_SERVER_ERROR;
     }
 }
