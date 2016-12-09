@@ -1,6 +1,7 @@
 package com.swe.gruppe4.mockup2;
 
 import com.swe.gruppe4.mockup2.Objektklassen.*;
+import com.swe.gruppe4.mockup2.Objektklassen.Tag;
 import java.util.ArrayList;
 
 import java.util.ArrayList;
@@ -95,5 +96,46 @@ public class Verbindung {
     public void freundschaftDelete(Benutzer benutzer){
                 //TODO: Daten an Server senden
 
+    }
+
+    /**
+     * Die folgenden Methoden werden für die REST-Ressourcen Tag benutzt
+     */
+
+    public ArrayList<com.swe.gruppe4.mockup2.Objektklassen.Tag> tagGet() {
+        ArrayList<Tag> tagList = new ArrayList<>();
+
+        //Mokupdaten, später über GET vom Server
+        tagList.add(new Tag(4711,"Präsentation"));
+        tagList.add(new Tag(4712,"Lernen"));
+        tagList.add(new Tag(4713,"Ruhe"));
+
+        return tagList;
+    }
+
+    /**
+     * Die folgenden Methoden werden für die REST-Ressourcen Raum benutzt
+     */
+
+    public ArrayList<Raum> raumListeGet() {
+        ArrayList<Raum> raumListe = new ArrayList<>();
+        Benutzer[] benutzer = new Benutzer[3];
+        benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
+        benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
+        benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
+
+
+        //Mokupdaten, später über GET vom Server
+        raumListe.add(new Raum(100,"G100",22,5,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(101,"G101",22,3,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(102,"G102",22,15,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(103,"G103",22,0,"",new Tag(0,""),new Benutzer[0]));
+        raumListe.add(new Raum(104,"G104",22,0,"",new Tag(0,""),new Benutzer[0]));
+        raumListe.add(new Raum(105,"G105",22,22,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(106,"G106",22,22,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(108,"G108",22,0,"",new Tag(0,""),new Benutzer[0]));
+
+        return raumListe;
     }
 }
