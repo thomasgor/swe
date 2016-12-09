@@ -34,7 +34,7 @@ public class RaumREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response getRaumdetails(@PathParam(value="param") int id){
+    public Response getRaumdetails(@PathParam(value="param") String id){
         //TODO: NULL überprüfen
         String json = Raum.getRaumdetails(id);
         if(json == null) return Antwort.NOT_FOUND;
@@ -76,7 +76,7 @@ public class RaumREST {
         if(!isAllowed) {
             //Überliefert dennoch das Raumobjekt
             System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
-            String s = Raum.getRaumdetails(Integer.parseInt(id));
+            String s = Raum.getRaumdetails(id);
             return Response.status(Response.Status.OK).entity(s).build();
         }
 

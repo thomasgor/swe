@@ -1,6 +1,7 @@
 package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.JsonHelper;
+import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -14,7 +15,6 @@ import java.util.Map;
  */
 @Table("Veranstaltung")
 public class Veranstaltung extends Datenbank {
-    //TODO: Es soll möglich sein ein Tag objekt zu inkludieren
 
     public static String getVeranstaltung(String professorID) {
         String result = "[]";
@@ -25,19 +25,21 @@ public class Veranstaltung extends Datenbank {
         //Es wurden Veranstaltungen gefunden
         if(veranstaltungen != null){
             result = veranstaltungen.toJson(true);
+            result = includeRaumInListe(result);
         }
 
         disconnect();
         return result;
     }
 
-    public static String getVeranstaltungId(String id){
+    public static String getVeranstaltungByID(String id){
         String result = null;
         connect();
 
         Veranstaltung v = Veranstaltung.findById(id);
         if(v != null){
             result = v.toJson(true);
+            result = includeRaum(result);
         }
 
         disconnect();
@@ -69,7 +71,30 @@ public class Veranstaltung extends Datenbank {
         return result;
     }
 
-    public String includeRaum(String json){
-        return "";
+    public static String includeRaumInListe(String json){
+        connect();
+        Map[] input = JsonHelper.toMaps(json);
+        Map[] output = new Map[input.length];
+
+        for(int i = 0; i < input.length; i++){
+            String mJSON = JsonHelper.getJsonStringFromMap(input[i]);
+            String mitRaum = includeRaum(mJSON);
+            output[i] = JsonHelper.toMap(mitRaum);
+
+        }
+        disconnect();
+        return JsonHelper.getJsonStringFromMap(output);
+    }
+
+    public static String includeRaum(String json){
+        connect();
+        System.out.println("includeRAUM");
+        Map input = JsonHelper.toMap(json);
+        String raumJSON = Raum.getRaumdetails(input.get("raum").toString());
+        if(raumJSON != null){
+            input.put("raum", JsonHelper.toMap(raumJSON));
+        }
+        disconnect();
+        return JsonHelper.getJsonStringFromMap(input);
     }
 }

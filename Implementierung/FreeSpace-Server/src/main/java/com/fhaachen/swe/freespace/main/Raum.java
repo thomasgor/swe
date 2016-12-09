@@ -23,7 +23,7 @@ public class Raum extends Datenbank {
         return json;
     }
 
-    public static String getRaumdetails(int id){
+    public static String getRaumdetails(String id){
         connect();
         try {
             Raum r = Raum.findById(id);
