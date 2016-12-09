@@ -33,6 +33,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         return roomInfoList.size();
     }
 
+    @Override
     public Room getItem(int index) {
         return this.roomInfoList.get(index);
     }

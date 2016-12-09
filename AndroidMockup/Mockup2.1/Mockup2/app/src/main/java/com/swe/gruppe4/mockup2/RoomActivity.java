@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.swe.gruppe4.mockup2.Objektklassen.Raum;
@@ -60,6 +61,9 @@ public class RoomActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Interne Funktion um Listener zu setzen
+        setOnItemClickListenerForView();
     }
 
     @Override
@@ -188,4 +192,15 @@ public class RoomActivity extends BaseActivity
 
         return emptyRoomList;
     }
+
+    public void setOnItemClickListenerForView() {
+        roomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 }
