@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_height="130dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/roomName" android:textColor="#060404" android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/statusImg"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp" />
+
+    <TextView
+        android:text="Vorlesung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/roomInfo"
+        android:backgroundTint="@android:color/darker_gray"
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@+id/roomName"
+        android:layout_alignStart="@+id/roomName" />
+
+    <ImageView
+        android:layout_height="30dp"
+        android:id="@+id/statusImg"
+        android:background="@drawable/circle_gray"
+        android:adjustViewBounds="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="29dp"
+        android:layout_width="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:id="@+id/leaveRoom"
+        android:layout_alignTop="@+id/roomName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="21dp"
+        android:layout_height="20dp"
+        app:srcCompat="@android:drawable/ic_menu_send" />
+
+    <Button
+        android:text="Tags hinzufügen"
+        android:layout_width="wrap_content"
+        android:id="@+id/addTags"
+        android:layout_height="30dp"
+        android:textSize="10sp"
+        android:layout_below="@+id/statusImg"
+        android:layout_alignStart="@+id/roomInfo" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/refreshSession"
+        android:layout_alignTop="@+id/addTags"
+        android:layout_alignStart="@+id/leaveRoom"
+        app:srcCompat="@android:drawable/ic_menu_rotate"/>
+
+</RelativeLayout >
