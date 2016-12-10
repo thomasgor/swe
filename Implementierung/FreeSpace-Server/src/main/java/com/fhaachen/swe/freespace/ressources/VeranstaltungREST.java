@@ -23,7 +23,7 @@ public class VeranstaltungREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
-        String response = Veranstaltung.getVeranstaltung(professorID);
+        String response = Veranstaltung.getVeranstaltungsListe(professorID);
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
@@ -35,7 +35,7 @@ public class VeranstaltungREST {
         String response = Veranstaltung.postVeranstaltung(json, professorID);
 
         if(response == null){
-            return Antwort.BAD_REQUEST;
+            return Antwort.ROOM_BLOCKED;
         }
 
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
