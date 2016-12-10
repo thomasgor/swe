@@ -138,7 +138,7 @@
     <string name="signed_in_fmt">Angemeldet als: %s</string>
     <string name="signed_in">Angemeldet</string>
     <string name="signing_in">Anmelden…</string>
-    <string name="signed_out">Bitte melde dich mit deinem Google Konto an, um die App nutzen zu können.</string>
+    <string name="signed_out">Bitte melde dich mit deinem Google-Konto an, um die App nutzen zu können.</string>
     <string name="signed_in_err">"Fehler: Bitte Logs überprüfen."</string>
     <string name="error_null_person">
         Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is

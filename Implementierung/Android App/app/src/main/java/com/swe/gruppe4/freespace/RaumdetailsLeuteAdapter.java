@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 
 import java.io.InputStream;
@@ -44,7 +45,7 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Benutzer benutzer = getItem(position);
+        final Benutzer benutzer = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.friends_box, parent, false);
         }
@@ -52,38 +53,17 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
         nickName.setText(benutzer.getVorname() + " " + benutzer.getName());
         TextView roomName = (TextView) convertView.findViewById(R.id.friend_room);
         roomName.setText("");
-        ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
-        new LoadProfilePicture(profilePicture).execute(benutzer.getFotoURL());
+        final ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
 
-        /*ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
-        deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);*/
+        Ion.with(this.getContext())
+                .load(benutzer.getFotoURL())
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(profilePicture);
 
         return convertView;
-    }
-
-    private class LoadProfilePicture extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        LoadProfilePicture(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 
 }
