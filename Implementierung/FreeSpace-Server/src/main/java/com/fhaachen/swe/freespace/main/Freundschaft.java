@@ -2,6 +2,7 @@ package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.JsonHelper;
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.annotations.CompositePK;
 import org.javalite.activejdbc.annotations.Table;
 
 import java.util.Map;
@@ -11,10 +12,16 @@ import java.util.Map;
  */
 
 @Table("Freundschaft")
+@CompositePK({ "Benutzer", "Freund" })
 
 public class Freundschaft extends Datenbank{
 
+    static {
+        validatePresenceOf("Benutzer", "Freund").message("ein oder mehrere Primärschlüssel fehlen!!!");
+    }
+
     private static String includeBenutzer(String json) {
+        connect();
         Map[] map = JsonHelper.toMaps(json);
         try {
             for (Map element : map) {
@@ -43,6 +50,7 @@ public class Freundschaft extends Datenbank{
         if (map != null) {
             antwort = JsonHelper.getJsonStringFromMap(map);
         }
+        disconnect();
         return antwort;
     }
 
@@ -62,17 +70,16 @@ public class Freundschaft extends Datenbank{
         return includeBenutzer(antwort);
     }
 
-    public static String postFreundschaft(String benutzerID, String json) {
+    //erstellt neue Freundschaft mit Status 0(Anfrage), muss somit noch durch put bejaht, oder durch delete beneint werden
+    public static String postFreundschaft(String benutzerID, String freundID) {
         connect();
         String antwort = null;
-        String freund = JsonHelper.getAttribute(json, "freund");
-        int status = Integer.valueOf(JsonHelper.getAttribute(json, "status"));
         //prüfen ob Freundschaft bereits besteht
         try {
-            if (Freundschaft.findByCompositeKeys(benutzerID, freund) != null) {
+            if (Freundschaft.findByCompositeKeys(benutzerID, freundID) != null || Freundschaft.findByCompositeKeys(freundID, benutzerID) != null) {
                 return null;
             }
-            antwort = Freundschaft.createIt("Benutzer", benutzerID, "Freund", freund, "Status", status).toJson(true);
+            antwort = Freundschaft.createIt("Benutzer", benutzerID, "Freund", freundID, "Status", 0).toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
             return null;
@@ -81,17 +88,21 @@ public class Freundschaft extends Datenbank{
         return antwort;
     }
 
-    public static String putFreundschaft(String benutzerID, String freund, String json) {
+
+    //ändert Status der freundschaft von 0 (Anfrage) auf 1 (Freundschaft zugestimmt)
+    public static String putFreundschaft(String benutzerID, String freund) {
         connect();
         String antwort = null;
-        int status = Integer.valueOf(JsonHelper.getAttribute(json, "status"));
         //prüfen ob Freundschaft bereits besteht
         try {
             Freundschaft freu = Freundschaft.findByCompositeKeys(benutzerID, freund);
             if (freu == null) {
-                return null;
+                freu = Freundschaft.findByCompositeKeys(freund, benutzerID);
+                if(freu == null) {
+                    return null;
+                }
             }
-            freu.set("Status", status).saveIt();
+            freu.set("Status", 1).saveIt();
             antwort = freu.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
@@ -108,7 +119,10 @@ public class Freundschaft extends Datenbank{
         try {
             Freundschaft freu = Freundschaft.findByCompositeKeys(benutzerID, freund);
             if (freu == null) {
-                return null;
+                freu = Freundschaft.findByCompositeKeys(freund, benutzerID);
+                if(freu == null) {
+                    return null;
+                }
             }
             freu.deleteCascade();
             antwort = freu.toJson(true);
