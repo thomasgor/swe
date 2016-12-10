@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -44,6 +45,7 @@ public class ActiveSessionActivity extends BaseActivity
     Button erneuern;
     Button beenden;
     RelativeLayout rlTop;
+    boolean hasShadow = false;
 
 
     @Override
@@ -85,6 +87,36 @@ public class ActiveSessionActivity extends BaseActivity
         });
 
 
+        rlTop=(RelativeLayout) findViewById(R.id.content_active_session2);
+        listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+                if(i != SCROLL_STATE_IDLE){
+                    if(listIsAtTop()){
+                        rlTop.animate().z(0).setStartDelay(0).setDuration(130);
+                    } else {
+                        rlTop.animate().z(7).setStartDelay(0).setDuration(130);
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onScroll (AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(listIsAtTop()){
+                    rlTop.animate().z(0).setStartDelay(0).setDuration(130);
+                } else {
+                    rlTop.animate().z(7).setStartDelay(0).setDuration(130);
+                }
+            }
+        });
+
+    }
+
+    private boolean listIsAtTop()   {
+        if(listPeopleInRoomView.getChildCount() == 0) return true;
+        return listPeopleInRoomView.getChildAt(0).getTop() == 0;
     }
 
     private void setData(){
@@ -109,6 +141,13 @@ public class ActiveSessionActivity extends BaseActivity
 
         setTag = (Button) findViewById(R.id.btn_set_tag);
         setTag.setEnabled(data.isMyTag());
+
+        setTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         listPeopleInRoomView = (ListView) findViewById(R.id.list_people_in_room);
         raumLeuteAdapter = new RaumdetailsLeuteAdapter(getApplicationContext(), R.layout.friends_box);

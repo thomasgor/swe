@@ -1,13 +1,16 @@
 package com.swe.gruppe4.freespace;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
@@ -30,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        showDemoDialog();
 
         //Kommentar entfernen wenn nicht richtiger debug-keystore vorhanden
         //startHomeActivityTest();
@@ -122,6 +128,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         intent.putExtra("profilePicture",pictureURL);
         startActivity(intent);
         finish();
+    }
+
+    private void showDemoDialog(){
+        new AlertDialog.Builder(LoginActivity.this)
+                .setCancelable(false)
+                .setTitle("Alpha")
+                .setMessage("Dies ist nur eine frühe Alphaversion.\nNoch nicht alles funktioniert einwandfrei und noch nicht alle Daten sind korrekt.")
+                .setPositiveButton("Verstanden",null)
+                .create()
+                .show();
     }
 
 
