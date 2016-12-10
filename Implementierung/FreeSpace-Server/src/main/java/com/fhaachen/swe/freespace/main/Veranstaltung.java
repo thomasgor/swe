@@ -45,6 +45,8 @@ public class Veranstaltung extends Datenbank {
     }
 
     public boolean istRaumBlockiert(int von, int bis, String raumid){
+
+        LazyList v = Veranstaltung.find("");
         return false;
     }
 
@@ -60,12 +62,15 @@ public class Veranstaltung extends Datenbank {
         v.set("name", input.get("name"));
         v.set("bis", input.get("bis"));
         v.set("von", input.get("von"));
-        //v.saveIt(); //Todo: Konnte die Veranstaltung eingefügt werden?
 
-        result = v.toJson(true);
+        try{
+            v.saveIt();
+            result = v.toJson(true);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
         disconnect();
-
-        System.out.println(result);
         return result;
     }
 

@@ -36,6 +36,11 @@ public class VeranstaltungREST {
     public Response postVeranstaltung(String json, @Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
         String response = Veranstaltung.postVeranstaltung(json, professorID);
+
+        if(response == null){
+            return Antwort.BAD_REQUEST;
+        }
+
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
