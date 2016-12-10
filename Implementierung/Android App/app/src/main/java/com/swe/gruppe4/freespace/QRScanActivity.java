@@ -1,7 +1,9 @@
 package com.swe.gruppe4.freespace;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -12,188 +14,103 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
+//import com.google.android.gms.vision.CameraSource;
+//import com.google.android.gms.vision.Detector;
+//import com.google.android.gms.vision.barcode.Barcode;
+//import com.google.android.gms.vision.barcode.BarcodeDetector;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.swe.gruppe4.freespace.Objektklassen.*;
+import java.util.ArrayList;
 
 public class QRScanActivity extends AppCompatActivity {
+    private Button scan_btn;
 
-    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
-    private Camera mCamera = null;
-    private CameraView mCameraView = null;
-    BarcodeDetector detector;
-    CameraSource cameraSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qrscan);
+        setContentView(R.layout.activity_empty);
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+        final Activity activity = this;
 
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CAMERA)) {
+        IntentIntegrator integrator = new IntentIntegrator(activity);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        integrator.setPrompt("Scan");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(false);
+        integrator.setBarcodeImageEnabled(false);
+        integrator.setOrientationLocked(true);
+        integrator.initiateScan();
 
+    }
 
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null){
+            if(result.getContents()==null){
+                Toast.makeText(this, "Scanvorgang abgebrochen", Toast.LENGTH_LONG).show();
+                finish();
             }
-        } else {
-            startCamera();
-        }
+            else {
+                //Toast.makeText(this, result.getContents(),Toast.LENGTH_LONG).show();
+                Verbindung verbindung = new Verbindung();
+                Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
 
-        ImageButton imgClose = (ImageButton)findViewById(R.id.imgClose);
-        imgClose.setOnClickListener(new View.OnClickListener() {
+                if(meinRaum == null) {
+                    Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                else {
+                    showDialog(meinRaum);
+                }
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void showDialog(Raum meinRaum){
+        AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
+        build.setCancelable(false);
+        build.setTitle(meinRaum.getRaumname());
+        build.setMessage( meinRaum.getTeilnehmer_aktuell() + "/" + meinRaum.getTeilnehmer_max() + " Leute\nTag: " + meinRaum.getTag().getName() );
+
+        build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                onBackPressed();
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Verbindung connect = new Verbindung();
+                Sitzung data = connect.sitzungGet();
+                Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
+                intent.putExtra("sitzung",data);
+                startActivity(intent);
+                //finish();
             }
         });
-    }
+        build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Toast.makeText(getApplicationContext(),"Unbekannter QR Code", Toast.LENGTH_LONG).show();
 
-    private void releaseCameraAndPreview() {
-        ///mCameraView.setCamera(null);
-        if (mCamera != null) {
-            mCamera.release();
-            mCamera = null;
-        }
-    }
-
-    private void startCamera(){
-        try {
-            releaseCameraAndPreview();
-            mCamera = Camera.open();//you can use open(int) to use different cameras
-        } catch (Exception e) {
-            Log.d("ERROR", "Failed to get camera: " + e.getMessage());
-
-
-        }
-
-        if (mCamera != null) {
-            mCameraView = new CameraView(this, mCamera);//create a SurfaceView to show camera data
-            FrameLayout camera_view = (FrameLayout) findViewById(R.id.camera_view);
-            camera_view.addView(mCameraView);//add the SurfaceView to the layout
-        } else {
-            detector =
-                    new BarcodeDetector.Builder(getApplicationContext())
-                            .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE)
-                            .build();
-
-            if (!detector.isOperational()) {
-
-                CameraSource mCameraSource = new CameraSource.Builder(getApplicationContext(), detector)
-                        .setFacing(CameraSource.CAMERA_FACING_BACK)
-                        .setRequestedFps(15.0f)
-                        .build();
-
-                AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
-                build.setCancelable(false);
-
-                build.setTitle("Fehler beim öffnen des Scanners");
-                build.setMessage("Probieren Sie bitte, den Scanner noch einmal zu öffnen. Wenn es immer noch nicht klappt, wenden Sie sich bitte an einen Administrator.");
-
-                build.setPositiveButton("Verstanden", null);
-                //build.setNegativeButton("Nein", null);
-                AlertDialog alert1 = build.create();
-                alert1.show();
-
-                finish();
-
-            } else {
-                detector.setProcessor(new Detector.Processor<Barcode>() {
-                    @Override
-                    public void release() {
-                    }
-
-                    @Override
-                    public void receiveDetections(Detector.Detections<Barcode> detections) {
-                        final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
-                        if (barcodes.size() != 0) {
-
-                            AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
-                            build.setCancelable(false);
-
-                            build.setTitle(barcodes.valueAt(0).displayValue);
-
-                            build.setPositiveButton("Verstanden", null);
-                            //build.setNegativeButton("Nein", null);
-                            AlertDialog alert1 = build.create();
-                            alert1.show();
-                        }
-                    }
-                });
+                Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
+                //intent.putExtra("profileName","Max Mustermann");
+                //intent.putExtra("profileEmail","max@mustermann.de");
+                //intent.putExtra("profilePicture","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg");
+                intent.putExtra("raumliste",(ArrayList<Raum>) getIntent().getSerializableExtra("raumliste"));
+                startActivity(intent);
+                //finish();
             }
-        }
+        });
+        AlertDialog alert1 = build.create();
+        alert1.show();
     }
 
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    startCamera();
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission
-
-
-                    AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
-                    build.setCancelable(false);
-
-                    build.setTitle("Fehlende Berechtigung");
-                    build.setMessage("Bitte erlauben Sie den Zugriff auf die Kamera, um den QR Scanner nutzen zu können.");
-
-                    build.setPositiveButton("Verstanden", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            finish();
-                        }
-                    });
-                    //build.setNegativeButton("Nein", null);
-                    AlertDialog alert1 = build.create();
-                    alert1.show();
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
 }

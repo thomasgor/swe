@@ -150,6 +150,7 @@ public class Verbindung {
         return raumListe;
     }
 
+    /*
     public Raum raumGet(int id){
         //TODO: Daten an Server senden
         //DUMMY! Später dann vom Server holen.
@@ -162,7 +163,35 @@ public class Verbindung {
 
         //TODO: Daten vom Server statt DummyDaten
     }
+    */
 
+    /**
+     * Die folgenden Methoden werden für die REST-Ressourcen Raum(id) benutzt
+     */
+    public Raum raumGet(int id) {
+        //TODO: Daten an Server senden
+        //Mokupdaten, später über GET vom Server
+        ArrayList<Raum> raume = new ArrayList<>(this.raumListeGet());
+        //Raum(int id, String raumname, int teilnehmer_max, int teilnehmer_aktuell, String fotoURL, Tag tag, Benutzer[] benutzer)
+
+        Object meinRaum = new Object();
+        for(int i = 0; i < raume.size(); i++) {
+            if(id == raume.get(i).getId()) {
+                meinRaum = new Raum(raume.get(i).getId(),
+                        raume.get(i).getRaumname(),
+                        raume.get(i).getTeilnehmer_max(),
+                        raume.get(i).getTeilnehmer_aktuell(),
+                        raume.get(i).getFotoURL(),
+                        raume.get(i).getTag(),
+                        raume.get(i).getBenutzer());
+                return (Raum)meinRaum;
+                //TODO: Daten vom Server statt DummyDaten
+            }
+
+        }
+        //return (Raum)meinRaum;
+        return null;
+    }
     public Raum raumPut(int tagID){
         //TODO: Daten an Server senden
         //DUMMY! Später dann vom Server holen.
