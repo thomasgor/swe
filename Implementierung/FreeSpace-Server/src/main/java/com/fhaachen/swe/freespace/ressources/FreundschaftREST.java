@@ -32,13 +32,13 @@ public class FreundschaftREST {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response postFreundschaft(@Context SecurityContext context, String json){
+    @Path(value="/{param}")
+    public Response postFreundschaft(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        String response = Freundschaft.postFreundschaft(benutzerID, json);
+        String response = Freundschaft.postFreundschaft(benutzerID, id);
         if (response != null) {
             return Antwort.CREATED;
-            //Falls Antwortcode CREATED nicht ausreichend
+            //Falls Antwortcode CREATED nicht ausreicht:
             //return Response.ok(response, MediaType.APPLICATION_JSON).build();
         }
         return Antwort.INTERNAL_SERVER_ERROR;
@@ -47,11 +47,10 @@ public class FreundschaftREST {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context, String json){
+    public Response putFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        String response = Freundschaft.putFreundschaft(benutzerID, id, json);
+        String response = Freundschaft.putFreundschaft(benutzerID, id);
         if (response != null) {
             return Response.ok(response, MediaType.APPLICATION_JSON).build();
         }
