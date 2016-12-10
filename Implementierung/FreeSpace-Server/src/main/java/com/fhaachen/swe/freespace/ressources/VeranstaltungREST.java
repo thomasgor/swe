@@ -2,10 +2,8 @@ package com.fhaachen.swe.freespace.ressources;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
-import com.fhaachen.swe.freespace.main.Benutzer;
 import com.fhaachen.swe.freespace.main.Veranstaltung;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -29,7 +27,6 @@ public class VeranstaltungREST {
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,7 +46,7 @@ public class VeranstaltungREST {
     @Path(value="/{param}")
     public Response getVeranstaltungID(@PathParam(value="param") String id ,@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
-        String response = Veranstaltung.getVeranstaltungId(id);
+        String response = Veranstaltung.getVeranstaltungByID(id);
         String responseProefessorID = JsonHelper.getAttribute(response, "benutzer");
 
         if(response == null){

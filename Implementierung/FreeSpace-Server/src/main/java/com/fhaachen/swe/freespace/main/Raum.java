@@ -1,5 +1,6 @@
 package com.fhaachen.swe.freespace.main;
 
+import com.fhaachen.swe.freespace.JsonHelper;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
@@ -22,7 +23,7 @@ public class Raum extends Datenbank {
         return json;
     }
 
-    public static String getRaumdetails(int id){
+    public static String getRaumdetails(String id){
         connect();
         try {
             Raum r = Raum.findById(id);
@@ -51,18 +52,43 @@ public class Raum extends Datenbank {
         }
 
         r.set("tag", tagID);
-        r.saveIt();
+        try{
+            r.saveIt();
+        }catch(Exception e){
+            System.out.println(e.toString());
+            return null;
+        }
+
 
         String json = r.toJson(true);
-
-        System.out.println("JSON: " + json);
+        //LADE TAG nach
+        if( r == null){
+            System.out.println("r ist null");
+        }
         disconnect();
+
+        String jsonTag = Tag.getTagById(r.getId().toString());
+        Map tagMap = JsonHelper.toMap(jsonTag);
+
+        Map raumMap = JsonHelper.toMap(json);
+
+
+        String res = raumMap.put("tag",tagMap).toString(); //jsonTag
+
+        //kein Fehler
+        if(res == null){
+            //tag wurde nachgeladen
+            System.out.print(raumMap.toString());
+        }
+
+        json = JsonHelper.getJsonStringFromMap(raumMap);
+
+
+        System.out.println(" Das ist mein JsonString: " + json);
         return json;
     }
 
     public void MapFromJSON(String json){
-        ObjectMapper mapper = new ObjectMapper();
-
     }
 
 
