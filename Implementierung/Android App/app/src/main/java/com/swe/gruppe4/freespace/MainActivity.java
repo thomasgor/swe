@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
+import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
+import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity
@@ -37,7 +39,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
-                ArrayList<Raum> roomListFromConnection = new ArrayList<>(connection.raumListeGet());
+                ArrayList<Raum> roomListFromConnection = new ArrayList<>(connection.raumGet());
                 intent.putExtra("raumliste",roomListFromConnection);
                 startActivity(intent);
             }
@@ -68,10 +70,15 @@ public class MainActivity extends BaseActivity
         }
         */
 
-        roomAdapter.add(new Room("G101",R.drawable.circle_green,"12/40 belegt",false));
-        roomAdapter.add(new Room("G103",R.drawable.circle_green,"8/23 belegt",false));
-        roomAdapter.add(new Room("G102",R.drawable.circle_yellow,"25/30 belegt",false));
-        roomAdapter.add(new Room("G111",R.drawable.circle_yellow,"17/32 belegt",false));
+        //Mockup Daten
+        Benutzer[] benutzer = new Benutzer[3];
+        benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
+        benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
+        benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
+        roomAdapter.add(new Raum(100,"G100",22,5,"",new Tag(4711,"Präsentation"),benutzer));
+        roomAdapter.add(new Raum(102,"G102",22,15,"",new Tag(4711,"Präsentation"),benutzer));
+        roomAdapter.add(new Raum(104,"G104",22,0,"",new Tag(0,""),new Benutzer[0]));
+        roomAdapter.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer));
         roomAdapter.notifyDataSetChanged();
         /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

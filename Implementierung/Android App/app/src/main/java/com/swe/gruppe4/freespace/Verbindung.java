@@ -128,7 +128,7 @@ public class Verbindung {
      * Die folgenden Methoden werden für die REST-Ressourcen Raum benutzt
      */
 
-    public ArrayList<Raum> raumListeGet() {
+    public ArrayList<Raum> raumGet() {
         ArrayList<Raum> raumListe = new ArrayList<>();
         Benutzer[] benutzer = new Benutzer[3];
         benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
@@ -139,10 +139,10 @@ public class Verbindung {
         //Mokupdaten, später über GET vom Server
         raumListe.add(new Raum(100,"G100",22,5,"",new Tag(4711,"Präsentation"),benutzer));
         raumListe.add(new Raum(101,"G101",22,3,"",new Tag(4711,"Präsentation"),benutzer));
-        raumListe.add(new Raum(102,"G102",22,15,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(4711,"G102",22,15,"",new Tag(4711,"Ruhe"),benutzer));
         raumListe.add(new Raum(103,"G103",22,0,"",new Tag(0,""),new Benutzer[0]));
         raumListe.add(new Raum(104,"G104",22,0,"",new Tag(0,""),new Benutzer[0]));
-        raumListe.add(new Raum(105,"G105",22,22,"",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(4711,"G105",22,22,"",new Tag(4711,"Präsentation"),benutzer));
         raumListe.add(new Raum(106,"G106",22,22,"",new Tag(4711,"Präsentation"),benutzer));
         raumListe.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer));
         raumListe.add(new Raum(108,"G108",22,0,"",new Tag(0,""),new Benutzer[0]));
@@ -171,7 +171,7 @@ public class Verbindung {
     public Raum raumGet(int id) {
         //TODO: Daten an Server senden
         //Mokupdaten, später über GET vom Server
-        ArrayList<Raum> raume = new ArrayList<>(this.raumListeGet());
+        ArrayList<Raum> raume = new ArrayList<>(this.raumGet());
         //Raum(int id, String raumname, int teilnehmer_max, int teilnehmer_aktuell, String fotoURL, Tag tag, Benutzer[] benutzer)
 
         Object meinRaum = new Object();
