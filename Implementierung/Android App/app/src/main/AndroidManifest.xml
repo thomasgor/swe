@@ -68,6 +68,9 @@
             android:name="com.swe.gruppe4.freespace.TagsFilterActivity"
             android:label="@string/title_activity_filter_tags" />
         <activity
+            android:name="com.swe.gruppe4.freespace.TagSetActivity"
+            android:label="@string/title_activity_set_tags" />
+        <activity
             android:name="com.swe.gruppe4.freespace.Settings2Activity"
             android:label="@string/title_activity_settings2"
             android:theme="@style/AppTheme.NoActionBar" />

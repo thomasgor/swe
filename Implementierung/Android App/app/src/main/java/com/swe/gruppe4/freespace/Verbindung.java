@@ -15,9 +15,6 @@ public class Verbindung {
 
 
     /**
-     * Die folgenden Methoden werden für die Sitzung benutzt
-     */
-    /**
      * Die folgenden Methoden werden für die REST-Ressourcen Sitzung benutzt
      */
     public Sitzung sitzungGet(){
@@ -69,7 +66,7 @@ public class Verbindung {
         benutzer[5] = new Benutzer(6,"abc@def.com","Schnee","Jon","http://static.giantbomb.com/uploads/original/3/39164/2865551-reasons-people-love-game-thrones-jon-snow-video.jpg", "",false);
 
         long endzeit=(System.currentTimeMillis()/1000L)+2700;    //aktuelle Zeit + 45 Minuten
-        return new Sitzung(4711,new Raum(4711,"W014",8,7,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Präsentation"), benutzer),true,endzeit);
+        return new Sitzung(4711,new Raum(4711,"W014",8,7,"http://i.imgur.com/LyzIuVj.jpg", new Tag(1,"Präsentation"), benutzer),true,endzeit);
         //TODO: Daten vom Server statt DummyDaten
     }
 
@@ -113,7 +110,7 @@ public class Verbindung {
      * Die folgenden Methoden werden für die REST-Ressourcen Tag benutzt
      */
 
-    public ArrayList<com.swe.gruppe4.freespace.Objektklassen.Tag> tagGet() {
+    public ArrayList<Tag> tagGet() {
         ArrayList<Tag> tagList = new ArrayList<>();
 
         //Mokupdaten, später über GET vom Server
@@ -158,7 +155,7 @@ public class Verbindung {
         benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
         benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
 
-        return new Raum(id,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Hallo Welt"), benutzer);
+        return new Raum(id,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new Tag(1,"Hallo Welt"), benutzer);
 
         //TODO: Daten vom Server statt DummyDaten
     }
@@ -170,7 +167,7 @@ public class Verbindung {
         benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
         benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
         benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
-        return new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(tagID,"Ruhe"), benutzer);
+        return new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new Tag(tagID,"Ruhe"), benutzer);
 
         //TODO: Daten vom Server statt DummyDaten
     }

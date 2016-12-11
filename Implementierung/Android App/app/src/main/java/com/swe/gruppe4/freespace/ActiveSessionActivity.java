@@ -51,7 +51,7 @@ public class ActiveSessionActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Daten holen
-        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
+        data = new Verbindung().sitzungGet();
         raum = data.getRaum();
 
 
@@ -145,7 +145,8 @@ public class ActiveSessionActivity extends BaseActivity
         setTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),TagSetActivity.class);
+                startActivity(intent);
             }
         });
 

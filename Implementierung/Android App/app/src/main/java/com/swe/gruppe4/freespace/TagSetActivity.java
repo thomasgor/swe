@@ -6,36 +6,54 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.util.ArrayList;
 
-public class TagsFilterActivity extends AppCompatActivity {
+public class TagSetActivity extends AppCompatActivity {
     private ListView tagView;
+    private ArrayList<Tag> tagList;
+
+    private RadioButton listRadioButton;
+
+    private RadioGroup rg;
+    int listIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tags_filter);
+        tagList = new Verbindung().tagGet();
 
-        tagView = (ListView) findViewById(R.id.tagList);
-        final TagAdapter tagAdapt = new TagAdapter(getApplicationContext(), R.layout.tag_box);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tags_set);
+
+        /*tagView = (ListView) findViewById(R.id.tagList);
+        final TagSetAdapter tagAdapt = new TagSetAdapter(getApplicationContext(), R.layout.tag_box);
         tagView.setAdapter(tagAdapt);
         tagView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
-        Verbindung connection = new Verbindung();
-
-        ArrayList<Tag> tagList = connection.tagGet();
         for(int i = 0; i < tagList.size(); i++) {
             tagAdapt.add(tagList.get(i));
         }
 
-        tagAdapt.notifyDataSetChanged();
+        tagAdapt.notifyDataSetChanged();*/
+
+        rg = (RadioGroup) findViewById(R.id.tagList);
+        for(Tag tag : tagList) {
+            RadioButton rb = new RadioButton(this);
+            rb.setText(tag.getName());
+            rb.setId(tag.getId());
+            rg.addView(rb);
+        }
+
+
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
@@ -46,20 +64,15 @@ public class TagsFilterActivity extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
 
 
+        //tagView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         //Aktion, wenn Anwenden Button gedrückt wird
         Button saveButton = (Button) findViewById(R.id.saveTagsButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Context context = getApplicationContext();
-                String text = "Tag Filter setzen!";
-                for (int i = 0; i < tagAdapt.getCheckedTags().size(); i++) {
-                    text += "\n";
-                    text += tagAdapt.getCheckedTags().get(i);
-                }
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                new Verbindung().raumPut(rg.getCheckedRadioButtonId());
+                finish();
+
             }
         });
 
@@ -76,6 +89,18 @@ public class TagsFilterActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(menuItem);
         }
+    }
+
+    public void onClickRadioButton(View v) {
+        View vMain = ((View) v.getParent());
+        int newIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
+        if (listIndex == newIndex) return;
+
+        if (listRadioButton != null) {
+            listRadioButton.setChecked(false);
+        }
+        listRadioButton = (RadioButton) v;
+        listIndex = newIndex;
     }
 
 }
