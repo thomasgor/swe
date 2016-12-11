@@ -25,9 +25,8 @@ public class RoomActivity extends BaseActivity
 
     private ListView roomView;
     private RoomAdapter roomAdapter;
-    private boolean roomsWithFriendsIsSelected = false;
-    private boolean emtyRoomsIsSelected = false;
-    private Menu menu;
+    private boolean roomsWithFriendsIsSelected=false;
+    private boolean emtyRoomsIsSelected=false;
 
     //Raum Objekt enthält alle Informationen zu einem Raum
     //Room Objekt dient nur zu Anzeige
@@ -56,6 +55,7 @@ public class RoomActivity extends BaseActivity
             }
         }
 
+
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_room, null, false);
         drawer.addView(contentView, 0);
@@ -68,8 +68,7 @@ public class RoomActivity extends BaseActivity
         Verbindung connection = new Verbindung();
         roomListFromConnection = connection.raumGet();
 
-        //TEST
-        //Später setze Daten durch Intent
+
         //Erstellt Raumliste für Anzeige nach Filterkriterien und zeigt sie an
         updateRooms();
 
@@ -95,7 +94,7 @@ public class RoomActivity extends BaseActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.room, menu);
         MenuItem empty = menu.findItem(R.id.action_filter_rooms);
-        //empty.setChecked(true);
+        empty.setChecked(emtyRoomsIsSelected);
         MenuItem friends = menu.findItem(R.id.filter_friends_only);
         //friends.setChecked(true);
         return true;
@@ -146,6 +145,7 @@ public class RoomActivity extends BaseActivity
         }
         if(emtyRoomsIsSelected) {
             result.addAll(emptyRoomsList);
+            result = getRoomsWithTags(result);
         }
 
         if(!roomsWithFriendsIsSelected && !emtyRoomsIsSelected) {
