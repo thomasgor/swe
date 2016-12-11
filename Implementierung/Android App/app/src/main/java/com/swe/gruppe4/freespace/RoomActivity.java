@@ -14,28 +14,47 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.swe.gruppe4.freespace.Objektklassen.Freundschaft;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RoomActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView roomView;
     private RoomAdapter roomAdapter;
+    private boolean roomsWithFriendsIsSelected=false;
+    private boolean emtyRoomsIsSelected=false;
 
     //Raum Objekt enthält alle Informationen zu einem Raum
     //Room Objekt dient nur zu Anzeige
     ArrayList<Raum> roomListFromConnection = new ArrayList<>();
-    ArrayList<Room> orderedRoomListFull = new ArrayList<>();
 
-    ArrayList<Room> roomListToShow = new ArrayList<>();
+    //Listen für die Anzeige
+    ArrayList<Raum> emptyRoomsList = new ArrayList<>();
+    ArrayList<Raum> roomsWithFriendsList = new ArrayList<>();
+
+    ArrayList<String> filterTags = new ArrayList<>();
+
+    //Freundschaftsliste des aktuellen Benutzers
+    ArrayList<Freundschaft> friendListUser = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        Bundle extraInfosFromIntent = getIntent().getExtras();
+        if(extraInfosFromIntent != null) {
+            Object filterTagsObject = extraInfosFromIntent.get("filterTags");
+            if (filterTagsObject != null) {
+                filterTags = (ArrayList<String>) filterTagsObject;
+            }
+        }
+
 
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_room, null, false);
@@ -47,17 +66,11 @@ public class RoomActivity extends BaseActivity
         roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
         Verbindung connection = new Verbindung();
-        roomListFromConnection = connection.raumListeGet();
+        roomListFromConnection = connection.raumGet();
 
-        //Interne Funktion um Räume zu ordnen
-        addRoomsInOrder(roomListFromConnection);
-        //Übergebe Liste an Adapter zur Anzeige
-        addRoomsInAdapter(orderedRoomListFull);
 
-        //Test nur leer Räume zeigen
-        //addRoomsInAdapter(getEmptyRooms(roomListFromConnection));
-
-        roomAdapter.notifyDataSetChanged();
+        //Erstellt Raumliste für Anzeige nach Filterkriterien und zeigt sie an
+        updateRooms();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -80,6 +93,10 @@ public class RoomActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.room, menu);
+        MenuItem empty = menu.findItem(R.id.action_filter_rooms);
+        empty.setChecked(emtyRoomsIsSelected);
+        MenuItem friends = menu.findItem(R.id.filter_friends_only);
+        //friends.setChecked(true);
         return true;
     }
 
@@ -95,28 +112,152 @@ public class RoomActivity extends BaseActivity
             startActivity(intent);
         } else if(id == R.id.filter_friends_only) {
             item.setChecked(!item.isChecked());
+            if(item.isChecked()) {
+                roomsWithFriendsList = getRoomsWithFriends(roomListFromConnection);
+                roomsWithFriendsIsSelected = true;
+            }
+            else {
+                roomsWithFriendsIsSelected = false;
+            }
+
         } else if(id == R.id.action_filter_rooms) {
             item.setChecked(!item.isChecked());
             if(item.isChecked()) {
-                roomAdapter.clearList();
-                addRoomsInAdapter(getEmptyRooms(roomListFromConnection));
-                roomAdapter.notifyDataSetChanged();
+                emptyRoomsList = getEmptyRooms(roomListFromConnection);
+                emtyRoomsIsSelected = true;
             } else {
-                roomAdapter.clearList();
-                addRoomsInAdapter(orderedRoomListFull);
-                roomAdapter.notifyDataSetChanged();
+                emtyRoomsIsSelected = false;
             }
 
         }
 
-        /*//noinspection SimplifiableIfStatement
-        if (id == R.id.filter_tags) {
-            return true;
-        }*/
+        updateRooms();
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void updateRooms() {
+        ArrayList<Raum> result = new ArrayList<>();
+        roomAdapter.clearList();
+        if(roomsWithFriendsIsSelected) {
+            result.addAll(roomsWithFriendsList);
+            result = getRoomsWithTags(result);
+        }
+        if(emtyRoomsIsSelected) {
+            result.addAll(emptyRoomsList);
+            result = getRoomsWithTags(result);
+        }
+
+        if(!roomsWithFriendsIsSelected && !emtyRoomsIsSelected) {
+            result.addAll(roomListFromConnection);
+            result = getRoomsWithTags(result);
+        }
+
+        result = getRoomsInAlphanumericOrder(result);
+        result = orderFullRoomsToBottomOfList(result);
+
+        addRoomsInAdapter(result);
+        roomAdapter.notifyDataSetChanged();
+
+    }
+
+
+
+    //Übergebe Liste an Adapter zur Anzeige
+    private void addRoomsInAdapter(ArrayList<Raum> list) {
+        for(int i = 0; i < list.size(); i++) {
+            roomAdapter.add(list.get(i));
+        }
+    }
+
+    //Filtert die leeren Räume aus einer Raumliste
+    private ArrayList<Raum> getEmptyRooms(ArrayList<Raum> fullRoomList) {
+        ArrayList<Raum> emptyRoomList = new ArrayList<>();
+
+        for(int i = 0; i < fullRoomList.size(); i++) {
+            if(fullRoomList.get(i).getTeilnehmer_aktuell() == 0) {
+                emptyRoomList.add(fullRoomList.get(i));
+            }
+        }
+
+        return emptyRoomList;
+    }
+
+    private ArrayList<Raum> getRoomsWithFriends(ArrayList<Raum> fullRoomList) {
+        friendListUser = new Verbindung().freundschaftGet();
+        ArrayList<Raum> friendListRoom = new ArrayList<>();
+        boolean found = false;
+
+        for(int i = 0; i < fullRoomList.size(); i++) {
+            Raum tmpRoom = fullRoomList.get(i);
+            found = false;
+            for(int j = 0; j < friendListUser.size(); j++) {
+                if(friendListUser.get(j).getRaum().getId() == tmpRoom.getId()) {
+                    found = true;
+                }
+            }
+            if(found) {
+                friendListRoom.add(tmpRoom);
+            }
+
+        }
+        return friendListRoom;
+    }
+
+    private ArrayList<Raum> getRoomsInAlphanumericOrder(ArrayList<Raum> raumList) {
+        ArrayList<Raum> tmpList = raumList;
+        Collections.sort(tmpList, new RaumComparator());
+        return tmpList;
+    }
+
+    private ArrayList<Raum> getRoomsWithTags(ArrayList<Raum> raumList) {
+        ArrayList<Raum> tmpList = new ArrayList<>();
+        if(filterTags == null || filterTags.size() == 0) {
+            return  raumList;
+        }
+        for(Raum room : raumList) {
+            for (String filterTagString : filterTags) {
+                if (room.getTag().getName().equals(filterTagString)) {
+                    tmpList.add(room);
+                    break;
+                }
+            }
+        }
+        return tmpList;
+    }
+
+    public void setOnItemClickListenerForView() {
+        roomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public ArrayList<Raum> orderFullRoomsToBottomOfList(ArrayList<Raum> roomList) {
+        ArrayList<Raum> tmpList = new ArrayList<>();
+        ArrayList<Raum> fullRoomsList = new ArrayList<>();
+        for(int i = 0; i < roomList.size(); i++) {
+            if(roomList.get(i).getTeilnehmer_aktuell() ==
+                    roomList.get(i).getTeilnehmer_max()) {
+                fullRoomsList.add(fullRoomsList.size(),roomList.get(i));
+            }
+            else {
+                tmpList.add(roomList.get(i));
+            }
+        }
+
+        for (int i = 0; i < fullRoomsList.size(); i++) {
+            tmpList.add(fullRoomsList.get(i));
+        }
+
+        return tmpList;
+    }
+
+    //Nicht mehr nötig das Room Objekt abgelöst
+    /*
     private void addRoomsInOrder(ArrayList<Raum> rawList) {
 
         ArrayList<Raum> connectionRoomList = rawList;
@@ -152,7 +293,9 @@ public class RoomActivity extends BaseActivity
             orderedRoomListFull.add(redStateRoomList.get(i));
         }
     }
+    */
 
+    /*
     private Room raumRoomAdapter(Raum raum) {
         int status = 0;
 
@@ -172,36 +315,6 @@ public class RoomActivity extends BaseActivity
 
         return new Room(raum.getRaumname(), status, roomInfo, false);
     }
-
-    //Übergebe Liste an Adapter zur Anzeige
-    private void addRoomsInAdapter(ArrayList<Room> list) {
-        for(int i = 0; i < list.size(); i++) {
-            roomAdapter.add(list.get(i));
-        }
-    }
-
-    //Filtert die leeren Räume aus einer Raumliste
-    private ArrayList<Room> getEmptyRooms(ArrayList<Raum> fullRoomList) {
-        ArrayList<Room> emptyRoomList = new ArrayList<>();
-
-        for(int i = 0; i < fullRoomList.size(); i++) {
-            if(fullRoomList.get(i).getTeilnehmer_aktuell() == 0) {
-                emptyRoomList.add(raumRoomAdapter(fullRoomList.get(i)));
-            }
-        }
-
-        return emptyRoomList;
-    }
-
-    public void setOnItemClickListenerForView() {
-        roomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
-                intent.putExtra("id",12);
-                startActivity(intent);
-            }
-        });
-    }
+    */
 
 }

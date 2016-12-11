@@ -1,6 +1,7 @@
 package com.swe.gruppe4.freespace;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,6 +61,10 @@ public class TagsFilterActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
+                intent.putExtra("filterTags",tagAdapt.getCheckedTags());
+                startActivity(intent);
+                finish();
             }
         });
 

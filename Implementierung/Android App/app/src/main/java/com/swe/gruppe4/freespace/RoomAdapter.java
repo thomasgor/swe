@@ -8,19 +8,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.swe.gruppe4.freespace.Objektklassen.Raum;
+
 import java.util.ArrayList;
 
 /**
  * Created by Kiesa on 28.10.2016.
  */
 
-public class RoomAdapter extends ArrayAdapter<Room> {
+public class RoomAdapter extends ArrayAdapter<Raum> {
 
-    private ArrayList<Room> roomInfoList = new ArrayList<Room>();
+    private ArrayList<Raum> roomInfoList = new ArrayList<>();
     /**
      *  add Room object  to the adapter
      */
-    public void add(Room room) {
+    public void add(Raum room) {
         super.add(room);
         roomInfoList.add(room);
 
@@ -33,7 +35,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     }
 
     @Override
-    public Room getItem(int index) {
+    public Raum getItem(int index) {
         return this.roomInfoList.get(index);
     }
 
@@ -50,11 +52,9 @@ public class RoomAdapter extends ArrayAdapter<Room> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Room roomObj = getItem(position);
-        if (convertView == null && !roomObj.flag) {
+        Raum roomObj = getItem(position);
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.room_box, parent, false);
-        } else if(convertView == null && roomObj.flag){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.current_room_box, parent, false);
         }
         /*if(roomObj.flag){
             ImageView leaveButton = (ImageView) convertView.findViewById(R.id.leaveRoom);
@@ -64,11 +64,13 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         }*/
         TextView roomName = (TextView) convertView.findViewById(R.id.roomName);
         assert roomObj != null;
-        roomName.setText(roomObj.getRoomName());
+        roomName.setText(roomObj.getRaumname());
         TextView roomInfo = (TextView) convertView.findViewById(R.id.roomInfo);
-        roomInfo.setText(roomObj.getRoomInfo());
+        roomInfo.setText("Belegung: " + roomObj.getTeilnehmer_aktuell() + "/" + roomObj.getTeilnehmer_max());
         ImageView statusIcon = (ImageView) convertView.findViewById(R.id.statusImg);
-        statusIcon.setImageResource(roomObj.getStatus());
+
+        //TODO: MUSS noch geändert werden wenn klar ist wie das Raumobjekt den Status übergibt
+        statusIcon.setImageResource(R.drawable.circle_green);
 
         return convertView;
     }
