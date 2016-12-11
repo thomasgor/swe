@@ -2,6 +2,7 @@ package com.fhaachen.swe.freespace;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -38,4 +39,40 @@ public class JsonHelper {
         return name;
     }
 
+    //Rückgabe:{"foto":"http://fotourl","id":1,"raumnummer":"G101","tag":{"id":1,"name":"Ruhe"},"teilnehmer_max":32}
+    public static String getJsonStringFromMap(Map m){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //   string a = mapper.writeValue();
+            return mapper.writeValueAsString(m);
+
+        }catch(Exception e){
+            return null;
+        }
+        // return "";
+    }
+
+    public static String getJsonStringFromMap(LinkedList m){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //   string a = mapper.writeValue();
+            return mapper.writeValueAsString(m);
+
+        }catch(Exception e){
+            return null;
+        }
+        // return "";
+    }
+
+    public static String getJsonStringFromMap(Map[] m){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //   string a = mapper.writeValue();
+            return mapper.writeValueAsString(m);
+
+        }catch(Exception e){
+            return null;
+        }
+        // return "";
+    }
 }

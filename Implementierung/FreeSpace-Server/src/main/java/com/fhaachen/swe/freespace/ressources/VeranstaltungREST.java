@@ -2,10 +2,8 @@ package com.fhaachen.swe.freespace.ressources;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
-import com.fhaachen.swe.freespace.main.Benutzer;
 import com.fhaachen.swe.freespace.main.Veranstaltung;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -25,10 +23,9 @@ public class VeranstaltungREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
-        String response = Veranstaltung.getVeranstaltung(professorID);
+        String response = Veranstaltung.getVeranstaltungsListe(professorID);
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
-
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -36,6 +33,11 @@ public class VeranstaltungREST {
     public Response postVeranstaltung(String json, @Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
         String response = Veranstaltung.postVeranstaltung(json, professorID);
+
+        if(response == null){
+            return Antwort.ROOM_BLOCKED;
+        }
+
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
@@ -44,7 +46,7 @@ public class VeranstaltungREST {
     @Path(value="/{param}")
     public Response getVeranstaltungID(@PathParam(value="param") String id ,@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
-        String response = Veranstaltung.getVeranstaltungId(id);
+        String response = Veranstaltung.getVeranstaltungByID(id);
         String responseProefessorID = JsonHelper.getAttribute(response, "benutzer");
 
         if(response == null){
@@ -66,7 +68,6 @@ public class VeranstaltungREST {
         return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können Veranstaltungen geändert werden!").build();
     }
 
-    @RolesAllowed("professor")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
