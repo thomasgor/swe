@@ -11,19 +11,32 @@ public class Sitzung extends Datenbank {
 
 
     public static String getSitzungById(String id){
+        String result = null;
         connect();
-        String json = Sitzung.findById(id).toJson(true);
+        Sitzung sitzung = Sitzung.findById(id);
+
+        if(sitzung == null){
+            return result;
+        }
+
+        result = sitzung.toJson(true);
         disconnect();
-        return json;
+        return result;
     }
 
-    public static boolean istTagBesitzer(String userid,String raumid){
+    public static boolean istTagBesitzer(String userID,String raumID){
         connect();
-        Long count = Sitzung.count("benutzer = ? and raum = ? and hasTag == 1", userid,raumid);
-
+        Long count = Sitzung.count("benutzer = ? and raum = ? and hasTag == 1", userID,raumID);
         disconnect();
 
         return (count != null && count >0);
+    }
+
+    public static long getRaumteilnehmer_anz(String raumID){
+        connect();
+        Long teilnehmer_anz = Sitzung.count("raum = ?", raumID);
+        disconnect();
+        return teilnehmer_anz;
     }
 
 }

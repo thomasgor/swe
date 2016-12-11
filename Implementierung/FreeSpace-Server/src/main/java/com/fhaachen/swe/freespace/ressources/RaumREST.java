@@ -27,6 +27,10 @@ public class RaumREST {
     public Response getRaum(){
         //TODO: NULL überprüfen
         String json = Raum.getRaum();
+        if(json == null){
+            return Antwort.BAD_REQUEST;
+        }
+
         return Response.ok(json,MediaType.APPLICATION_JSON).build();
         //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Raumliste").build();
     }
@@ -37,7 +41,7 @@ public class RaumREST {
     public Response getRaumdetails(@PathParam(value="param") String id){
         //TODO: NULL überprüfen
         String json = Raum.getRaumdetails(id);
-        if(json == null) return Antwort.NOT_FOUND;
+        if(json == null) return Antwort.BAD_REQUEST;
 
         return Response.ok(Raum.getRaumdetails(id), MediaType.APPLICATION_JSON).build();
         //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Raumdetails von " + id).build();
@@ -49,7 +53,6 @@ public class RaumREST {
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response putRaumdetails(@PathParam(value="param") String id, String json, @Context SecurityContext context) {
-    //TODO: TAG nachladen
 
       /*  System.out.println(json);
         Map tmp = JsonHelper.toMap(json);
@@ -58,8 +61,8 @@ public class RaumREST {
         Map m = (Map)tmp.get("tag2");
 
         String name = String.valueOf(m.get("name"));
-        System.out.println(name); */
-/*
+        System.out.println(name);
+
         Map tmp = JsonHelper.toMap(json);
         System.out.println(tmp);
         System.out.println(((Map)tmp.get("tag2")).get("name")); */
@@ -77,10 +80,10 @@ public class RaumREST {
             //Überliefert dennoch das Raumobjekt
             System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
             String s = Raum.getRaumdetails(id);
-            return Response.status(Response.Status.OK).entity(s).build();
+            return Response.status(Response.Status.FORBIDDEN).entity(s).build();
         }
 
-        String answer = Raum.putRaumID(id,Integer.parseInt(tag));
+        String answer = Raum.putRaumID(id,tag);
 
         //Es existiert kein Raum mit der ID
         if(answer == null){

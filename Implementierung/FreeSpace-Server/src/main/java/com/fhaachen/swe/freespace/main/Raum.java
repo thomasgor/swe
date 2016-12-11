@@ -3,6 +3,7 @@ package com.fhaachen.swe.freespace.main;
 import com.fhaachen.swe.freespace.JsonHelper;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -17,84 +18,164 @@ import java.util.Map;
 public class Raum extends Datenbank {
 
     public static String getRaum(){
+        String result = "[]";
         connect();
-        String json = Raum.findAll().toJson(true);
+        LazyList<Raum> raeume = Raum.findAll();
+
+        if (raeume != null) {
+            Map[] raeumeMap = JsonHelper.toMaps(raeume.toJson(true));
+            for( Map raumMap : raeumeMap){
+                try{
+                     raumMap = completeRaumDetails(raumMap);
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            System.out.println(raeumeMap.toString());
+            result = JsonHelper.getJsonStringFromMap(raeumeMap);
+        }
+
         disconnect();
-        return json;
+        return result;
     }
 
     public static String getRaumdetails(String id){
-        connect();
+        String result = null;
+
         try {
-            Raum r = Raum.findById(id);
+            connect();
+            Raum raum = Raum.findById(id);
+            disconnect();
 
-            if(r == null) {
-                System.out.println("Der Raum ist null");
-                return null;
+            if(raum != null) {
+                String json = raum.toJson(true);
+                Map raumMap = JsonHelper.toMap(json);
+                System.out.println("completeRaumDetails");
+                raumMap = completeRaumDetails(raumMap);
+
+                if(raumMap == null){
+                    System.out.println("RaumMap ist null");
+                }
+
+                result = JsonHelper.getJsonStringFromMap(raumMap);
+
+            } else{
+                System.out.println("Raum wurde nicht gefunden");
             }
-
-            return r.toJson(true);
         }
         catch(Exception e){
                 System.out.println(e.toString());
         }
 
-        disconnect();
-        return null;//json;
+        return result;//json;
     }
 
-    public static String putRaumID(String raumID,int tagID){
+    public static String putRaumID(String raumID,String tagID){
         connect();
-        Raum r = Raum.findById(raumID);
-        if(r == null){
+        Raum raum = Raum.findById(raumID);
+        if(raum == null){
             //Raum nicht vorhanden
             return null;
         }
 
-        r.set("tag", tagID);
+        raum.set("tag", tagID);
         try{
-            r.saveIt();
+            raum.saveIt();
         }catch(Exception e){
+            //TAG nicht vorhanden
             System.out.println(e.toString());
             return null;
         }
-
-
-        String json = r.toJson(true);
-        //LADE TAG nach
-        if( r == null){
-            System.out.println("r ist null");
-        }
         disconnect();
+        String json = raum.toJson(true);
 
-        String jsonTag = Tag.getTagById(r.getId().toString());
-        Map tagMap = JsonHelper.toMap(jsonTag);
-
+        //lade Details nach..
         Map raumMap = JsonHelper.toMap(json);
-
-
-        String res = raumMap.put("tag",tagMap).toString(); //jsonTag
-
-        //kein Fehler
-        if(res == null){
-            //tag wurde nachgeladen
-            System.out.print(raumMap.toString());
-        }
+        raumMap = completeRaumDetails(raumMap);
 
         json = JsonHelper.getJsonStringFromMap(raumMap);
-
-
         System.out.println(" Das ist mein JsonString: " + json);
         return json;
     }
 
-    public void MapFromJSON(String json){
+
+    public static Map completeRaumDetails(Map raumMap){
+        //Lade Tag nach
+        raumMap = includeTag(raumMap);
+
+
+        String raumID = raumMap.get("id").toString();
+        //lade Teilnehmer_anz
+        long teilnehmer_anz = Sitzung.getRaumteilnehmer_anz(raumID);
+        if(teilnehmer_anz == 0)
+        System.out.println("Teilnehmer_anz ist null: " + raumID) ;
+        raumMap.put("teilnehmer_anz",teilnehmer_anz);
+
+        //lade Status
+        long teilnehmer_max = Long.parseLong((raumMap.get("teilnehmer_max")).toString());
+
+        double auslastung = 100;
+        System.out.println("teilnehmer_max = " + teilnehmer_max);
+        if(teilnehmer_max == 0){
+            auslastung = 100;
+        }else{
+            auslastung = (teilnehmer_anz / teilnehmer_max) * 100;
+        }
+
+        boolean aktiveVeranstaltung = false;
+
+        //eigentlich long
+        //TODO millisekungen oder sekunden?
+        long unixTime = System.currentTimeMillis() / 1000L;
+        int unixTime_Int = Integer.parseInt(String.valueOf(unixTime));
+
+        //TODO muss von THomas noch gemacht werden -> die Methode verfügt noch nicht über connect /disconnect usw.
+        try{
+            aktiveVeranstaltung =Veranstaltung.istRaumFrei( unixTime_Int,unixTime_Int,raumID);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        //
+
+
+        if(aktiveVeranstaltung){
+            raumMap.put("status","grau");
+        }else{
+
+            if(auslastung >= 80)
+                raumMap.put("status","rot");
+            else if(auslastung >= 40){
+                raumMap.put("status","gelb");
+            } else{
+                raumMap.put("status","grün");
+            }
+        }
+
+        return raumMap;
     }
 
 
+    public static Map includeTag(Map raumMap){
+       // Map raumMap = JsonHelper.toMap(json);
+        if(raumMap.get("tag") != null) {
+            String tagID = raumMap.get("tag").toString();
+            //LADE TAG nach
+            String jsonTag = Tag.getTagById(tagID);
+            if (jsonTag != null) {
+                Map tagMap = JsonHelper.toMap(jsonTag);
+                String res = raumMap.put("tag", tagMap).toString(); //jsonTag
 
-
-
+                //kein Fehler
+                if (res == null) {
+                    //tag wurde nachgeladen
+                    System.out.print(raumMap.toString());
+                }
+            }
+            //TAG ist nachgeladen
+        }
+        return raumMap;
+    }
 
 
 
