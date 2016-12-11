@@ -39,7 +39,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int id = getIntent().getIntExtra("id",0);
+        int id = getIntent().getIntExtra("id",4711);
         raum = new Verbindung().raumGet(id);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);

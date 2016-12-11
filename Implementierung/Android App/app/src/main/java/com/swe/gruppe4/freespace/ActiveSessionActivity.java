@@ -51,7 +51,8 @@ public class ActiveSessionActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Daten holen
-        data = new Verbindung().sitzungGet();
+        //data = new Verbindung().sitzungGet();
+        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
         raum = data.getRaum();
 
 

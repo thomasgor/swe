@@ -78,7 +78,7 @@ public class QRScanActivity extends AppCompatActivity {
         }
     }
 
-    private void showDialog(Raum meinRaum){
+    private void showDialog(final Raum meinRaum){
         AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
         build.setCancelable(false);
         build.setTitle(meinRaum.getRaumname());
@@ -90,7 +90,7 @@ public class QRScanActivity extends AppCompatActivity {
                 Verbindung connect = new Verbindung();
                 Sitzung data = connect.sitzungGet();
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
-                intent.putExtra("sitzung",data);
+                intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));
                 startActivity(intent);
                 //finish();
             }

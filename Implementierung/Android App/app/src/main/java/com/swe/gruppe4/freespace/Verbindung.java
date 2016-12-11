@@ -51,6 +51,24 @@ public class Verbindung {
     }
 
     public Sitzung sitzungPut(int id){
+
+        ArrayList<Raum> raume = new ArrayList<>(this.raumGet());
+
+        for(int i = 0; i < raume.size(); i++) {
+            if(id == raume.get(i).getId()) {
+                Raum meinRaum = new Raum(raume.get(i).getId(),
+                        raume.get(i).getRaumname(),
+                        raume.get(i).getTeilnehmer_max(),
+                        raume.get(i).getTeilnehmer_aktuell(),
+                        raume.get(i).getFotoURL(),
+                        raume.get(i).getTag(),
+                        raume.get(i).getBenutzer());
+                return new Sitzung(4711,meinRaum,true,(System.currentTimeMillis()/1000L)+2700);
+                //TODO: Daten vom Server statt DummyDaten
+            }
+
+        }
+
         //TODO: Daten an Server senden
         //DUMMY! Später dann vom Server holen.
         Benutzer[] benutzer = new Benutzer[6];
@@ -127,22 +145,25 @@ public class Verbindung {
 
     public ArrayList<Raum> raumGet() {
         ArrayList<Raum> raumListe = new ArrayList<>();
-        Benutzer[] benutzer = new Benutzer[3];
-        benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
+        Benutzer[] benutzer = new Benutzer[6];
+        benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "",false);
         benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
         benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
+        benutzer[3] = new Benutzer(4,"abc@def.com","Yoda","Meister","http://starwars.gamona.de/wp-content/gallery/yoda-bilder/13_Yoda.jpg", "",false);
+        benutzer[4] = new Benutzer(5,"abc@def.com","Spock","Kommandant","https://pbs.twimg.com/profile_images/424886311078469632/8sKG_p8v_400x400.jpeg", "",false);
+        benutzer[5] = new Benutzer(6,"abc@def.com","Schnee","Jon","http://static.giantbomb.com/uploads/original/3/39164/2865551-reasons-people-love-game-thrones-jon-snow-video.jpg", "",false);
 
 
         //Mokupdaten, später über GET vom Server
-        raumListe.add(new Raum(100,"G100",22,5,"",new Tag(4711,"Präsentation"),benutzer));
-        raumListe.add(new Raum(101,"G101",22,3,"",new Tag(4711,"Präsentation"),benutzer));
-        raumListe.add(new Raum(4711,"G102",22,15,"",new Tag(4711,"Ruhe"),benutzer));
-        raumListe.add(new Raum(103,"G103",22,0,"",new Tag(0,""),new Benutzer[0]));
-        raumListe.add(new Raum(104,"G104",22,0,"",new Tag(0,""),new Benutzer[0]));
-        raumListe.add(new Raum(4711,"G105",22,22,"",new Tag(4711,"Präsentation"),benutzer));
-        raumListe.add(new Raum(106,"G106",22,22,"",new Tag(4711,"Präsentation"),benutzer));
-        raumListe.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer));
-        raumListe.add(new Raum(108,"G108",22,0,"",new Tag(0,""),new Benutzer[0]));
+        raumListe.add(new Raum(100,"G100",22,6,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(101,"G101",22,3,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(4711,"G102",22,15,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Ruhe"),benutzer));
+        raumListe.add(new Raum(103,"G103",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0]));
+        raumListe.add(new Raum(104,"G104",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0]));
+        raumListe.add(new Raum(4711,"G105",22,22,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(106,"G106",22,22,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(107,"G107",22,15,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer));
+        raumListe.add(new Raum(108,"G108",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0]));
 
         return raumListe;
     }
