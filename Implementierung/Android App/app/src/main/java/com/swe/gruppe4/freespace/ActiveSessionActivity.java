@@ -115,9 +115,8 @@ public class ActiveSessionActivity extends BaseActivity
 
     }
 
-    private boolean listIsAtTop()   {
-        if(listPeopleInRoomView.getChildCount() == 0) return true;
-        return listPeopleInRoomView.getChildAt(0).getTop() == 0;
+    private boolean listIsAtTop() {
+        return listPeopleInRoomView.getChildCount() == 0 || listPeopleInRoomView.getChildAt(0).getTop() == 0;
     }
 
     private void setData(){

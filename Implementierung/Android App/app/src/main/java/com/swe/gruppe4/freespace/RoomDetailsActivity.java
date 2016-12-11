@@ -61,7 +61,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
             }
         });
 
-        rlTop=(RelativeLayout) findViewById(R.id.content_active_session2);
+        rlTop=(RelativeLayout) findViewById(R.id.activity_room_details2);
         listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -88,9 +88,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     }
 
-    private boolean listIsAtTop()   {
-        if(listPeopleInRoomView.getChildCount() == 0) return true;
-        return listPeopleInRoomView.getChildAt(0).getTop() == 0;
+    private boolean listIsAtTop() {
+        return listPeopleInRoomView.getChildCount() == 0 || listPeopleInRoomView.getChildAt(0).getTop() == 0;
     }
 
     private void setData(){
