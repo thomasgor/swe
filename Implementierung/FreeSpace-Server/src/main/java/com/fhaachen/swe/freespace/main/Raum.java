@@ -40,6 +40,28 @@ public class Raum extends Datenbank {
         return result;
     }
 
+    //TODO: TOTEST, SOLLTE ABER SO GEHEN !!!!!!!!!!!
+    public static String includeBenutzerInRaumdetails(String json){
+        Map input = JsonHelper.toMap(json);
+        String raumID = input.get("raum").toString();
+        connect();
+        LazyList<Sitzung> sitzungen = Sitzung.find("raum=?", raumID);
+        Map[] benutzer = new Map[sitzungen.size()];
+
+        for(int i=0; i< benutzer.length; i++){
+            String benutzerID = sitzungen.get(i).get("benutzer").toString();
+            Benutzer b = Benutzer.findById(benutzerID);
+            String bJson = b.toJson(true);
+            Map bMap = JsonHelper.toMap(bJson);
+            benutzer[i] = bMap;
+        }
+
+        input.put("benutzer", benutzer);
+        String outputJSON = JsonHelper.getJsonStringFromMap(input);
+
+        disconnect();
+        return outputJSON;
+    }
     public static String getRaumdetails(String id){
         String result = null;
 
