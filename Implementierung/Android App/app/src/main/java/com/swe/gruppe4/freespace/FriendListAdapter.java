@@ -20,6 +20,8 @@ import android.content.DialogInterface;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.*;
 
 /**
@@ -62,7 +64,15 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         TextView roomName = (TextView) convertView.findViewById(R.id.friend_room);
         roomName.setText(friendObj.getRaum().getRaumname());
         ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
-        new FriendListAdapter.LoadRoomImage(profilePicture).execute(friendObj.getBenutzer().getFotoURL());
+
+        Ion.with(this.getContext())
+                .load(friendObj.getBenutzer().getFotoURL())
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(profilePicture);
+
         ImageView deleteFriend = (ImageView) convertView.findViewById(R.id.friendDelete);
         deleteFriend.setImageResource(android.R.drawable.ic_menu_delete);
         deleteFriend.setOnClickListener(new View.OnClickListener() {
@@ -74,29 +84,6 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         return convertView;
     }
 
-    private class LoadRoomImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        LoadRoomImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 
     private void showDialogDelete(View v, final Benutzer ben){
                 AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
@@ -108,7 +95,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                            @Override
                     public void onClick(DialogInterface dialog, int which) {
                             new Verbindung().freundschaftDelete(ben);
-                               notifyDataSetChanged();
+                               Freundesliste.getData();
 
                                 }
 
@@ -118,4 +105,8 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                 AlertDialog alert1 = build.create();
                 alert1.show();
             }
+
+    public Freundschaft getFreund(int i){
+        return friendInfoList.get(i);
+    }
 }

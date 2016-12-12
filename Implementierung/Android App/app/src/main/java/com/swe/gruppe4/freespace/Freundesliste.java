@@ -20,10 +20,11 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class Freundesliste extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    static ArrayList<Freundschaft> freunde;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<Freundschaft> freunde = new Verbindung().freundschaftGet();
+        getData();
         Freundschaft data;
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -36,7 +37,7 @@ public class Freundesliste extends BaseActivity
         ListView friendView = (ListView) findViewById(R.id.friendList);
 
         FriendRequestAdapter requestAdapter = new FriendRequestAdapter(getApplicationContext(), R.layout.friends_request_box);
-        FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
+        final FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
         requestView.setAdapter(requestAdapter);
         friendView.setAdapter(friendsAdapter);
         requestView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
@@ -54,6 +55,9 @@ public class Freundesliste extends BaseActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                int id = friendsAdapter.getFreund(i).getRaum().getId();
+                intent.putExtra("id",friendsAdapter.getFreund(i).getRaum().getId());
+
                 startActivity(intent);
             }
         });
@@ -89,11 +93,17 @@ public class Freundesliste extends BaseActivity
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getApplicationContext(),"Anfrage gesendet", Toast.LENGTH_LONG).show();
                 new Verbindung().freundschaftPost(email.getText().toString());
+                getData();
             }
         });
         build.setNegativeButton("Abbrechen", null);
         AlertDialog alert1 = build.create();
         alert1.show();
+    }
+
+    public static void getData() {
+        freunde = new Verbindung().freundschaftGet();
+
     }
 
 }
