@@ -23,11 +23,7 @@ public class FreundschaftREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFreundschaften(@Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        String response = Freundschaft.getFreundschaften(benutzerID);
-        if (response != null) {
-            return Response.ok(response, MediaType.APPLICATION_JSON).build();
-        }
-        return Antwort.INTERNAL_SERVER_ERROR;
+        return Freundschaft.getFreundschaften(benutzerID);
     }
 
     @POST
@@ -35,13 +31,7 @@ public class FreundschaftREST {
     @Path(value="/{param}")
     public Response postFreundschaft(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        String response = Freundschaft.postFreundschaft(benutzerID, id);
-        if (response != null) {
-            return Antwort.CREATED;
-            //Falls Antwortcode CREATED nicht ausreicht:
-            //return Response.ok(response, MediaType.APPLICATION_JSON).build();
-        }
-        return Antwort.INTERNAL_SERVER_ERROR;
+        return Freundschaft.postFreundschaft(benutzerID, id);
     }
 
 
@@ -50,11 +40,7 @@ public class FreundschaftREST {
     @Path(value="/{param}")
     public Response putFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        String response = Freundschaft.putFreundschaft(benutzerID, id);
-        if (response != null) {
-            return Response.ok(response, MediaType.APPLICATION_JSON).build();
-        }
-        return Antwort.INTERNAL_SERVER_ERROR;
+        return Freundschaft.putFreundschaft(benutzerID, id);
     }
 
     @DELETE
@@ -62,10 +48,6 @@ public class FreundschaftREST {
     @Path(value="/{param}")
     public Response deleteFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        String response = Freundschaft.deleteFreundschaft(benutzerID, id);
-        if (response != null) {
-            return Response.ok(response, MediaType.APPLICATION_JSON).build();
-        }
-        return Antwort.INTERNAL_SERVER_ERROR;
+        return Freundschaft.deleteFreundschaft(benutzerID, id);
     }
 }
