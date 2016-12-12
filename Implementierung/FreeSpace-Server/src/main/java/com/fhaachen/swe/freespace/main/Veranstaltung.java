@@ -46,8 +46,11 @@ public class Veranstaltung extends Datenbank {
         return result;
     }
 
-
     public static boolean istRaumFrei(int von, int bis, String raumid){
+        return istRaumFrei(von,bis, raumid, null);
+    }
+
+    public static boolean istRaumFrei(int von, int bis, String raumid, String nichtBeachten){
         /*
         * Ein Raum ist blockiert, wenn von oder bis inner halb des Zeitraums einer anderen veranstaltung liegen!
         */
@@ -61,6 +64,11 @@ public class Veranstaltung extends Datenbank {
             int von1 = Integer.parseInt(v.get("von").toString());
             int bis1 = Integer.parseInt(v.get("bis").toString());
 
+            //Bei der Änderung einer Veranstaltung muss diese Bei der überprüfung ignoriert werden!
+            if(nichtBeachten.equals(v.get("id").toString())){
+                continue;
+            }
+
             if(von >= von1 && von <= bis1){
                 return false;
             }
@@ -68,10 +76,23 @@ public class Veranstaltung extends Datenbank {
             if(bis >= von1 && bis <=bis1){
                 return false;
             }
+
+            if(von1 >= von && von <= bis){
+                return false;
+            }
+
+            if(bis1 >= von && bis <=bis){
+                return false;
+            }
         }
+
         return true;
     }
 
+    /*
+        Gibt null zurück, wenn der Raum blockiert ist, oder eine Exception aufgetereten ist!
+        Ansonsten wird die neu erstellte Veranstlaltung zurück gegeben!
+    */
     public static String postVeranstaltung(String json, String professorID){
         String result = null;
         connect();
@@ -91,8 +112,11 @@ public class Veranstaltung extends Datenbank {
 
             try{
                 v.saveIt();
-                result = v.toJson(true);
+                String id = v.get("id").toString();
+                result = getVeranstaltungByID(id);
             } catch (Exception e){
+                //Es ist eine SQL-Exception aufgetreten!
+                //Wahrscheinlich ist die raumid falsch!
                 System.out.println(e);
             }
         }
@@ -101,35 +125,58 @@ public class Veranstaltung extends Datenbank {
         return result;
     }
 
-    public static String putVeranstaltungByID(String id, String json){
+    public static String putVeranstaltungByID(String id, String json, String professorID){
         connect();
-        String result = null;
+        String result = "OK";
         Map input = JsonHelper.toMap(json);
         Veranstaltung v = Veranstaltung.findById(id);
-        if(v != null){
-            int von = Integer.parseInt(input.get("von").toString());
-            int bis = Integer.parseInt(input.get("bis").toString());
-            String raum = input.get("raum").toString();
 
-            if(Veranstaltung.istRaumFrei(von,bis, raum)) {
-                v.set("raum", input.get("raum"));
-                v.set("von", input.get("von"));
-                v.set("bis", input.get("bis"));
+        int von = Integer.parseInt(input.get("von").toString());
+        int bis = Integer.parseInt(input.get("bis").toString());
+        String raum = input.get("raum").toString();
 
-                try {
-                    v.saveIt();
-                    result = v.toJson(true);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+        if(v == null){
+            result = "NOT_FOUND";
+        }
+        else if(!v.get("benutzer").equals(professorID)){
+            result = "FORBIDDEN";
+        }
+        else if(!Veranstaltung.istRaumFrei(von,bis, raum, id)){
+            result = "ROOM_BLOCKED";
+        }
+        else {
+            v.set("raum", input.get("raum"));
+            v.set("name", input.get("name"));
+            v.set("von", input.get("von"));
+            v.set("bis", input.get("bis"));
+
+            try {
+                v.saveIt();
+                result = getVeranstaltungByID(id);
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
+
+
         disconnect();
         return result;
     }
 
-    public static String deleteVeranstaltung(String id){
-        return "";
+    public static String deleteVeranstaltung(String id, String professorID){
+        connect();
+        String result = null;
+        Veranstaltung v = Veranstaltung.findById(id);
+        if(v == null){
+            result = "NOT_FOUND";
+        }else if(!v.get("benutzer").equals(professorID)){
+            result = "FORBIDDEN";
+        }else{
+            v.delete();
+            result ="OK";
+        }
+        disconnect();
+        return result;
     }
 
     public static String includeRaumInListe(String json){

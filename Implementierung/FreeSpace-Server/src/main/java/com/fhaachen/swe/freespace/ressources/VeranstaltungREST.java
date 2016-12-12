@@ -19,6 +19,7 @@ import javax.ws.rs.core.SecurityContext;
 @RolesAllowed("professor")
 public class VeranstaltungREST {
 
+    //DONE
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(@Context SecurityContext context){
@@ -27,6 +28,8 @@ public class VeranstaltungREST {
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
+
+    //DONE
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,10 +40,10 @@ public class VeranstaltungREST {
         if(response == null){
             return Antwort.ROOM_BLOCKED;
         }
-
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
+    //DONE
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
@@ -60,19 +63,47 @@ public class VeranstaltungREST {
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
+
+    //DONE
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putVeranstltungID(@PathParam(value="param") String id, String json){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können Veranstaltungen geändert werden!").build();
+    public Response putVeranstltungID(@PathParam(value="param") String id, String json, @Context SecurityContext context){
+        String professorID = context.getUserPrincipal().getName();
+        String response = Veranstaltung.putVeranstaltungByID(id, json, professorID);
+
+        if(response.equals("ROOM_BLOCKED")){
+            return Antwort.ROOM_BLOCKED;
+        }
+
+        if(response.equals("NOT_FOUND")){
+            return Antwort.NOT_FOUND;
+        }
+
+        if(response.equals("FORBIDDEN")){
+            return Antwort.FORBIDDEN;
+        }
+        return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
+
+    //DONE
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response deleteVeranstaltungID(@PathParam(value="param") String id, String json){
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("hier können Veranstaltungen gelöscht werden!" + json).build();
+    public Response deleteVeranstaltungID(@PathParam(value="param") String id, @Context SecurityContext context){
+        String professorID = context.getUserPrincipal().getName();
+        String response = Veranstaltung.deleteVeranstaltung(id, professorID);
+
+        if(response.equals("NOT_FOUND")){
+            return Antwort.NOT_FOUND;
+        }
+
+        if(response.equals("FORBIDDEN")){
+            return Antwort.FORBIDDEN;
+        }
+        return Response.ok().build();
     }
 }
