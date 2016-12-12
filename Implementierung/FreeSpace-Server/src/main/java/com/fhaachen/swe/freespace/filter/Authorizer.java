@@ -19,7 +19,7 @@ public class Authorizer implements SecurityContext {
         this.user = user;
         this.principal = new Principal() {
             public String getName() {
-                return user.username;
+                return user.userid;
             }
         };
     }
@@ -29,15 +29,12 @@ public class Authorizer implements SecurityContext {
     }
 
     public boolean isUserInRole(String role) {
-        System.out.println("suche nach rolle");
-        String rolle = Benutzer.getRolle(user.username);
-        System.out.println("Rolle gefunden: " + rolle);
+        String rolle = Benutzer.getRolle(user.userid);
         return (role.equals(rolle));
     }
 
     public boolean isSecure() {
         //"https".equals(uriInfo.get().getRequestUri().getScheme());)
-        System.out.println("Server frag nach isSecure");
         return true;
     }
 

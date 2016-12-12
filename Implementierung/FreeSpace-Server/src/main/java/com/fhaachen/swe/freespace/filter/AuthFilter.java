@@ -46,6 +46,11 @@ public class AuthFilter implements ContainerRequestFilter {
         //Ist der String null sind keine Informationen im Header gewesen
         if(authentication == null){
             System.out.println("Anfrage ohne Authorization im HTTP-Header");
+            String uri = filterContext.getUriInfo().getPath();
+
+            if(uri.equals("benutzer") || uri.equals("benutzer/")){
+                return new User("","");
+            }
             return null;
         }
 
@@ -66,14 +71,14 @@ public class AuthFilter implements ContainerRequestFilter {
             return null;
         }
 
-        String username = values[0];
-        String password = values[1];
+        String userid = values[0];
+        String token = values[1];
 
 
         //Validieren der Benutzerdaten
         User user;
-        if(Benutzer.istBenutzer(username)){
-            user = new User(username , "user");
+        if(Benutzer.istBenutzer(userid) && Benutzer.prüfeToken(userid, token)){
+            user = new User(userid , token);
             System.out.println("Benutzer authentifiziert");
             return user;
         }else{

@@ -1,11 +1,14 @@
 package com.fhaachen.swe.freespace.main;
 
+import com.fhaachen.swe.freespace.JsonHelper;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import javax.xml.ws.WebServiceException;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by thomas on 27.11.2016.
@@ -13,17 +16,82 @@ import java.util.List;
 @Table("Benutzer")
 public class Benutzer extends Datenbank{
 
-    public static void getDataFromGoogle(int idToken){
-
-
-    }
-
     public static boolean istProfessor(String id){
         connect();
         Long count = Benutzer.count("id=? AND istProfessor=1", id);
         disconnect();
 
         return(count != null && count >= 1);
+    }
+
+    public static String putBenutzer(String json, String id){
+        connect();
+        String result = null;
+        Map input = JsonHelper.toMap(json);
+        Benutzer b = Benutzer.findById(id);
+        if(b == null){
+            result = "NOT_FOUND";
+        }else if(id.equals(b.get("id").toString())){
+            result="FORBIDDEN";
+        }
+        else{
+            b.set("email", input.get("email"));
+            b.set("foto", input.get("foto"));
+            b.set("name", input.get("email"));
+            b.set("vorname", input.get("email"));
+
+            try {
+                b.saveIt();
+                result = b.toJson(true);
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+        return result;
+    }
+
+    public static String postBenutzer(String json){
+        String result = null;
+        Map input = JsonHelper.toMap(json);
+        String benutzerID = input.get("id").toString();
+
+        if(istBenutzer(benutzerID)){
+            connect();
+            System.out.println("Benutzer mit der id="+benutzerID+" ist schon vorhanden");
+            Benutzer b = Benutzer.findById(benutzerID);
+            result = b.toJson(true);
+        }else{
+            connect();
+            Benutzer neu = new Benutzer();
+            neu.set("id",benutzerID);
+            neu.set("email", input.get("email"));
+            neu.set("token", generiereToken());
+            neu.set("name", input.get("name"));
+            neu.set("vorname", input.get("vorname"));
+            neu.set("foto", input.get("foto"));
+
+            try {
+                neu.saveIt();
+                result = neu.toJson(true);
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
+
+        disconnect();
+        return result;
+    }
+
+    public static String generiereToken(){
+        char[] chars = "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 32; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        String output = sb.toString();
+        return output;
     }
 
     public static String getRolle(String id){
@@ -38,7 +106,6 @@ public class Benutzer extends Datenbank{
         }
 
         disconnect();
-
         return rolle;
     }
 
@@ -47,6 +114,19 @@ public class Benutzer extends Datenbank{
         Long count = Benutzer.count("id=?", id);
         disconnect();
         return(count != null && count > 0);
+    }
+
+    public static boolean prüfeToken(String id, String token){
+        System.out.println("Prüfue token benutzer="+id+" token="+token);
+        connect();
+        Benutzer b = Benutzer.findById(id);
+        String t = null;
+        if(b != null){
+            t = b.get("token").toString();
+        }
+
+        disconnect();
+        return (token.equals(t));
     }
 
     public static void main(String[] args) {
