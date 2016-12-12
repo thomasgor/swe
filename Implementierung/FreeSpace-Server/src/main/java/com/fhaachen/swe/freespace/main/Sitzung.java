@@ -65,8 +65,8 @@ public class Sitzung extends Datenbank {
         int hasTag = Integer.parseInt(JsonHelper.getAttribute(json, "hasTag"));
         try {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzer);
-            if (sitz == null) {
-                return Antwort.NO_ACTIVE_SESSION;
+            if (sitz != null) {
+                return Antwort.ACTIVE_SESSION;
             }
             antwort = Sitzung.createIt("benutzer", benutzer, "raum", raum, "endzeit", endzeit, "hasTag", hasTag).toJson(true);
         } catch(Exception e) {
@@ -99,16 +99,14 @@ public class Sitzung extends Datenbank {
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
-    //TODO: Warum wird ein inhalt zurück gegeben Ich denke heir brauchen wir keine Antwort nur einen status!
     public static Response deleteSitzung(String benutzer) {
         connect();
         String antwort = null;
         try {
-            Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzer);
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", Integer.parseInt(benutzer));
             if (sitz == null) {
-                return Antwort.NOT_FOUND;
+                return Antwort.NO_ACTIVE_SESSION;
             }
-
             sitz.delete();
             antwort = sitz.toJson(true);
         } catch(Exception e) {
@@ -116,7 +114,7 @@ public class Sitzung extends Datenbank {
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        return Response.ok(antwort,MediaType.APPLICATION_JSON).build(); // ??????
+        return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
     public static boolean istTagBesitzer(String userid,String raumid){
