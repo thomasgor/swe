@@ -40,6 +40,7 @@ public class AuthFilter implements ContainerRequestFilter {
     }
 
     private User authenticate(ContainerRequestContext filterContext){
+
         //Extrahieren der login informationen
         String authentication = filterContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 

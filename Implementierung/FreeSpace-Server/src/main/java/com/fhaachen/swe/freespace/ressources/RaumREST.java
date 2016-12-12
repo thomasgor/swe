@@ -2,16 +2,22 @@ package com.fhaachen.swe.freespace.ressources;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
+import com.fhaachen.swe.freespace.Server;
 import com.fhaachen.swe.freespace.main.Raum;
 import com.fhaachen.swe.freespace.main.Sitzung;
 import com.fhaachen.swe.freespace.main.Tag;
 
 import javax.annotation.security.RolesAllowed;
+import javax.imageio.ImageIO;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -92,4 +98,25 @@ public class RaumREST {
 
         return Response.ok(answer, MediaType.APPLICATION_JSON).build();
     }
+
+    @GET
+    @Produces("image/png")
+    @Path(value="/{param}/foto")
+    public Response getRaumfoto(@PathParam(value="param") String id) {
+        File foto = new File("Raum.jpg");
+        try {
+            BufferedImage image = ImageIO.read(foto);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            byte[] imageData = baos.toByteArray();
+            System.out.println(Server.BASE_URI);
+
+            return Response.ok(imageData, "image/png").build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Antwort.INTERNAL_SERVER_ERROR;
+    }
+
+
 }

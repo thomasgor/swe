@@ -28,11 +28,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Benutzer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Benutzer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="657">
+              <caret line="85" column="60" lean-forward="false" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="60" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Raum.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Raum.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1440">
-              <caret line="105" column="20" lean-forward="false" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="20" />
+            <state relative-caret-position="270">
+              <caret line="88" column="49" lean-forward="true" selection-start-line="88" selection-start-column="49" selection-end-line="88" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/Server.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="23" column="51" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -51,48 +73,38 @@
       <file leaf-file-name="RaumREST.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/RaumREST.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="945">
-              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+            <state relative-caret-position="453">
+              <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SitzungREST.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/SitzungREST.java">
+      <file leaf-file-name="Authorizer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/Authorizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+            <state relative-caret-position="60">
+              <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="10" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TagREST.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/TagREST.java">
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            <state relative-caret-position="90">
+              <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VeranstaltungREST.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/VeranstaltungREST.java">
+      <file leaf-file-name="AuthFilter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="66" column="10" lean-forward="false" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Dijkstra.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/maps/Dijkstra.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            <state relative-caret-position="285">
+              <caret line="38" column="60" lean-forward="false" selection-start-line="38" selection-start-column="60" selection-end-line="38" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -113,16 +125,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
               <caret line="23" column="25" lean-forward="true" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WegREST.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/WegREST.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -183,14 +185,14 @@
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/JsonHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Freundschaft.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Datenbank.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/RaumREST.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Veranstaltung.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/VeranstaltungREST.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/Authorizer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Benutzer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/BenutzerREST.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/RaumREST.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/Authorizer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Raum.java" />
       </list>
     </option>
@@ -1145,16 +1147,16 @@
       <workItem from="1481533622686" duration="5345000" />
       <workItem from="1481541669577" duration="868000" />
       <workItem from="1481542616527" duration="62000" />
-      <workItem from="1481542885304" duration="321000" />
+      <workItem from="1481542885304" duration="1771000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66591000" />
+    <option name="totallyTimeSpent" value="68041000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1166,7 +1168,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28713858" sideWeight="0.25536993" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37558687" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28713858" sideWeight="0.7446301" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28713858" sideWeight="0.7446301" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.49685973" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1354,13 +1356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="47" column="29" lean-forward="false" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FreeSpace-Server.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="434">
@@ -1438,30 +1433,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/Authorizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="31" column="52" lean-forward="false" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="52" column="13" lean-forward="false" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Freundschaft.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -1474,16 +1445,6 @@
         <state relative-caret-position="585">
           <caret line="39" column="77" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Benutzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="85" column="60" lean-forward="false" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1511,19 +1472,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/RaumREST.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/SitzungREST.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1531,7 +1486,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1539,7 +1496,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="27" column="17" lean-forward="false" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1583,10 +1542,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="23" column="51" lean-forward="false" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Benutzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="657">
+          <caret line="85" column="60" lean-forward="false" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/ressources/RaumREST.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="453">
+          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/AuthFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="38" column="60" lean-forward="false" selection-start-line="38" selection-start-column="60" selection-end-line="38" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/filter/Authorizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="10" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fhaachen/swe/freespace/main/Raum.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="105" column="20" lean-forward="false" selection-start-line="105" selection-start-column="20" selection-end-line="105" selection-end-column="20" />
+        <state relative-caret-position="270">
+          <caret line="88" column="49" lean-forward="true" selection-start-line="88" selection-start-column="49" selection-end-line="88" selection-end-column="49" />
           <folding />
         </state>
       </provider>

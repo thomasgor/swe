@@ -39,7 +39,6 @@ public class Raum extends Datenbank {
         disconnect();
         return result;
     }
-
     //TODO: TO TEST, SOLLTE ABER SO GEHEN !!!!!!!!!!!
     public static String includeBenutzerInRaumdetails(String json){
         Map input = JsonHelper.toMap(json);
