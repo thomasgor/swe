@@ -27,8 +27,9 @@ public class SitzungREST {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postSitzung(String json){
-        return Sitzung.postSitzung(json);
+    public Response postSitzung(String json, @Context SecurityContext context){
+        String benutzerID = context.getUserPrincipal().getName();
+        return Sitzung.postSitzung(json, benutzerID);
     }
 
     @DELETE
