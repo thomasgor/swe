@@ -21,10 +21,6 @@ public class WegREST {
         @Path(value="/{param1}/{param2}")
         @Produces(MediaType.APPLICATION_JSON)
         public Response getWeg(@PathParam(value="param1") String startID ,@PathParam(value="param2") String zielID){
-            String response = Weg.getWeg(startID, zielID);
-            if(response != null){
-                return Response.ok(response, MediaType.APPLICATION_JSON).build();
-            }
-            return Antwort.BAD_REQUEST;
+            return Weg.getWeg(startID, zielID);
         }
 }
