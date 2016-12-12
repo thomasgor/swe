@@ -1,6 +1,8 @@
 package com.swe.gruppe4.freespace;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -70,7 +72,10 @@ public class TagSetActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Verbindung().raumPut(rg.getCheckedRadioButtonId());
+                Intent result = new Intent();
+                result.putExtra("id",rg.getCheckedRadioButtonId());
+                setResult(Activity.RESULT_OK,result);
+                //new Verbindung().raumPut(rg.getCheckedRadioButtonId(),raumID);
                 finish();
 
             }

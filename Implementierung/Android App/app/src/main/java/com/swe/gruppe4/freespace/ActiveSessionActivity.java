@@ -47,6 +47,8 @@ public class ActiveSessionActivity extends BaseActivity
     RelativeLayout rlTop;
     boolean hasShadow = false;
 
+    public final static int BACK_FROM_TAG = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +148,7 @@ public class ActiveSessionActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),TagSetActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, BACK_FROM_TAG);
             }
         });
 
@@ -171,6 +173,16 @@ public class ActiveSessionActivity extends BaseActivity
         int max = raum.getTeilnehmer_max();
         int crnt = raum.getTeilnehmer_aktuell();
         leute.setText(getString(R.string.people_in_room_cnt,crnt,max,getResources().getQuantityString(R.plurals.people_in_room_cnt_anon,crnt-nichtAnonym,crnt-nichtAnonym)));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch(requestCode){
+            case BACK_FROM_TAG:
+                int tagID = data.getIntExtra("id",0);
+                raum = new Verbindung().raumPut(tagID,raum.getId());
+                setData();
+        }
     }
 
 }
