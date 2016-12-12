@@ -1,11 +1,16 @@
 package com.fhaachen.swe.freespace.main;
 
+import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.CompositePK;
 import org.javalite.activejdbc.annotations.Table;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.ResponseCache;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * Created by thomas on 27.11.2016.
@@ -54,7 +59,7 @@ public class Freundschaft extends Datenbank{
         return antwort;
     }
 
-    public static String getFreundschaften(String benutzerID) {
+    public static Response getFreundschaften(String benutzerID) {
         connect();
         String antwort = "[]";
         try {
@@ -64,33 +69,35 @@ public class Freundschaft extends Datenbank{
             }
         } catch(Exception e) {
             e.printStackTrace();
-            return null;
+            return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        return includeBenutzer(antwort);
+        antwort = includeBenutzer(antwort);
+        return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
-    //erstellt neue Freundschaft mit Status 0(Anfrage), muss somit noch durch put bejaht, oder durch delete beneint werden
-    public static String postFreundschaft(String benutzerID, String freundID) {
+    //erstellt neue Freundschaft mit Status 0(Anfrage), muss somit noch durch put bejaht, oder durch delete verneint werden
+    public static Response postFreundschaft(String benutzerID, String freundID) {
         connect();
         String antwort = null;
         //prüfen ob Freundschaft bereits besteht
         try {
             if (Freundschaft.findByCompositeKeys(benutzerID, freundID) != null || Freundschaft.findByCompositeKeys(freundID, benutzerID) != null) {
-                return null;
+                return Antwort.BAD_REQUEST;
             }
             antwort = Freundschaft.createIt("Benutzer", benutzerID, "Freund", freundID, "Status", 0).toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
-            return null;
+            return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        return antwort;
+        antwort = includeBenutzer(antwort);
+        return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
 
     //ändert Status der freundschaft von 0 (Anfrage) auf 1 (Freundschaft zugestimmt)
-    public static String putFreundschaft(String benutzerID, String freund) {
+    public static Response putFreundschaft(String benutzerID, String freund) {
         connect();
         String antwort = null;
         //prüfen ob Freundschaft bereits besteht
@@ -99,20 +106,21 @@ public class Freundschaft extends Datenbank{
             if (freu == null) {
                 freu = Freundschaft.findByCompositeKeys(freund, benutzerID);
                 if(freu == null) {
-                    return null;
+                    return Antwort.BAD_REQUEST;
                 }
             }
             freu.set("Status", 1).saveIt();
             antwort = freu.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
-            return null;
+            return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        return antwort;
+        antwort = includeBenutzer(antwort);
+        return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
-    public static String deleteFreundschaft(String benutzerID, String freund) {
+    public static Response deleteFreundschaft(String benutzerID, String freund) {
         connect();
         String antwort = null;
         //prüfen ob Freundschaft besteht
@@ -121,16 +129,16 @@ public class Freundschaft extends Datenbank{
             if (freu == null) {
                 freu = Freundschaft.findByCompositeKeys(freund, benutzerID);
                 if(freu == null) {
-                    return null;
+                    return Antwort.BAD_REQUEST;
                 }
             }
             freu.deleteCascade();
             antwort = freu.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
-            return null;
+            return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        return antwort;
+        return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 }

@@ -1,10 +1,14 @@
 package com.fhaachen.swe.freespace.main;
 
+import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.maps.*;
 import com.fhaachen.swe.freespace.maps.Campus.Campus;
 import com.fhaachen.swe.freespace.maps.GebäudeG.G1;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -13,15 +17,16 @@ import java.util.Map;
  */
 public class Weg {
 
-    public static String getWeg(String startID, String zielID) {
-        String antwort = null;
+    public static Response getWeg(String startID, String zielID) {
+        String antwort = "{}";
         Knoten start = new Knoten(startID);
         Knoten ziel = new Knoten(zielID);
         LinkedList<Knoten> weg = getWeg(start, ziel);
         if(weg != null) {
             antwort = JsonHelper.getJsonStringFromMap(weg);
+            return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
         }
-        return antwort;
+        return Antwort.BAD_REQUEST;
     }
 
     private static LinkedList<Knoten> getWeg(Knoten start, Knoten ziel) {
