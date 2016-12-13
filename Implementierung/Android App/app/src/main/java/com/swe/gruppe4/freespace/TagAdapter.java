@@ -1,6 +1,7 @@
 package com.swe.gruppe4.freespace;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by Merlin on 29.10.2016.
@@ -49,7 +51,19 @@ public class TagAdapter extends ArrayAdapter<com.swe.gruppe4.freespace.Objektkla
         final CheckBox tagCheckBox = (CheckBox) convertView.findViewById(R.id.tagCheckBox2);
         assert tagObj != null;
         tagCheckBox.setText(tagObj.getName());
-        tagCheckBox.setChecked(false);
+        HashSet<String> currSelectedFilter;
+        SharedPreferences sharedPref = getContext().getSharedPreferences("com.swe.gruppe4.freespace.roomfilter", Context.MODE_PRIVATE);
+        if(sharedPref.contains("filterTags")) {
+            currSelectedFilter = (HashSet<String>) sharedPref.getStringSet("filterTags", new HashSet<String>());
+        } else {
+            currSelectedFilter = new HashSet<>();
+        }
+
+        tagCheckBox.setChecked(currSelectedFilter.contains(tagObj.getName()));
+        if(currSelectedFilter.contains(tagObj.getName())) {
+            checkedTags.add(tagObj.getName());
+        }
+
         tagCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

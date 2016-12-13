@@ -2,6 +2,7 @@ package com.swe.gruppe4.freespace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +20,15 @@ import com.swe.gruppe4.freespace.Objektklassen.Raum;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class RoomActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView roomView;
     private RoomAdapter roomAdapter;
-    private boolean roomsWithFriendsIsSelected=false;
-    private boolean emtyRoomsIsSelected=false;
+    private boolean roomsWithFriendsIsSelected;
+    private boolean emtyRoomsIsSelected;
 
     //Raum Objekt enthält alle Informationen zu einem Raum
     //Room Objekt dient nur zu Anzeige
@@ -36,16 +38,21 @@ public class RoomActivity extends BaseActivity
     ArrayList<Raum> emptyRoomsList = new ArrayList<>();
     ArrayList<Raum> roomsWithFriendsList = new ArrayList<>();
 
-    ArrayList<String> filterTags = new ArrayList<>();
+    //ArrayList<String> filterTags = new ArrayList<>();
+    HashSet<String> filterTags = new HashSet<>();
 
     //Freundschaftsliste des aktuellen Benutzers
     ArrayList<Freundschaft> friendListUser = new ArrayList<>();
+
+    SharedPreferences sharedPref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        /*
 
         Bundle extraInfosFromIntent = getIntent().getExtras();
         if(extraInfosFromIntent != null) {
@@ -54,6 +61,35 @@ public class RoomActivity extends BaseActivity
                 filterTags = (ArrayList<String>) filterTagsObject;
             }
         }
+
+        */
+
+
+
+        sharedPref = this.getSharedPreferences("com.swe.gruppe4.freespace.roomfilter", Context.MODE_PRIVATE);
+        final boolean defaultValue = false;
+        if(sharedPref.contains("emtyRoomsIsSelected")) {
+            emtyRoomsIsSelected = sharedPref.getBoolean("emtyRoomsIsSelected", defaultValue);
+        } else {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("emtyRoomsIsSelected", defaultValue);
+            editor.commit();
+        }
+
+        if(sharedPref.contains("roomsWithFriendsIsSelected")) {
+            roomsWithFriendsIsSelected = sharedPref.getBoolean("roomsWithFriendsIsSelected", defaultValue);
+        } else {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("roomsWithFriendsIsSelected", defaultValue);
+            editor.commit();
+        }
+
+        if(sharedPref.contains("filterTags")) {
+            filterTags = (HashSet<String>) sharedPref.getStringSet("filterTags", new HashSet<String>());
+        } else {
+            filterTags = new HashSet<>();
+        }
+
 
 
         //inflate your activity layout here!
@@ -67,7 +103,8 @@ public class RoomActivity extends BaseActivity
 
         Verbindung connection = new Verbindung();
         roomListFromConnection = connection.raumGet();
-
+        roomsWithFriendsList = getRoomsWithFriends(roomListFromConnection);
+        emptyRoomsList = getEmptyRooms(roomListFromConnection);
 
         //Erstellt Raumliste für Anzeige nach Filterkriterien und zeigt sie an
         updateRooms();
@@ -96,7 +133,7 @@ public class RoomActivity extends BaseActivity
         MenuItem empty = menu.findItem(R.id.action_filter_rooms);
         empty.setChecked(emtyRoomsIsSelected);
         MenuItem friends = menu.findItem(R.id.filter_friends_only);
-        //friends.setChecked(true);
+        friends.setChecked(roomsWithFriendsIsSelected);
         return true;
     }
 
@@ -110,23 +147,37 @@ public class RoomActivity extends BaseActivity
         if(id == R.id.filter_tags){
             Intent intent = new Intent(getApplicationContext(), TagsFilterActivity.class);
             startActivity(intent);
-        } else if(id == R.id.filter_friends_only) {
+        }
+        else if(id == R.id.filter_friends_only) {
             item.setChecked(!item.isChecked());
             if(item.isChecked()) {
                 roomsWithFriendsList = getRoomsWithFriends(roomListFromConnection);
                 roomsWithFriendsIsSelected = true;
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("roomsWithFriendsIsSelected",true);
+                editor.commit();
             }
             else {
                 roomsWithFriendsIsSelected = false;
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("roomsWithFriendsIsSelected",false);
+                editor.commit();
             }
 
-        } else if(id == R.id.action_filter_rooms) {
+        }
+        else if(id == R.id.action_filter_rooms) {
             item.setChecked(!item.isChecked());
             if(item.isChecked()) {
                 emptyRoomsList = getEmptyRooms(roomListFromConnection);
                 emtyRoomsIsSelected = true;
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("emtyRoomsIsSelected",true);
+                editor.commit();
             } else {
                 emtyRoomsIsSelected = false;
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("emtyRoomsIsSelected",false);
+                editor.commit();
             }
 
         }
@@ -231,7 +282,7 @@ public class RoomActivity extends BaseActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
     }

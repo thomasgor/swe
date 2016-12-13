@@ -2,6 +2,7 @@ package com.swe.gruppe4.freespace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class TagsFilterActivity extends AppCompatActivity {
     private ListView tagView;
@@ -61,8 +63,15 @@ public class TagsFilterActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+
+                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.swe.gruppe4.freespace.roomfilter", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.clear();
+                editor.putStringSet("filterTags", new HashSet<String>(tagAdapt.getCheckedTags()));
+                editor.commit();
+
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
-                intent.putExtra("filterTags",tagAdapt.getCheckedTags());
+                //intent.putExtra("filterTags",tagAdapt.getCheckedTags());
                 startActivity(intent);
                 finish();
             }
