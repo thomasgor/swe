@@ -282,7 +282,8 @@ public class RoomActivity extends BaseActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
-                //startActivity(intent);
+                intent.putExtra("id",roomAdapter.getItem(position).getId());
+                startActivity(intent);
             }
         });
     }

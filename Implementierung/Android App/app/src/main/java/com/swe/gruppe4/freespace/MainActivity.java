@@ -7,6 +7,7 @@ import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.content.Intent;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -71,14 +72,21 @@ public class MainActivity extends BaseActivity
         */
 
         //Mockup Daten
-        Benutzer[] benutzer = new Benutzer[3];
+        /*Benutzer[] benutzer = new Benutzer[3];
         benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
         benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
         benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
         roomAdapter.add(new Raum(100,"G100",22,5,"",new Tag(4711,"Präsentation"),benutzer));
         roomAdapter.add(new Raum(102,"G102",22,15,"",new Tag(4711,"Präsentation"),benutzer));
         roomAdapter.add(new Raum(104,"G104",22,0,"",new Tag(0,""),new Benutzer[0]));
-        roomAdapter.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer));
+        roomAdapter.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer)); */
+
+        ArrayList<Raum> räume = connection.raumGet();
+        for (Raum r:räume) {
+            if(r.getTeilnehmer_aktuell() < r.getTeilnehmer_max())
+                roomAdapter.add(r);
+
+        }
         roomAdapter.notifyDataSetChanged();
         /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -86,7 +94,18 @@ public class MainActivity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();*/
 
+
+        roomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                intent.putExtra("id",roomAdapter.getItem(position).getId());
+                startActivity(intent);
+            }
+        });
     }
+
+
 
 }
 
