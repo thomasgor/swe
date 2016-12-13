@@ -1,6 +1,7 @@
 package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.JsonHelper;
+import com.fhaachen.swe.freespace.Server;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
@@ -83,7 +84,7 @@ public class Raum extends Datenbank {
 
                 result = JsonHelper.getJsonStringFromMap(raumMap);
                 result = includeBenutzerInRaumdetails(result);
-
+                result = includeRaumFoto(result);
             } else{
                 System.out.println("Raum wurde nicht gefunden");
             }
@@ -199,6 +200,13 @@ public class Raum extends Datenbank {
         return raumMap;
     }
 
+
+    public static String includeRaumFoto(String json){
+
+        Map raum = JsonHelper.toMap(json);
+        raum.put("foto",Server.BASE_URI + "raum/" + raum.get("id") +  "/foto");
+        return JsonHelper.getJsonStringFromMap(raum);
+    }
 
 
 }

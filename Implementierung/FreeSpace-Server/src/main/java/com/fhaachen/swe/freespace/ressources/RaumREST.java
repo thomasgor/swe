@@ -45,6 +45,7 @@ public class RaumREST {
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response getRaumdetails(@PathParam(value="param") String id){
+
         //TODO: NULL überprüfen
         String json = Raum.getRaumdetails(id);
         if(json == null) return Antwort.BAD_REQUEST;
@@ -93,11 +94,13 @@ public class RaumREST {
 
         //Es existiert kein Raum mit der ID
         if(answer == null){
-            return Antwort.NOT_FOUND;
+            return Antwort.INTERNAL_SERVER_ERROR;
         }
 
         return Response.ok(answer, MediaType.APPLICATION_JSON).build();
     }
+
+    //fotourl  [IPAdresse8888/RaumID)
 
     @GET
     @Produces("image/png")
@@ -105,13 +108,14 @@ public class RaumREST {
     public Response getRaumfoto(@PathParam(value="param") String id) {
         File foto = new File("Raum.jpg");
         try {
-            BufferedImage image = ImageIO.read(foto);
+           BufferedImage image = ImageIO.read(foto);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
             byte[] imageData = baos.toByteArray();
             System.out.println(Server.BASE_URI);
 
-            return Response.ok(imageData, "image/png").build();
+
+          return Response.ok(imageData, "image/png").build();
         } catch (IOException e) {
             e.printStackTrace();
         }
