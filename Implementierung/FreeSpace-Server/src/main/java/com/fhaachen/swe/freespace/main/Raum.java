@@ -74,16 +74,18 @@ public class Raum extends Datenbank {
                 Map raumMap = JsonHelper.toMap(json);
                 System.out.println("completeRaumDetails");
                 raumMap = completeRaumDetails(raumMap);
-
                 if(raumMap == null){
                     System.out.println("RaumMap ist null");
                 }
 
                 result = JsonHelper.getJsonStringFromMap(raumMap);
+                result = includeBenutzerInRaumdetails(result);
 
             } else{
                 System.out.println("Raum wurde nicht gefunden");
             }
+
+
         }
         catch(Exception e){
                 System.out.println(e.toString());
