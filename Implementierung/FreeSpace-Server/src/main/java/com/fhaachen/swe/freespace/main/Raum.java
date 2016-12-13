@@ -8,6 +8,7 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class Raum extends Datenbank {
                 try{
                      raumMap = completeRaumDetails(raumMap);
                 }catch(Exception e){
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
             }
 
@@ -42,17 +43,19 @@ public class Raum extends Datenbank {
     //TODO: TO TEST, SOLLTE ABER SO GEHEN !!!!!!!!!!!
     public static String includeBenutzerInRaumdetails(String json){
         Map input = JsonHelper.toMap(json);
-        String raumID = input.get("raum").toString();
+        String raumID = input.get("id").toString();
         connect();
         LazyList<Sitzung> sitzungen = Sitzung.find("raum=?", raumID);
-        Map[] benutzer = new Map[sitzungen.size()];
+        ArrayList<Map> benutzer = new ArrayList<Map>();
 
-        for(int i=0; i< benutzer.length; i++){
+        for(int i=0; i< sitzungen.size(); i++){
             String benutzerID = sitzungen.get(i).get("benutzer").toString();
             Benutzer b = Benutzer.findById(benutzerID);
-            String bJson = b.toJson(true);
-            Map bMap = JsonHelper.toMap(bJson);
-            benutzer[i] = bMap;
+            if(!"1".equals(b.get("istAnonym").toString())){
+                String bJson = b.toJson(true);
+                Map bMap = JsonHelper.toMap(bJson);
+                benutzer.add(bMap);
+            }
         }
 
         input.put("benutzer", benutzer);
@@ -88,7 +91,7 @@ public class Raum extends Datenbank {
 
         }
         catch(Exception e){
-                System.out.println(e.toString());
+            e.printStackTrace();
         }
 
         return result;//json;
@@ -129,38 +132,34 @@ public class Raum extends Datenbank {
 
 
         String raumID = raumMap.get("id").toString();
-        //lade Teilnehmer_anz
-        long teilnehmer_anz = Sitzung.getRaumteilnehmer_anz(raumID);
+
+        int teilnehmer_anz = Sitzung.getRaumteilnehmer_anz(raumID);
         if(teilnehmer_anz == 0)
-        System.out.println("Teilnehmer_anz ist null: " + raumID) ;
+            System.out.println("Teilnehmer_anz ist null: " + raumID);
+
         raumMap.put("teilnehmer_anz",teilnehmer_anz);
 
         //lade Status
-        long teilnehmer_max = Long.parseLong((raumMap.get("teilnehmer_max")).toString());
+        int teilnehmer_max = Integer.parseInt((raumMap.get("teilnehmer_max")).toString());
 
         double auslastung = 100;
         System.out.println("teilnehmer_max = " + teilnehmer_max);
         if(teilnehmer_max == 0){
             auslastung = 100;
         }else{
-            auslastung = (teilnehmer_anz / teilnehmer_max) * 100;
+            auslastung = ((double) teilnehmer_anz / (double) teilnehmer_max) * 100;
         }
 
         boolean aktiveVeranstaltung = false;
 
-        //eigentlich long
-        //TODO millisekungen oder sekunden?
         long unixTime = System.currentTimeMillis() / 1000L;
         int unixTime_Int = Integer.parseInt(String.valueOf(unixTime));
 
-        //TODO muss von THomas noch gemacht werden -> die Methode verfügt noch nicht über connect /disconnect usw.
         try{
-            aktiveVeranstaltung =Veranstaltung.istRaumFrei( unixTime_Int,unixTime_Int,raumID);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+            aktiveVeranstaltung =Veranstaltung.istRaumFrei(unixTime_Int,unixTime_Int,raumID);
+        }catch(Exception e) {
+            e.printStackTrace();
         }
-        //
-
 
         if(aktiveVeranstaltung){
             raumMap.put("status","grau");

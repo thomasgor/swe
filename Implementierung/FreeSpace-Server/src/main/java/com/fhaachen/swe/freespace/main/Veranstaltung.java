@@ -47,13 +47,14 @@ public class Veranstaltung extends Datenbank {
     }
 
     public static boolean istRaumFrei(int von, int bis, String raumid){
-        return istRaumFrei(von,bis, raumid, null);
+        return istRaumFrei(von,bis, raumid, "");
     }
 
     public static boolean istRaumFrei(int von, int bis, String raumid, String nichtBeachten){
         /*
         * Ein Raum ist blockiert, wenn von oder bis inner halb des Zeitraums einer anderen veranstaltung liegen!
         */
+        connect();
         LazyList<Veranstaltung> veranstaltungen = Veranstaltung.find("raum=?", raumid);
 
         if(veranstaltungen == null){
@@ -86,6 +87,7 @@ public class Veranstaltung extends Datenbank {
             }
         }
 
+        disconnect();
         return true;
     }
 
@@ -104,6 +106,7 @@ public class Veranstaltung extends Datenbank {
         String raum = input.get("raum").toString();
 
         if(Veranstaltung.istRaumFrei(von,bis,raum)){
+            connect();
             v.set("benutzer", Integer.parseInt(professorID));
             v.set("raum", input.get("raum"));
             v.set("name", input.get("name"));

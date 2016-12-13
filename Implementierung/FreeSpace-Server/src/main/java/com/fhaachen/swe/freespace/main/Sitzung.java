@@ -17,11 +17,14 @@ import java.util.Map;
 @IdName("benutzer")
 public class Sitzung extends Datenbank {
 
-    public static long getRaumteilnehmer_anz(String raumID){
+    public static int getRaumteilnehmer_anz(String raumID){
+        System.out.print("getRaumteilnehmer_anz: " + raumID + " ");
         connect();
-        Long teilnehmer_anz = Sitzung.count("raum = ?", raumID);
+        Long teilnehmer_anz = Sitzung.count("raum=?", raumID);
+        int result = Integer.parseInt(teilnehmer_anz.toString());
         disconnect();
-        return teilnehmer_anz;
+        System.out.print(result);
+        return result;
     }
 
 
@@ -86,19 +89,22 @@ public class Sitzung extends Datenbank {
         long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (45 * 60);
 
         try {
-            Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzerID);
-            //Nuetzer hat bereits eine akive Sitzung, sitzung soll gelöscht werden und eine neue Soll angelegt werden !
+            Sitzung sitz = Sitzung.findById(benutzerID);
             if (sitz != null) {
                 System.out.println("Benutzer hat bereits eine aktive Sitzung:" + benutzerID);
                 deleteSitzung(benutzerID);
             }
 
+            connect();
             Sitzung s  = new Sitzung();
             s.set("benutzer", benutzerID);
             s.set("endzeit", endzeit);
             s.set("raum", raum);
             s.set("hasTag", 0);
-            s.saveIt();
+            boolean erfolg = s.insert();
+
+            disconnect();
+            System.out.println("Neue sitzung wurde erstellt");
             antwort = s.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
@@ -106,7 +112,6 @@ public class Sitzung extends Datenbank {
         }
 
         disconnect();
-        antwort = includeBenutzer(antwort);
         antwort = includeRaumInSitzung(antwort);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
