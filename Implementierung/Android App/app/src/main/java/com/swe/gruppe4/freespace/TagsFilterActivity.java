@@ -66,7 +66,7 @@ public class TagsFilterActivity extends AppCompatActivity {
 
                 SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.swe.gruppe4.freespace.roomfilter", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.clear();
+                //editor.clear();
                 editor.putStringSet("filterTags", new HashSet<String>(tagAdapt.getCheckedTags()));
                 editor.commit();
 
