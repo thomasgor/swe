@@ -70,6 +70,15 @@ public class Sitzung extends Datenbank {
         antwort = includeBenutzer(antwort);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
+    public static String includeRaumInSitzung(String json){
+        Map input = JsonHelper.toMap(json);
+        String raumDetails = Raum.getRaumdetails(input.get("raum").toString());
+        Map raumMap = JsonHelper.toMap(raumDetails);
+
+        input.put("raum", raumMap);
+        return JsonHelper.getJsonStringFromMap(input);
+
+    }
 
     public static Response postSitzung(String json, String benutzerID) {
         connect();
