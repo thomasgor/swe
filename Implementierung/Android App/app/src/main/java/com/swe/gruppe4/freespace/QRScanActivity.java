@@ -61,16 +61,26 @@ public class QRScanActivity extends AppCompatActivity {
             }
             else {
                 //Toast.makeText(this, result.getContents(),Toast.LENGTH_LONG).show();
-                Verbindung verbindung = new Verbindung();
-                Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
+                //TODO verbessern
+                //Object scanned = result.getContents();
+                if ( isInteger(result.getContents())) {
+                    Verbindung verbindung = new Verbindung();
+                    Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
 
-                if(meinRaum == null) {
-                    Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
-                    finish();
+                    if(meinRaum == null) {
+                        Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                    else {
+                        showDialog(meinRaum);
+                    }
                 }
                 else {
-                    showDialog(meinRaum);
+                    Toast.makeText(this, "Unbekannter QR Code k int" ,Toast.LENGTH_LONG).show();
+                    finish();
                 }
+
+
             }
         }
         else {
@@ -111,6 +121,30 @@ public class QRScanActivity extends AppCompatActivity {
         });
         AlertDialog alert1 = build.create();
         alert1.show();
+    }
+
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
