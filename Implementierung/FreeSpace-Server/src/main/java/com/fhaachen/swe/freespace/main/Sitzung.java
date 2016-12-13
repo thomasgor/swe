@@ -49,8 +49,6 @@ public class Sitzung extends Datenbank {
         return json;
     }
 
-    //TODO: in der Sitzung sollte eigentlich kein benutzer objekt stehen, der benutzer kennt sich
-    //TODO: der raum sollte nachgeladen werden
     //TODO: Nachteil: Wenn man eine Response returned dann kann man die methode von nirgendwo anders benutzen
     //TODO: Ich finde es besser, wenn man hier einen String zurück gibt oder so, lass einfach mla drüber reden!!
     public static Response getSitzungById(String id){
@@ -67,7 +65,7 @@ public class Sitzung extends Datenbank {
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzer(antwort);
+        antwort = includeRaumInSitzung(antwort);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
     public static String includeRaumInSitzung(String json){
@@ -89,9 +87,10 @@ public class Sitzung extends Datenbank {
 
         try {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzerID);
-            //Nuetzer hat bereits eine akive Sitzung, was machen wir in einem Solchen Fall???
+            //Nuetzer hat bereits eine akive Sitzung, sitzung soll gelöscht werden und eine neue Soll angelegt werden !
             if (sitz != null) {
-                return Antwort.NOT_IMPLEMENTED;
+                System.out.println("Benutzer hat bereits eine aktive Sitzung:" + benutzerID);
+                deleteSitzung(benutzerID);
             }
 
             Sitzung s  = new Sitzung();
@@ -106,9 +105,9 @@ public class Sitzung extends Datenbank {
             return Antwort.INTERNAL_SERVER_ERROR;
         }
 
-
         disconnect();
         antwort = includeBenutzer(antwort);
+        antwort = includeRaumInSitzung(antwort);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
@@ -120,14 +119,12 @@ public class Sitzung extends Datenbank {
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
             }
-            //TODO: Sollen wir wirklich erlauben, das der Raum geändert werden kann????
-            //TODO: Eigentlich sollte in diesem fall eine neue Sitzung angelegt werden
-            //TODO: Thomas sagt, hier soll nur hastag und endzeit gesetzt werden
-            int raum = Integer.parseInt(JsonHelper.getAttribute(json, "raum"));
             long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (45 * 60);
             int hasTag = Integer.parseInt(JsonHelper.getAttribute(json, "hasTag"));
-            sitz.set("raum", raum).set("endzeit", endzeit).set("hasTag", hasTag).saveIt();
+
+            sitz.set("endzeit", endzeit).set("hasTag", hasTag).saveIt();
             antwort = sitz.toJson(true);
+            antwort = includeRaumInSitzung(antwort);
         } catch(Exception e) {
             e.printStackTrace();
             return Antwort.INTERNAL_SERVER_ERROR;
