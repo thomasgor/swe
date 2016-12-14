@@ -8,6 +8,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.Timestamp;
 import java.util.Map;
 
 /**
@@ -59,6 +60,11 @@ public class Sitzung extends Datenbank {
         try {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", Integer.parseInt(id));
             if (sitz == null) {
+                return Antwort.NO_ACTIVE_SESSION;
+            }
+            boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
+            if(outOfTime) {
+                sitz.delete();
                 return Antwort.NO_ACTIVE_SESSION;
             }
             antwort = sitz.toJson(true);
@@ -159,6 +165,9 @@ public class Sitzung extends Datenbank {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzer);
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
+            }
+            if(sitz.get("hasTag").toString().equals("1")) {
+                Raum.putRaumID(sitz.get("raum").toString(), null, benutzer);
             }
             sitz.delete();
         } catch(Exception e) {

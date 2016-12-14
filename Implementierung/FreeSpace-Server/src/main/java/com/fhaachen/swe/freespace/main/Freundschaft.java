@@ -20,39 +20,87 @@ import java.util.ResourceBundle;
 @CompositePK({ "Benutzer", "Freund" })
 
 public class Freundschaft extends Datenbank{
-
     static {
         validatePresenceOf("Benutzer", "Freund").message("ein oder mehrere Primärschlüssel fehlen!!!");
     }
 
-    private static String includeBenutzer(String json) {
-        connect();
+    private static String includeBenutzerMaps(String json) {
         Map[] map = JsonHelper.toMaps(json);
-        try {
-            for (Map element : map) {
-                System.out.println(element.toString());
-                Benutzer ben = Benutzer.findById(element.get("benutzer"));
-                Benutzer fre = Benutzer.findById(element.get("freund"));
+        String antwort = "[]";
+        if(map != null) {
+                for (Map element : map) {
+                    connect();
+                    try {
+                    System.out.println(element.toString());
+                    Benutzer ben = Benutzer.findById(element.get("benutzer"));
+                    Benutzer fre = Benutzer.findById(element.get("freund"));
 
+                    element.put("raum", null);
+
+                    if (ben != null) {
+                        ben.set("istAnonym", null);
+                        ben.set("token", null);
+                        String jsonBenutzer = ben.toJson(true);
+                        Map benutzer = JsonHelper.toMap(jsonBenutzer);
+                        element.put("benutzer", benutzer);
+                    }
+                    if (fre != null) {
+
+                        Sitzung sitz = Sitzung.findFirst("benutzer = ?", fre.getId());
+                        if(sitz != null) {
+                            String raum = Raum.getRaumByID(sitz.get("raum").toString());
+                            Map raumMap = JsonHelper.toMap(raum);
+                            element.put("raum", raumMap);
+                        }
+                        fre.set("istAnonym", null);
+                        fre.set("token", null);
+                        String jsonFreund = fre.toJson(true);
+                        Map freund = JsonHelper.toMap(jsonFreund);
+                        element.put("freund", freund);
+                    }
+                    System.out.println(element.toString());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return json;
+                }
+                disconnect();
+            }
+            antwort = JsonHelper.getJsonStringFromMap(map);
+        }
+        return antwort;
+    }
+
+    private static String includeBenutzerMap(String json) {
+        connect();
+        Map map = JsonHelper.toMap(json);
+        String antwort = null;
+        if (map != null) {
+            try {
+                System.out.println(map.toString());
+                Benutzer ben = Benutzer.findById(map.get("benutzer"));
+                Benutzer fre = Benutzer.findById(map.get("freund"));
                 if (ben != null) {
+                    ben.set("istAnonym", null);
+                    ben.set("token", null);
                     String jsonBenutzer = ben.toJson(true);
                     Map benutzer = JsonHelper.toMap(jsonBenutzer);
-                    element.put("benutzer", benutzer);
+                    map.put("benutzer", benutzer);
                 }
                 if (fre != null) {
+                    fre.set("istAnonym", null);
+                    fre.set("token", null);
                     String jsonFreund = fre.toJson(true);
                     Map freund = JsonHelper.toMap(jsonFreund);
-                    element.put("freund", freund);
+                    map.put("freund", freund);
                 }
-                System.out.println(element.toString());
+                System.out.println(map.toString());
 
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return json;
             }
-        } catch(Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        String antwort = "[]";
-        if (map != null) {
             antwort = JsonHelper.getJsonStringFromMap(map);
         }
         disconnect();
@@ -72,15 +120,30 @@ public class Freundschaft extends Datenbank{
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzer(antwort);
+        antwort = includeBenutzerMaps(antwort);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
     //erstellt neue Freundschaft mit Status 0(Anfrage), muss somit noch durch put bejaht, oder durch delete verneint werden
-    public static Response postFreundschaft(String benutzerID, String freundID) {
+    public static Response postFreundschaft(String benutzerID, String json) {
         connect();
         String antwort = null;
+        Benutzer freund = null;
+        try {
+            String email = JsonHelper.getAttribute(json, "email");
+            freund = Benutzer.findFirst("email = ?", email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Antwort.INTERNAL_SERVER_ERROR;
+        }
+        if(freund == null) {
+            return Antwort.BAD_REQUEST;
+        }
+        String freundID = freund.getId().toString();
         //prüfen ob Freundschaft bereits besteht
+        if(benutzerID.equals(freundID)) {
+            return Antwort.BAD_REQUEST;
+        }
         try {
             if (Freundschaft.findByCompositeKeys(benutzerID, freundID) != null || Freundschaft.findByCompositeKeys(freundID, benutzerID) != null) {
                 return Antwort.BAD_REQUEST;
@@ -91,7 +154,7 @@ public class Freundschaft extends Datenbank{
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzer(antwort);
+        antwort = includeBenutzerMap(antwort);
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
@@ -102,13 +165,11 @@ public class Freundschaft extends Datenbank{
         String antwort = null;
         //prüfen ob Freundschaft bereits besteht
         try {
-            Freundschaft freu = Freundschaft.findByCompositeKeys(benutzerID, freund);
-            if (freu == null) {
-                freu = Freundschaft.findByCompositeKeys(freund, benutzerID);
-                if(freu == null) {
-                    return Antwort.BAD_REQUEST;
-                }
+            Freundschaft freu = Freundschaft.findByCompositeKeys(freund, benutzerID);
+            if(freu == null) {
+                return Antwort.BAD_REQUEST;
             }
+
             freu.set("Status", 1).saveIt();
             antwort = freu.toJson(true);
         } catch(Exception e) {
@@ -116,7 +177,7 @@ public class Freundschaft extends Datenbank{
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzer(antwort);
+        antwort = includeBenutzerMap(antwort);
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
@@ -139,6 +200,6 @@ public class Freundschaft extends Datenbank{
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
+        return Response.ok().build();
     }
 }
