@@ -67,7 +67,7 @@ public class Verbindung {
     }
 	
 	public ArrayList<Freundschaft> freundschaftGet() {
-        ArrayList<Freundschaft> freunde = new ArrayList<Freundschaft>();
+        ArrayList<Freundschaft> freunde = new ArrayList<>();
         Benutzer[] benutzer = new Benutzer[10];
         for(int i = 0; i < 3; i++){
             Benutzer tmp = new Benutzer(i,"abc@def.com","Peter","Pan","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",false);
@@ -137,5 +137,50 @@ public class Verbindung {
         raumListe.add(new Raum(108,"G108",22,0,"",new Tag(0,""),new Benutzer[0]));
 
         return raumListe;
+    }
+
+
+
+    /**
+     * Die folgenden Methoden werden für die REST-Ressourcen Veranstaltung benutzt
+     */
+    public ArrayList<Veranstaltung> lecturesGet() {
+        ArrayList<Veranstaltung> lectures = new ArrayList<Veranstaltung>();
+        Veranstaltung[] veranstaltungen = new Veranstaltung[3];
+        Benutzer[] benutzer = new Benutzer[5];
+        Raum room =  new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.mockup2.Objektklassen.Tag(1,"Hallo Welt"), benutzer);
+        for(int i = 0; i < 3; i++){
+            Veranstaltung tmp = new Veranstaltung(i,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false), 1481541300000L, 1481546700000L,room );
+            lectures.add(i, tmp);
+        }
+        //TODO: Daten vom Server statt DummyDaten
+
+        return lectures;
+    }
+
+
+
+    public Veranstaltung lectureGet(long id){
+        //TODO: Daten vom Server holen
+        Benutzer[] benutzer = new Benutzer[5];
+        Raum room =  new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.mockup2.Objektklassen.Tag(1,"Hallo Welt"), benutzer);
+        Veranstaltung veranstaltung = new Veranstaltung(1,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Prof","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false), 1481541300000L, 1481546700000L,room);
+        return veranstaltung;
+    }
+
+
+    public void lecturePost(String name, long von, long bis, Raum raum){
+        //TODO: Daten an Server senden
+
+    }
+
+    public void lecturePut(long id, String name, long von, long bis, Raum raum){
+        //TODO: Daten an Server senden
+
+    }
+
+    public void lectureDelete(long id){
+        //TODO: Daten an Server senden
+
     }
 }

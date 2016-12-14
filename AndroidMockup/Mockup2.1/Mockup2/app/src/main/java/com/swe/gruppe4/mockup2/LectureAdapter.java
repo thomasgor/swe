@@ -7,30 +7,31 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.ArrayList;
-
-import static android.R.drawable.ic_menu_delete;
+import com.swe.gruppe4.mockup2.Objektklassen.*;
 
 /**
  * Created by Kiesa on 29.10.2016.
  */
 
-public class LectureAdapter extends ArrayAdapter<Lecture> {
+class LectureAdapter extends ArrayAdapter<Veranstaltung> {
 
-    private ArrayList<Lecture> lectureList = new ArrayList<Lecture>();
+    private ArrayList<Veranstaltung> lectureList = new ArrayList<>();
     /**
      *  add Room object  to the adapter
      */
-    public void add(Lecture lecture) {
-        super.add(lecture);
-        lectureList.add(lecture);
+    public void add(Veranstaltung veranstaltung) {
+        super.add(veranstaltung);
+        lectureList.add(veranstaltung);
 
     }
 
 
 
-    public Lecture getItem(int index) {
+    public Veranstaltung getItem(int index) {
         return this.lectureList.get(index);
     }
 
@@ -39,20 +40,33 @@ public class LectureAdapter extends ArrayAdapter<Lecture> {
     }
 
     /**
-     *  this method is used to populate the Roomlist in the RoomActivity
+     *  this method is used to populate the Lecturelist in the LecturelistActivity
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Lecture lectureObj = getItem(position);
+        Veranstaltung lectureObj = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.lecture_box, parent, false);
         }
         TextView lectureName = (TextView) convertView.findViewById(R.id.lecture_name);
-        lectureName.setText(lectureObj.getLectureName());
-        TextView lectureDate = (TextView) convertView.findViewById(R.id.lecture_date);
-        lectureDate.setText(lectureObj.getLectureDate());
+        lectureName.setText(lectureObj.getName());
+
+        //converting Date from long to readable String
+        Date date=new Date(lectureObj.getVon());
+        SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yy hh:mm");
+        String dateTextVon = df2.format(date);
+        TextView lectureDateVon = (TextView) convertView.findViewById(R.id.lecture_date_von);
+        lectureDateVon.setText(dateTextVon);
+
+
+        date=new Date(lectureObj.getBis());
+        String dateTextBis = df2.format(date);
+        TextView lectureDateBis = (TextView) convertView.findViewById(R.id.lecture_date_bis);
+        lectureDateBis.setText(dateTextBis);
+
         TextView lectureRoom = (TextView) convertView.findViewById(R.id.lecture_room);
-        lectureRoom.setText(lectureObj.getLectureRoom());
+        lectureRoom.setText(lectureObj.getRaum().getRaumname());
+
         ImageView editButton = (ImageView) convertView.findViewById(R.id.imageView2);
         ImageView deleteButton = (ImageView) convertView.findViewById(R.id.imageView3);
         editButton.setImageResource(android.R.drawable.ic_menu_edit);

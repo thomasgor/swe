@@ -1,6 +1,7 @@
 package com.swe.gruppe4.mockup2;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,11 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.ArrayList;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
+
+import com.swe.gruppe4.mockup2.Objektklassen.Veranstaltung;
 
 public class LectureListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +33,8 @@ public class LectureListActivity extends BaseActivity
     private LectureAdapter lectureAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ArrayList<Veranstaltung> veranstaltungen = new Verbindung().lecturesGet();
+        Veranstaltung data;
         super.onCreate(savedInstanceState);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,11 +47,29 @@ public class LectureListActivity extends BaseActivity
         lectureAdapter = new LectureAdapter(getApplicationContext(), R.layout.lecture_box);
         lectureView.setAdapter(lectureAdapter);
         lectureView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        lectureAdapter.add(new Lecture("Vorlesung SWE","Mo.24.10.2016 12:00-13:00","G101"));
-        lectureAdapter.add(new Lecture("Vorlesung GIP","Di.25.10.2016 12:00-13:00","G101"));
-        lectureAdapter.add(new Lecture("Übung SWE","Mi.26.10.2016 12:00-13:00","G101"));
-        lectureAdapter.add(new Lecture("Übung GIP","Do.27.10.2016 12:00-13:00","G101"));
+
+
+        for(Veranstaltung v:veranstaltungen){
+            lectureAdapter.add(v);
+        }
         lectureAdapter.notifyDataSetChanged();
+
+        lectureView.setClickable(true);
+        lectureView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(),LectureEditActivity.class);
+
+                //ToDo: Passende ID übergeben
+                intent.putExtra("ID", l);
+                startActivity(intent);
+            }
+        });
+
+
+        //TODO: OnItemClickListener für "Veranstaltung löschen"
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +91,15 @@ public class LectureListActivity extends BaseActivity
 
         build.setMessage("Möchten Sie die Veranstaltung wirklich löschen?");
 
-        build.setPositiveButton("Ja", null);
+        build.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
+                //TODO: ID der angeklickten Veranstaltung auslesen
+                //new Verbindung().lectureDelete(id);
+            }
+        });
+
         build.setNegativeButton("Nein", null);
         AlertDialog alert1 = build.create();
         alert1.show();

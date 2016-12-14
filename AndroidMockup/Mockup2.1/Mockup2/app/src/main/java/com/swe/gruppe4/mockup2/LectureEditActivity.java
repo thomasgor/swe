@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 import static com.swe.gruppe4.mockup2.R.id.time;
 
-public class AddLectureActivity extends AppCompatActivity implements View.OnClickListener{
+public class LectureEditActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText veranstaltungsNameEtxt;
 
     private EditText fromDateEtxt;
@@ -62,7 +62,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
 
         Room room;
         List<String> spinnerArray =  new ArrayList<>();
-        for (countVar = 0; countVar < numberOfRooms; countVar++){
+        for(countVar = 0; countVar < numberOfRooms; countVar++){
             room = roomadapter.getItem(countVar);
             spinnerArray.add(room.getRoomName());
         }
@@ -82,6 +82,9 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
                 //String name = (String) textview.getText();
                 //textview = (TextView) convertView.findViewById(R.id.DateEditText);
                 //Date date = textview.getText();
+                long id = getIntent().getLongExtra("ID", 0);
+                Verbindung verbindung = new Verbindung();
+
                 try {
                     SimpleDateFormat df = new SimpleDateFormat("dd.mm.yyyy");
                     java.util.Date fromDate;
@@ -106,7 +109,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
                     Raum raum = new Raum (100,"G100",22,5,"",new Tag (4711,"Präsentation"), ben);
 
                     Verbindung v = new Verbindung();
-                    v.lecturePost(veranstaltungsName, longFromTime,longToTime,raum);
+                    v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,raum);
 
                 }catch(java.text.ParseException e)
                 {
@@ -142,8 +145,11 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setDateTimeField() {
+        long id = getIntent().getLongExtra("ID", 0);
+        Verbindung verbindung = new Verbindung();
+        Veranstaltung veranstaltung = verbindung.lectureGet(id);
         fromDateEtxt.setOnClickListener(this);
-
+        //TODO: Kalender Startwerte auf Werte der Veranstaltung setzen
         Calendar newCalendar = Calendar.getInstance();
         fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
