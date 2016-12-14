@@ -27,7 +27,6 @@ public class Sitzung extends Datenbank {
         return result;
     }
 
-
     private static String includeBenutzer(String json) {
         System.out.println("Include Benutzer");
         connect();
@@ -178,4 +177,45 @@ public class Sitzung extends Datenbank {
 
         return (count != null && count >0);
     }
+
+    public static boolean raumHasTag(String raumID){
+        connect();
+        long anz = Sitzung.count("raum = ? and hasTag = 1", raumID);
+        disconnect();
+        if(anz >= 1)
+            return true;
+        return false;
+    }
+
+    public static boolean setHasTag(String benutzerID){
+        connect();
+        try {
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzerID);
+            sitz.set("hasTag",1);
+            sitz.saveIt();
+        }catch(Exception e){
+            disconnect();
+            return false;
+        }
+
+        disconnect();
+        return true;
+    }
+
+    public static boolean hasSessionInRoom(String raumID, String benutzerID) {
+        connect();
+        try {
+            Sitzung sitz = findFirst("benutzer = ? and raum = ?", benutzerID, raumID);
+            if(sitz != null) {
+                disconnect();
+                return true;
+            }
+        } catch(Exception e) {
+            disconnect();
+            return false;
+        }
+        disconnect();
+        return false;
+    }
+
 }

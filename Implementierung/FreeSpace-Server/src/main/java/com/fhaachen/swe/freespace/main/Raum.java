@@ -125,12 +125,6 @@ public class Raum extends Datenbank {
         raum.set("tag", tagID);
         try{
             raum.saveIt();
-            Benutzer b = Benutzer.findById(benutzerID);
-            if(b != null){
-                b.set("hasTag", 1);
-                b.saveIt();
-            }
-
         }catch(Exception e){
             //TAG nicht vorhanden
             System.out.println(e.toString());
