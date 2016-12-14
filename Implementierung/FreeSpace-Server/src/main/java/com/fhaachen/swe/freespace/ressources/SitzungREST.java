@@ -35,15 +35,25 @@ public class SitzungREST {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response deleteSitzungID(@PathParam(value="param") String id){
-        return Sitzung.deleteSitzung(id);
+    public Response deleteSitzungID(@PathParam(value="param") String id, @Context SecurityContext context){
+        String benutzerID = context.getUserPrincipal().getName();
+        if(!id.equals(benutzerID)){
+            return Antwort.FORBIDDEN;
+        }
+
+        return Sitzung.deleteSitzung(benutzerID);
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putSitzungID(@PathParam(value="param") String id, String json){
+    public Response putSitzungID(@PathParam(value="param") String id, String json, @Context SecurityContext context){
+        String benutzerID = context.getUserPrincipal().getName();
+        if(!id.equals(benutzerID)){
+            return Antwort.FORBIDDEN;
+        }
+
         return Sitzung.putSitzung(id, json);
     }
 }

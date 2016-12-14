@@ -13,6 +13,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.UriBuilder;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URI;
 import java.util.List;
 
@@ -24,7 +25,20 @@ public class Server {
         return UriBuilder.fromUri("http://localhost/").port(8888).build();
     }
 
+    private static String getURL(){
+        try{
+            String ip = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":8888/";
+            return ip;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static final URI BASE_URI = getBaseURI();
+    public static final String URL = getURL();
+
+
 
     protected static HttpServer startServer() throws IOException{
         System.out.println("Starting grizzly");
@@ -44,6 +58,7 @@ public class Server {
         boolean test = true;
         try {
             HttpServer httpServer = startServer();
+            System.out.println("Webservice published to: " + URL);
             System.out.println("Hit enter to Stop");
             System.in.read();
             httpServer.stop();

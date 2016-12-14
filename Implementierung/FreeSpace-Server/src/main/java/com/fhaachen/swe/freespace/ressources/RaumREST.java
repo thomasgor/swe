@@ -60,26 +60,8 @@ public class RaumREST {
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response putRaumdetails(@PathParam(value="param") String id, String json, @Context SecurityContext context) {
-
-      /*  System.out.println(json);
-        Map tmp = JsonHelper.toMap(json);
-
-        String tag = String.valueOf(tmp.get("tag"));
-        Map m = (Map)tmp.get("tag2");
-
-        String name = String.valueOf(m.get("name"));
-        System.out.println(name);
-
-        Map tmp = JsonHelper.toMap(json);
-        System.out.println(tmp);
-        System.out.println(((Map)tmp.get("tag2")).get("name")); */
-
-    //    System.out.println(JsonHelper.getAttribute(json,"tag2","name"));
-
-
         String tag = JsonHelper.getAttribute(json,"tag");
         String username = context.getUserPrincipal().getName(); // BenutzerID
-
         boolean isAllowed = Sitzung.istTagBesitzer(username,id);
 
         // User hat keine Berechtigung tag zu setzen
@@ -100,13 +82,12 @@ public class RaumREST {
         return Response.ok(answer, MediaType.APPLICATION_JSON).build();
     }
 
-    //fotourl  [IPAdresse8888/RaumID)
 
     @GET
     @Produces("image/png")
     @Path(value="/{param}/foto")
     public Response getRaumfoto(@PathParam(value="param") String id) {
-        File foto = new File("Raum.jpg");
+        File foto = new File("fotos/"+ id +".jpg");
         try {
            BufferedImage image = ImageIO.read(foto);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

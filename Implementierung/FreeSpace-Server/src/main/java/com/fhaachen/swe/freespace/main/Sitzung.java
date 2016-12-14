@@ -73,12 +73,11 @@ public class Sitzung extends Datenbank {
     }
     public static String includeRaumInSitzung(String json){
         Map input = JsonHelper.toMap(json);
-        String raumDetails = Raum.getRaumdetails(input.get("raum").toString());
-        Map raumMap = JsonHelper.toMap(raumDetails);
+        String raumID = input.get("raum").toString();
+        String raum = Raum.getRaumByID(raumID);
+        input.put("raum", JsonHelper.toMap(raum));
 
-        input.put("raum", raumMap);
         return JsonHelper.getJsonStringFromMap(input);
-
     }
 
     public static Response postSitzung(String json, String benutzerID) {
@@ -116,6 +115,21 @@ public class Sitzung extends Datenbank {
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
+    public static String getNoActiceSession() {
+        try{
+        Map homescreen = JsonHelper.toMap("{\"räume\": null}");
+        String raumliste = Raum.getRaum();
+        System.out.println(raumliste);
+        homescreen.put("räume", JsonHelper.toMaps(raumliste));
+        homescreen.put("karte", "SIMON MUSS DAS REGELN!");
+        return JsonHelper.getJsonStringFromMap(homescreen);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static Response putSitzung(String benutzer, String json) {
         connect();
         String antwort = null;
@@ -124,6 +138,7 @@ public class Sitzung extends Datenbank {
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
             }
+
             long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (45 * 60);
             int hasTag = Integer.parseInt(JsonHelper.getAttribute(json, "hasTag"));
 
@@ -138,7 +153,6 @@ public class Sitzung extends Datenbank {
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
-    //TODO: SIMON, das klappt jetzt !
     public static Response deleteSitzung(String benutzer) {
         connect();
         String antwort = null;

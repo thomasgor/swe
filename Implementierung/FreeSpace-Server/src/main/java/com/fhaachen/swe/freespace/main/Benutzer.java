@@ -1,6 +1,7 @@
 package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.JsonHelper;
+import jdk.nashorn.internal.runtime.JSONFunctions;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
@@ -24,29 +25,27 @@ public class Benutzer extends Datenbank{
         return(count != null && count >= 1);
     }
 
-    public static String putBenutzer(String json, String id){
-        connect();
-        String result = null;
+    public static String putBenutzer(String json, String benutzerID){
+        String result = "";
         Map input = JsonHelper.toMap(json);
-        Benutzer b = Benutzer.findById(id);
-        if(b == null){
-            result = "NOT_FOUND";
-        }else if(id.equals(b.get("id").toString())){
-            result="FORBIDDEN";
-        }
-        else{
-            b.set("email", input.get("email"));
-            b.set("foto", input.get("foto"));
-            b.set("name", input.get("email"));
-            b.set("vorname", input.get("email"));
+        String input_pw = input.get("masterpasswort").toString();
 
-            try {
+        if(!"admin".equals(input_pw)){
+            return null;
+        }
+
+        connect();
+        Benutzer b = Benutzer.findById(benutzerID);
+        if(b != null){
+            b.set("istProfessor", 1);
+            try{
                 b.saveIt();
                 result = b.toJson(true);
-            }catch(Exception e){
-                System.out.println(e);
+            } catch (Exception e){
+                e.printStackTrace();
             }
         }
+        disconnect();
         return result;
     }
 

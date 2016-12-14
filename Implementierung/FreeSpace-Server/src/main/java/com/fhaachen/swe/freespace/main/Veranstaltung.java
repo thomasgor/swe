@@ -33,15 +33,19 @@ public class Veranstaltung extends Datenbank {
     }
 
     public static String getVeranstaltungByID(String id){
+        System.out.println("getVeranstaltungByID "+  id);
         String result = null;
         connect();
 
-        Veranstaltung v = Veranstaltung.findById(id);
-        if(v != null){
-            result = v.toJson(true);
-            result = includeRaum(result);
+        try {
+            Veranstaltung v = Veranstaltung.findById(id);
+            if (v != null) {
+                result = v.toJson(true);
+                result = includeRaum(result);
+            }
+        }catch(Exception e){
+            System.out.println(e);
         }
-
         disconnect();
         return result;
     }
@@ -148,6 +152,7 @@ public class Veranstaltung extends Datenbank {
             result = "ROOM_BLOCKED";
         }
         else {
+            connect();
             v.set("raum", input.get("raum"));
             v.set("name", input.get("name"));
             v.set("von", input.get("von"));
@@ -201,7 +206,7 @@ public class Veranstaltung extends Datenbank {
         connect();
         System.out.println("includeRAUM");
         Map input = JsonHelper.toMap(json);
-        String raumJSON = Raum.getRaumdetails(input.get("raum").toString());
+        String raumJSON = Raum.getRaumByID(input.get("raum").toString());
         if(raumJSON != null){
             input.put("raum", JsonHelper.toMap(raumJSON));
         }

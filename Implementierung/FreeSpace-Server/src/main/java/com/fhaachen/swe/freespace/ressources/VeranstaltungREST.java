@@ -50,11 +50,12 @@ public class VeranstaltungREST {
     public Response getVeranstaltungID(@PathParam(value="param") String id ,@Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();
         String response = Veranstaltung.getVeranstaltungByID(id);
-        String responseProefessorID = JsonHelper.getAttribute(response, "benutzer");
 
         if(response == null){
             return Antwort.NOT_FOUND;
         }
+
+        String responseProefessorID = JsonHelper.getAttribute(response, "benutzer");
 
         if(!professorID.equals(responseProefessorID)){
             System.out.println("Benutzer " + professorID + " hat versucht eine Veranstaltung von "+ responseProefessorID + " zu laden");
