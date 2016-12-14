@@ -1,5 +1,6 @@
 package com.swe.gruppe4.freespace;
 
+import com.google.gson.Gson;
 import com.swe.gruppe4.freespace.Objektklassen.*;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import java.util.ArrayList;
@@ -12,6 +13,19 @@ import java.util.ArrayList;
 public class Verbindung {
 
 
+    private static final int HTTP_GET = 0;
+    private static final int HTTP_POST = 1;
+    private static final int HTTP_PUT = 2;
+    private static final int HTTP_DELETE = 3;
+
+    private static final int FREUNDSCHAFT = 0;
+    private static final int BENUTZER = 1;
+    private static final int SITZUNG = 2;
+    private static final int VERANSTALTUNG = 3;
+    private static final int RAUM = 4;
+    private static final int TAG = 5;
+    private static final int KARTE = 6;
+
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
         add(new Tag(4711,"Präsentation"));
         add(new Tag(4712,"Lernen"));
@@ -19,24 +33,114 @@ public class Verbindung {
     }};
 
     /**
+     * Die Methode wird benutzt um REST Methoden ohne ID Parameter aufzurufen
+     */
+    private String connectDUMMY(int restRessource, int httpMethod, String inputJson){
+
+        //TODO: HTTP-Builder erstellen und initialisieren
+
+        switch(httpMethod){
+            //TODO: HTTP-Builder richtige Methode geben
+            case HTTP_GET:
+                break;
+            case HTTP_POST:
+                break;
+            case HTTP_PUT:
+                break;
+            case HTTP_DELETE:
+                break;
+            default:
+                return "false";
+        }
+
+        switch(restRessource){
+            case FREUNDSCHAFT:
+                break;
+            case BENUTZER:
+                break;
+            case SITZUNG:
+                Benutzer[] benutzer = new Benutzer[5];
+                benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "",false);
+                benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
+                benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
+                benutzer[3] = new Benutzer(4,"abc@def.com","Yoda","Meister","http://starwars.gamona.de/wp-content/gallery/yoda-bilder/13_Yoda.jpg", "",false);
+                benutzer[4] = new Benutzer(5,"abc@def.com","Spock","Kommandant","https://pbs.twimg.com/profile_images/424886311078469632/8sKG_p8v_400x400.jpeg", "",false);
+                //benutzer[5] = new Benutzer(6,"abc@def.com","Schnee","Jon","http://static.giantbomb.com/uploads/original/3/39164/2865551-reasons-people-love-game-thrones-jon-snow-video.jpg", "",false);
+
+                long endzeit=(System.currentTimeMillis()/1000L)+2700;    //aktuelle Zeit + 45 Minuten
+                Sitzung sitzung =  new Sitzung(4711,new Raum(100,"G102",22,6,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Präsentation"), benutzer),false,endzeit);
+
+
+                Gson gson = new Gson();
+                return gson.toJson(sitzung);
+            case VERANSTALTUNG:
+                break;
+            case RAUM:
+                break;
+            case TAG:
+                break;
+            case KARTE:
+                break;
+            default:
+                return "false";
+        }
+        return "false";
+    }
+
+    /**
+     * Die Methode wird benutzt um REST Methoden ohne ID Parameter aufzurufen
+     */
+    private String connectDUMMY(int restRessource, int httpMethod, String inputJson, int id){
+
+        //TODO: HTTP-Builder erstellen und initialisieren
+
+        switch(httpMethod){
+            //TODO: HTTP-Builder richtige Methode geben
+            case HTTP_GET:
+                break;
+            case HTTP_POST:
+                break;
+            case HTTP_PUT:
+                break;
+            case HTTP_DELETE:
+                break;
+            default:
+                return "false";
+        }
+
+        switch(restRessource){
+            case FREUNDSCHAFT:
+                break;
+            case BENUTZER:
+                break;
+            case SITZUNG:
+                break;
+            case VERANSTALTUNG:
+                break;
+            case RAUM:
+                break;
+            case TAG:
+                break;
+            case KARTE:
+                break;
+            default:
+                return "false";
+        }
+        return "false";
+    }
+
+    /**
      * Die folgenden Methoden werden für die REST-Ressourcen Sitzung benutzt
      */
     public Sitzung sitzungGet(){
         //DUMMY! Später dann vom Server holen.
-        Benutzer[] benutzer = new Benutzer[5];
-        /*for(int i = 0; i < 3; i++){
-            Benutzer tmp = new Benutzer(i,"abc@def.com","Pan" + i,"Peter","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",false);
-            benutzer[i]=tmp;
-        }*/
-        benutzer[0] = new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "",false);
-        benutzer[1] = new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",false);
-        benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
-        benutzer[3] = new Benutzer(4,"abc@def.com","Yoda","Meister","http://starwars.gamona.de/wp-content/gallery/yoda-bilder/13_Yoda.jpg", "",false);
-        benutzer[4] = new Benutzer(5,"abc@def.com","Spock","Kommandant","https://pbs.twimg.com/profile_images/424886311078469632/8sKG_p8v_400x400.jpeg", "",false);
-        //benutzer[5] = new Benutzer(6,"abc@def.com","Schnee","Jon","http://static.giantbomb.com/uploads/original/3/39164/2865551-reasons-people-love-game-thrones-jon-snow-video.jpg", "",false);
+        Gson gson = new Gson();
+        String json = connectDUMMY(SITZUNG, HTTP_GET, "");
 
-        long endzeit=(System.currentTimeMillis()/1000L)+2700;    //aktuelle Zeit + 45 Minuten
-        return new Sitzung(4711,new Raum(100,"G102",22,6,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Präsentation"), benutzer),false,endzeit);
+        Sitzung res = gson.fromJson(json,Sitzung.class);
+        return res;
+
+
         //TODO: Daten vom Server statt DummyDaten
 
     }
@@ -95,8 +199,8 @@ public class Verbindung {
     public void sitzungDelete(int id){
         //TODO: Daten an Server senden
     }
-	
-	public ArrayList<Freundschaft> freundschaftGet() {
+
+    public ArrayList<Freundschaft> freundschaftGet() {
         ArrayList<Freundschaft> freunde = new ArrayList<Freundschaft>();
         Benutzer[] benutzer = new Benutzer[10];
         for(int i = 0; i < 3; i++){
@@ -115,17 +219,17 @@ public class Verbindung {
     //TODO: Daten vom Server statt DummyDaten
 
     public void freundschaftPost(String email) {
-                //TODO: Daten an Server senden
+        //TODO: Daten an Server senden
 
     }
 
     public void freundschaftPut(Benutzer benutzer, boolean accepted){
-                //TODO: Daten an Server senden
+        //TODO: Daten an Server senden
 
     }
 
     public void freundschaftDelete(Benutzer benutzer){
-                //TODO: Daten an Server senden
+        //TODO: Daten an Server senden
 
     }
 
@@ -208,7 +312,6 @@ public class Verbindung {
             }
 
         }
-        //return (Raum)meinRaum;
         return null;
     }
     public Raum raumPut(int tagID, int raumID){

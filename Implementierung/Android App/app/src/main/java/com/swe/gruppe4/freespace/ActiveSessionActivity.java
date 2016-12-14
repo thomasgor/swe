@@ -91,7 +91,7 @@ public class ActiveSessionActivity extends BaseActivity
 
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            rlTop=(RelativeLayout) findViewById(R.id.activity_room_details2);
+            rlTop=(RelativeLayout) findViewById(R.id.content_active_session2);
             listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
