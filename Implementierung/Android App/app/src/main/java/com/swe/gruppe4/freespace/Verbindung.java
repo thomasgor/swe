@@ -71,8 +71,7 @@ public class Verbindung {
                 Sitzung sitzung =  new Sitzung(4711,new Raum(100,"G102",22,6,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Präsentation"), benutzer),false,endzeit);
 
 
-                Gson gson = new Gson();
-                return gson.toJson(sitzung);
+                return new Gson().toJson(sitzung);
             case VERANSTALTUNG:
                 break;
             case RAUM:
@@ -134,13 +133,7 @@ public class Verbindung {
      */
     public Sitzung sitzungGet(){
         //DUMMY! Später dann vom Server holen.
-        Gson gson = new Gson();
-        String json = connectDUMMY(SITZUNG, HTTP_GET, "");
-
-        Sitzung res = gson.fromJson(json,Sitzung.class);
-        return res;
-
-
+        return new Gson().fromJson(connectDUMMY(SITZUNG, HTTP_GET, ""),Sitzung.class);
         //TODO: Daten vom Server statt DummyDaten
 
     }
