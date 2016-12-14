@@ -39,7 +39,7 @@ public class Tag extends Datenbank {
         String antwort = null;
         connect();
         try{
-            Tag tag = Tag.findById(Integer.parseInt(tagID));
+            Tag tag = Tag.findById(tagID);
             if(tag != null){
                 antwort = tag.toJson(true);
             } else {

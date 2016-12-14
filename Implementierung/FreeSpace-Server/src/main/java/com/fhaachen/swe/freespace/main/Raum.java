@@ -2,6 +2,7 @@ package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.Server;
+import jdk.nashorn.internal.runtime.JSONFunctions;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
@@ -9,6 +10,8 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,18 @@ import java.util.Map;
 @Table("Raum")
 public class Raum extends Datenbank {
 
+    public static String getRaumByID(String id){
+        connect();
+        String result = "";
+        Raum r = Raum.findById(id);
+        if(r != null){
+            Map m = JsonHelper.toMap(r.toJson(true));
+            m = completeRaumDetails(m);
+            result = JsonHelper.getJsonStringFromMap(m);
+        }
+        disconnect();
+        return result;
+    }
     public static String getRaum(){
         String result = "[]";
         connect();
@@ -29,6 +44,7 @@ public class Raum extends Datenbank {
             for( Map raumMap : raeumeMap){
                 try{
                      raumMap = completeRaumDetails(raumMap);
+
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -41,7 +57,7 @@ public class Raum extends Datenbank {
         disconnect();
         return result;
     }
-    //TODO: TO TEST, SOLLTE ABER SO GEHEN !!!!!!!!!!!
+
     public static String includeBenutzerInRaumdetails(String json){
         Map input = JsonHelper.toMap(json);
         String raumID = input.get("id").toString();
@@ -98,7 +114,7 @@ public class Raum extends Datenbank {
         return result;//json;
     }
 
-    public static String putRaumID(String raumID,String tagID){
+    public static String putRaumID(String raumID,String tagID, String benutzerID){
         connect();
         Raum raum = Raum.findById(raumID);
         if(raum == null){
@@ -109,6 +125,12 @@ public class Raum extends Datenbank {
         raum.set("tag", tagID);
         try{
             raum.saveIt();
+            Benutzer b = Benutzer.findById(benutzerID);
+            if(b != null){
+                b.set("hasTag", 1);
+                b.saveIt();
+            }
+
         }catch(Exception e){
             //TAG nicht vorhanden
             System.out.println(e.toString());
@@ -175,6 +197,7 @@ public class Raum extends Datenbank {
             }
         }
 
+        raumMap.put("foto",Server.URL + "raum/" + raumMap.get("id") +  "/foto");
         return raumMap;
     }
 
@@ -202,9 +225,8 @@ public class Raum extends Datenbank {
 
 
     public static String includeRaumFoto(String json){
-
         Map raum = JsonHelper.toMap(json);
-        raum.put("foto",Server.BASE_URI + "raum/" + raum.get("id") +  "/foto");
+        raum.put("foto",Server.URL + "raum/" + raum.get("id") +  "/foto");
         return JsonHelper.getJsonStringFromMap(raum);
     }
 

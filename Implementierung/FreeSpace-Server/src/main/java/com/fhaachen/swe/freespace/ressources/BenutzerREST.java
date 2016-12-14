@@ -39,11 +39,15 @@ public class BenutzerREST {
     @RolesAllowed({"user", "professor"})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path(value="/{param}")
-    public Response putBenutzer(@PathParam(value="param") String id, String json, @Context SecurityContext context){
-        //String benutzerID = context.getUserPrincipal().getName();
-        //String result = Benutzer.putBenutzer(json, benutzerID);
-        return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Benutzer ändern wird erstmal nicht benötigt!!!!!!!!!!!").build();
+    public Response putBenutzer(String json, @Context SecurityContext context){
+        String benutzerID = context.getUserPrincipal().getName();
+        String result = Benutzer.putBenutzer(json, benutzerID);
+
+        if(result == null){
+            return Antwort.FORBIDDEN;
+        }
+
+        return Response.ok(result, MediaType.APPLICATION_JSON).build();
     }
 
 }
