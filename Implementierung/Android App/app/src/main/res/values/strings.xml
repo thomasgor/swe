@@ -110,8 +110,8 @@
     <string name="empty_rooms">Nur Leere Räume</string>
     <string name="filter_friends">Räume mit Freunden</string>
     <string name="clickable_tags">Tags</string>
-    <string name="title_activity_tags_filter">Tags filtern</string>
-    <string name="title_activity_filter_tags">Tag setzen</string>
+    <string name="title_activity_filter_tags">Tags filtern</string>
+    <string name="title_activity_set_tags">Tag setzen</string>
     <string name="title_activity_settings2">Einstellungen</string>
     <string name="title_activity_active_session">FreeSpace</string>
     <string name="qrscan">QR Scanner</string>

@@ -47,10 +47,13 @@ public class ActiveSessionActivity extends BaseActivity
     RelativeLayout rlTop;
     boolean hasShadow = false;
 
+    public final static int BACK_FROM_TAG = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Daten holen
+        //data = new Verbindung().sitzungGet();
         data = (Sitzung) getIntent().getSerializableExtra("sitzung");
         raum = data.getRaum();
 
@@ -87,36 +90,37 @@ public class ActiveSessionActivity extends BaseActivity
         });
 
 
-        rlTop=(RelativeLayout) findViewById(R.id.content_active_session2);
-        listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-                if(i != SCROLL_STATE_IDLE){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            rlTop=(RelativeLayout) findViewById(R.id.activity_room_details2);
+            listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onScrollStateChanged(AbsListView absListView, int i) {
+                    if(i != SCROLL_STATE_IDLE){
+                        if(listIsAtTop()){
+                            rlTop.animate().z(0).setStartDelay(0).setDuration(130);
+                        } else {
+                            rlTop.animate().z(7).setStartDelay(0).setDuration(130);
+                        }
+                    }
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onScroll (AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                     if(listIsAtTop()){
                         rlTop.animate().z(0).setStartDelay(0).setDuration(130);
                     } else {
                         rlTop.animate().z(7).setStartDelay(0).setDuration(130);
                     }
                 }
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onScroll (AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(listIsAtTop()){
-                    rlTop.animate().z(0).setStartDelay(0).setDuration(130);
-                } else {
-                    rlTop.animate().z(7).setStartDelay(0).setDuration(130);
-                }
-            }
-        });
+            });
+        }
 
     }
 
-    private boolean listIsAtTop()   {
-        if(listPeopleInRoomView.getChildCount() == 0) return true;
-        return listPeopleInRoomView.getChildAt(0).getTop() == 0;
+    private boolean listIsAtTop() {
+        return listPeopleInRoomView.getChildCount() == 0 || listPeopleInRoomView.getChildAt(0).getTop() == 0;
     }
 
     private void setData(){
@@ -145,7 +149,8 @@ public class ActiveSessionActivity extends BaseActivity
         setTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(),TagSetActivity.class);
+                startActivityForResult(intent, BACK_FROM_TAG);
             }
         });
 
@@ -170,6 +175,16 @@ public class ActiveSessionActivity extends BaseActivity
         int max = raum.getTeilnehmer_max();
         int crnt = raum.getTeilnehmer_aktuell();
         leute.setText(getString(R.string.people_in_room_cnt,crnt,max,getResources().getQuantityString(R.plurals.people_in_room_cnt_anon,crnt-nichtAnonym,crnt-nichtAnonym)));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch(requestCode){
+            case BACK_FROM_TAG:
+                int tagID = data.getIntExtra("id",0);
+                raum = new Verbindung().raumPut(tagID,raum.getId());
+                setData();
+        }
     }
 
 }
