@@ -90,30 +90,32 @@ public class ActiveSessionActivity extends BaseActivity
         });
 
 
-        rlTop=(RelativeLayout) findViewById(R.id.content_active_session2);
-        listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-                if(i != SCROLL_STATE_IDLE){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            rlTop=(RelativeLayout) findViewById(R.id.activity_room_details2);
+            listPeopleInRoomView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onScrollStateChanged(AbsListView absListView, int i) {
+                    if(i != SCROLL_STATE_IDLE){
+                        if(listIsAtTop()){
+                            rlTop.animate().z(0).setStartDelay(0).setDuration(130);
+                        } else {
+                            rlTop.animate().z(7).setStartDelay(0).setDuration(130);
+                        }
+                    }
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onScroll (AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                     if(listIsAtTop()){
                         rlTop.animate().z(0).setStartDelay(0).setDuration(130);
                     } else {
                         rlTop.animate().z(7).setStartDelay(0).setDuration(130);
                     }
                 }
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onScroll (AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(listIsAtTop()){
-                    rlTop.animate().z(0).setStartDelay(0).setDuration(130);
-                } else {
-                    rlTop.animate().z(7).setStartDelay(0).setDuration(130);
-                }
-            }
-        });
+            });
+        }
 
     }
 
