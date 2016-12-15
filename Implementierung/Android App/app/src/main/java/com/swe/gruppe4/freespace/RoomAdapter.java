@@ -70,7 +70,18 @@ public class RoomAdapter extends ArrayAdapter<Raum> {
         ImageView statusIcon = (ImageView) convertView.findViewById(R.id.statusImg);
 
         //TODO: MUSS noch geändert werden wenn klar ist wie das Raumobjekt den Status übergibt
-        statusIcon.setImageResource(R.drawable.circle_green);
+        if(roomObj.getStatus().equals("grün")) {
+            statusIcon.setImageResource(R.drawable.circle_green);
+        }
+        else if(roomObj.getStatus().equals("gelb")) {
+            statusIcon.setImageResource(R.drawable.circle_yellow);
+        }
+        else if(roomObj.getStatus().equals("rot")) {
+            statusIcon.setImageResource(R.drawable.circle_red);
+        }
+        else {
+            statusIcon.setImageResource(R.drawable.circle_gray);
+        }
 
         return convertView;
     }

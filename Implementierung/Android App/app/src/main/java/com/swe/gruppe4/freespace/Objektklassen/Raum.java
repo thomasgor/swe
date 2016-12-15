@@ -11,12 +11,15 @@ public class Raum implements Serializable{
     private String raumname;
     private int teilnehmer_max;
     private int teilnehmer_aktuell;
-    private enum status{ROT, GELB, GRÜN, GRAU}
+    private String status;
+
+
+
     private String fotoURL;
     private Tag tag;
     private Benutzer[] benutzer;
 
-    public Raum(int id, String raumname, int teilnehmer_max, int teilnehmer_aktuell, String fotoURL, Tag tag, Benutzer[] benutzer) {
+    public Raum(int id, String raumname, int teilnehmer_max, int teilnehmer_aktuell, String fotoURL, Tag tag, Benutzer[] benutzer, String status) {
         this.id = id;
         this.raumname = raumname;
         this.teilnehmer_max = teilnehmer_max;
@@ -24,6 +27,7 @@ public class Raum implements Serializable{
         this.fotoURL = fotoURL;
         this.tag = tag;
         this.benutzer = benutzer;
+        this.status = status;
     }
 
     public int getId() {
@@ -72,6 +76,14 @@ public class Raum implements Serializable{
 
     public void setTag(Tag tag) {
         this.tag = tag;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Benutzer[] getBenutzer() {
