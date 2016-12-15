@@ -22,48 +22,58 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+/**
+ * Die Activity dient zur Darstellung der Räume in Form einer Liste. Die Liste kann
+ * gefiltert werden in dem entsprechende Checkboxen gesetzt oder über die TagFilterActivity
+ * Tags ausgewählt werden. Die Klasse enthält die Methoden, die zur Filterung nötig sind.
+ * Die Filter werden persistent gesetzt.
+ *
+ * @author Marco Linnartz
+ * @version 1.0
+ */
+
 public class RoomActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ListView roomView;
     private RoomAdapter roomAdapter;
+
+    //Zustand der Checkboxen "Räume mit Freunden" und "Nur leere Räume"
     private boolean roomsWithFriendsIsSelected;
     private boolean emtyRoomsIsSelected;
 
-    //Raum Objekt enthält alle Informationen zu einem Raum
-    //Room Objekt dient nur zu Anzeige
+    //Enthält alle Raume und wird bei onCeate durch Verbindungsklasse gefüllt
     ArrayList<Raum> roomListFromConnection = new ArrayList<>();
 
     //Listen für die Anzeige
+
+    //enthält nur noch die leeren Räume
     ArrayList<Raum> emptyRoomsList = new ArrayList<>();
+    //enthält nur noch die Räume mit Freunden
     ArrayList<Raum> roomsWithFriendsList = new ArrayList<>();
 
-    //ArrayList<String> filterTags = new ArrayList<>();
+    //entält die gesetzten Filter
     HashSet<String> filterTags = new HashSet<>();
 
     //Freundschaftsliste des aktuellen Benutzers
     ArrayList<Freundschaft> friendListUser = new ArrayList<>();
 
+    //speichert die gesetzten Filter und Tags
     SharedPreferences sharedPref;
 
+    /**
+     * Beim Aufbau der Activitiy wird zunächst der Status der Checkboxen wiederhergestellt (wenn schon vorhanden).
+     * Diese wurden in einer SharedPreferences Datei gespeichert. Wenn Tags gesetzt wurden befinden, diese sich ebenfalls
+     * in dieser Datei. Über ein Verbindungsobjekt wird zunächst die aktuelle Raumliste geladen.
+     * Außerdem werden die leeren und Räume mit Freunden erstellt (Nicht teuer).
+     * Anzeige der Räume erfolgt anschließen mit Hilfe der Methode updateRooms.
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        /*
-
-        Bundle extraInfosFromIntent = getIntent().getExtras();
-        if(extraInfosFromIntent != null) {
-            Object filterTagsObject = extraInfosFromIntent.get("filterTags");
-            if (filterTagsObject != null) {
-                filterTags = (ArrayList<String>) filterTagsObject;
-            }
-        }
-
-        */
-
 
 
         sharedPref = this.getSharedPreferences("com.swe.gruppe4.freespace.roomfilter", Context.MODE_PRIVATE);
@@ -89,7 +99,6 @@ public class RoomActivity extends BaseActivity
         } else {
             filterTags = new HashSet<>();
         }
-
 
 
         //inflate your activity layout here!
@@ -126,6 +135,11 @@ public class RoomActivity extends BaseActivity
         }
     }
 
+    /**
+     * Checkboxen im Optionsmenu werden entsprechend der Einstellungen in den SharedPreferenzes gesetzt
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -137,6 +151,15 @@ public class RoomActivity extends BaseActivity
         return true;
     }
 
+    /**
+     * Wertet die Auswahl im Optionsmenu aus.
+     * Wenn Tags berüht wird startet die TagsFilterActivity, um Tags zu setzten
+     * Bei auf Checkboxen gedrückt wird wird der Status getoggelt und die Datei mit den SharedPreferences
+     * wird aktualisiert
+     * Am Ende wird die Anzeige der Räume aktualisiert
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -144,10 +167,12 @@ public class RoomActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        //Tags
         if(id == R.id.filter_tags){
             Intent intent = new Intent(getApplicationContext(), TagsFilterActivity.class);
             startActivity(intent);
         }
+        //Räume mit Freunden
         else if(id == R.id.filter_friends_only) {
             item.setChecked(!item.isChecked());
             if(item.isChecked()) {
@@ -165,6 +190,7 @@ public class RoomActivity extends BaseActivity
             }
 
         }
+        //Nur leere Räume
         else if(id == R.id.action_filter_rooms) {
             item.setChecked(!item.isChecked());
             if(item.isChecked()) {
@@ -187,7 +213,13 @@ public class RoomActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateRooms() {
+    /**
+     *Übergibt die gefilterte Raumliste an dem Raumadapter
+     * Hier erfolgt auch die Filterung anhand der gesetzten Filter
+     * Am Ende erfolgt eine Alphanumerische Sortierung und das Schieben
+     * der vollen Räume an das Ende der Liste
+     */
+    private void updateRooms() {
         ArrayList<Raum> result = new ArrayList<>();
         roomAdapter.clearList();
         if(roomsWithFriendsIsSelected) {
@@ -212,16 +244,20 @@ public class RoomActivity extends BaseActivity
 
     }
 
-
-
-    //Übergebe Liste an Adapter zur Anzeige
+    /**
+     * Übergebe Liste an Adapter zur Anzeige
+     */
     private void addRoomsInAdapter(ArrayList<Raum> list) {
         for(int i = 0; i < list.size(); i++) {
             roomAdapter.add(list.get(i));
         }
     }
 
-    //Filtert die leeren Räume aus einer Raumliste
+    /**
+     * //Filtert die leeren Räume aus einer Raumliste
+     * @param fullRoomList Liste die gefiltert werden soll
+     * @return gefilterte Liste
+     */
     private ArrayList<Raum> getEmptyRooms(ArrayList<Raum> fullRoomList) {
         ArrayList<Raum> emptyRoomList = new ArrayList<>();
 
@@ -234,6 +270,11 @@ public class RoomActivity extends BaseActivity
         return emptyRoomList;
     }
 
+    /**
+     * Filtert die Liste mit Freunden aus einer Raumliste
+     * @param fullRoomList Liste die gefiltert werden soll
+     * @return gefilterte Liste
+     */
     private ArrayList<Raum> getRoomsWithFriends(ArrayList<Raum> fullRoomList) {
         friendListUser = new Verbindung().freundschaftGet();
         ArrayList<Raum> friendListRoom = new ArrayList<>();
@@ -277,6 +318,10 @@ public class RoomActivity extends BaseActivity
         return tmpList;
     }
 
+    /**
+     * Wenn auf ein Raumelement gedrückt wird, wird die RaumdetailsActivity mit einem Intent
+     * gestartet, das die ID des Raumes enthält
+     */
     public void setOnItemClickListenerForView() {
         roomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -288,6 +333,11 @@ public class RoomActivity extends BaseActivity
         });
     }
 
+    /**
+     * Sortiert die vollen Räume an das Ende der Liste
+     * @param roomList ursprüngeliche Liste
+     * @return Liste mit vollen Räume am Ende, wenn vorhanden
+     */
     public ArrayList<Raum> orderFullRoomsToBottomOfList(ArrayList<Raum> roomList) {
         ArrayList<Raum> tmpList = new ArrayList<>();
         ArrayList<Raum> fullRoomsList = new ArrayList<>();
@@ -308,7 +358,7 @@ public class RoomActivity extends BaseActivity
         return tmpList;
     }
 
-    //Nicht mehr nötig das Room Objekt abgelöst
+    //Nicht mehr nötig, da das Room Objekt durch Raum abgelöst wurde
     /*
     private void addRoomsInOrder(ArrayList<Raum> rawList) {
 

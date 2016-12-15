@@ -21,6 +21,15 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 
+/**
+ * Dient zum Login der Anwender. Nutzt die Google API um das lokal vorhanden Googlekonto
+ * zur Authentifizierung zu verwenden. Zur Identifizierung wird die Google ID des Nutzern abgegriffen
+ * Zusätzlich wird der Nutzername, die Emailadresse und die URL des Profilbildes abgerufen
+ *
+ * @author Marco Linnartz
+ * @version 1.1
+ */
+
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private GoogleApiClient mGoogleApiClient;

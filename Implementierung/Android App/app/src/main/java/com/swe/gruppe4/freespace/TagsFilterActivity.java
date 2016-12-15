@@ -18,9 +18,25 @@ import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Stellt eine Liste mit Checkboxen bereit. Jedem verfügbaren Tag wird eine Checkbox bereitgestellt.
+ * Die Tags die gesetzt werden, werden im Filter der Raumliste berücksichtigt.
+ *
+ * @author Marco Linnartz
+ * @version 1.0
+ */
+
 public class TagsFilterActivity extends AppCompatActivity {
     private ListView tagView;
 
+    /**
+     * Anfangs werden die aktuell verfügbaren Tags vom Server über ein Verbindungsobjekt angefragt.
+     * Die Tags werden danach in die Listview mit Hilfe des TagAdapter eingefügt.
+     * Wenn auf den AnwendenButton gedrückt wird, werden die gesetzten Tags in eine Sharedpreferences Datei
+     * gespeichtert. Die Datei steht der RoomActivity zur Anzeige und Filterun zur Verfügung. Danach wird die
+     * RoomActivity über ein explizietes Intent gestartet.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +82,10 @@ public class TagsFilterActivity extends AppCompatActivity {
 
                 SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.swe.gruppe4.freespace.roomfilter", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                //editor.clear();
                 editor.putStringSet("filterTags", new HashSet<String>(tagAdapt.getCheckedTags()));
                 editor.commit();
 
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
-                //intent.putExtra("filterTags",tagAdapt.getCheckedTags());
                 startActivity(intent);
                 finish();
             }

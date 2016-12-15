@@ -13,31 +13,59 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- * Created by Merlin on 29.10.2016.
+ * Dient zum erstellen der Tagliste. Hier werden die Tagobjekt in die Listview
+ * eingefügt
+ *
+ * @author Marco Linnartz
+ * @version 1.0
  */
 
 public class TagAdapter extends ArrayAdapter<com.swe.gruppe4.freespace.Objektklassen.Tag> {
     private ArrayList<com.swe.gruppe4.freespace.Objektklassen.Tag> tagArrayList = new ArrayList<>();
     private ArrayList<String> checkedTags = new ArrayList<>();
 
+    /**
+     * Fügt Tags in Liste für Anzeige hinzu
+     * @param tag
+     */
     public void add(com.swe.gruppe4.freespace.Objektklassen.Tag tag) {
         super.add(tag);
         tagArrayList.add(tag);
     }
 
+    /**
+     * Liefert den Tag am entsprechenden Index
+     * @param index
+     * @return
+     */
     public com.swe.gruppe4.freespace.Objektklassen.Tag getItem(int index) {
         return this.tagArrayList.get(index);
     }
+
 
     public TagAdapter(Context context, int resource) {
         super(context, resource);
     }
 
+    /**
+     * Liefert eine Liste der Tags, die gecheckt sind
+     * @return
+     */
     public ArrayList<String> getCheckedTags() {
         return checkedTags;
     }
 
 
+    /**
+     * Fügt die einzelnen Tags in die ListView ein.
+     * Fägt einen Listener auf die Checkboxen ein. Wenn ein Eintrag ausgewählt wird,
+     * wird diese in die Liste der gecheckten Tags hinzugefügt. Wenn der Eintrag abgewählt wird,
+     * wird der Eintrage aus der Liste der gecheckten Tags entfernt
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         com.swe.gruppe4.freespace.Objektklassen.Tag tagObj = getItem(position);
@@ -47,7 +75,6 @@ public class TagAdapter extends ArrayAdapter<com.swe.gruppe4.freespace.Objektkla
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.tag_box_check, parent, false);
         }
 
-        //RadioButton tagRadioButton = (RadioButton) convertView.findViewById(R.id.tagCheckBox);
         final CheckBox tagCheckBox = (CheckBox) convertView.findViewById(R.id.tagCheckBox2);
         assert tagObj != null;
         tagCheckBox.setText(tagObj.getName());
@@ -74,8 +101,7 @@ public class TagAdapter extends ArrayAdapter<com.swe.gruppe4.freespace.Objektkla
                 }
             }
         });
-        //tagRadioButton.setText(tagObj.getName());
-        //tagRadioButton.setChecked(false);
+
         return convertView;
     }
 }
