@@ -1,6 +1,6 @@
 package com.swe.gruppe4.mockup2;
-
 import android.content.Context;
+
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
+import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import com.swe.gruppe4.mockup2.Objektklassen.*;
@@ -69,16 +73,35 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         TextView lectureRoom = (TextView) convertView.findViewById(R.id.lecture_room);
         lectureRoom.setText(lectureObj.getRaum().getRaumname());
 
-        ImageView editButton = (ImageView) convertView.findViewById(R.id.imageView2);
+
         ImageView deleteButton = (ImageView) convertView.findViewById(R.id.imageView3);
+        deleteButton.setImageResource(android.R.drawable.ic_menu_delete);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogDelete(view, lectureObj.getId());
             }
         });
+
+
+
+        ImageView editButton = (ImageView) convertView.findViewById(R.id.imageView2);
         editButton.setImageResource(android.R.drawable.ic_menu_edit);
-        deleteButton.setImageResource(android.R.drawable.ic_menu_delete);
+
+        //editButton.setClickable(true);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), LectureEditActivity.class);
+                i.putExtra("Id", lectureObj.getId());
+                view.getContext().startActivity(i);
+            }
+        });
+
+
+
+
         return convertView;
     }
 
@@ -95,7 +118,9 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
             public void onClick(DialogInterface dialog, int which) {
                 Verbindung verb = new Verbindung();
                 verb.lectureDelete(lectureId);
+                //Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
                 notifyDataSetChanged();
+
 
             }
 

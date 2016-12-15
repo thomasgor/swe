@@ -59,6 +59,7 @@
             android:label="Veranstaltungen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AddLectureActivity" />
+        <activity android:name=".LectureEditActivity" />
         <activity
             android:name=".RoomActivity"
             android:label="@string/title_activity_room"

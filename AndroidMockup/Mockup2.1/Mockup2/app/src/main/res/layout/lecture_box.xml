@@ -7,6 +7,17 @@
     tools:background="?attr/colorButtonNormal">
 
     <TextView
+        android:text="Vorlesung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lecture_date_von"
+        android:backgroundTint="@android:color/darker_gray"
+        android:layout_below="@+id/lecture_name"
+        android:layout_alignStart="@+id/lecture_name"
+        android:layout_marginTop="15dp"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -22,36 +33,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lecture_room"
-        android:layout_below="@+id/lecture_date"
-        android:layout_alignStart="@+id/lecture_date"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignStart="@+id/lecture_date_bis" />
 
     <TextView
         android:text="Vorlesung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lecture_date"
+        android:id="@+id/lecture_date_bis"
         android:backgroundTint="@android:color/darker_gray"
-        android:layout_below="@+id/lecture_name"
-        android:layout_alignStart="@+id/lecture_name"
-        android:layout_marginTop="15dp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:layout_below="@+id/lecture_date_von"
+        android:layout_alignStart="@+id/lecture_date_von" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_menu_edit"
-        android:layout_marginEnd="26dp"
+        android:layout_marginEnd="25dp"
         android:id="@+id/imageView2"
-        android:layout_above="@+id/lecture_date"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/ic_menu_delete"
         android:id="@+id/imageView3"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/lecture_date_von"
         android:layout_alignStart="@+id/imageView2" />
 
 </RelativeLayout >

@@ -54,6 +54,7 @@ public class LectureListActivity extends BaseActivity
         }
         lectureAdapter.notifyDataSetChanged();
 
+/*
         lectureView.setClickable(true);
         lectureView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -65,9 +66,8 @@ public class LectureListActivity extends BaseActivity
                 startActivity(intent);
             }
         });
+*/
 
-
-        //TODO: OnItemClickListener für "Veranstaltung löschen"
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -81,7 +81,7 @@ public class LectureListActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        showDialog();
+        //showDialog();
 
     }
 
