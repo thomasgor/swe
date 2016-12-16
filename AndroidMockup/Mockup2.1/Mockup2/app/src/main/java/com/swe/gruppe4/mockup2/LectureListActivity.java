@@ -54,19 +54,7 @@ public class LectureListActivity extends BaseActivity
         }
         lectureAdapter.notifyDataSetChanged();
 
-/*
-        lectureView.setClickable(true);
-        lectureView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(),LectureEditActivity.class);
 
-                //ToDo: Passende ID übergeben
-                intent.putExtra("ID", l);
-                startActivity(intent);
-            }
-        });
-*/
 
 
 

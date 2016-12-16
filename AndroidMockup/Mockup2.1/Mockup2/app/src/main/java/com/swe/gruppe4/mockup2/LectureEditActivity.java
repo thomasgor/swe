@@ -57,7 +57,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
         Verbindung verb = new Verbindung();
-        ArrayList<Raum> raumliste = verb.raumListeGet();
+        final ArrayList<Raum> raumliste = verb.raumListeGet();
 
 
 
@@ -69,7 +69,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner sItems = (Spinner) findViewById(R.id.spinner);
+        final Spinner sItems = (Spinner) findViewById(R.id.spinner);
         sItems.setAdapter(adapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -103,15 +103,24 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
 
                     String veranstaltungsName = veranstaltungsNameEtxt.getText().toString();
 
-                    //TODO: Spinner mit Rauminfo auslesen
-                    //Bis dahin mit Mockupdaten
-                    Benutzer[] ben = new Benutzer[1];
-                    ben[0] = new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",false);
-                    Raum raum = new Raum (100,"G100",22,5,"",new Tag (4711,"Präsentation"), ben);
+                    String selectedRoomName = sItems.getSelectedItem().toString();
+
+                    //Nur damit selectedRoom initialisiert ist.
+                    Raum selectedRoom = raumliste.get(0);
+
+                    for(Raum raum: raumliste){
+                        if(raum.getRaumname().toString() == selectedRoomName){
+                            selectedRoom = raum;
+                            break;
+                        }
+
+                    }
+
+
 
                     Verbindung v = new Verbindung();
-                    v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,raum);
-
+                    v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,selectedRoom);
+                    Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                 }catch(java.text.ParseException e)
                 {
                     // TODO Auto-generated catch block
