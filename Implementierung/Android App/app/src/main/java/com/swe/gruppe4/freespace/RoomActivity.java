@@ -110,7 +110,7 @@ public class RoomActivity extends BaseActivity
         roomView.setAdapter(roomAdapter);
         roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
-        Verbindung connection = new Verbindung();
+        VerbindungDUMMY connection = new VerbindungDUMMY();
         roomListFromConnection = connection.raumGet();
         roomsWithFriendsList = getRoomsWithFriends(roomListFromConnection);
         emptyRoomsList = getEmptyRooms(roomListFromConnection);
@@ -276,7 +276,7 @@ public class RoomActivity extends BaseActivity
      * @return gefilterte Liste
      */
     private ArrayList<Raum> getRoomsWithFriends(ArrayList<Raum> fullRoomList) {
-        friendListUser = new Verbindung().freundschaftGet();
+        friendListUser = new VerbindungDUMMY().freundschaftGet();
         ArrayList<Raum> friendListRoom = new ArrayList<>();
         boolean found = false;
 

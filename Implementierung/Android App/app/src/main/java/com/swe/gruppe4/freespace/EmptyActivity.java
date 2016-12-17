@@ -27,7 +27,7 @@ public class EmptyActivity extends AppCompatActivity {
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Verbindung connect = new Verbindung();
+                VerbindungDUMMY connect = new VerbindungDUMMY();
                 Sitzung data = connect.sitzungGet();
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",data);

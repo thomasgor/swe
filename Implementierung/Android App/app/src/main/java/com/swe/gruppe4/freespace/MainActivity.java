@@ -12,9 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
-import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
-import com.swe.gruppe4.freespace.Objektklassen.Tag;
+
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity
@@ -29,7 +28,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        final Verbindung connection = new Verbindung();
+        final VerbindungDUMMY connection = new VerbindungDUMMY();
 
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_main, null, false);

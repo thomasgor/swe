@@ -58,7 +58,7 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         acceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Verbindung().freundschaftPut(friendObj.getBenutzer(), true);
+                new VerbindungDUMMY().freundschaftPut(friendObj.getBenutzer(), true);
             }
         });
 
@@ -67,7 +67,7 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         declineFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Verbindung().freundschaftPut(friendObj.getBenutzer(), false);
+                new VerbindungDUMMY().freundschaftPut(friendObj.getBenutzer(), false);
             }
         });
         return convertView;

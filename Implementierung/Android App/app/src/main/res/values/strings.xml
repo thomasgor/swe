@@ -130,6 +130,7 @@
     <string name="set_tag">Tag setzen</string>
     <string name="room_number">%1$s</string>
     <string name="tag">%1$s</string>
+    <string name="errormsgTitle">"Fehler %d"</string>
 
 
 

@@ -8,17 +8,14 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.view.ViewPropertyAnimator;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
@@ -53,8 +50,8 @@ public class ActiveSessionActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Daten holen
-        //data = new Verbindung().sitzungGet();
-        data = (Sitzung) getIntent().getSerializableExtra("sitzung");
+        //data = new VerbindungDUMMY().sitzungGet();
+        data = new RestConnection(this).sitzungGet();
         raum = data.getRaum();
 
 
@@ -72,7 +69,7 @@ public class ActiveSessionActivity extends BaseActivity
         erneuern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                data = new Verbindung().sitzungPut(data.getId());
+                data = new VerbindungDUMMY().sitzungPut(data.getId());
                 raum = data.getRaum();
                 setData();
             }
@@ -82,7 +79,7 @@ public class ActiveSessionActivity extends BaseActivity
         beenden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Verbindung().sitzungDelete(data.getId());
+                new VerbindungDUMMY().sitzungDelete(data.getId());
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -182,7 +179,7 @@ public class ActiveSessionActivity extends BaseActivity
         switch(requestCode){
             case BACK_FROM_TAG:
                 int tagID = data.getIntExtra("id",0);
-                raum = new Verbindung().raumPut(tagID,raum.getId());
+                raum = new VerbindungDUMMY().raumPut(tagID,raum.getId());
                 setData();
         }
     }

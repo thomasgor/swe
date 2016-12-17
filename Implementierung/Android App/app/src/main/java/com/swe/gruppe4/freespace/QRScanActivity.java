@@ -1,22 +1,12 @@
 package com.swe.gruppe4.freespace;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 //import com.google.android.gms.vision.CameraSource;
@@ -64,7 +54,7 @@ public class QRScanActivity extends AppCompatActivity {
                 //TODO verbessern
                 //Object scanned = result.getContents();
                 if ( isInteger(result.getContents())) {
-                    Verbindung verbindung = new Verbindung();
+                    VerbindungDUMMY verbindung = new VerbindungDUMMY();
                     Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
 
                     if(meinRaum == null) {
@@ -97,7 +87,7 @@ public class QRScanActivity extends AppCompatActivity {
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Verbindung connect = new Verbindung();
+                VerbindungDUMMY connect = new VerbindungDUMMY();
                 Sitzung data = connect.sitzungGet();
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));

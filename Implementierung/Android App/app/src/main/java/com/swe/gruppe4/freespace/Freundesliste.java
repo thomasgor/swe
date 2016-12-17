@@ -92,7 +92,7 @@ public class Freundesliste extends BaseActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getApplicationContext(),"Anfrage gesendet", Toast.LENGTH_LONG).show();
-                new Verbindung().freundschaftPost(email.getText().toString());
+                new VerbindungDUMMY().freundschaftPost(email.getText().toString());
                 getData();
             }
         });
@@ -102,7 +102,7 @@ public class Freundesliste extends BaseActivity
     }
 
     public static void getData() {
-        freunde = new Verbindung().freundschaftGet();
+        freunde = new VerbindungDUMMY().freundschaftGet();
 
     }
 

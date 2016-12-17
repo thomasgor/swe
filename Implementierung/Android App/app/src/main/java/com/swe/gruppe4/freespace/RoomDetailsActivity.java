@@ -1,7 +1,6 @@
 package com.swe.gruppe4.freespace;
 
 
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +17,6 @@ import android.widget.Toast;
 import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
-import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class RoomDetailsActivity extends AppCompatActivity {
 
@@ -40,7 +33,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int id = getIntent().getIntExtra("id",4711);
-        raum = new Verbindung().raumGet(id);
+        raum = new VerbindungDUMMY().raumGet(id);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

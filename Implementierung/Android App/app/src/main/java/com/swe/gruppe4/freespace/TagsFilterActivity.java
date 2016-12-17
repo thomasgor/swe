@@ -47,7 +47,7 @@ public class TagsFilterActivity extends AppCompatActivity {
         tagView.setAdapter(tagAdapt);
         tagView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
-        Verbindung connection = new Verbindung();
+        VerbindungDUMMY connection = new VerbindungDUMMY();
 
         ArrayList<Tag> tagList = connection.tagGet();
         for(int i = 0; i < tagList.size(); i++) {

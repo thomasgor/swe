@@ -1,7 +1,6 @@
 package com.swe.gruppe4.freespace;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +8,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
@@ -31,7 +28,7 @@ public class TagSetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        tagList = new Verbindung().tagGet();
+        tagList = new VerbindungDUMMY().tagGet();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tags_set);
@@ -75,7 +72,7 @@ public class TagSetActivity extends AppCompatActivity {
                 Intent result = new Intent();
                 result.putExtra("id",rg.getCheckedRadioButtonId());
                 setResult(Activity.RESULT_OK,result);
-                //new Verbindung().raumPut(rg.getCheckedRadioButtonId(),raumID);
+                //new VerbindungDUMMY().raumPut(rg.getCheckedRadioButtonId(),raumID);
                 finish();
 
             }

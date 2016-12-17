@@ -3,7 +3,7 @@ package com.swe.gruppe4.freespace.Objektklassen;
 import java.io.Serializable;
 
 /**
- * <p>Überschrift: Struktur von Verbindung </p>
+ * <p>Überschrift: Struktur von VerbindungDUMMY </p>
  * <p>Beschreibung:
  * </p>
  * <p>Copyright: Merlin Copyright (c) 2016</p>

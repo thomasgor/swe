@@ -1,30 +1,49 @@
 package com.swe.gruppe4.freespace;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.util.SparseIntArray;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.google.gson.Gson;
-import com.swe.gruppe4.freespace.Objektklassen.*;
+import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
+import com.swe.gruppe4.freespace.Objektklassen.Freundschaft;
+import com.swe.gruppe4.freespace.Objektklassen.Raum;
+import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Merlin on 04.12.2016.
  */
 
 
-public class Verbindung {
+public class RestConnection {
 
+    private Context context;
 
-    private static final int HTTP_GET = 0;
-    private static final int HTTP_POST = 1;
-    private static final int HTTP_PUT = 2;
-    private static final int HTTP_DELETE = 3;
+    private static final String HTTP_GET = "GET";
+    private static final String HTTP_POST = "POST";
+    private static final String HTTP_PUT = "PUT";
+    private static final String HTTP_DELETE = "DELETE";
 
-    private static final int FREUNDSCHAFT = 0;
-    private static final int BENUTZER = 1;
-    private static final int SITZUNG = 2;
-    private static final int VERANSTALTUNG = 3;
-    private static final int RAUM = 4;
-    private static final int TAG = 5;
-    private static final int KARTE = 6;
+    private static final String FREUNDSCHAFT = "Freundschaft";
+    private static final String BENUTZER = "Benutzer";
+    private static final String SITZUNG = "Sitzung";
+    private static final String VERANSTALTUNG = "Veranstaltung";
+    private static final String RAUM = "Raum";
+    private static final String TAG = "Tag";
+    private static final String KARTE = "Karte";
+
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
         add(new Tag(4711,"Präsentation"));
@@ -32,26 +51,129 @@ public class Verbindung {
         add(new Tag(4713,"Ruhe"));
     }};
 
+    public RestConnection(Context context) {
+        this.context = context;
+    }
+
+
+
     /**
      * Die Methode wird benutzt um REST Methoden ohne ID Parameter aufzurufen
      */
-    private String connectDUMMY(int restRessource, int httpMethod, String inputJson){
-
-        //TODO: HTTP-Builder erstellen und initialisieren
-
-        switch(httpMethod){
-            //TODO: HTTP-Builder richtige Methode geben
-            case HTTP_GET:
+    private SparseIntArray acceptableCodes(String restRessource, String httpMethod){
+        SparseIntArray res = new SparseIntArray();
+        switch(restRessource){
+            case FREUNDSCHAFT:
+                res.append(200,0);
                 break;
-            case HTTP_POST:
+            case BENUTZER:
+                res.append(201,0);
+                switch (httpMethod){
+                    case HTTP_POST:
+                        res.append(200,0);
+                        break;
+                    case HTTP_PUT:
+                        res.append(403,0);
+                    default:
+                        return null;
+                }
                 break;
-            case HTTP_PUT:
+            case SITZUNG:
+                switch (httpMethod){
+                    case HTTP_GET:
+                        res.append(200,0);
+                        res.append(900,0);
+                        break;
+                    case HTTP_POST:
+                        res.append(201,0);
+                        break;
+                    default:
+                        return null;
+                }
                 break;
-            case HTTP_DELETE:
+            case VERANSTALTUNG:
+                switch (httpMethod){
+                    case HTTP_GET:
+                        res.append(200,0);
+                        break;
+                    case HTTP_POST:
+                        res.append(201,0);
+                        res.append(910,0);
+                        break;
+                    default:
+                        return null;
+                }
+                break;
+            case RAUM:
+                res.append(200,0);
+                break;
+            case TAG:
+                res.append(200,0);
+                break;
+            case KARTE:
+                switch (httpMethod){
+                    case HTTP_GET:
+                        break;
+                    case HTTP_POST:
+                        break;
+                    case HTTP_PUT:
+                        break;
+                    case HTTP_DELETE:
+                        break;
+                    default:
+                        return null;
+                }
                 break;
             default:
-                return "false";
+                return null;
         }
+        return null;
+    }
+    private String restRequest(String restRessource, String httpMethod, String inputJson){
+
+
+        String response = "false";
+        try {
+            java.net.URL url = new java.net.URL("http://example-server.com/" + restRessource +"/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod(httpMethod);
+            OutputStream os = conn.getOutputStream();
+
+            if(!Objects.equals(inputJson, "")){
+                conn.setRequestProperty("Content-Type","application/json");
+                byte[] inputJsonBytes = inputJson.getBytes("UTF-8");
+                os.write(inputJsonBytes);
+            }
+            os.flush();
+
+            int responseCode = conn.getResponseCode();
+            SparseIntArray acceptableCodes = acceptableCodes(restRessource,httpMethod);
+            if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+            } else {
+                showErrorMessage(responseCode);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private void showErrorMessage(int responseCode) {
+
+        new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.errormsgTitle, responseCode))
+                .setMessage("BlablablaMrFreeman")
+                .setPositiveButton("Verstanden", null)
+                .create()
+                .show();
+    }
+
+    private String connectDUMMY(String restRessource, String httpMethod, String inputJson){
 
         switch(restRessource){
             case FREUNDSCHAFT:
@@ -68,8 +190,9 @@ public class Verbindung {
                 //benutzer[5] = new Benutzer(6,"abc@def.com","Schnee","Jon","http://static.giantbomb.com/uploads/original/3/39164/2865551-reasons-people-love-game-thrones-jon-snow-video.jpg", "",false);
 
                 long endzeit=(System.currentTimeMillis()/1000L)+2700;    //aktuelle Zeit + 45 Minuten
-                Sitzung sitzung =  new Sitzung(4711,new Raum(100,"G102",22,6,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Präsentation"), benutzer, "grün"),false,endzeit);
+                Sitzung sitzung =  new Sitzung(4711,new Raum(100,"G102",22,6,"http://i.imgur.com/LyzIuVj.jpg", new Tag(1,"Präsentation"), benutzer, "grün"),false,endzeit);
 
+                showErrorMessage(403);
 
                 return new Gson().toJson(sitzung);
             case VERANSTALTUNG:
@@ -83,13 +206,29 @@ public class Verbindung {
             default:
                 return "false";
         }
+
+        switch(httpMethod){
+            //TODO: HTTP-Builder richtige Methode geben
+            case HTTP_GET:
+                break;
+            case HTTP_POST:
+                break;
+            case HTTP_PUT:
+                break;
+            case HTTP_DELETE:
+                break;
+            default:
+                return "false";
+        }
+
+
         return "false";
     }
 
     /**
-     * Die Methode wird benutzt um REST Methoden ohne ID Parameter aufzurufen
+     * Die Methode wird benutzt um REST Methoden mit ID Parameter aufzurufen
      */
-    private String connectDUMMY(int restRessource, int httpMethod, String inputJson, int id){
+    private String connectDUMMY(String restRessource, String httpMethod, String inputJson, int id){
 
         //TODO: HTTP-Builder erstellen und initialisieren
 
@@ -126,6 +265,45 @@ public class Verbindung {
                 return "false";
         }
         return "false";
+    }
+    private SparseIntArray acceptableCodesID(String restRessource, String httpMethod){
+        SparseIntArray res = new SparseIntArray();
+        switch(restRessource){
+            case FREUNDSCHAFT:
+                res.append(200,0);
+                res.append(400,0);
+                break;
+            case SITZUNG:
+                res.append(200,0);
+                break;
+            case VERANSTALTUNG:
+                res.append(200,0);
+                switch (httpMethod){
+                    case HTTP_PUT:
+                        res.append(910,0);
+                }
+                break;
+            case RAUM:
+                res.append(200,0);
+                break;
+            case KARTE:
+                switch (httpMethod){
+                    case HTTP_GET:
+                        break;
+                    case HTTP_POST:
+                        break;
+                    case HTTP_PUT:
+                        break;
+                    case HTTP_DELETE:
+                        break;
+                    default:
+                        return null;
+                }
+                break;
+            default:
+                return null;
+        }
+        return null;
     }
 
     /**
@@ -146,7 +324,7 @@ public class Verbindung {
         benutzer[2] = new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",false);
 
         long endzeit=(System.currentTimeMillis()/1000L)+2700;    //aktuelle Zeit + 45 Minuten
-        return new Sitzung(4711,new Raum(raumID,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Lernen"), benutzer, "gelb"),false,endzeit);
+        return new Sitzung(4711,new Raum(raumID,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new Tag(1,"Lernen"), benutzer, "gelb"),false,endzeit);
 
         //TODO: Daten vom Server statt DummyDaten
     }

@@ -5,10 +5,6 @@ package com.swe.gruppe4.freespace;
  */
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +14,6 @@ import android.widget.TextView;
 import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.koushikdutta.ion.Ion;
@@ -94,7 +89,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                       {
                            @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            new Verbindung().freundschaftDelete(ben);
+                            new VerbindungDUMMY().freundschaftDelete(ben);
                                Freundesliste.getData();
 
                                 }
