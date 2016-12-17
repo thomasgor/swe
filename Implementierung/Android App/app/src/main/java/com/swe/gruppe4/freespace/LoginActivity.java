@@ -19,6 +19,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 
 /**
@@ -39,33 +41,60 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "LoginActivity";
 
+    /**
+     * Sign-In Client wird konfiguriert und aufgebaut
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        showDemoDialog();
+        //showDemoDialog();
 
         //Kommentar entfernen wenn nicht richtiger debug-keystore vorhanden
         //startHomeActivityTest();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // Konfiguriert den Sign-In und bestimmt welche Informationen abgerufen werden sollen
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
+        //Baut den Google Sign-In Client anhand der im gso konfigurierten Informationen
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+    }
+
+    /**
+     * Wird für den Silent Sign-In benötigt. Wenn man vor kurzen angemeldet wurde startet die App sofort,
+     * ohne eine Interaktionen mit dem Anwender. Zusätzlich wird ein Ladedialog eingefügt wenn der Google
+     * Account geprüft werden muss.
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if(opr.isDone()) {
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        }
+        else {
+            showProgressDialog();
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
+                    hideProgressDialog();
+                    handleSignInResult(googleSignInResult);
+                }
+            });
+        }
     }
 
     @Override
@@ -73,6 +102,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     }
 
+    /**
+     * Wenn auf den SignIn Button gedrückt wird über die interne signIn Methode
+     * der Authentifzierungsvorgang gestart
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -81,11 +115,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    /**
+     * Starte Sign-In Vorgang über Google API
+     */
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    /**
+     * Call Back, wenn das Resultat vorliegt. Delegiert weiteres Vorgehen an interne
+     * Methode handleSignInResult
+    */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,6 +138,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    /**
+     * Bei erfolgreicher Authentifizierung werden der Profilname, die Email Adresse und
+     * das Benutzerprofilbild geladen und an die MainActivity über ein Intent übergeben.
+     * @param result
+     */
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
@@ -122,6 +168,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         } else {
             // Signed out, show unauthenticated UI.
+        }
+    }
+
+    /**
+     * Zeigt einen ProgressDialog wenn nicht schon vorhanden
+     */
+    private void showProgressDialog() {
+        if(mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    /**
+     * Entfernt Progressdialog, wenn vorhanden
+     */
+    private void hideProgressDialog() {
+        if(mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
         }
     }
 

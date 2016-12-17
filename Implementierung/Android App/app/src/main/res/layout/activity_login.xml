@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
@@ -18,13 +19,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp" />
 
-    <TextView
-        android:text="Bitte Anmelden.. wird noch schöner"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_launcher_appicon"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/imageView4"
+        android:layout_marginBottom="200dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp" />
+
+    <TextView
+        android:text="Freespace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="93dp"
+        android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="146dp"
-        android:id="@+id/textView" />
+        android:textSize="36sp"
+        android:textStyle="normal|bold"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
 </RelativeLayout>
