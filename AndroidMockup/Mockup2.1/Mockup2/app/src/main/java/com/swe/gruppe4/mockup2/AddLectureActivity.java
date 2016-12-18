@@ -169,7 +169,9 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(2016,8,11,hourOfDay,minute);
-                fromTimeEtxt.setText(hourOfDay+":"+minute);
+                SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
+                String TimeFromSet = df1.format(newDate.getTime());
+                fromTimeEtxt.setText(TimeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
@@ -178,7 +180,9 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(2016,8,11,hourOfDay,minute);
-                toTimeEtxt.setText(hourOfDay+":"+minute);
+                SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
+                String TimeToSet = df1.format(newDate.getTime());
+                toTimeEtxt.setText(TimeToSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 

@@ -59,7 +59,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
 
         //converting Date from long to readable String
         Date date=new Date(lectureObj.getVon());
-        SimpleDateFormat df2 = new SimpleDateFormat("dd/MM/yy hh:mm", java.util.Locale.getDefault());
+        SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.yyyy HH:mm", java.util.Locale.getDefault());
         String dateTextVon = df2.format(date);
         TextView lectureDateVon = (TextView) convertView.findViewById(R.id.lecture_date_von);
         lectureDateVon.setText(dateTextVon);
