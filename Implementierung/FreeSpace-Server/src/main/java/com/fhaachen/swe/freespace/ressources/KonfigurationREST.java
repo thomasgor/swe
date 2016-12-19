@@ -20,7 +20,9 @@ public class KonfigurationREST {
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public Response getKonfiguration(){
+    public Response getKonfiguration(@CookieParam("Basic") NewCookie cookie){
+        System.out.println(cookie.getValue());
+
         String html = null;
         try {
             html = Konfiguration.fileToString("admin/login.html");
@@ -55,8 +57,11 @@ public class KonfigurationREST {
             return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
 
         }else if(action.equals(("logout"))){
+
             html = Konfiguration.getLogoutHTML();
-            return Response.ok(html, MediaType.TEXT_HTML).build();
+            System.out.println("LOGOUT");
+            NewCookie cookie = new NewCookie("Basic", "deleted", "/", "","FreeSpace-Server", 0,false);
+            return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
 
         }else if(action.equals("speichern")){
             System.out.println("intervall" + intervall);

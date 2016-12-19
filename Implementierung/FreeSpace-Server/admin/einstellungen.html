@@ -13,26 +13,12 @@
 	<body id="body">
 		<div class="col-xs-8">
 			<h2>Administration FreeSpace</h2>
-			
-<<<<<<< HEAD
-					<form id="neue_einstellungen" method="post" target="_self"> 
-										<div class="panel panel-default">
-
-					<input name="action" type="hidden" value="speichern"></input>	
-
-					<div class="panel-heading"> 
-						Neues Masterpasswort: Bitte alle Felder ausf&uuml;llen!
-					</div>
-
-=======
-
-			<form id="neue_einstellungen" method="post" target="_self">	
-
+				
+				<form id="neue_einstellungen" method="post" target="_self">	
 				<div class="panel panel-default">
 					<input name="action" type="hidden" value="speichern"></input> 
 
 					<div class="panel-heading"> Neues Masterpasswort: Bitte alle Felder ausf&uuml;llen!</div>
->>>>>>> c53f6200a48dca1281c14ce777bf66aeee5fcaee
 					<div class="panel-body">	
 						<div class="form-group">
 							<label for="input_masterpassword"> Neues Masterpasswort:</label>
@@ -43,11 +29,6 @@
 							<label for="input_masterpassword">Masterpasswort best&auml;tigen:</label>
 							<input type="password" class="form-control" id="input_masterpassword_2" id="input_masterpassword_2" placeholder="Masterpasswort">
 						</div>
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> c53f6200a48dca1281c14ce777bf66aeee5fcaee
 						<div class="form-group">
 							<label for="input_altespasswort">Altes Masterpasswort:</label>
 							<input type="password" class="form-control" id="input_altespasswort" id="input_altespasswort" placeholder="Altes Masterpasswort">
@@ -71,30 +52,21 @@
 	
 						<div class="has-error form-group">
 							<label for="checkbox">Tags entfernen: </label> 
-							<div class="checkbox form-group" id="tags" /div>
+							<div class="checkbox form-group" id="tags">
+							</div>
   						</div>
   					</div>
-<<<<<<< HEAD
- 
-					<button type="submit" class="btn btn-success" id="save" name="save">Speichern</button>
-				</form>
-					
-
-					<form id="logout_einstellungen" method="post" target="_self"> 
-						<input type="hidden" name="action" value="logout"></input>
-						<button type="submit" class="btn btn-danger" id="logout" name="logout">Logout</button>
-					</form>
-				</div>
-=======
   				</div>
   	
 				<button type="submit" class="btn btn-success" id="save" name="save">Speichern</button>
 			</form>
+
 			<form id="logout" method="post" target="_self">
 				<input name="action" type="hidden" value="logout"> 
 				<button type="submit" class="btn btn-danger" id="logout" name="logout">Logout</button>
-			</form>
->>>>>>> c53f6200a48dca1281c14ce777bf66aeee5fcaee
+		</form>
 		</div>
+		
+
 	</body>
 	</html>
