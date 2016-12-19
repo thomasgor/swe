@@ -109,7 +109,11 @@ public class Konfiguration extends Datenbank{
         LazyList<Tag> tagList = Tag.getTagList();
         Integer count = new Integer(1);
         for(Tag element: tagList) {
+<<<<<<< HEAD
             divTag.appendElement("label").appendElement("input").attr("type", "checkbox").attr("id", "tag" + count.toString()).attr("name", "tags").attr("value", element.getId().toString()).text((String)element.get("name"));
+=======
+            divTag.appendElement("label").appendElement("input").attr("type", "checkbox").attr("id", "tag" + count.toString()).attr("name", "tags").attr("value", (String)element.get("id")).text((String)element.get("name"));
+>>>>>>> c53f6200a48dca1281c14ce777bf66aeee5fcaee
             count++;
         }
         return doc.toString();
