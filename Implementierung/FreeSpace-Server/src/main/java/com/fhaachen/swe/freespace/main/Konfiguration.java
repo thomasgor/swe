@@ -7,7 +7,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -93,10 +92,9 @@ public class Konfiguration extends Datenbank{
             e.printStackTrace();
         }
         return  "";
-
     }
 
-    private static String putValuesInHTML() {
+    public static String getEinstellungenHTML() {
         String input = null;
         try {
             input = fileToString("admin/einstellungen.html");

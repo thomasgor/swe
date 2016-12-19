@@ -44,6 +44,7 @@ public class Tag extends Datenbank {
             e.printStackTrace();
             return null;
         }
+        tags.load();
         disconnect();
         return tags;
     }
