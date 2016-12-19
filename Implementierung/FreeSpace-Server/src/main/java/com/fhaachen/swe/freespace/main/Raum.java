@@ -2,18 +2,10 @@ package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.Server;
-import jdk.nashorn.internal.runtime.JSONFunctions;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
