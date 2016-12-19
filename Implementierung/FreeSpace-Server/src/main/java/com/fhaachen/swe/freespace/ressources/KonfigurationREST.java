@@ -8,6 +8,7 @@ import org.javalite.common.Base64;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -21,9 +22,14 @@ public class KonfigurationREST {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response getKonfiguration(@CookieParam("Basic") NewCookie cookie){
-        System.out.println(cookie.getValue());
-
-        String html = null;
+        if(cookie != null){
+            String[] values = cookie.toString().split(";");
+            if(Konfiguration.validiereCookie(values[0])){
+                String html = Konfiguration.getEinstellungenHTML();
+                return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
+            }
+        }
+        String html = "";
         try {
             html = Konfiguration.fileToString("admin/login.html");
         } catch (IOException e) {
@@ -41,7 +47,13 @@ public class KonfigurationREST {
 
         if(action.equals("login")){
 
-            @SuppressWarnings("Since15") String base = Base64.getEncoder().encodeToString((user+":"+pw).getBytes());
+            @SuppressWarnings("Since15") String base = null;
+            try {
+                System.out.println();
+                base = Base64.getEncoder().encodeToString((user+":"+pw).getBytes("ASCII"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             NewCookie cookie = new NewCookie("Basic", base, "/", "","FreeSpace-Server", 600,false);
 
             try {
@@ -60,7 +72,7 @@ public class KonfigurationREST {
 
             html = Konfiguration.getLogoutHTML();
             System.out.println("LOGOUT");
-            NewCookie cookie = new NewCookie("Basic", "deleted", "/", "","FreeSpace-Server", 0,false);
+            NewCookie cookie = new NewCookie("Basic", "", "/", "","FreeSpace-Server", 0,false);
             return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
 
         }else if(action.equals("speichern")){

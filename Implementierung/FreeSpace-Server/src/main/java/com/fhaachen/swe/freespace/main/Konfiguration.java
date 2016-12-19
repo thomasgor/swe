@@ -6,9 +6,12 @@ import org.javalite.activejdbc.annotations.Table;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * Created by thomasgorgels on 19.12.16.
@@ -16,6 +19,20 @@ import java.io.IOException;
 @Table("konfiguration")
 @IdName("key")
 public class Konfiguration extends Datenbank{
+
+    public static boolean validiereCookie(String value){
+        @SuppressWarnings("Since15") String decoded = new String(DatatypeConverter.parseBase64Binary(value), Charset.forName("ASCII"));
+        String[] values = decoded.split(":");
+
+        //Falsche Syntax
+        if(values.length < 2){
+            return false;
+        }
+        String admin_name = values[0];
+        String admin_pw = values[1];
+
+        return Benutzer.istAdministrator(admin_name, admin_pw);
+    }
 
     public static boolean isMaster(String input){
         connect();
