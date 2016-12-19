@@ -26,9 +26,10 @@ public class Tag extends Datenbank {
     /**
      * Erzeut eine Liste aller auf dem Server Befindlichen Tags und wandelt diese in ein String-Objekt im
      * Json-Format um. Sollten keine Tags vorhanden sein, wird eine leere Liste umgewandelt.
-     * Liefert bei Erfolg ein Response-Objekt mit HTTP-Statuscode OK zurück
+     * Liefert bei Erfolg ein Response-Objekt mit HTTP-Statuscode OK zurück und dem Strin-Objekt. Anderenfalls
+     * ein Response-Objekt mit dem Fehlercode Internal Server Error als HTTP-Statucode und ohne String-Objekt.
      *
-     * @return
+     * @return Liste aller Tags als String im Json-Format
      */
 
     public static Response  getTagListe(){
@@ -47,6 +48,13 @@ public class Tag extends Datenbank {
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
+    /**
+     * Liefert eine Liste aller Tags der Datenbank als LayzyList(activeJDBC). Falls nicht auf die Datenbank zugegriffen
+     * werden kann, oder keine Tags auf der Datenbank vorhanden sind, wird null zurückgegeben.
+     *
+     * @return Liste aller Tags auf der Datenbank, oder null
+     */
+
     public static LazyList getTagList() {
         connect();
         LazyList<Tag> tags = null;
@@ -60,6 +68,14 @@ public class Tag extends Datenbank {
         disconnect();
         return tags;
     }
+
+    /**
+     * Sucht einen Tag auf der Datenbank mit der ID tagID und gibt diesen als String im Json-Format zurück. Falls kein Tag
+     * mit der tagID existiert, oder nicht auf die Datenbank zugegriffen werden kann, wird null zurückgegeben.
+     *
+     * @param tagID ID des gesuchten Tags
+     * @return Den Tag-Eintrag aus der Datenbank als String im Json-Format, oder null
+     */
 
     public static String getTagById(String tagID) {
         String antwort = null;
@@ -78,6 +94,16 @@ public class Tag extends Datenbank {
         disconnect();
         return antwort;
     }
+
+    /**
+     * Löscht den Tag-Eintrag mit der ID tagID aus der Datenbank. Falls kein Tag mit der ID tagID existiert, wird ein
+     * Response-Objekt mit HTTP-Statuscode Bad Request zurückgegeben, falls nicht auf den Server zugegriffen werden kann,
+     * ein Response-Objekt mit HTTP-Statuscode Internal Server Error und bei Erfolg ein Response-Objekt mit
+     * HTTP-Statuscode OK und dem gelöschten Tag-Eintrag als String im Json-Format.
+     *
+     * @param tagID ID des zu löschenden Tags
+     * @return Response-Objekt mit HTTP-Statuscode und bei Erfolg mit dem gelöschten Element als String im Json-Format
+     */
 
     public static Response deleteTag(String tagID) {
         connect();
@@ -102,6 +128,17 @@ public class Tag extends Datenbank {
         disconnect();
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
+
+    /**
+     * Erstellt einen neuen Tag-Eintrag mit dem Namen, der aus dem String json entnommen wird. Dieser ist im Json-Format.
+     * Falls kein, ein leerer, oder ein bereits in der Datenbank vorhandener Name übermittelt wurde, wird ein
+     * Response-Objekt mit HTTP-Statuscode Bad Request zurückgegeben.
+     * Falls nicht auf den Server zugegriffen werden kann, ein Response-Objekt mit HTTP-Statuscode Internal Server Error
+     * und bei Erfolg ein Response-Objekt mit HTTP-Statuscode OK und dem neu erstellten Tag-Eintrag als String im Json-Format.
+     *
+     * @param json String im Json-Format, der den Namen des zu erstellenden Tags enthält
+     * @return Response-Objekt mit HTTP-Statuscode und bei Erfolg mit dem neu erstellten Tag als String im Json-Format
+     */
 
     public static Response postTag(String json) {
         connect();
