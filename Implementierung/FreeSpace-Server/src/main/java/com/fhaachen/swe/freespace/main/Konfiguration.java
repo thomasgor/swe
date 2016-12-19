@@ -94,7 +94,7 @@ public class Konfiguration extends Datenbank{
         return  "";
     }
 
-    public static String putDBValuesInEinstellungenHTML() {
+    public static String getEinstellungenHTML() {
         String input = null;
         try {
             input = fileToString("admin/einstellungen.html");
