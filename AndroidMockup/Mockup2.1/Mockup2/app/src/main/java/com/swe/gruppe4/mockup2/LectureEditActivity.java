@@ -92,9 +92,11 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
                     fromDate = df.parse(fromDateEtxt.getText().toString());
                     Long longFromDate = fromDate.getTime();
 
-                    df = new SimpleDateFormat("hh:mm");
+                    df = new SimpleDateFormat("HH:mm");
                     java.util.Date toTime;
                     toTime = df.parse(toTimeEtxt.getText().toString());
+
+                    //Kann man die einfach addieren?
                     Long longToTime = toTime.getTime() + longFromDate;
 
                     java.util.Date fromTime;
@@ -155,9 +157,24 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setDateTimeField() {
-        long id = getIntent().getLongExtra("ID", 0);
-        Verbindung verbindung = new Verbindung();
-        Veranstaltung veranstaltung = verbindung.lectureGet(id);
+        final long id = getIntent().getLongExtra("ID", 0);
+        final Verbindung verbindung = new Verbindung();
+        final Veranstaltung veranstaltung = verbindung.lectureGet(id);
+        long longFrom = veranstaltung.getVon();
+        long longTo = veranstaltung.getBis();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");
+        int yearFrom = Integer.parseInt(df.format(longFrom));
+        df = new SimpleDateFormat("mm");
+        int monthFrom = Integer.parseInt(df.format(longFrom));
+        df = new SimpleDateFormat("dd");
+        int dayFrom = Integer.parseInt(df.format(longFrom));
+        df = new SimpleDateFormat("HH");
+        String hourFrom = df.format(longFrom);
+        String hourTo = df.format(longTo);
+        df = new SimpleDateFormat("mm");
+        String minuteFrom = df.format(longFrom);
+        String minuteTo = df.format(longTo);
+        fromDateEtxt.setText(dateFormatter.format(longFrom));
         fromDateEtxt.setOnClickListener(this);
         //TODO: Kalender Startwerte auf Werte der Veranstaltung setzen
         Calendar newCalendar = Calendar.getInstance();
@@ -167,25 +184,32 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 fromDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+
             }
+            //Hier werden die "Startwerte" für den DatePicker gesetzt.
+        },yearFrom, monthFrom, dayFrom);
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
+        fromTimeEtxt.setText(hourFrom +":"+minuteFrom);
         fromTimeEtxt.setOnClickListener(this);
         fromTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(2016,8,11,hourOfDay,minute);
-                fromTimeEtxt.setText(hourOfDay+":"+minute);
+                newDate.set(1970,1,1,hourOfDay,minute);
+                SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
+                String TimeFromSet = df1.format(newDate.getTime());
+                fromTimeEtxt.setText(TimeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
+        toTimeEtxt.setText(hourTo+":"+minuteTo);
         toTimeEtxt.setOnClickListener(this);
         toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(2016,8,11,hourOfDay,minute);
-                toTimeEtxt.setText(hourOfDay+":"+minute);
+                newDate.set(1970,1,1,hourOfDay,minute);
+                SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
+                String timeFromSet = df1.format(newDate.getTime());
+                toTimeEtxt.setText(timeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
