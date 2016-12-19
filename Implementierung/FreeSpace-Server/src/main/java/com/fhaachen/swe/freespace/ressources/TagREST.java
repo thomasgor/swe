@@ -24,12 +24,14 @@ public class TagREST {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
     public Response postTag(String json){
         return Tag.postTag(json);
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
     @Path(value="/{param}")
     public Response deleteTagID(@PathParam(value="param") String id){
         return Tag.deleteTag(id);

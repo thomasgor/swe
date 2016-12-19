@@ -22,31 +22,53 @@ public class KonfigurationREST {
     @Produces(MediaType.TEXT_HTML)
     public Response getKonfiguration(){
         String html = null;
-        html = Konfiguration.getEinstellungenHTML();
+        try {
+            html = Konfiguration.fileToString("admin/login.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return Response.ok(html, MediaType.TEXT_HTML).build();
     }
 
     @POST
     @Produces(MediaType.TEXT_HTML)
-    public Response login(@FormParam("user") String user, @FormParam("pw") String pw, @CookieParam("Basic") NewCookie c)
+    public Response login(@FormParam("user") String user, @FormParam("pw") String pw, @FormParam("action") String action,@FormParam("input_masterpassword_1") String master1, @FormParam("input_masterpassword_2") String master2, @FormParam("input_altespasswort") String altMaster,
+                          @FormParam("input_sitzungsintervall") String intervall, @FormParam("input_tag") String neuerTag, @FormParam("tags") List<String> tags)
     {
-        String html = new String();
-        @SuppressWarnings("Since15") String base = Base64.getEncoder().encodeToString((user+":"+pw).getBytes());
-        NewCookie cookie = new NewCookie("Basic", base, "/", "","FreeSpace-Server", 600,false);
+        String html ="";
 
-        try {
-            //Login erfolgreich
-            if (Benutzer.istAdministrator(user, pw)) {
-                html = Konfiguration.fileToString("admin/einstellungen.html");
+        if(action.equals("login")){
 
+            @SuppressWarnings("Since15") String base = Base64.getEncoder().encodeToString((user+":"+pw).getBytes());
+            NewCookie cookie = new NewCookie("Basic", base, "/", "","FreeSpace-Server", 600,false);
 
-            } else {
-                html = Konfiguration.getLoginFehlerHTML();
+            try {
+                //Login erfolgreich
+                if (Benutzer.istAdministrator(user, pw)) {
+                    html = Konfiguration.getEinstellungenHTML();
+                } else {
+                    html = Konfiguration.getLoginFehlerHTML();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
+            return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
+
+        }else if(action.equals(("logout"))){
+            html = Konfiguration.getLogoutHTML();
+            return Response.ok(html, MediaType.TEXT_HTML).build();
+
+        }else if(action.equals("speichern")){
+            System.out.println("intervall" + intervall);
+            System.out.println("master1:" + master1 + " master2:" + master2);
+            System.out.println("altmaster:" + altMaster);
+            System.out.println("neuerTag" + neuerTag);
+            System.out.println("zu löschen" + tags.toString());
+            html = Konfiguration.getEinstellungenSaved();
+            return Response.ok(html, MediaType.TEXT_HTML).build();
         }
-        return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
+
+        return Response.ok(html, MediaType.TEXT_HTML).build();
     }
 
     @PUT
