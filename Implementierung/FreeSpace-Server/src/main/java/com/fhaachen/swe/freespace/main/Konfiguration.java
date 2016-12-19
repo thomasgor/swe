@@ -107,9 +107,24 @@ public class Konfiguration extends Datenbank{
         intervall.attr("value", getSitzungsintervall());
         Element divTag = doc.getElementById("tags");
         LazyList<Tag> tagList = Tag.getTagList();
+        Integer count = new Integer(1);
         for(Tag element: tagList) {
-            divTag.appendElement("label").appendElement("input").attr("type", "checkbox").attr("id", "checkboxError").attr("value", "option1").text((String)element.get("name"));
+            divTag.appendElement("label").appendElement("input").attr("type", "checkbox").attr("id", "tag" + count.toString()).attr("name", "tags").attr("value", "option1").text((String)element.get("name"));
+            count++;
         }
+        return doc.toString();
+    }
+
+    public static String getEinstellungenSaved() {
+        String html = Konfiguration.getEinstellungenHTML();
+        Document doc = Jsoup.parse(html, "UTF-8");
+        Element body = doc.getElementById("body");
+        body.prepend("<div class = \"alert alert-success alert-dismissable\">" +
+                    "<button type = \"button\" class = \"close\" data-dismiss = \"alert\" aria-hidden = \"true\">" +
+                    " &times;" +
+                    "</button>" +
+                    " <strong>Einstellungen erfolgreich gespeichert!</strong>" +
+                    "</div>");
         return doc.toString();
     }
 }
