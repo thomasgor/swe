@@ -1,5 +1,6 @@
 package com.fhaachen.swe.freespace.ressources;
 
+import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.main.Benutzer;
 import com.fhaachen.swe.freespace.main.Konfiguration;
 import org.javalite.common.Base64;
@@ -7,6 +8,7 @@ import org.javalite.common.Base64;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by thomasgorgels on 19.12.16.
@@ -20,11 +22,7 @@ public class KonfigurationREST {
     @Produces(MediaType.TEXT_HTML)
     public Response getKonfiguration(){
         String html = null;
-        try {
-            html = Konfiguration.fileToString("admin/login.html");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        html = Konfiguration.getEinstellungenHTML();
         return Response.ok(html, MediaType.TEXT_HTML).build();
     }
 
@@ -50,5 +48,17 @@ public class KonfigurationREST {
         }
         return Response.ok(html, MediaType.TEXT_HTML).cookie(cookie).build();
     }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public Response putKonfiguration(@FormParam("input_masterpassword_1") String master1, @FormParam("input_masterpassword_2") String master2, @FormParam("input_altespasswort") String altMaster,
+                                     @FormParam("input_sitzungsintervall") String intervall, @FormParam("input_tag") String neuerTag, @FormParam("tags") List<String> tags) {
+        //if(setKonfiguration(altMaster, master1, master2, tags, neuerTag, intervall)) {
+        //    return Response.ok(Konfiguration.getEinstellungenSaved(), MediaType.TEXT_HTML).build();
+        //}
+        return Antwort.INTERNAL_SERVER_ERROR;
+    }
+
 }
 
