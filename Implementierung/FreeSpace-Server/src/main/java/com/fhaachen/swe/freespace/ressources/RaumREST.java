@@ -62,17 +62,38 @@ public class RaumREST {
     public Response putRaumdetails(@PathParam(value="param") String id, String json, @Context SecurityContext context) {
         String tag = JsonHelper.getAttribute(json,"tag");
         String username = context.getUserPrincipal().getName(); // BenutzerID
-        boolean isAllowed = Sitzung.istTagBesitzer(username,id);
+        String answer = null;
 
-        // User hat keine Berechtigung tag zu setzen
-        if(!isAllowed) {
-            //Überliefert dennoch das Raumobjekt
-            System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
-            String s = Raum.getRaumdetails(id);
-            return Response.status(Response.Status.FORBIDDEN).entity(s).build();
+
+
+
+        boolean raumHasTagHolder = Sitzung.raumHasTag(id);
+
+        if(Sitzung.hasSessionInRoom(id, username)) {
+            //Gibt es einen Tagholder?
+            if (raumHasTagHolder) {
+
+                boolean isAllowed = Sitzung.istTagBesitzer(username, id);
+
+                // User hat keine Berechtigung tag zu setzen
+                if (!isAllowed) {
+                    //Überliefert dennoch das Raumobjekt
+                    System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
+                    String s = Raum.getRaumdetails(id);
+                    return Response.status(Response.Status.FORBIDDEN).entity(s).build();
+                }
+                //Ich bin der Tagholder
+                answer = Raum.putRaumID(id, tag, username);
+
+            } else {
+                if (Sitzung.setHasTag(username)) {
+                    answer = Raum.putRaumID(id, tag, username);
+                }
+            }
+        } else {
+            return Antwort.NO_ACTIVE_SESSION;
         }
 
-        String answer = Raum.putRaumID(id,tag);
 
         //Es existiert kein Raum mit der ID
         if(answer == null){

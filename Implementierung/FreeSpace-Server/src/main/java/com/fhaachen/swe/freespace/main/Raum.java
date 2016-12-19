@@ -68,7 +68,10 @@ public class Raum extends Datenbank {
         for(int i=0; i< sitzungen.size(); i++){
             String benutzerID = sitzungen.get(i).get("benutzer").toString();
             Benutzer b = Benutzer.findById(benutzerID);
-            if(!"1".equals(b.get("istAnonym").toString())){
+
+            if(b != null && !"1".equals(b.get("istAnonym").toString())){
+                b.set("istAnonym",null);
+                b.set("token",null);
                 String bJson = b.toJson(true);
                 Map bMap = JsonHelper.toMap(bJson);
                 benutzer.add(bMap);
@@ -125,12 +128,6 @@ public class Raum extends Datenbank {
         raum.set("tag", tagID);
         try{
             raum.saveIt();
-            Benutzer b = Benutzer.findById(benutzerID);
-            if(b != null){
-                b.set("hasTag", 1);
-                b.saveIt();
-            }
-
         }catch(Exception e){
             //TAG nicht vorhanden
             System.out.println(e.toString());

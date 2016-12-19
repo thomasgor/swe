@@ -27,11 +27,11 @@ public class FreundschaftREST {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path(value="/{param}")
-    public Response postFreundschaft(@PathParam(value="param") String id, @Context SecurityContext context){
+    public Response postFreundschaft(String json, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        return Freundschaft.postFreundschaft(benutzerID, id);
+        return Freundschaft.postFreundschaft(benutzerID, json);
     }
 
 

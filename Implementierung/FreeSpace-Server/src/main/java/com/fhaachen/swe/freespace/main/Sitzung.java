@@ -8,6 +8,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.Timestamp;
 import java.util.Map;
 
 /**
@@ -26,7 +27,6 @@ public class Sitzung extends Datenbank {
         System.out.print(result);
         return result;
     }
-
 
     private static String includeBenutzer(String json) {
         System.out.println("Include Benutzer");
@@ -60,6 +60,11 @@ public class Sitzung extends Datenbank {
         try {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", Integer.parseInt(id));
             if (sitz == null) {
+                return Antwort.NO_ACTIVE_SESSION;
+            }
+            boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
+            if(outOfTime) {
+                sitz.delete();
                 return Antwort.NO_ACTIVE_SESSION;
             }
             antwort = sitz.toJson(true);
@@ -161,6 +166,9 @@ public class Sitzung extends Datenbank {
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
             }
+            if(sitz.get("hasTag").toString().equals("1")) {
+                Raum.putRaumID(sitz.get("raum").toString(), null, benutzer);
+            }
             sitz.delete();
         } catch(Exception e) {
             e.printStackTrace();
@@ -178,4 +186,45 @@ public class Sitzung extends Datenbank {
 
         return (count != null && count >0);
     }
+
+    public static boolean raumHasTag(String raumID){
+        connect();
+        long anz = Sitzung.count("raum = ? and hasTag = 1", raumID);
+        disconnect();
+        if(anz >= 1)
+            return true;
+        return false;
+    }
+
+    public static boolean setHasTag(String benutzerID){
+        connect();
+        try {
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzerID);
+            sitz.set("hasTag",1);
+            sitz.saveIt();
+        }catch(Exception e){
+            disconnect();
+            return false;
+        }
+
+        disconnect();
+        return true;
+    }
+
+    public static boolean hasSessionInRoom(String raumID, String benutzerID) {
+        connect();
+        try {
+            Sitzung sitz = findFirst("benutzer = ? and raum = ?", benutzerID, raumID);
+            if(sitz != null) {
+                disconnect();
+                return true;
+            }
+        } catch(Exception e) {
+            disconnect();
+            return false;
+        }
+        disconnect();
+        return false;
+    }
+
 }
