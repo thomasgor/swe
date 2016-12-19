@@ -3,6 +3,7 @@ package com.swe.gruppe4.freespace;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.SparseIntArray;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -28,7 +30,6 @@ import java.util.Objects;
 
 
 public class RestConnection {
-
     private Context context;
 
     private static final String HTTP_GET = "GET";
@@ -43,6 +44,10 @@ public class RestConnection {
     private static final String RAUM = "Raum";
     private static final String TAG = "Tag";
     private static final String KARTE = "Karte";
+
+
+    public static String id;
+    public static String token;
 
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
@@ -131,11 +136,13 @@ public class RestConnection {
     }
     private String restRequest(String restRessource, String httpMethod, String inputJson){
 
-
         String response = "false";
         try {
             java.net.URL url = new java.net.URL("http://example-server.com/" + restRessource +"/");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            String userPass = id+":"+token;
+            byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
+            conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
             conn.setRequestMethod(httpMethod);
             OutputStream os = conn.getOutputStream();
 

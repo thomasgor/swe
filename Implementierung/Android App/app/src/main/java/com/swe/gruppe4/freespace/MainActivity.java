@@ -2,6 +2,7 @@ package com.swe.gruppe4.freespace;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TabHost;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        Log.d("FirebaseToken", FirebaseInstanceId.getInstance().getToken());
 
         final VerbindungDUMMY connection = new VerbindungDUMMY();
 

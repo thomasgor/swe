@@ -1,7 +1,11 @@
 package com.swe.gruppe4.freespace;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -24,6 +28,14 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.NotificationCompat;
 
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,6 +63,7 @@ public class ActiveSessionActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         //Daten holen
         //data = new VerbindungDUMMY().sitzungGet();
+
         data = new RestConnection(this).sitzungGet();
         raum = data.getRaum();
 
@@ -167,6 +180,9 @@ public class ActiveSessionActivity extends BaseActivity
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(untilTime);
         activeUntil.setText(getString(R.string.session_active_until_clock, DateFormat.getTimeInstance(DateFormat.SHORT).format(untilTime)));
+
+        long delay = data.getEndzeit()*1000 - System.currentTimeMillis();
+
 
         leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
         int max = raum.getTeilnehmer_max();
