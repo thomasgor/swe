@@ -4,7 +4,6 @@ import com.fhaachen.swe.freespace.main.Benutzer;
 import com.fhaachen.swe.freespace.main.Konfiguration;
 import org.javalite.common.Base64;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class KonfigurationREST {
 
     @POST
     @Produces(MediaType.TEXT_HTML)
-    public Response login(@FormParam("user") String user, @FormParam("pw") String pw)
+    public Response login(@FormParam("user") String user, @FormParam("pw") String pw, @CookieParam("Basic") NewCookie c)
     {
         String html = new String();
         @SuppressWarnings("Since15") String base = Base64.getEncoder().encodeToString((user+":"+pw).getBytes());
