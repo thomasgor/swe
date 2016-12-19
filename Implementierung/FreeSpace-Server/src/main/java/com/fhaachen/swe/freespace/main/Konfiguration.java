@@ -6,11 +6,6 @@ import org.javalite.activejdbc.annotations.Table;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-<<<<<<< HEAD
-import org.jsoup.nodes.FormElement;
-=======
->>>>>>> 548e3610712efd9602c7b660d1e4073f8061080a
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -66,10 +61,38 @@ public class Konfiguration extends Datenbank{
             userform.attr("class", userform_class += " has-error");
 
             Element body = doc.getElementById("body");
-            body.appendElement("div").attr("class", "alert alert-danger alert-dismissable").appendElement("");
+            body.prepend("<div class = \"alert alert-danger alert-dismissable\">" +
+                    "<button type = \"button\" class = \"close\" data-dismiss = \"alert\" aria-hidden = \"true\">" +
+                    " &times;" +
+                    " </button>" +
+                    " <strong>FEHLER: </strong> Bitte pr&uuml;fen sie Ihre Eingaben" +
+                    "</div>");
+            return doc.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return  "";
+    }
+
+    public static String getLogoutHTML(){
+        try {
+            String html = fileToString("admin/login.html");
+            Document doc = Jsoup.parse(html, "UTF-8");
+
+            Element userform = doc.getElementById("login_form");
+            String userform_class = userform.attr("class");
+            Element body = doc.getElementById("body");
+            body.prepend("<div class = \"alert alert-success alert-dismissable\">" +
+                    "<button type = \"button\" class = \"close\" data-dismiss = \"alert\" aria-hidden = \"true\">" +
+                    " &times;" +
+                    "</button>" +
+                    " <strong>Sie haben sich erfolgreich abgemeldet.</strong> Bis zum n&auml;chsten mal!" +
+                    "</div>");
+            return doc.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  "";
 
     }
 
