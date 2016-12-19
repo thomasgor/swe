@@ -6,13 +6,8 @@ import org.javalite.activejdbc.annotations.Table;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-<<<<<<< HEAD
-import org.jsoup.nodes.FormElement;
-=======
->>>>>>> 548e3610712efd9602c7b660d1e4073f8061080a
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -70,10 +65,10 @@ public class Konfiguration extends Datenbank{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
-    private static String putValuesInHTML() {
+    public static String putDBValuesInEinstellungenHTML() {
         String input = null;
         try {
             input = fileToString("admin/einstellungen.html");
