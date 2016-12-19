@@ -1,0 +1,77 @@
+
+		
+
+
+<html>
+	<head>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+		<div class = "alert alert-success alert-dismissable">
+   		<button type = "button" class = "close" data-dismiss = "alert" aria-hidden = "true">&times;</button>
+   		<strong>Einstellungen erfolgreich gespeichert!</strong>
+		</div>
+
+		<div class="col-xs-8">
+		<h2>Administration APPNAME</h2>
+		
+		<div class="panel panel-default">
+		<div class="panel-heading"> Neues Masterpasswort: Bitte alle Felder ausf&uuml;llen!</div>	
+
+		<div class="panel-body">	
+			<div class="form-group">
+				<label for="input_masterpassword"> Neues Masterpasswort:</label>
+				<input type="password" class="form-control" id="input_masterpassword" placeholder="Masterpasswort">
+			</div>
+
+			<div class="form-group">
+				<label for="input_masterpassword">Masterpasswort best&auml;tigen:</label>
+				<input type="password" class="form-control" id="input_masterpassword" placeholder="Masterpasswort">
+			</div>
+
+			<div class="form-group">
+				<label for="input_altespasswort">Altes Masterpasswort:</label>
+				<input type="password" class="form-control" id="input_altespasswort" placeholder="Altes Masterpasswort">
+			</div>
+		</div>
+		</div>
+	    
+
+	    <div class="panel panel-default">
+	    	<div class="panel-heading">Einstellungen</div>
+	    	<div class="panel-body">
+	    		<div class="form-group">
+    				<label for="input_sitzungsintervall">Sitzungsintervall</label>
+    				<input type="text" class="form-control" id="input_sitzungsintervall" placeholder="00:45">
+  				</div>
+
+				<div class="form-group">
+					<label for="input_tag">Tag hinzuf&uuml;gen: </label>
+					<input type="text" class="form-control" id="input_tag" placeholder="neuer Tag">
+				</div>
+
+				<div class="has-error form-group">
+					<label for="checkbox">Tags entfernen: </label> 
+	  				<div class="checkbox form-group">
+	    				<label> <input type="checkbox" id="checkboxError" value="option1">Ruhe</label>
+	    				</br>
+			    		<label><input type="checkbox" id="checkboxError" value="option1">Pr&auml;sentation</label>
+						</br>
+			    		<label> <input type="checkbox" id="checkboxError" value="option1">Vorlesung</label>
+	    			</div>
+  				</div>
+  			</div>
+  		</div>
+  	
+		<button type="button" class="btn btn-success">Speichern</button>
+		<button type="button" class="btn btn-danger">Logout</button>
+	</body>
+</html>

@@ -30,6 +30,12 @@ public class Authorizer implements SecurityContext {
 
     public boolean isUserInRole(String role) {
         String rolle = Benutzer.getRolle(user.userid);
+
+        //Administratoren stehen nicht in der Datenbank, daher hier ausnahme!
+        if(role.equals("admin")){
+            if(user.userid.equals("admin") && user.token.equals("admin"))
+                return true;
+        }
         return (role.equals(rolle));
     }
 

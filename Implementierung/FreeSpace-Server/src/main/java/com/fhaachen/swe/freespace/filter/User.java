@@ -11,6 +11,6 @@ public class User {
     public User(String userid, String token){
         this.userid = userid;
         this.token = token;
-        System.out.println("New user: " + this.userid +  "Token: " + this.role);
+        System.out.println("New user: " + this.userid +  " Token: " + this.role);
     }
 }

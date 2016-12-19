@@ -30,7 +30,12 @@ public class Benutzer extends Datenbank{
         Map input = JsonHelper.toMap(json);
         String input_pw = input.get("masterpasswort").toString();
 
+        /*
         if(!"admin".equals(input_pw)){
+            return null;
+        }*/
+
+        if(!Konfiguration.isMaster(input_pw)){
             return null;
         }
 
