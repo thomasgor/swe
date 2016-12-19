@@ -2,13 +2,11 @@ package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.security.Timestamp;
 import java.util.Map;
 
 /**
