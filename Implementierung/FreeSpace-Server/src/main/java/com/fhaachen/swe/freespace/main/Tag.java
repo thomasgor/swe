@@ -14,12 +14,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by thomas on 27.11.2016.
+ * Klasse Tag beinhaltet die Logik um die HTTP-Methoden GET, POST, DELETE des Restservices umzusetzen.
+ * Die Logik wurde anhand des Systementwurfs umgesetzt.
+ *
+ * @author Simon Catley
+ * @version 1.2
  */
 @Table("Tag")
 public class Tag extends Datenbank {
 
-    public static Response getTagListe(){
+    /**
+     * Erzeut eine Liste aller auf dem Server Befindlichen Tags und wandelt diese in ein String-Objekt im
+     * Json-Format um. Sollten keine Tags vorhanden sein, wird eine leere Liste umgewandelt.
+     * Liefert bei Erfolg ein Response-Objekt mit HTTP-Statuscode OK zurück
+     *
+     * @return
+     */
+
+    public static Response  getTagListe(){
         String antwort = "[]";
         connect();
         try {
