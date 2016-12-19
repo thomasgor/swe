@@ -14,9 +14,20 @@ import java.util.Random;
 /**
  * Created by thomas on 27.11.2016.
  */
+
+/**
+ * Die Klasse Benutzer implementiert, operationen auf der Datenbank, welche im Beuzug zu der Tabelle benutzer stehen
+ *@author thomasgorgels
+ */
 @Table("Benutzer")
 public class Benutzer extends Datenbank{
 
+    /**
+     *  Übeprüft durch einen Zugriff auf der Datenbank ob der Benutzer ein Professor ist.
+     *  Dazu muss das Feld istProfessor == 1 sein!
+     * @param id Die id des Nutzers
+     * @return true falls Benutzer ein Professor ist, ansonsten false
+     */
     public static boolean istProfessor(String id){
         connect();
         Long count = Benutzer.count("id=? AND istProfessor=1", id);
@@ -25,6 +36,15 @@ public class Benutzer extends Datenbank{
         return(count != null && count >= 1);
     }
 
+    /**
+     * Ändert die Benutzerdaten in der Datenbank.
+     * Dabei wird nur das Attribut masterpasswort aus dem String ausgelesen, wenn dies mit dem aktuellen Masterpasswort übereinstimmt,
+     * wird istProfessor = 1 gesetzte. Somit ist der Benutzer ein Professor.
+     * Stimmt das Masterpasswort nciht mit dem konfigurierten Passwort überein, wird keine Aktion ausgeführt
+     * @param json String im Json-Format, aus welchem die zu ändernden Attribute gelesen werden
+     * @param benutzerID ID des Benutzers, der geändert werden soll
+     * @return Die geänderte Ressource als String im JSON-Format
+     */
     public static String putBenutzer(String json, String benutzerID){
         String result = "";
         Map input = JsonHelper.toMap(json);
@@ -54,6 +74,14 @@ public class Benutzer extends Datenbank{
         return result;
     }
 
+    /**
+     * Diese Methode wird zur Registrierung der Benutzer genutzt.
+     * Wenn ein Benutzer seine ID im String schickt, wird überprüft, ob der Benutzer wiederkehrend ist, somit schon im System vorhanden ist,
+     * is dies Der Fall, wird kein neuer Benutzer angelegt, der bestehende wird ausgegeben.
+     * handelt es sich um einen neuen Benutzer, wird ein neuer Benutzer in die Datenbank geschrieben und als String im JSON-Format zurückgegeben
+     * @param json Ein Benutzer als String im JSON-Format
+     * @return Ein Benutzer asl String im JSON-Format
+     */
     public static String postBenutzer(String json){
         String result = null;
         Map input = JsonHelper.toMap(json);
@@ -86,6 +114,11 @@ public class Benutzer extends Datenbank{
         return result;
     }
 
+    /**
+     * Diese methode genieriert ein 32-Zeichen langes Token für neue Benutzer
+     *
+     * @return 32-zeichen langes Token, bestehende aus buchstaben und Zahlen
+     */
     public static String generiereToken(){
         char[] chars = "abcdefghijklmnopqrstuvwxyz1234567890".toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -97,6 +130,14 @@ public class Benutzer extends Datenbank{
         String output = sb.toString();
         return output;
     }
+
+    /**
+     * Diese Methode prüft, ob der Benutzer ein Adrministrator ist, hier wird mit name und passwort gearbeitet, da ein adminstrator nur zugriff auf das Webinterface hat
+     * Er ist kein eigentlicher Benutzer des Systems!
+     * @param name Benutzername für den Administrator-Account
+     * @param pw Passwort für den Administrator-Accoutn
+     * @return true, falls Administartor- Benutzername und Passwort mit den, in der Datenbank hinterlegten Werten stimmen!
+     */
     public static boolean istAdministrator(String name, String pw){
         connect();
         String admin_name = Konfiguration.findById("admin_name").get("value").toString();
@@ -105,6 +146,13 @@ public class Benutzer extends Datenbank{
 
         return(name.equals(admin_name) && pw.equals(admin_pw));
     }
+
+    /**
+     * Ermittelt die Rolle zu einem Benutzer
+     * Dabei gilt, ein der Benutezr ist ein Professor, falls istProfessor == 1 ist, ansonsten ist er ein user
+     * @param id Benutzer id, des zu prüfunden Benutzers
+     * @return professor, falls istProfessor == 1, ansonsten user
+     */
     public static String getRolle(String id){
         connect();
         Benutzer b = Benutzer.findById(id);
@@ -120,6 +168,11 @@ public class Benutzer extends Datenbank{
         return rolle;
     }
 
+    /**
+     * Überprüft, ob es die Benutzer-ID schon in der Datenbank gibt, hier können wiederkehrende Benutzer erkannt werden
+     * @param id Benutzer-ID des Benutzers
+     * @return true, falls die Benutzer-ID in der Datenbank gefunden wurde, ansonsten false
+     */
     public static boolean istBenutzer(String id){
         connect();
         Long count = Benutzer.count("id=?", id);
@@ -127,6 +180,12 @@ public class Benutzer extends Datenbank{
         return(count != null && count > 0);
     }
 
+    /**
+     * Übeprüft die gültigkeit eines Tokens, eines Benutezrs
+     * @param id ID des Benutzers
+     * @param token Token des Benutzers
+     * @return true, falls die übergebenen Daten mit den in der Datenbank hintelegten übereinstimmen, ansonsten false
+     */
     public static boolean prüfeToken(String id, String token){
         System.out.println("Prüfue token benutzer="+id+" token="+token);
         connect();
@@ -139,9 +198,4 @@ public class Benutzer extends Datenbank{
         disconnect();
         return (token.equals(t));
     }
-
-    public static void main(String[] args) {
-
-    }
-
 }
