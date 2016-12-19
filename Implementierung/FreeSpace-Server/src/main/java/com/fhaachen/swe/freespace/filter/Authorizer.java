@@ -33,7 +33,7 @@ public class Authorizer implements SecurityContext {
 
         //Administratoren stehen nicht in der Datenbank, daher hier ausnahme!
         if(role.equals("admin")){
-            if(user.userid.equals("admin") && user.token.equals("admin"))
+            if(Benutzer.istAdministrator(user.userid, user.token))
                 return true;
         }
         return (role.equals(rolle));
