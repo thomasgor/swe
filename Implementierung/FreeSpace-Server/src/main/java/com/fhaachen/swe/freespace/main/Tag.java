@@ -2,17 +2,11 @@ package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
-import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Klasse Tag beinhaltet die Logik um die HTTP-Methoden GET, POST, DELETE des Restservices umzusetzen.
  * Die Logik wurde anhand des Systementwurfs umgesetzt.
