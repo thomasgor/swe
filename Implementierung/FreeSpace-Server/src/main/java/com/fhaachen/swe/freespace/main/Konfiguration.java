@@ -1,11 +1,15 @@
 package com.fhaachen.swe.freespace.main;
 
+import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+<<<<<<< HEAD
 import org.jsoup.nodes.FormElement;
+=======
+>>>>>>> 548e3610712efd9602c7b660d1e4073f8061080a
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,9 +31,9 @@ public class Konfiguration extends Datenbank{
         return (pw.equals(input));
     }
 
-    public static  int getSitzungsintervall(){
+    public static String getSitzungsintervall(){
         connect();
-        int intervall = Integer.parseInt(Konfiguration.findById("sitzungsintervall").get("value").toString());
+        String intervall = Konfiguration.findById("sitzungsintervall").get("value").toString();
         disconnect();
         return intervall;
     }
@@ -70,16 +74,21 @@ public class Konfiguration extends Datenbank{
     }
 
     private static String putValuesInHTML() {
-        File input = new File("/admin/einstellungen.html");
-        Document doc;
-        return "";
-    }
-
-    public static void main(String[] args) {
+        String input = null;
         try {
-            System.out.println(fileToString("admin/login.html"));
+            input = fileToString("admin/einstellungen.html");
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
+        Document doc = Jsoup.parse(input, "UTF-8");
+        Element intervall = doc.getElementById("input_sitzungsintervall");
+        intervall.attr("value", getSitzungsintervall());
+        Element divTag = doc.getElementById("tags");
+        LazyList<Tag> tagList = Tag.getTagList();
+        for(Tag element: tagList) {
+            divTag.appendElement("label").appendElement("input").attr("type", "checkbox").attr("id", "checkboxError").attr("value", "option1").text((String)element.get("name"));
+        }
+        return doc.toString();
     }
 }

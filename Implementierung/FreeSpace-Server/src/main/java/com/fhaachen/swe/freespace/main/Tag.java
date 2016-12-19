@@ -35,6 +35,19 @@ public class Tag extends Datenbank {
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
+    public static LazyList getTagList() {
+        connect();
+        LazyList<Tag> tags = null;
+        try {
+            tags = Tag.findAll();
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        disconnect();
+        return tags;
+    }
+
     public static String getTagById(String tagID) {
         String antwort = null;
         connect();
