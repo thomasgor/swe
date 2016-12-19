@@ -4,6 +4,8 @@ import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +34,7 @@ public class Konfiguration extends Datenbank{
         return intervall;
     }
 
-    private static String fileToString(String pathname) throws IOException {
+    public static String fileToString(String pathname) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(pathname));
         String         line = null;
         StringBuilder  stringBuilder = new StringBuilder();
@@ -50,6 +52,22 @@ public class Konfiguration extends Datenbank{
         }
     }
 
+    public static  String getLoginFehlerHTML(){
+        try {
+            String html = fileToString("admin/login.html");
+            Document doc = Jsoup.parse(html, "UTF-8");
+
+            Element userform = doc.getElementById("login_form");
+            String userform_class = userform.attr("class");
+            userform.attr("class", userform_class += " has-error");
+
+            Element body = doc.getElementById("body");
+            body.appendElement("div").attr("class", "alert alert-danger alert-dismissable").appendElement("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     private static String putValuesInHTML() {
         File input = new File("/admin/einstellungen.html");

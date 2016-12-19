@@ -14,18 +14,18 @@
 
 		<div>
 		<center>
-			<h2>Administration APPNAME</h2>
+			<h2>Administration FreeSpace</h2>
 
-		<form class="form-inline" target="einstellungen.html">
+		<form class="form-inline" target="_self" method="post" name="login" id="login_form">
 		
 		<div class="form-group">
-			<label for="input_user">Benutzername: </label>
-			<input type="email" class="form-control" id="input_user" placeholder="Benutzername">
+			<label for="user">Benutzername: </label>
+			<input name="user" type="text" class="form-control" id="user" placeholder="Benutzername">
 		</div>
 	    
 	    <div class="form-group">
-    		<label for="exampleInputPassword3">Passwort: </label>
-    		<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Passwort">
+    		<label for="password">Passwort: </label>
+    		<input type="password" name="pw" class="form-control" id="pw" placeholder="Passwort">
   		</div>
 
   		<button type="submit" class="btn btn-default">Login</button>

@@ -97,7 +97,14 @@ public class Benutzer extends Datenbank{
         String output = sb.toString();
         return output;
     }
+    public static boolean istAdministrator(String name, String pw){
+        connect();
+        String admin_name = Konfiguration.findById("admin_name").get("value").toString();
+        String admin_pw = Konfiguration.findById("admin_passwort").get("value").toString();
+        disconnect();
 
+        return(name.equals(admin_name) && pw.equals(admin_pw));
+    }
     public static String getRolle(String id){
         connect();
         Benutzer b = Benutzer.findById(id);
