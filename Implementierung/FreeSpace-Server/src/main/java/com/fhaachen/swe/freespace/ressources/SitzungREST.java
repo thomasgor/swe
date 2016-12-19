@@ -45,15 +45,14 @@ public class SitzungREST {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
-    public Response putSitzungID(@PathParam(value="param") String id, String json, @Context SecurityContext context){
+    public Response putSitzungID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
         if(!id.equals(benutzerID)){
             return Antwort.FORBIDDEN;
         }
 
-        return Sitzung.putSitzung(id, json);
+        return Sitzung.putSitzung(id);
     }
 }
