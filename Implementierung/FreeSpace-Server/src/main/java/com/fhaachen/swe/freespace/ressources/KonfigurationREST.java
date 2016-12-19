@@ -41,7 +41,7 @@ public class KonfigurationREST {
             if (Benutzer.istAdministrator(user, pw)) {
                 html = Konfiguration.fileToString("admin/einstellungen.html");
             } else {
-                html = Konfiguration.fileToString("admin/login_fehlerhaft.html");
+                html = Konfiguration.getLoginFehlerHTML();
             }
         }catch (Exception e){
             e.printStackTrace();
