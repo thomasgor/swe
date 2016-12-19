@@ -46,7 +46,6 @@ public class KonfigurationREST {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return Response.ok(html, MediaType.TEXT_HTML).build();
     }
 }
