@@ -13,6 +13,7 @@ import javax.ws.rs.core.SecurityContext;
 /**
  * Die Klasse FreundschaftREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET,
  * POST, PUT und DELETE als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/freundschaft
+ * {@link Freundschaft Server-Logik}
  *
  * @author Simon Catley
  * @version 1.1

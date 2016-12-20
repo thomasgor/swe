@@ -5,10 +5,13 @@ import com.fhaachen.swe.freespace.main.Sitzung;
 
 import javax.ws.rs.core.Response;
 
-
 /**
- * Created by thomasgorgels on 02.12.16.
+ * Die Klasse Antwort enthaelt global auf dem Server genutzte statische Variablen fuer Response-Objekte mit HTTP-Statuscodes
+ *
+ * @author Thomas Gorgels
+ * @version 1.2
  */
+
 public class Antwort {
 
     //200
@@ -40,6 +43,4 @@ public class Antwort {
 
     //901
     public static final Response ROOM_BLOCKED = Response.status(901).build();
-    
-    //...
 }

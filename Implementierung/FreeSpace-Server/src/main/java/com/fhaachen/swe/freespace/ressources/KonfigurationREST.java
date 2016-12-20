@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * Die Klasse KonfigurationREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET und
  * POST als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/konfiguration
+ * {@link Konfiguration Server-Logik}
  *
  * @author Thomas Gorgels
  * @version 1.0

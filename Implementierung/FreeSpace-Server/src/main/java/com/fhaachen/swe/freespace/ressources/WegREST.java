@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 /**
  * Die Klasse WegREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es wird die HTTP-Methoden GET
  * als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/weg
+ * {@link Weg Server-Logik}
  *
  * @author Simon Catley
  * @version 1.0

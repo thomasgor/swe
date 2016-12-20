@@ -21,6 +21,7 @@ import java.io.IOException;
 /**
  * Die Klasse RaumREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET und
  * PUT als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/raum
+ * {@link Raum Server-Logik}
  *
  * @author Patrick Wueller
  * @version 1.4

@@ -6,10 +6,21 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * Created by pwueller on 06.12.2016.
+ * Die Klasse JsonHelper ist eine Hilfsklasse die es ermöglicht Strings im Json-Format in Java-Maps umzuwandeln und
+ * umgekehrt
+ *
+ * @author Partrick Wueller
+ * @version 1.0
  */
 
 public class JsonHelper {
+
+    /**
+     * Wandelt einen String im Json-Format, der ein einzelnes Json-Objekt enthaelt, in eine Map um.
+     *
+     * @param json Umzuwandelndes Json-Objekt als String
+     * @return Map mit Keys und Values aus dem Json-Objekt entnommen
+     */
 
     public static Map toMap(String json) {
         ObjectMapper mapper = new ObjectMapper();
@@ -17,6 +28,15 @@ public class JsonHelper {
             return mapper.readValue(json, Map.class);
         } catch (IOException e) { throw new RuntimeException(e); }
     }
+
+    /**
+     * Wandelt einen String im Json-Format, der eine Liste aus Json-Objekten enthaelt, in ein Map-Array um.
+     *
+     * @param json Umzuwandelnde Json-Objekt-Liste als String
+     * @return Map-Array mit einer Map fuer jedes Listenelement, mit dessen jeweiligen Keys und Values aus
+     * dem Json-Objekt entnommen
+     */
+
     public static Map[] toMaps(String json) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -39,7 +59,15 @@ public class JsonHelper {
         return name;
     }
 
-    //Rückgabe:{"foto":"http://fotourl","id":1,"raumnummer":"G101","tag":{"id":1,"name":"Ruhe"},"teilnehmer_max":32}
+    /**
+     * Wandelt eine Map in einen String im Json-Format um. Keys werden Atrribute und deren
+     * Values werden die Attributwerte.
+     * Strings in der Map werden im Json-String in Hochkomata gefasst, Zahlen jedoch nicht.
+     *
+     * @param m Umzuwandelnde Map
+     * @return String im Json-Format mit Attributen und Attributwerten aus den Keys und Values der Map m entnommen
+     */
+
     public static String getJsonStringFromMap(Map m){
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -52,17 +80,36 @@ public class JsonHelper {
         // return "";
     }
 
-    public static String getJsonStringFromMap(LinkedList m){
+    /**
+     * Wandelt eine LinkedList l in einen String im Json-Format um, dabei wird ein Json-Liste erstellt, bei der jedes Element
+     * das Attribute und Attributwerte des Listenelements erhaelt.
+     * Strings in der Map werden im Json-String in Hochkomata gefasst, Zahlen jedoch nicht.
+     *
+     * @param l Umzuwandelnde LinkedList
+     * @return String im Json-Format mit Liste aus Elementen, mit Attributen und Attributwerten aus den Attributen der
+     * Listenelemente aus l entnommen
+     */
+
+    public static String getJsonStringFromMap(LinkedList l){
         try {
             ObjectMapper mapper = new ObjectMapper();
             //   string a = mapper.writeValue();
-            return mapper.writeValueAsString(m);
+            return mapper.writeValueAsString(l);
 
         }catch(Exception e){
             return null;
         }
-        // return "";
     }
+
+    /**
+     * Wandelt ein Map-Array m in einen String im Json-Format um, dabei wird ein Json-Liste erstellt, bei der jedes Element
+     * das Attribute und Attributwerte einer Map des Arrays erhaelt.
+     * Strings in der Map werden im Json-String in Hochkomata gefasst, Zahlen jedoch nicht.
+     *
+     * @param m Umzuwandelndes Map-Array
+     * @return String im Json-Format mit Liste aus Elementen, mit Attributen und Attributwerten aus den Attributen der
+     * Arrayelemente aus m entnommen
+     */
 
     public static String getJsonStringFromMap(Map[] m){
         try {
@@ -73,6 +120,5 @@ public class JsonHelper {
         }catch(Exception e){
             return null;
         }
-        // return "";
     }
 }
