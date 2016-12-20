@@ -125,7 +125,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                 }catch(java.text.ParseException e)
                 {
-                    // TODO Auto-generated catch block
+                    // Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -176,7 +176,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         String minuteTo = df.format(longTo);
         fromDateEtxt.setText(dateFormatter.format(longFrom));
         fromDateEtxt.setOnClickListener(this);
-        //TODO: Kalender Startwerte auf Werte der Veranstaltung setzen
+
         Calendar newCalendar = Calendar.getInstance();
         fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 

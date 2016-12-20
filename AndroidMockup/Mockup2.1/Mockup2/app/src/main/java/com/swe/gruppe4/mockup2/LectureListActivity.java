@@ -73,23 +73,5 @@ public class LectureListActivity extends BaseActivity
 
     }
 
-    private void showDialog(){
-        AlertDialog.Builder build = new AlertDialog.Builder(LectureListActivity.this);
-        build.setCancelable(false);
 
-        build.setMessage("Möchten Sie die Veranstaltung wirklich löschen?");
-
-        build.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
-                //TODO: ID der angeklickten Veranstaltung auslesen
-                //new Verbindung().lectureDelete(id);
-            }
-        });
-
-        build.setNegativeButton("Nein", null);
-        AlertDialog alert1 = build.create();
-        alert1.show();
-    }
 }

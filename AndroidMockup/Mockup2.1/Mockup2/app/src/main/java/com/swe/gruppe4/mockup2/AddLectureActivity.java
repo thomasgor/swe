@@ -119,7 +119,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
                     v.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
                 }catch(java.text.ParseException e)
                 {
-                    // TODO Auto-generated catch block
+                    // Auto-generated catch block
                     e.printStackTrace();
                 }
 
