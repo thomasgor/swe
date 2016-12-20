@@ -23,7 +23,17 @@ import javax.ws.rs.core.SecurityContext;
 @RolesAllowed("professor")
 public class VeranstaltungREST {
 
-    //DONE
+    /**
+     * Diese Methode realisiert den HTTP-GET-Request. Sie erhaelt als Übergabeparameter einen SecurityContext context
+     * aus welcher die ID des über Basic Authentication angemeldeten Benutzers entnommen werden kann. Es sind nur Benutzer,
+     * die als Professoren markiert sind erlaubt.
+     * Liefert ein Response-Objekt mit HTTP-Statuscode und einem Json-String mit den Veranstaltungen des angemeldeten
+     * Professors an den Aufrufer zurück.
+     *
+     * @param context SecurityContext des angemeldeten Benutzers
+     * @return Response-Objekt mit HTTP-Statuscode und Json-String mit den Veranstaltungen des angemeldeten Benutzers
+     */
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVeranstaltungsliste(@Context SecurityContext context){
@@ -47,7 +57,18 @@ public class VeranstaltungREST {
         return Response.ok(response, MediaType.APPLICATION_JSON).build();
     }
 
-    //DONE
+    /**
+     * Diese Methode realisiert den HTTP-GET-Request. Sie erhaelt als Übergabeparameter einen SecurityContext context
+     * aus welcher die ID des über Basic Authentication angemeldeten Benutzers entnommen werden kann. Es sind nur Benutzer,
+     * die als Professoren markiert sind erlaubt. Sie erhaelt ausserdem die ID der gesuchten Veranstaltung im String id.
+     * Liefert ein Response-Objekt mit HTTP-Statuscode und einem Json-String mit der gesuchten Veranstaltung des angemeldeten
+     * Professors an den Aufrufer zurück.
+     *
+     * @param id ID der gesuchten Veranstaltung
+     * @param context SecurityContext des angemeldeten Benutzers
+     * @return Response-Objekt mit HTTP-Statuscode und Json-String mit der gesuchten Veranstaltung des angemeldeten Benutzers
+     */
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
