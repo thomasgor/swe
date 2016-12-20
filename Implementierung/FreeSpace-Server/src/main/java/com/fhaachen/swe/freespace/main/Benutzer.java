@@ -39,8 +39,8 @@ public class Benutzer extends Datenbank{
     /**
      * Ändert die Benutzerdaten in der Datenbank.
      * Dabei wird nur das Attribut masterpasswort aus dem String ausgelesen, wenn dies mit dem aktuellen Masterpasswort übereinstimmt,
-     * wird istProfessor = 1 gesetzte. Somit ist der Benutzer ein Professor.
-     * Stimmt das Masterpasswort nciht mit dem konfigurierten Passwort überein, wird keine Aktion ausgeführt
+     * wird istProfessor = 1 gesetzt. Somit ist der Benutzer ein Professor.
+     * Stimmt das Masterpasswort nicht mit dem konfigurierten Passwort überein, wird keine Aktion ausgeführt
      * @param json String im Json-Format, aus welchem die zu ändernden Attribute gelesen werden
      * @param benutzerID ID des Benutzers, der geändert werden soll
      * @return Die geänderte Ressource als String im JSON-Format

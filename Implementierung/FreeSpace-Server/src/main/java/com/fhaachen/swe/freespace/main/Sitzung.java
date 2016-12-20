@@ -157,7 +157,8 @@ public class Sitzung extends Datenbank {
      *
      * @param json Enthält die RaumID für die die Sitzung erstellt werden soll im Json-Format
      * @param benutzerID Die ID des Benutzers für den Die Sitzung erstellt werden soll
-     * @return
+     * @return Response-Objekt mit HTTP-Statuscode und bei erfolgreichem kreieren, das neu erstellte Sitzungs-Objekt als
+     * String im Json-Format
      */
 
     public static Response postSitzung(String json, String benutzerID) {
