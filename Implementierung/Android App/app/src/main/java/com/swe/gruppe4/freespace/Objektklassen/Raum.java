@@ -3,19 +3,33 @@ package com.swe.gruppe4.freespace.Objektklassen;
 import java.io.Serializable;
 
 /**
- * Created by Merlin on 22.11.2016.
+ * @author Merlin
+ * @version 1.0
+ * Stellt einen Raum dar, der für Veranstaltung oder nur den Studenten genutzt werden kann.
+ * Enthält nur Attribute mit Gettern und Settern
  */
 
 public class Raum implements Serializable{
+    /**
+     * Eindeutige ID des Raumes
+     */
     private int id;
     private String raumname;
     private int teilnehmer_max;
     private int teilnehmer_aktuell;
+
+    /**
+     * Auslastung des Raumes in Form einer Farbe. z.B. green, red
+     */
     private String status;
 
-
-
+    /**
+     * URL vom Bild des Google Account
+     */
     private String fotoURL;
+    /**
+     * Gesetzter Tag das Raums
+     */
     private Tag tag;
     private Benutzer[] benutzer;
 

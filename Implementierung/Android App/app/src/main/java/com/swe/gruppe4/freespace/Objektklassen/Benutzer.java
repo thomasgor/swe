@@ -3,7 +3,10 @@ package com.swe.gruppe4.freespace.Objektklassen;
 import java.io.Serializable;
 
 /**
- *
+ * @author Merlin
+ * @version 1.0
+ * Anwender des Systems. Kann ein Student oder ein Professor sein
+ * Enthält nur Attribute mit Gettern und Settern
  */
 
 public class Benutzer implements Serializable {

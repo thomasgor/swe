@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 /**
  * Created by Merlin on 22.11.2016.
+ *
  */
 
 public class Freundschaft implements Serializable{
     private Benutzer benutzer;
     private boolean status;
+    private Raum raum;
 
     public Freundschaft(Benutzer benutzer, boolean status, Raum raum) {
         this.benutzer = benutzer;
@@ -40,5 +42,5 @@ public class Freundschaft implements Serializable{
         this.status = status;
     }
 
-    private Raum raum;
+
 }
