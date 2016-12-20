@@ -15,7 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
 
 public class Settings2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,10 +34,36 @@ public class Settings2Activity extends BaseActivity
         drawer.addView(contentView, 0);
 
         Button masterpw = (Button) findViewById(R.id.setMasterPW);
+        //ToDo
+        final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
+        final CheckBox anonymChkB = (CheckBox) findViewById(R.id.checkBox);
+        anonymChkB.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(anonymChkB.isChecked()){
+
+                    //v.putAnonymerStatus();
+                    //ToDo: Funktion um anonymen Status zu setzen (in verbindung.java)
+
+                }else{
+                    System.out.println("Un-Checked");
+                }
+            }
+        });
         masterpw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
+
+                Verbindung v = new Verbindung();
+                Benutzer ben = v.benutzerPut(passwordEtxt.getText().toString());
+                if(ben.istProfessor() == false) {
+                    Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
+                }else{
+
+                    //ToDo: "refresh" current user
+                }
             }
         });
 
