@@ -5,7 +5,6 @@ import com.fhaachen.swe.freespace.JsonHelper;
 import com.fhaachen.swe.freespace.Server;
 import com.fhaachen.swe.freespace.main.Raum;
 import com.fhaachen.swe.freespace.main.Sitzung;
-import com.fhaachen.swe.freespace.main.Tag;
 
 import javax.annotation.security.RolesAllowed;
 import javax.imageio.ImageIO;
@@ -18,10 +17,13 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 /**
- * Created by thomas on 27.11.2016.
+ * Die Klasse RaumREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET und
+ * PUT als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/raum
+ *
+ * @author Patrick Wueller
+ * @version 1.4
  */
 
 @Path( value = "/raum")
@@ -31,7 +33,7 @@ public class RaumREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRaum(){
-        //TODO: NULL überprüfen
+
         String json = Raum.getRaum();
         if(json == null){
             return Antwort.BAD_REQUEST;
@@ -46,7 +48,6 @@ public class RaumREST {
     @Path(value="/{param}")
     public Response getRaumdetails(@PathParam(value="param") String id){
 
-        //TODO: NULL überprüfen
         String json = Raum.getRaumdetails(id);
         if(json == null) return Antwort.BAD_REQUEST;
 

@@ -1,9 +1,7 @@
 package com.fhaachen.swe.freespace.ressources;
 
-import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.main.Weg;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

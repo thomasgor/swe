@@ -17,6 +17,7 @@ import javax.ws.rs.core.SecurityContext;
  * @author Simon Catley
  * @version 1.1
  */
+
 @RolesAllowed({"user", "professor"})
 @Path("/freundschaft")
 public class FreundschaftREST {
@@ -30,6 +31,7 @@ public class FreundschaftREST {
      * @param context SecurityContext des angemeldeten Benutzers
      * @return Response-Objekt mit HTTP-Statuscode und Json-String mit den Freundschaften des Aufrufers
      */
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFreundschaften(@Context SecurityContext context){

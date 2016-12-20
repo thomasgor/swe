@@ -12,7 +12,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 /**
- * Created by thomas on 27.11.2016.
+ * Die Klasse VeranstaltungREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET,
+ * POST, PUT und DELETE als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/veranstaltung
+ *
+ * @author Thomas Gorgels
+ * @version 1.2
  */
 
 @Path( value = "/veranstaltung")
