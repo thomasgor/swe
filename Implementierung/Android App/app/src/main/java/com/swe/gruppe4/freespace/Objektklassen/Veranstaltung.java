@@ -1,20 +1,22 @@
-package com.swe.gruppe4.freespace.Objektklassen;
+package com.swe.gruppe4.mockup2.Objektklassen;
 
 import java.io.Serializable;
 
 /**
- * Created by Merlin on 22.11.2016.
+ *  * Created by Merlin on 22.11.2016.
  */
 
 public class Veranstaltung implements Serializable {
     private int id;
+    private String name;
     private Benutzer dozent;
     private long von;
     private long bis;
     private Raum raum;
 
-    public Veranstaltung(int id, Benutzer dozent, long von, long bis, Raum raum) {
+    public Veranstaltung(int id, String name, Benutzer dozent, long von, long bis, Raum raum) {
         this.id = id;
+        this.name = name;
         this.dozent = dozent;
         this.von = von;
         this.bis = bis;
@@ -28,6 +30,10 @@ public class Veranstaltung implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setName(String name) {this.name = name;}
+
+    public String getName() {return name;}
 
     public Benutzer getDozent() {
         return dozent;

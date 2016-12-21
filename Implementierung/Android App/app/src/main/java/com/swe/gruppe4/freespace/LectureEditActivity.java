@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 import static com.swe.gruppe4.mockup2.R.id.time;
 
-public class AddLectureActivity extends AppCompatActivity implements View.OnClickListener{
+public class LectureEditActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText veranstaltungsNameEtxt;
 
     private EditText fromDateEtxt;
@@ -83,15 +83,20 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
                 //String name = (String) textview.getText();
                 //textview = (TextView) convertView.findViewById(R.id.DateEditText);
                 //Date date = textview.getText();
+                long id = getIntent().getLongExtra("ID", 0);
+                Verbindung verbindung = new Verbindung();
+
                 try {
                     SimpleDateFormat df = new SimpleDateFormat("dd.mm.yyyy");
                     java.util.Date fromDate;
                     fromDate = df.parse(fromDateEtxt.getText().toString());
                     Long longFromDate = fromDate.getTime();
 
-                    df = new SimpleDateFormat("hh:mm");
+                    df = new SimpleDateFormat("HH:mm");
                     java.util.Date toTime;
                     toTime = df.parse(toTimeEtxt.getText().toString());
+
+                    //Kann man die einfach addieren?
                     Long longToTime = toTime.getTime() + longFromDate;
 
                     java.util.Date fromTime;
@@ -100,23 +105,24 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
 
                     String veranstaltungsName = veranstaltungsNameEtxt.getText().toString();
 
-
-
                     String selectedRoomName = sItems.getSelectedItem().toString();
 
                     //Nur damit selectedRoom initialisiert ist.
                     Raum selectedRoom = raumliste.get(0);
 
-                    for(Raum raumInListe: raumliste){
-                        if(raumInListe.getRaumname().toString() == selectedRoomName){
-                            selectedRoom = raumInListe;
+                    for(Raum raum: raumliste){
+                        if(raum.getRaumname().toString() == selectedRoomName){
+                            selectedRoom = raum;
                             break;
                         }
 
                     }
 
+
+
                     Verbindung v = new Verbindung();
-                    v.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
+                    v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,selectedRoom);
+                    Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                 }catch(java.text.ParseException e)
                 {
                     // Auto-generated catch block
@@ -151,6 +157,24 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setDateTimeField() {
+        final long id = getIntent().getLongExtra("ID", 0);
+        final Verbindung verbindung = new Verbindung();
+        final Veranstaltung veranstaltung = verbindung.lectureGet(id);
+        long longFrom = veranstaltung.getVon();
+        long longTo = veranstaltung.getBis();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");
+        int yearFrom = Integer.parseInt(df.format(longFrom));
+        df = new SimpleDateFormat("mm");
+        int monthFrom = Integer.parseInt(df.format(longFrom));
+        df = new SimpleDateFormat("dd");
+        int dayFrom = Integer.parseInt(df.format(longFrom));
+        df = new SimpleDateFormat("HH");
+        String hourFrom = df.format(longFrom);
+        String hourTo = df.format(longTo);
+        df = new SimpleDateFormat("mm");
+        String minuteFrom = df.format(longFrom);
+        String minuteTo = df.format(longTo);
+        fromDateEtxt.setText(dateFormatter.format(longFrom));
         fromDateEtxt.setOnClickListener(this);
 
         Calendar newCalendar = Calendar.getInstance();
@@ -160,29 +184,32 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 fromDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+
             }
+            //Hier werden die "Startwerte" für den DatePicker gesetzt.
+        },yearFrom, monthFrom, dayFrom);
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
+        fromTimeEtxt.setText(hourFrom +":"+minuteFrom);
         fromTimeEtxt.setOnClickListener(this);
         fromTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(2016,8,11,hourOfDay,minute);
+                newDate.set(1970,1,1,hourOfDay,minute);
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String TimeFromSet = df1.format(newDate.getTime());
                 fromTimeEtxt.setText(TimeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
+        toTimeEtxt.setText(hourTo+":"+minuteTo);
         toTimeEtxt.setOnClickListener(this);
         toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(2016,8,11,hourOfDay,minute);
+                newDate.set(1970,1,1,hourOfDay,minute);
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
-                String TimeToSet = df1.format(newDate.getTime());
-                toTimeEtxt.setText(TimeToSet);
+                String timeFromSet = df1.format(newDate.getTime());
+                toTimeEtxt.setText(timeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
