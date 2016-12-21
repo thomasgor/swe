@@ -1,4 +1,4 @@
-package com.swe.gruppe4.mockup2;
+package com.swe.gruppe4.freespace;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 
-import com.swe.gruppe4.mockup2.Objektklassen.Veranstaltung;
+import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
 
 public class LectureListActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,7 +33,7 @@ public class LectureListActivity extends BaseActivity
     private LectureAdapter lectureAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<Veranstaltung> veranstaltungen = new Verbindung().lecturesGet();
+        ArrayList<Veranstaltung> veranstaltungen = new RestConnection(getApplicationContext()).lecturesGet();
         Veranstaltung data;
         super.onCreate(savedInstanceState);
 

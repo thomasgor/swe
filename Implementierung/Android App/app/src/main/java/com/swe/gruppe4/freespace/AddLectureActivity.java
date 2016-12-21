@@ -1,4 +1,4 @@
-package com.swe.gruppe4.mockup2;
+package com.swe.gruppe4.freespace;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 
 import android.widget.TextView;
-import com.swe.gruppe4.mockup2.Objektklassen.*;
-import com.swe.gruppe4.mockup2.Objektklassen.Tag;
+import com.swe.gruppe4.freespace.Objektklassen.*;
+import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +31,7 @@ import java.util.Locale;
 import java.util.List;
 import java.util.ArrayList;
 
-import static com.swe.gruppe4.mockup2.R.id.time;
+import static com.swe.gruppe4.freespace.R.id.time;
 
 public class AddLectureActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText veranstaltungsNameEtxt;
@@ -56,8 +56,8 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-        Verbindung verb = new Verbindung();
-        final ArrayList<Raum> raumliste = verb.raumListeGet();
+        RestConnection verb = new RestConnection(getApplicationContext());
+        final ArrayList<Raum> raumliste = verb.raumGet();
 
 
 
@@ -115,7 +115,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
 
                     }
 
-                    Verbindung v = new Verbindung();
+                    RestConnection v = new RestConnection(getApplicationContext());
                     v.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
                 }catch(java.text.ParseException e)
                 {

@@ -1,4 +1,4 @@
-package com.swe.gruppe4.mockup2;
+package com.swe.gruppe4.freespace;
 import android.content.Context;
 
 import android.content.DialogInterface;
@@ -17,7 +17,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import com.swe.gruppe4.mockup2.Objektklassen.*;
+import com.swe.gruppe4.freespace.Objektklassen.*;
 
 /**
  * Created by Kiesa on 29.10.2016.
@@ -61,14 +61,14 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         Date date=new Date(lectureObj.getVon());
         SimpleDateFormat df2 = new SimpleDateFormat("dd.MM.yyyy HH:mm", java.util.Locale.getDefault());
         String dateTextVon = df2.format(date);
-        TextView lectureDateVon = (TextView) convertView.findViewById(R.id.lecture_date_von);
-        lectureDateVon.setText(dateTextVon);
+
 
 
         date=new Date(lectureObj.getBis());
-        String dateTextBis = df2.format(date);
-        TextView lectureDateBis = (TextView) convertView.findViewById(R.id.lecture_date_bis);
-        lectureDateBis.setText(dateTextBis);
+        SimpleDateFormat df3 = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+        String dateTextBis = df3.format(date);
+        TextView lectureDateBis = (TextView) convertView.findViewById(R.id.lecture_date);
+        lectureDateBis.setText(dateTextVon + " - " + dateTextBis);
 
         TextView lectureRoom = (TextView) convertView.findViewById(R.id.lecture_room);
         lectureRoom.setText(lectureObj.getRaum().getRaumname());
@@ -108,7 +108,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
     private void showDialogDelete(View v, final long lectureId){
         AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
         build.setCancelable(false);
-        Verbindung verb = new Verbindung();
+        RestConnection verb = new RestConnection(getContext());
 
         //build.setTitle("Freund wirklich löschen?");
         build.setMessage("Möchten Sie die Veranstaltung " + verb.lectureGet(lectureId).getName()+ " wirklich löschen?");
@@ -116,7 +116,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Verbindung verb = new Verbindung();
+                RestConnection verb = new RestConnection(getContext());
                 verb.lectureDelete(lectureId);
                 //Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
                 notifyDataSetChanged();

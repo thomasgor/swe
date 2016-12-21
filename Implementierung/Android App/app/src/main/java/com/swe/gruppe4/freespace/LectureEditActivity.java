@@ -1,4 +1,4 @@
-package com.swe.gruppe4.mockup2;
+package com.swe.gruppe4.freespace;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 
 import android.widget.TextView;
-import com.swe.gruppe4.mockup2.Objektklassen.*;
-import com.swe.gruppe4.mockup2.Objektklassen.Tag;
+import com.swe.gruppe4.freespace.Objektklassen.*;
+import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,7 +31,7 @@ import java.util.Locale;
 import java.util.List;
 import java.util.ArrayList;
 
-import static com.swe.gruppe4.mockup2.R.id.time;
+import static com.swe.gruppe4.freespace.R.id.time;
 
 public class LectureEditActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText veranstaltungsNameEtxt;
@@ -56,8 +56,8 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-        Verbindung verb = new Verbindung();
-        final ArrayList<Raum> raumliste = verb.raumListeGet();
+        RestConnection verb = new RestConnection(getApplicationContext());
+        final ArrayList<Raum> raumliste = verb.raumGet();
 
 
 
@@ -84,7 +84,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
                 //textview = (TextView) convertView.findViewById(R.id.DateEditText);
                 //Date date = textview.getText();
                 long id = getIntent().getLongExtra("ID", 0);
-                Verbindung verbindung = new Verbindung();
+
 
                 try {
                     SimpleDateFormat df = new SimpleDateFormat("dd.mm.yyyy");
@@ -120,7 +120,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-                    Verbindung v = new Verbindung();
+                    RestConnection v = new RestConnection(getApplicationContext());
                     v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,selectedRoom);
                     Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                 }catch(java.text.ParseException e)
@@ -158,7 +158,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
 
     private void setDateTimeField() {
         final long id = getIntent().getLongExtra("ID", 0);
-        final Verbindung verbindung = new Verbindung();
+        final RestConnection verbindung = new RestConnection(getApplicationContext());
         final Veranstaltung veranstaltung = verbindung.lectureGet(id);
         long longFrom = veranstaltung.getVon();
         long longTo = veranstaltung.getBis();

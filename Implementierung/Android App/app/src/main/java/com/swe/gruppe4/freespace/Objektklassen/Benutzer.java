@@ -3,10 +3,7 @@ package com.swe.gruppe4.freespace.Objektklassen;
 import java.io.Serializable;
 
 /**
- * @author Merlin
- * @version 1.0
- * Anwender des Systems. Kann ein Student oder ein Professor sein
- * Enthält nur Attribute mit Gettern und Settern
+ *
  */
 
 public class Benutzer implements Serializable {
@@ -16,9 +13,10 @@ public class Benutzer implements Serializable {
     private String vorname;
     private String fotoURL;
     private String token;
-    private boolean isProfessor;
+    private int isProfessor;
+    private int istAnonym;
 
-    public Benutzer(long id, String email, String name, String vorname, String fotoURL, String token, boolean isProfessor) {
+    public Benutzer(long id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -26,6 +24,7 @@ public class Benutzer implements Serializable {
         this.fotoURL = fotoURL;
         this.token = token;
         this.isProfessor = isProfessor;
+        this.istAnonym = istAnonym;
     }
 
     public long getId() {
@@ -76,11 +75,11 @@ public class Benutzer implements Serializable {
         this.token = token;
     }
 
-    public boolean isProfessor() {
-        return isProfessor;
-    }
+    public boolean istProfessor() {if(this.isProfessor == 1) return true; return false;}
 
-    public void setProfessor(boolean professor) {
-        isProfessor = professor;
-    }
+    public void setProfessor(boolean professor) { if(professor){this.isProfessor = 1;}else{this.isProfessor = 0;}}
+
+    public boolean isAnonymous(){if(this.istAnonym == 1) return true; return false;}
+
+    public void setAnonymous(boolean Anonym){ if(Anonym == true){ this.istAnonym = 1;}else{ this.istAnonym = 0;}}
 }

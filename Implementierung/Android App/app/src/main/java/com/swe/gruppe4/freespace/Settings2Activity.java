@@ -1,4 +1,4 @@
-package com.swe.gruppe4.mockup2;
+package com.swe.gruppe4.freespace;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.swe.gruppe4.mockup2.Objektklassen.Benutzer;
+import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 
 public class Settings2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,7 +45,7 @@ public class Settings2Activity extends BaseActivity
                 if(anonymChkB.isChecked()){
 
                     //v.putAnonymerStatus();
-                    //ToDo: Funktion um anonymen Status zu setzen (in verbindung.java)
+                    //ToDo: Funktion um anonymen Status zu setzen (in RestConnection.java)
 
                 }else{
                     System.out.println("Un-Checked");
@@ -56,7 +56,7 @@ public class Settings2Activity extends BaseActivity
             @Override
             public void onClick(View view) {
 
-                Verbindung v = new Verbindung();
+                RestConnection v = new RestConnection(getApplicationContext());
                 Benutzer ben = v.benutzerPut(passwordEtxt.getText().toString());
                 if(ben.istProfessor() == false) {
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
