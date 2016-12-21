@@ -193,6 +193,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    /**
+     * Umgehen des Login für Testzwecke
+     */
     private void startHomeActivityTest() {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         intent.putExtra("profileName","Max Mustermann");
@@ -207,6 +210,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         finish();
     }
 
+    /**
+     * Warnung für Präsentation der Alphaversion
+     */
     private void showDemoDialog(){
         new AlertDialog.Builder(LoginActivity.this)
                 .setCancelable(false)

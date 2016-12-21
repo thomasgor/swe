@@ -5,7 +5,11 @@ import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import java.util.Comparator;
 
 /**
- * Created by Marco on 10.12.2016.
+ * Definiert die Ordnung zwischen den Raumobjekten. Die Räume sollen alphanumerisch geordnet werden.
+ * Daher wird alphanumerisch nach Raumname sortiert.
+ *
+ * @author Marco Linnartz
+ * @version 1.0
  */
 
 public class RaumComparator implements Comparator<Raum> {
