@@ -86,12 +86,14 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
                 try {
                     SimpleDateFormat df = new SimpleDateFormat("dd.mm.yyyy");
                     java.util.Date fromDate;
+
                     fromDate = df.parse(fromDateEtxt.getText().toString());
                     Long longFromDate = fromDate.getTime();
 
                     df = new SimpleDateFormat("hh:mm");
                     java.util.Date toTime;
                     toTime = df.parse(toTimeEtxt.getText().toString());
+
                     Long longToTime = toTime.getTime() + longFromDate;
 
                     java.util.Date fromTime;
@@ -168,7 +170,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
         fromTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(2016,8,11,hourOfDay,minute);
+                newDate.set(1970,1,1,hourOfDay,minute);
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String TimeFromSet = df1.format(newDate.getTime());
                 fromTimeEtxt.setText(TimeFromSet);
@@ -179,7 +181,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
         toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(2016,8,11,hourOfDay,minute);
+                newDate.set(1970,1,1,hourOfDay,minute);
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String TimeToSet = df1.format(newDate.getTime());
                 toTimeEtxt.setText(TimeToSet);

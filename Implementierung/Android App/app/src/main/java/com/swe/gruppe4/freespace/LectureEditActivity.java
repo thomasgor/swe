@@ -194,7 +194,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         fromTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(1970,1,1,hourOfDay,minute);
+                newDate.set(1970,0,0,hourOfDay,minute);
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String TimeFromSet = df1.format(newDate.getTime());
                 fromTimeEtxt.setText(TimeFromSet);
@@ -206,7 +206,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute){
                 Calendar newDate = Calendar.getInstance();
-                newDate.set(1970,1,1,hourOfDay,minute);
+                newDate.set(1970,0,0,hourOfDay,minute);
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String timeFromSet = df1.format(newDate.getTime());
                 toTimeEtxt.setText(timeFromSet);
