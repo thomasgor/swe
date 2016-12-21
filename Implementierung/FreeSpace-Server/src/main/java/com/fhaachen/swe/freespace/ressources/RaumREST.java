@@ -21,6 +21,7 @@ import java.io.IOException;
 /**
  * Die Klasse RaumREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET und
  * PUT als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/raum
+ * {@link Raum Server-Logik}
  *
  * @author Patrick Wueller
  * @version 1.4
@@ -29,6 +30,13 @@ import java.io.IOException;
 @Path( value = "/raum")
 @RolesAllowed({"user", "professor"})
 public class RaumREST {
+
+    /**
+     * Diese Methode realisiert den HTTP-GET-Request. Sie liefert ein Response-Objekt mit einem Json-String, welcher
+     * alle auf dem Server befindlichen Räume enthaelt, an den Aufrufer zurück.
+     *
+     * @return Response-Objekt mit Json-String, der alle Raeme enthaelt
+     */
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,6 +51,14 @@ public class RaumREST {
         //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Hier ensteht die Raumliste").build();
     }
 
+    /**
+     * Diese Methode realisiert den HTTP-GET-Request. Sie erhaelt als Uebergabeparameter einen String id, welcher die ID des
+     * gesuchten Raumes enthaelt und liefert ein Response-Objekt mit einem Json-String, welcher
+     * das Raum-Objekt enthaelt, an den Aufrufer zurück.
+     *
+     * @return Response-Objekt mit Json-String, der das gesuchte Raum-Objekt enthaelt
+     */
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
@@ -55,6 +71,16 @@ public class RaumREST {
         //return Response.status(Response.Status.NOT_IMPLEMENTED).entity("Raumdetails von " + id).build();
     }
 
+    /**
+     * Die Realisierung des PUT-Request. Setzt den Tag eines Raumes den im Json-String json enthaltenen Tag, falls der über
+     * den SecurityContext context erhaltenen angemeldete Benutzer eine Sitzung in dem Raum mit der ID id hat und Tagholder ist.
+     * Liefert ein Response-Objekt mit einem Json-String mit geaendertem Raum-Objekt an den Aufrufer zurück.
+     *
+     * @param id ID des Raumes
+     * @param json Json-String mit neuem Tag
+     * @param context SecurityContext des angemeldeten Benutzers
+     * @return Response-Objekt mit HTTP-Statuscode und Json-String mit geaendertem Raum
+     */
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -104,6 +130,13 @@ public class RaumREST {
         return Response.ok(answer, MediaType.APPLICATION_JSON).build();
     }
 
+    /**
+     * Diese Methode realisiert den HTTP-GET-Request. Sie erhaelt als Uebergabeparameter einen String id, welcher die ID des
+     * gesuchten Raumes enthaelt und liefert ein Response-Objekt mit einem Byte-Array, welches das Foto des Raumes enthaelt,
+     * an den Aufrufer zurück.
+     *
+     * @return Response-Objekt mit Byte-Array, das das gesuchte Raumfoto enthaelt
+     */
 
     @GET
     @Produces("image/png")

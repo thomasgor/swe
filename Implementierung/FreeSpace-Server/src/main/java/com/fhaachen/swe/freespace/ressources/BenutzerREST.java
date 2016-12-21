@@ -13,6 +13,7 @@ import javax.ws.rs.core.SecurityContext;
 /**
  * Die Klasse BenutzerREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden POST und
  * PUT als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/benutzer
+ * {@link Benutzer Server-Logik}
  *
  * @author Thomas Gorgels
  * @version 1.6

@@ -7,13 +7,139 @@ import com.fhaachen.swe.freespace.maps.Knoten;
 import java.util.ArrayList;
 
 /**
- * Created by Simon on 08.12.2016.
+ *  Klasse G1 ist eine von Karte{@link Karte} abgeleitete Karte, die das Erdgeschoss des Gebaeudes G der FH Aachen
+ *  in der Eupenerstrasse 70 modelliert.
+ *
+ *  @author Simon Catley
+ *  @version 1.0
  */
+
 public class G1 extends Karte{
+
+    /**
+     * Standard-Konstruktor der Karte G1 und einzige public Methode, da die Karte nicht veraendert werden soll, nur erzeugt
+     */
 
     public G1(){
         this.setUp();
     }
+
+    /**
+     * Diese Methode erzeugt alle Knoten, Kanten und deren Verbindungen, die noetig sind um die zu modellierende Karte darzustellen und
+     * mit Dijkstra{@link com.fhaachen.swe.freespace.maps.Dijkstra} bearbeiten zu koennen und fuegt diese in die
+     * geerbten Attribute knoten bzw. kanten{@link Karte} ein.
+     *
+     *        _______ _____________
+     *       |       |             |
+     *       |       |             |
+     *       | G102  |    G101     |
+     *       |       |             |
+     *       |       |_____________|
+     *       |       |    |        |
+     *       |       | 1  |        |
+     *       |_______|    |  G107  |
+     *       |XXXXXXX|    |        |
+     *       |XXXXXXX|    |        |
+     *       |XXXXXXX| 2  |________|
+     *       |XXXXXXX|    |XXXXXXXX|
+     *       |       W             |
+     *       |_______W             |
+     *       |       A 3           E
+     *       |_______A             E
+     *       |       W 4   SSSSSSSS|
+     *       |_______W     SSSSSSSS|
+     *       |XXXXXXX|    |XXXXXXXX|
+     *       |       | 5  |        |
+     *       | G112  |    |        |
+     *       |       | 6  |  G111  |
+     *       |_______|    |        |
+     *       |       | 7  |        |
+     *       |       |____|________|
+     *       | G116  |             |
+     *       |       |             |
+     *       |       |    G115     |
+     *       |       |             |
+     *       |_______|_____________|
+     *
+     *
+     *   X = nicht betretbar
+     *   A = Aufzug
+     *   S = Strufen nach oben
+     *   E = Eingang/Ausgang
+     *
+     *
+     *   Flurknoten:
+     *
+     *   1 = Flurknoten verbunden über Kanten mit G101, G102, G107, 2
+     *       id = G131
+     *   2 = Flurknoten verbunden über Kanten mit G107, 1, 3
+     *       id = G132
+     *   3 = Flurknoten verbunden über Kanten mit exit, 2, 4
+     *       id = G133
+     *   4 = Flurknoten verbunden über Kanten mit etageHoch, 3, 5
+     *       id = G134
+     *   5 = Flurknoten verbunden über Kanten mit G111, G112, 4, 6
+     *       id = G135
+     *   6 = Flurknoten verbunden über Kanten mit G111, 5, 7
+     *       id = G136
+     *   7 = Flurknoten verbunden über Kanten mit G116 u G115 u 6
+     *       id = G137
+     *
+     *
+     *   Kanten:
+     *
+     *            G101
+     *              |
+     *              1
+     *              |
+     *   G102--2--G131---3---
+     *              |        |
+     *              4      G107
+     *              |        |
+     *            G132---5---
+     *              |
+     *              6
+     *              |
+     *            G133---7---E
+     *              |
+     *              8
+     *              |
+     *            G134---9---S
+     *              |
+     *              10
+     *              |
+     *   G112-11--G135--12---
+     *              |        |
+     *              13     G111
+     *              |        |
+     *            G136--14---
+     *              |
+     *              15
+     *              |
+     *   G116-16--G137
+     *              |
+     *              17
+     *              |
+     *            G115
+     *
+     *   1 = Kanten mit ID G161
+     *   2 = Kanten mit ID G162
+     *   3 = Kanten mit ID G163
+     *   4 = Kanten mit ID G164
+     *   5 = Kanten mit ID G165
+     *   6 = Kanten mit ID G166
+     *   7 = Kanten mit ID G167
+     *   8 = Kanten mit ID G168
+     *   9 = Kanten mit ID G169
+     *   10 = Kanten mit ID G170
+     *   11 = Kanten mit ID G171
+     *   12 = Kanten mit ID G172
+     *   13 = Kanten mit ID G173
+     *   14 = Kanten mit ID G174
+     *   15 = Kanten mit ID G175
+     *   16 = Kanten mit ID G176
+     *   17 = Kanten mit ID G177
+     */
 
     private void setUp() {
 
@@ -102,118 +228,3 @@ public class G1 extends Karte{
         this.setKanten(kantenListe);
     }
 }
-
-
-/*
-*        _______ _____________
-*       |       |             |
-*       |       |             |
-*       | G102  |    G101     |
-*       |       |             |
-*       |       |_____________|
-*       |       |    |        |
-*       |       | 1  |        |
-*       |_______|    |  G107  |
-*       |XXXXXXX|    |        |
-*       |XXXXXXX|    |        |
-*       |XXXXXXX| 2  |________|
-*       |XXXXXXX|    |XXXXXXXX|
-*       |       W             |
-*       |_______W             |
-*       |       A 3           E
-*       |_______A             E
-*       |       W 4   SSSSSSSS|
-*       |_______W     SSSSSSSS|
-*       |XXXXXXX|    |XXXXXXXX|
-*       |       | 5  |        |
-*       | G112  |    |        |
-*       |       | 6  |  G111  |
-*       |_______|    |        |
-*       |       | 7  |        |
-*       |       |____|________|
-*       | G116  |             |
-*       |       |             |
-*       |       |    G115     |
-*       |       |             |
-*       |_______|_____________|
-*
-*
-*   X = nicht betretbar
-*   A = Aufzug
-*   S = Strufen nach oben
-*   E = Eingang/Ausgang
-*
-*
-*   Flurknoten:
-*
-*   1 = Flurknoten verbunden über Kanten mit G101, G102, G107, 2
-*       id = G131
-*   2 = Flurknoten verbunden über Kanten mit G107, 1, 3
-*       id = G132
-*   3 = Flurknoten verbunden über Kanten mit exit, 2, 4
-*       id = G133
-*   4 = Flurknoten verbunden über Kanten mit etageHoch, 3, 5
-*       id = G134
-*   5 = Flurknoten verbunden über Kanten mit G111, G112, 4, 6
-*       id = G135
-*   6 = Flurknoten verbunden über Kanten mit G111, 5, 7
-*       id = G136
-*   7 = Flurknoten verbunden über Kanten mit G116 u G115 u 6
-*       id = G137
-*
-*
-*   Kanten:
-*
-*            G101
-*              |
-*              1
-*              |
-*   G102--2--G131---3---
-*              |        |
-*              4      G107
-*              |        |
-*            G132---5---
-*              |
-*              6
-*              |
-*            G133---7---E
-*              |
-*              8
-*              |
-*            G134---9---S
-*              |
-*              10
-*              |
-*   G112-11--G135--12---
-*              |        |
-*              13     G111
-*              |        |
-*            G136--14---
-*              |
-*              15
-*              |
-*   G116-16--G137
-*              |
-*              17
-*              |
-*            G115
-*
-*   1 = Kanten mit ID G161
-*   2 = Kanten mit ID G162
-*   3 = Kanten mit ID G163
-*   4 = Kanten mit ID G164
-*   5 = Kanten mit ID G165
-*   6 = Kanten mit ID G166
-*   7 = Kanten mit ID G167
-*   8 = Kanten mit ID G168
-*   9 = Kanten mit ID G169
-*   10 = Kanten mit ID G170
-*   11 = Kanten mit ID G171
-*   12 = Kanten mit ID G172
-*   13 = Kanten mit ID G173
-*   14 = Kanten mit ID G174
-*   15 = Kanten mit ID G175
-*   16 = Kanten mit ID G176
-*   17 = Kanten mit ID G177
-*
-*/

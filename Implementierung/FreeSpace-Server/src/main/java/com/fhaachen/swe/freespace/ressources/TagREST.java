@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 /**
  * Die Klasse TagREST ist die Schnittstelle von HTTP-Request und Server-Logik. Es werden die HTTP-Methoden GET,
  * POST und DELETE als REST-Service realisiert, mit dem Pfad http://-Server Domain Namespace-/tag
+ * {@link Tag Server-Logik}
  *
  * @author Simon Catley
  * @version 1.0
