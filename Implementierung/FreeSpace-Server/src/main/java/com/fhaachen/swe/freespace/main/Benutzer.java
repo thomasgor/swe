@@ -49,20 +49,21 @@ public class Benutzer extends Datenbank{
         String result = "";
         Map input = JsonHelper.toMap(json);
         String input_pw = input.get("masterpasswort").toString();
-
-        /*
-        if(!"admin".equals(input_pw)){
-            return null;
-        }*/
-
-        if(!Konfiguration.isMaster(input_pw)){
-            return null;
-        }
+        String input_istAnonym = input.get("istAnonym").toString();
 
         connect();
         Benutzer b = Benutzer.findById(benutzerID);
         if(b != null){
-            b.set("istProfessor", 1);
+            //Wenn Masterpasswort richtig, setze ist istProfessor
+            if(!Konfiguration.isMaster(input_pw)){
+                b.set("istProfessor", 1);
+            }
+
+            //Wenn istAnony gesetzt ist, setze die Flag
+            if(input_istAnonym != null && (input_istAnonym.equals("1") ||input_istAnonym.equals("0"))){
+                b.set("istAnonym", input_istAnonym);
+            }
+
             try{
                 b.saveIt();
                 result = b.toJson(true);
