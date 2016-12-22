@@ -15,8 +15,9 @@ public class Benutzer implements Serializable {
     private String token;
     private int isProfessor;
     private int istAnonym;
+    private int istPush;
 
-    public Benutzer(long id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym) {
+    public Benutzer(long id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym, int istPush) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -25,6 +26,7 @@ public class Benutzer implements Serializable {
         this.token = token;
         this.isProfessor = isProfessor;
         this.istAnonym = istAnonym;
+        this.istPush = istPush;
     }
 
     public long getId() {
@@ -82,4 +84,8 @@ public class Benutzer implements Serializable {
     public boolean isAnonymous(){if(this.istAnonym == 1) return true; return false;}
 
     public void setAnonymous(boolean Anonym){ if(Anonym == true){ this.istAnonym = 1;}else{ this.istAnonym = 0;}}
+
+    public boolean isPush() {if(this.istPush == 1) return true; return false;}
+
+    public void setPush(boolean push) { if(push){this.istPush = 1;}else{this.istPush = 0;}}
 }

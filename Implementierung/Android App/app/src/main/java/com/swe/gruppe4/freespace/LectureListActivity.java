@@ -33,7 +33,7 @@ public class LectureListActivity extends BaseActivity
     private LectureAdapter lectureAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<Veranstaltung> veranstaltungen = new RestConnection(getApplicationContext()).lecturesGet();
+        ArrayList<Veranstaltung> veranstaltungen = new RestConnection(this).lecturesGet();
         Veranstaltung data;
         super.onCreate(savedInstanceState);
 
@@ -44,7 +44,7 @@ public class LectureListActivity extends BaseActivity
         drawer.addView(contentView, 0);
 
         lectureView = (ListView) findViewById(R.id.lectureList);
-        lectureAdapter = new LectureAdapter(getApplicationContext(), R.layout.lecture_box);
+        lectureAdapter = new LectureAdapter(getApplicationContext(), R.layout.lecture_box, this);
         lectureView.setAdapter(lectureAdapter);
         lectureView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 

@@ -56,7 +56,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-        RestConnection verb = new RestConnection(getApplicationContext());
+        RestConnection verb = new RestConnection(this);
         final ArrayList<Raum> raumliste = verb.raumGet();
 
 
@@ -76,6 +76,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Button saveLecture = (Button) findViewById(R.id.saveLectureButton);
+        final RestConnection v = new RestConnection(this);
         saveLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +121,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
 
 
 
-                    RestConnection v = new RestConnection(getApplicationContext());
+
                     v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,selectedRoom);
                     Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                 }catch(java.text.ParseException e)
@@ -158,7 +159,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
 
     private void setDateTimeField() {
         final long id = getIntent().getLongExtra("ID", 0);
-        final RestConnection verbindung = new RestConnection(getApplicationContext());
+        final RestConnection verbindung = new RestConnection(this);
         final Veranstaltung veranstaltung = verbindung.lectureGet(id);
         long longFrom = veranstaltung.getVon();
         long longTo = veranstaltung.getBis();

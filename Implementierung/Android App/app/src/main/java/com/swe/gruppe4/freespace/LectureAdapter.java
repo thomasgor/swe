@@ -1,4 +1,5 @@
 package com.swe.gruppe4.freespace;
+import android.app.Activity;
 import android.content.Context;
 
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import com.swe.gruppe4.freespace.Objektklassen.*;
 class LectureAdapter extends ArrayAdapter<Veranstaltung> {
 
     private ArrayList<Veranstaltung> lectureList = new ArrayList<>();
+    Activity aufgerufenVon;
     /**
      *  add Room object  to the adapter
      */
@@ -41,8 +43,9 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         return this.lectureList.get(index);
     }
 
-    public LectureAdapter(Context context , int textViewResourceId){
+    public LectureAdapter(Context context , int textViewResourceId, Activity aufgerufenVon){
         super(context,textViewResourceId);
+        this.aufgerufenVon = aufgerufenVon;
     }
 
     /**
@@ -108,7 +111,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
     private void showDialogDelete(View v, final long lectureId){
         AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
         build.setCancelable(false);
-        RestConnection verb = new RestConnection(getContext());
+        RestConnection verb = new RestConnection(this.aufgerufenVon);
 
         //build.setTitle("Freund wirklich löschen?");
         build.setMessage("Möchten Sie die Veranstaltung " + verb.lectureGet(lectureId).getName()+ " wirklich löschen?");

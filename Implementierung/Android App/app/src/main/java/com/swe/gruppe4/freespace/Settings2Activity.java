@@ -37,6 +37,7 @@ public class Settings2Activity extends BaseActivity
         //ToDo
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
         final CheckBox anonymChkB = (CheckBox) findViewById(R.id.checkBox);
+        final RestConnection v = new RestConnection(this);
         anonymChkB.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -56,7 +57,7 @@ public class Settings2Activity extends BaseActivity
             @Override
             public void onClick(View view) {
 
-                RestConnection v = new RestConnection(getApplicationContext());
+
                 Benutzer ben = v.benutzerPut(passwordEtxt.getText().toString());
                 if(ben.istProfessor() == false) {
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();

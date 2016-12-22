@@ -56,7 +56,7 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-        RestConnection verb = new RestConnection(getApplicationContext());
+        final RestConnection verb = new RestConnection(this);
         final ArrayList<Raum> raumliste = verb.raumGet();
 
 
@@ -117,8 +117,8 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
 
                     }
 
-                    RestConnection v = new RestConnection(getApplicationContext());
-                    v.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
+
+                    verb.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
                 }catch(java.text.ParseException e)
                 {
                     // Auto-generated catch block
