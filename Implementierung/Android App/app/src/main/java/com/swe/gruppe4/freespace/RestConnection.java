@@ -573,7 +573,7 @@ public class RestConnection {
 
     }
 
-    public Benutzer benutzerPut (String PW){
+    public Benutzer benutzerPut (String PW, int isProfessor, int isPush){
 
         //TODO: Daten an Server senden
         //TODO: Benutzerobjekt des eingeloggten Benutzers zurückgeben

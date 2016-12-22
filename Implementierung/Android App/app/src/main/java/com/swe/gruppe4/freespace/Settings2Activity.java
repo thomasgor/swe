@@ -19,7 +19,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
+import com.swe.gruppe4.freespace.Objektklassen.*;
+import com.swe.gruppe4.freespace.RestConnection;
 
 public class Settings2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,10 +35,11 @@ public class Settings2Activity extends BaseActivity
         drawer.addView(contentView, 0);
 
         Button masterpw = (Button) findViewById(R.id.setMasterPW);
-        //ToDo
+        //ToDo: Checkboxen auf Rückgabewerte von isAnonym() und isPush() des aktuellen Benutzers setzen.
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
         final CheckBox anonymChkB = (CheckBox) findViewById(R.id.checkBox);
-        final RestConnection v = new RestConnection(this);
+        final CheckBox pushChkB = (CheckBox) findViewById(R.id.checkBox2);
+        final RestConnection verb = new RestConnection(this);
         anonymChkB.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -45,25 +47,43 @@ public class Settings2Activity extends BaseActivity
                 // TODO Auto-generated method stub
                 if(anonymChkB.isChecked()){
 
-                    //v.putAnonymerStatus();
-                    //ToDo: Funktion um anonymen Status zu setzen (in RestConnection.java)
+                    Benutzer ben = verb.benutzerPut("",1,2);
+
 
                 }else{
-                    System.out.println("Un-Checked");
+                    Benutzer ben = verb.benutzerPut("",0,2);
+
                 }
             }
         });
+        pushChkB.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(pushChkB.isChecked()){
+
+                    Benutzer ben = verb.benutzerPut("",2,1);
+
+
+                }else{
+                    Benutzer ben = verb.benutzerPut("",2,0);
+
+                }
+            }
+        });
+
         masterpw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                Benutzer ben = v.benutzerPut(passwordEtxt.getText().toString());
+                Benutzer ben = verb.benutzerPut(passwordEtxt.getText().toString(),2,2);
                 if(ben.istProfessor() == false) {
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
                 }else{
 
-                    //ToDo: "refresh" current user
+                    //ToDo: Eingeloggten Benutzer aktualisieren, im Prof Features verfügbar zu machen
                 }
             }
         });
