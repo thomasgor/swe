@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     /**
      * Wenn auf den SignIn Button gedrückt wird über die interne signIn Methode
      * der Authentifzierungsvorgang gestart
-     * @param v
+     * @param v Element auf das gedrückt wurde
      */
     @Override
     public void onClick(View v) {
@@ -142,27 +142,32 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     /**
      * Bei erfolgreicher Authentifizierung werden der Profilname, die Email Adresse und
      * das Benutzerprofilbild geladen und an die MainActivity über ein Intent übergeben.
-     * @param result
+     * @param result Ergebnis des SignIn Prozesses
      */
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            //mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.putExtra("profileName",acct.getDisplayName());
             intent.putExtra("profileEmail",acct.getEmail());
-            Log.d(TAG, "UserID: " + acct.getId());
+            //Log.d(TAG, "UserID: " + acct.getId());
+            //Log.d(TAG, "Vorname: " + acct.getGivenName());
+            //Log.d(TAG, "Nachname:" + acct.getFamilyName());
             //Log.d(TAG, "UserIDToken: " + acct.getIdToken());
             String pictureURL;
             if(acct.getPhotoUrl() != null) {
                 pictureURL = acct.getPhotoUrl().toString();
-                Log.d(TAG, "PictureURL: " + pictureURL);
+                //Log.d(TAG, "PictureURL: " + pictureURL);
 
             } else {
                 pictureURL = "https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg";
             }
+
+            RestConnection connection = new RestConnection(this);
+            connection.benutzerPost(acct.getId(),acct.getEmail(), acct.getFamilyName(), acct.getGivenName(), pictureURL);
 
             intent.putExtra("profilePicture",pictureURL);
             startActivity(intent);

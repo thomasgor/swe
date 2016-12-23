@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -579,5 +580,20 @@ public class RestConnection {
         //TODO: Benutzerobjekt des eingeloggten Benutzers zurückgeben
         return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
 
+    }
+
+    public Benutzer benutzerPost (String id, String email, String name, String vorname, String fotoURL) {
+        //TODO: Daten an Server senden
+        //TODO: Benutzerobjekt des eingeloggten Benutzers zurückgeben
+        //TODO: Benutzer kann neu sein oder schon bestehen
+
+        Log.d(TAG, "UserID: " + id);
+        Log.d(TAG, "email: " + email);
+        Log.d(TAG, "Vorname: " + vorname);
+        Log.d(TAG, "Nachname:" + name);
+        Log.d(TAG, "FotoURL:" + fotoURL);
+
+        //Hier später Serverantwort
+        return new Benutzer(id, email, name, vorname, fotoURL, "servertoken" , 0, 0, 1);
     }
 }

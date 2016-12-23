@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class Benutzer implements Serializable {
-    private long id;
+    private String id;
     private String email;
     private String name;
     private String vorname;
@@ -18,6 +18,18 @@ public class Benutzer implements Serializable {
     private int istPush;
 
     public Benutzer(long id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym, int istPush) {
+        this.id = String.valueOf(id);
+        this.email = email;
+        this.name = name;
+        this.vorname = vorname;
+        this.fotoURL = fotoURL;
+        this.token = token;
+        this.isProfessor = isProfessor;
+        this.istAnonym = istAnonym;
+        this.istPush = istPush;
+    }
+
+    public Benutzer(String id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym, int istPush) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -29,11 +41,11 @@ public class Benutzer implements Serializable {
         this.istPush = istPush;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
