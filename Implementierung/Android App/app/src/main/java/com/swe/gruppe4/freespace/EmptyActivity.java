@@ -9,16 +9,44 @@ import android.widget.Toast;
 
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 
+/**
+ * @author
+ * last time modified: 23.12.2016 from Eduard Mantler
+ * <p>Dummy Activity für die Navigation</p>
+ */
 public class EmptyActivity extends AppCompatActivity {
+
+    private int destinationId;
+    private int sourceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        destinationId = getIntent().getIntExtra("destinationId", 0);
+        sourceId = getIntent().getIntExtra("sourceId", 0);
         showDialog();
         setContentView(R.layout.activity_empty);
     }
 
     private void showDialog(){
+        AlertDialog.Builder build = new AlertDialog.Builder(EmptyActivity.this);
+        build.setCancelable(false);
+        build.setTitle("Navigation");
+        build.setMessage("Bald ist hier eine Karte von Raum " + sourceId + " nach " + destinationId + ".");
+
+        build.setPositiveButton("Ich freu mich drauf!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        AlertDialog alert1 = build.create();
+        alert1.show();
+
+        /*
         AlertDialog.Builder build = new AlertDialog.Builder(EmptyActivity.this);
         build.setCancelable(false);
         build.setTitle("G101");
@@ -50,5 +78,6 @@ public class EmptyActivity extends AppCompatActivity {
         });
         AlertDialog alert1 = build.create();
         alert1.show();
+        */
     }
 }

@@ -1,6 +1,7 @@
 package com.swe.gruppe4.freespace;
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,11 @@ import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 
+/**
+ * @author
+ * last time modified: 23.12.2016 from Eduard Mantler
+ * <p>Zeigt die Raumdetails an</p>
+ */
 public class RoomDetailsActivity extends AppCompatActivity {
 
     ImageView imgRoom;
@@ -32,7 +38,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int id = getIntent().getIntExtra("id",4711);
+        final int id = getIntent().getIntExtra("id",4711);
         raum = new VerbindungDUMMY().raumGet(id);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
@@ -50,7 +56,11 @@ public class RoomDetailsActivity extends AppCompatActivity {
         gehezu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert",Toast.LENGTH_SHORT).show();
+                // Kein Startpunkt vorhanden: MainActivity.startingPointId = 0!
+                Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert" ,Toast.LENGTH_SHORT).show();
             }
         });
 

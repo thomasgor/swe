@@ -20,7 +20,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    // statische Variable um den eingescannten Startpunkt festzuhalten
+    // Id 0 darf nicht in der Tabelle Räume der DB vorhanden sein
+    public static int startingPointId = 0;
     private Button qrScanner;
     private ListView roomView;
     private RoomAdapter roomAdapter;
@@ -43,8 +45,9 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
-                ArrayList<Raum> roomListFromConnection = new ArrayList<>(connection.raumGet());
-                intent.putExtra("raumliste",roomListFromConnection);
+                //ArrayList<Raum> roomListFromConnection = new ArrayList<>(connection.raumGet());
+                //intent.putExtra("raumliste",roomListFromConnection);
+                intent.putExtra("id", 0);
                 startActivity(intent);
             }
         });

@@ -16,17 +16,19 @@ import java.util.ArrayList;
 
 /**
  * @author Eduard Mantler
- * last time modified: 22.12.2016 from Eduard Mantler
+ * last time modified: 23.12.2016 from Eduard Mantler
  * <p>QR-Scanner von der Startseite</p>
  */
 public class QRScanActivity extends AppCompatActivity {
     private Button scan_btn;
+    //private int context = getIntent().getIntExtra("RoomId", 0);
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty);
-
+        id = getIntent().getIntExtra("id", 0);
         final Activity activity = this;
 
         IntentIntegrator integrator = new IntentIntegrator(activity);
@@ -38,6 +40,8 @@ public class QRScanActivity extends AppCompatActivity {
         integrator.setOrientationLocked(false);
         integrator.setTimeout(20000);
         integrator.initiateScan();
+
+
 
     }
 
@@ -63,7 +67,14 @@ public class QRScanActivity extends AppCompatActivity {
                         invalidQRCode();
                     }
                     else {
-                        showDialog(meinRaum);
+                        if(id == 0) { //!= NULL?? 0 Id in DB?
+                            showDialog(meinRaum);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(),EmptyActivity.class);
+                            intent.putExtra("destinationId", meinRaum.getId());
+                            intent.putExtra("sourceId", id);
+                            startActivity(intent);
+                        }
                     }
                 }
                 else {
@@ -81,6 +92,7 @@ public class QRScanActivity extends AppCompatActivity {
      * @param meinRaum Raum Objekt des gescannten Raumes
      */
     private void showDialog(final Raum meinRaum){
+        MainActivity.startingPointId = meinRaum.getId();
         AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
         build.setCancelable(false);
         build.setTitle(meinRaum.getRaumname());
