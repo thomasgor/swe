@@ -9,19 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.Toast;
 
-//import com.google.android.gms.vision.CameraSource;
-//import com.google.android.gms.vision.Detector;
-//import com.google.android.gms.vision.barcode.Barcode;
-//import com.google.android.gms.vision.barcode.BarcodeDetector;
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.swe.gruppe4.freespace.Objektklassen.*;
 import java.util.ArrayList;
 
+/**
+ * @author Eduard Mantler
+ * last time modified: 22.12.2016 from Eduard Mantler
+ * <p>QR-Scanner von der Startseite</p>
+ */
 public class QRScanActivity extends AppCompatActivity {
     private Button scan_btn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,45 +31,44 @@ public class QRScanActivity extends AppCompatActivity {
 
         IntentIntegrator integrator = new IntentIntegrator(activity);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        integrator.setPrompt("Scan");
+        integrator.setPrompt("");
         integrator.setCameraId(0);
         integrator.setBeepEnabled(false);
         integrator.setBarcodeImageEnabled(false);
-        integrator.setOrientationLocked(true);
+        integrator.setOrientationLocked(false);
+        integrator.setTimeout(20000);
         integrator.initiateScan();
 
     }
 
+    /**
+     * onActivityResult: verwaltet die Eingaben des QR-Scanner
+     * @param requestCode Anfrage Id
+     * @param resultCode  Ergebnis Id
+     * @param data        Ergebnis Daten
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
-            if(result.getContents()==null){
-                Toast.makeText(this, "Scanvorgang abgebrochen", Toast.LENGTH_LONG).show();
-                finish();
+            if(result.getContents() == null){
+                cancelledScan();
             }
             else {
-                //Toast.makeText(this, result.getContents(),Toast.LENGTH_LONG).show();
-                //TODO verbessern
-                //Object scanned = result.getContents();
                 if ( isInteger(result.getContents())) {
                     VerbindungDUMMY verbindung = new VerbindungDUMMY();
                     Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
 
                     if(meinRaum == null) {
-                        Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
-                        finish();
+                        invalidQRCode();
                     }
                     else {
                         showDialog(meinRaum);
                     }
                 }
                 else {
-                    Toast.makeText(this, "Unbekannter QR Code k int" ,Toast.LENGTH_LONG).show();
-                    finish();
+                    invalidQRCode();
                 }
-
-
             }
         }
         else {
@@ -78,11 +76,16 @@ public class QRScanActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * showDialog: zeigt die Auswahl: "Raum suchen", "Einchecken" nach erfolgreichen Scan
+     * @param meinRaum Raum Objekt des gescannten Raumes
+     */
     private void showDialog(final Raum meinRaum){
         AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
         build.setCancelable(false);
         build.setTitle(meinRaum.getRaumname());
-        build.setMessage( meinRaum.getTeilnehmer_aktuell() + "/" + meinRaum.getTeilnehmer_max() + " Leute\nTag: " + meinRaum.getTag().getName() );
+        build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
+                                                            + " Leute\nTag: " + meinRaum.getTag().getName() );
 
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
@@ -92,27 +95,43 @@ public class QRScanActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));
                 startActivity(intent);
-                //finish();
             }
         });
         build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //Toast.makeText(getApplicationContext(),"Unbekannter QR Code", Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
-                //intent.putExtra("profileName","Max Mustermann");
-                //intent.putExtra("profileEmail","max@mustermann.de");
-                //intent.putExtra("profilePicture","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg");
-                intent.putExtra("raumliste",(ArrayList<Raum>) getIntent().getSerializableExtra("raumliste"));
+                //intent.putExtra("raumliste",(ArrayList<Raum>) getIntent().getSerializableExtra("raumliste"));
                 startActivity(intent);
-                //finish();
             }
         });
         AlertDialog alert1 = build.create();
+
         alert1.show();
+
     }
 
+    /**
+     * invalidQRCode: Meldung falls der QR-Code nicht erkannt wurde
+     */
+    private void invalidQRCode() {
+        Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    /**
+     * cancelledScan: Meldung falls der Scanvorgang abgebrochen wurde
+     */
+    private void cancelledScan() {
+        Toast.makeText(this, "Scanvorgang abgebrochen" ,Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    /**
+     * isInteger: Prüft ob ein String in ein Integer convertiert werden kann
+     * @param str der zu prüfende String
+     * @return True, falls der String in einen Integer convertiert werden kann
+     */
     public static boolean isInteger(String str) {
         if (str == null) {
             return false;
@@ -138,3 +157,4 @@ public class QRScanActivity extends AppCompatActivity {
     }
 
 }
+
