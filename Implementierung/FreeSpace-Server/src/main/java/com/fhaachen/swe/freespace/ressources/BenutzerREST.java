@@ -42,7 +42,6 @@ public class BenutzerREST {
             System.out.println(e);
         }
 
-        System.out.println(result);
         if(result == null){
             return Antwort.BAD_REQUEST;
         }

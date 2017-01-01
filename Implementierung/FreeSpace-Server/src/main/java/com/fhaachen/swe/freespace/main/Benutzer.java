@@ -104,13 +104,13 @@ public class Benutzer extends Datenbank{
             neu.set("foto", input.get("foto"));
 
             try {
-                neu.saveIt();
+                neu.insert();
                 result = neu.toJson(true);
+                System.out.println("postBenutzer: Neuer Benutzer angelegt "+ result);
             }catch(Exception e){
                 System.out.println(e);
             }
         }
-
         disconnect();
         return result;
     }
