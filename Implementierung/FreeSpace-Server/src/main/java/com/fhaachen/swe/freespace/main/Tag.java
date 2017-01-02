@@ -7,6 +7,8 @@ import org.javalite.activejdbc.annotations.Table;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
+
 /**
  * Klasse Tag beinhaltet die Logik um die HTTP-Methoden GET, POST, DELETE des Restservices umzusetzen.
  * Die Logik wurde anhand des Systementwurfs umgesetzt.
@@ -151,4 +153,65 @@ public class Tag extends Datenbank {
         disconnect();
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
+
+    /**
+     * Löscht die Tags
+     * @param ids Enthält die Liste der zu löschenden Tags
+     * @return true, wenn das Löschen erfolgreich war
+     */
+
+    public static boolean deleteTags(List<String> ids){
+        try {
+
+            if(ids != null) {
+                connect();
+
+                for (String i : ids) {
+                    System.out.println("Lösche Tag:" + i);
+                    Tag t = Tag.findById(Integer.parseInt(i));
+                    LazyList<Raum> raum = Raum.find("tag = ?", Integer.parseInt(t.get("id").toString()));
+
+                    for (Raum element : raum) {
+                        System.out.println("Raume bei Tag " + i);
+                        element.set("tag", null).saveIt();
+                    }
+
+                    System.out.println("Lösche endgültig Tag:" + i);
+                    t.delete();
+                }
+                disconnect();
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            disconnect();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Fügt einen neuen Tag hinzu
+     * @param tagname Der Name des Tag, welcher neu hinzugefügt werden soll
+     * @return true, wenn das Anlegen erfolgreich war
+     */
+
+    public static boolean addNeuerTag(String tagname) {
+        connect();
+        //prüfen ob Tag existiert
+        try {
+            if (tagname == null || tagname == "" || Tag.findFirst("name = ?", tagname) != null) {
+                return false;
+            }
+            Tag.createIt("name", tagname);
+        } catch(Exception e) {
+            e.printStackTrace();
+            disconnect();
+            return false;
+        }
+        disconnect();
+        return true;
+    }
+
+
 }

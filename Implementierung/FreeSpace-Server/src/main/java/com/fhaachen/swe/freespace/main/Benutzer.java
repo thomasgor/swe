@@ -10,6 +10,7 @@ import javax.xml.ws.WebServiceException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.javalite.common.Base64;
 
 /**
  * Created by thomas on 27.11.2016.
@@ -205,4 +206,29 @@ public class Benutzer extends Datenbank{
         disconnect();
         return (token.equals(t));
     }
+
+    /**
+     * Setzt die BenutzerRollen in den Zustand "Student/normaler Benutzer" zurück.
+     */
+    public static void resetBenutzerRolle(){
+        connect();
+        String sql = "UPDATE Benutzer SET istProfessor = 0";
+        Base.exec(sql);
+        disconnect();
+    }
+
+    /**
+     * Übeprüft ob der angemeldete Nutzer ein Administrator ist
+     * @param cookieValue Enthält den Wert des zu überprüfenden Cookies
+     * @return true, falls der Benutzer ein Administrator ist
+     */
+    public static boolean istAdministrator(String cookieValue){
+        connect();
+        String admin_name = Konfiguration.findById("admin_name").get("value").toString();
+        String admin_pw = Konfiguration.findById("admin_passwort").get("value").toString();
+        disconnect();
+
+        return cookieValue.equals(Base64.getEncoder().encodeToString((admin_name+":"+admin_pw).getBytes()));
+    }
+
 }
