@@ -108,10 +108,12 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         return convertView;
     }
 
-    private void showDialogDelete(View v, final long lectureId){
+    private void showDialogDelete(View v, final int lectureId){
         AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
         build.setCancelable(false);
-        RestConnection verb = new RestConnection(this.aufgerufenVon);
+
+        VerbindungDUMMY verb = new VerbindungDUMMY();
+        //RestConnection verb = new RestConnection(this.aufgerufenVon);
 
         //build.setTitle("Freund wirklich löschen?");
         build.setMessage("Möchten Sie die Veranstaltung " + verb.lectureGet(lectureId).getName()+ " wirklich löschen?");
@@ -119,7 +121,10 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                RestConnection verb = new RestConnection(getContext());
+
+                VerbindungDUMMY verb = new VerbindungDUMMY();
+                //RestConnection verb = new RestConnection(getContext());
+
                 verb.lectureDelete(lectureId);
                 //Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
                 notifyDataSetChanged();

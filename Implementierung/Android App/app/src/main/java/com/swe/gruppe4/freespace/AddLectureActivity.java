@@ -56,7 +56,10 @@ public class AddLectureActivity extends AppCompatActivity implements View.OnClic
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-        final RestConnection verb = new RestConnection(this);
+
+        final VerbindungDUMMY verb = new VerbindungDUMMY();
+        //final RestConnection verb = new RestConnection(this);
+
         final ArrayList<Raum> raumliste = verb.raumGet();
 
 

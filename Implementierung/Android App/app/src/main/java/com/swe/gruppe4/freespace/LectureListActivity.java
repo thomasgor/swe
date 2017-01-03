@@ -33,7 +33,10 @@ public class LectureListActivity extends BaseActivity
     private LectureAdapter lectureAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayList<Veranstaltung> veranstaltungen = new RestConnection(this).lecturesGet();
+
+        ArrayList<Veranstaltung> veranstaltungen = new VerbindungDUMMY().lecturesGet();
+        //ArrayList<Veranstaltung> veranstaltungen = new RestConnection(this).lecturesGet();
+
         Veranstaltung data;
         super.onCreate(savedInstanceState);
 

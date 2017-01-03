@@ -397,4 +397,12 @@ public class VerbindungDUMMY {
         //TODO: Daten an Server senden
 
     }
+
+    public Benutzer benutzerPut (String PW, int isProfessor, int isPush){
+
+        //TODO: Daten an Server senden
+        //TODO: Benutzerobjekt des eingeloggten Benutzers zurückgeben
+        return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
+
+    }
 }

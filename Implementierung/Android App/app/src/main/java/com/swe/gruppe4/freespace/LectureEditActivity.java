@@ -56,7 +56,10 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-        RestConnection verb = new RestConnection(this);
+
+        VerbindungDUMMY verb = new VerbindungDUMMY();
+        //RestConnection verb = new RestConnection(this);
+
         final ArrayList<Raum> raumliste = verb.raumGet();
 
 
@@ -76,7 +79,10 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Button saveLecture = (Button) findViewById(R.id.saveLectureButton);
-        final RestConnection v = new RestConnection(this);
+
+        final VerbindungDUMMY v = new VerbindungDUMMY();
+        //final RestConnection v = new RestConnection(this);
+
         saveLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +90,7 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
                 //String name = (String) textview.getText();
                 //textview = (TextView) convertView.findViewById(R.id.DateEditText);
                 //Date date = textview.getText();
-                long id = getIntent().getLongExtra("ID", 0);
+                int id = getIntent().getIntExtra("ID", 0);
 
 
                 try {
@@ -158,8 +164,11 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setDateTimeField() {
-        final long id = getIntent().getLongExtra("ID", 0);
-        final RestConnection verbindung = new RestConnection(this);
+        final int id = getIntent().getIntExtra("ID", 0);
+
+        final VerbindungDUMMY verbindung = new VerbindungDUMMY();
+        //final RestConnection verbindung = new RestConnection(this);
+
         final Veranstaltung veranstaltung = verbindung.lectureGet(id);
         long longFrom = veranstaltung.getVon();
         long longTo = veranstaltung.getBis();
