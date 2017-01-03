@@ -228,7 +228,7 @@ public class VerbindungDUMMY {
 
     }
 
-    public void freundschaftPut(Benutzer benutzer, boolean accepted){
+    public void freundschaftPut(Benutzer benutzer){
         //TODO: Daten an Server senden
 
     }
@@ -356,5 +356,45 @@ public class VerbindungDUMMY {
         return null;
 
         //TODO: Daten vom Server statt DummyDaten
+    }
+
+    public ArrayList<Veranstaltung> lecturesGet() {
+        ArrayList<Veranstaltung> lectures = new ArrayList<Veranstaltung>();
+        Veranstaltung[] veranstaltungen = new Veranstaltung[3];
+        Benutzer[] benutzer = new Benutzer[5];
+        Raum room =  new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Hallo Welt"), benutzer, "gelb");
+        for(int i = 0; i < 3; i++){
+            Veranstaltung tmp = new Veranstaltung(i,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1), 1293840001000L, 1481546700000L,room );
+            lectures.add(i, tmp);
+        }
+        //TODO: Daten vom Server statt DummyDaten
+
+        return lectures;
+    }
+
+
+
+    public Veranstaltung lectureGet(long id){
+        //TODO: Daten vom Server holen
+        Benutzer[] benutzer = new Benutzer[5];
+        Raum room =  new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Hallo Welt"), benutzer, "grün");
+        Veranstaltung veranstaltung = new Veranstaltung(1,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Prof","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1), 1293840001000L, 1481546700000L,room);
+        return veranstaltung;
+    }
+
+
+    public void lecturePost(String name, long von, long bis, Raum raum){
+        //TODO: Daten an Server senden
+
+    }
+
+    public void lecturePut(long id, String name, long von, long bis, Raum raum){
+        //TODO: Daten an Server senden
+
+    }
+
+    public void lectureDelete(long id){
+        //TODO: Daten an Server senden
+
     }
 }

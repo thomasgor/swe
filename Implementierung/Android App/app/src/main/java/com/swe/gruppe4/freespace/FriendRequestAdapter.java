@@ -5,6 +5,7 @@ package com.swe.gruppe4.freespace;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,8 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         acceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new VerbindungDUMMY().freundschaftPut(friendObj.getBenutzer(), true);
+                new VerbindungDUMMY().freundschaftPut(friendObj.getBenutzer());
+
             }
         });
 
@@ -67,7 +69,8 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         declineFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new VerbindungDUMMY().freundschaftPut(friendObj.getBenutzer(), false);
+                new VerbindungDUMMY().freundschaftDelete(friendObj.getBenutzer());
+
             }
         });
         return convertView;

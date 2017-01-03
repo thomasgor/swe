@@ -106,7 +106,7 @@ public class JsonStringBuilder {
     {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("emal", email);
+            jsonObj.put("email", email);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -162,7 +162,7 @@ public class JsonStringBuilder {
      * @param veranstaltung
      * @return
      */
-    public String buildPUTveranstaltungJson(Veranstaltung veranstaltung)
+    public String buildPUTveranstaltungJson(Veranstaltung veranstaltung)//TODO: Man kann keine Veranstaltung übergeben, es müssen alle teile einzeln als Parameter übergeben werden, und nur ein Raum, keine Liste. Bitte ändern.
     {
         JSONObject jsonObj = new JSONObject();
         try {
@@ -192,7 +192,7 @@ public class JsonStringBuilder {
      * @param raumList
      * @return
      */
-    public String buildPOSTsitzungJson(List<Raum> raumList)
+    public String buildPOSTsitzungJson(List<Raum> raumList) //TODO: man braucht nur die RaumID zu senden, bitte ändern
     {
         JSONObject jsonObj = new JSONObject();
         try {
