@@ -50,6 +50,7 @@ public class Benutzer extends Datenbank{
         Map input = JsonHelper.toMap(json);
         String input_pw = input.get("masterpasswort").toString();
         String input_istAnonym = input.get("istAnonym").toString();
+        String input_istPush = input.get("istPush").toString();
 
         connect();
         Benutzer b = Benutzer.findById(benutzerID);
@@ -62,6 +63,11 @@ public class Benutzer extends Datenbank{
             //Wenn istAnony gesetzt ist, setze die Flag
             if(input_istAnonym != null && (input_istAnonym.equals("1") ||input_istAnonym.equals("0"))){
                 b.set("istAnonym", input_istAnonym);
+            }
+
+            //Wenn istPush gesetzt ist, setze die Flag
+            if(input_istPush != null && (input_istPush.equals("1") ||input_istPush.equals("0"))){
+                b.set("istPush", input_istPush);
             }
 
             try{
