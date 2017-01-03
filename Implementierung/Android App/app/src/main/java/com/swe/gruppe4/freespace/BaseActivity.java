@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.swe.gruppe4.freespace.Objektklassen.*;
 import java.io.InputStream;
 import com.koushikdutta.ion.Ion;
 
@@ -46,6 +47,13 @@ public class BaseActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(!ben.istProfessor()) {
+            navigationView.getMenu().findItem(R.id.nav_professor).setVisible(false);
+        }
+
+
         View header=navigationView.getHeaderView(0);
 
         TextView profileName = (TextView)header.findViewById(R.id.profileName);

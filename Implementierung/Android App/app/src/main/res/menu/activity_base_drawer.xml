@@ -20,7 +20,8 @@
             android:title="Einstellungen" />
     </group>
 
-    <item android:title="Professor">
+    <item android:title="Professor"
+        android:id="@+id/nav_professor">
         <menu>
             <item
                 android:id="@+id/nav_professor_stundenplan"
