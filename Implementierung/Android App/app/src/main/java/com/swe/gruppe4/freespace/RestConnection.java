@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.util.SparseIntArray;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +18,9 @@ import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +29,8 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.lang.Object;
+import android.os.AsyncTask;
 
 /**
  * Created by Merlin on 04.12.2016.
@@ -137,18 +143,72 @@ public class RestConnection {
         }
         return null;
     }
-    private String restRequest(String restRessource, String httpMethod, String inputJson){
+    private String restRequest(final String restRessource, final String httpMethod, String input){
 
+        class RestCon extends AsyncTask<String,Integer,String> {
+            String resp;
+
+            protected String doInBackground(String... params) {
+                String response = "false";
+                try {
+                    java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + restRessource +"/");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    String userPass = id+":"+token;
+                    byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
+                    conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
+                    conn.setRequestMethod(httpMethod);
+                    OutputStream os = conn.getOutputStream();
+                    if(!Objects.equals(params[0], "")){
+                        conn.setRequestProperty("Content-Type","application/json");
+                        byte[] inputJsonBytes = params[0].getBytes("UTF-8");
+                        os.write(inputJsonBytes);
+                    }
+                    os.flush();
+
+                    int responseCode = conn.getResponseCode();
+                    SparseIntArray acceptableCodes = acceptableCodes(BENUTZER,HTTP_POST);
+                    if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
+                        InputStream in = new BufferedInputStream(conn.getInputStream());
+                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+                    } else {
+                        showErrorMessage(responseCode);
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return response;
+            }
+
+            protected void onProgressUpdate(Integer... progress) {
+
+            }
+
+            protected void onPostExecute(String result) {
+                resp = result;
+
+            }
+
+        }
+
+        RestCon connn = new RestCon();
+        connn.execute(input);
+        return connn.resp;
+
+
+    }
+
+    private String restRequest(String restRessource, String httpMethod, String inputJson, int idn) {
         String response = "false";
         try {
-            java.net.URL url = new java.net.URL("http://example-server.com/" + restRessource +"/");
+            java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + restRessource +"/" + idn);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             String userPass = id+":"+token;
             byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
             conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
             conn.setRequestMethod(httpMethod);
             OutputStream os = conn.getOutputStream();
-
             if(!Objects.equals(inputJson, "")){
                 conn.setRequestProperty("Content-Type","application/json");
                 byte[] inputJsonBytes = inputJson.getBytes("UTF-8");
@@ -173,39 +233,63 @@ public class RestConnection {
         return response;
     }
 
-    private String restRequest(String restRessource, String httpMethod, String inputJson, int id) {
-        String response = "false";
-        try {
-            java.net.URL url = new java.net.URL("http://example-server.com/" + restRessource +"/");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            String userPass = id+":"+token;
-            byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
-            conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
-            conn.setRequestMethod(httpMethod);
-            OutputStream os = conn.getOutputStream();
-            //TODO: ID Mit schicken.
-            if(!Objects.equals(inputJson, "")){
-                conn.setRequestProperty("Content-Type","application/json");
-                byte[] inputJsonBytes = inputJson.getBytes("UTF-8");
-                os.write(inputJsonBytes);
+    private String restPOSTBenutzer(String input) {
+
+
+
+        class RestCon extends AsyncTask<String,Integer,String> {
+             String resp;
+
+            protected String doInBackground(String... params) {
+                String response = "false";
+                try {
+                    java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + BENUTZER +"/");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    //String userPass = ""+":"+"";
+                    //byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
+                    //conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
+                    conn.setRequestMethod(HTTP_POST);
+                    OutputStream os = conn.getOutputStream();
+                    if(!Objects.equals(params[0], "")){
+                        conn.setRequestProperty("Content-Type","application/json");
+                        byte[] inputJsonBytes = params[0].getBytes("UTF-8");
+                        os.write(inputJsonBytes);
+                    }
+                    os.flush();
+
+                    int responseCode = conn.getResponseCode();
+                    SparseIntArray acceptableCodes = acceptableCodes(BENUTZER,HTTP_POST);
+                    if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
+                        InputStream in = new BufferedInputStream(conn.getInputStream());
+                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+                    } else {
+                        showErrorMessage(responseCode);
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return response;
             }
-            os.flush();
 
-            int responseCode = conn.getResponseCode();
-            SparseIntArray acceptableCodes = acceptableCodes(restRessource,httpMethod);
-            if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
-                InputStream in = new BufferedInputStream(conn.getInputStream());
-                response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-            } else {
-                showErrorMessage(responseCode);
+            protected void onProgressUpdate(Integer... progress) {
+
             }
 
+            protected void onPostExecute(String result) {
+                resp = result;
+                Log.d("myTag2",result);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            }
+
         }
 
-        return response;
+        RestCon connn = new RestCon();
+        connn.execute(input);
+        return connn.resp;
+
+
     }
 
 
@@ -358,13 +442,13 @@ public class RestConnection {
      */
     public Sitzung sitzungGet(){
         String antwortJSon = restRequest(SITZUNG, HTTP_GET, null);
-        //TODO: Antwort verarbeiten
+        //return builder.getFromJson(antwortJSon, "Sitzung");
         return null;
 
     }
     public Sitzung sitzungPost(int raumID){
-        //String jSon = builder.buildPOSTsitzungJson(raumID);//TODO buildPOSTsitzung ändern
-        //String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);
+        String jSon = builder.buildPOSTsitzungJson(raumID);
+        String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);
         //TODO: Antwort verarbeiten
         return null;
     }
@@ -460,53 +544,55 @@ public class RestConnection {
 
 
 
-    public Veranstaltung lectureGet(long id){
-        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, null, id);//TODO: id auf INT ändern in Lecture Activities
+    public Veranstaltung lectureGet(int id){
+        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, null, id);
         //TODO: Antwort verarbeiten
         return null;
     }
 
 
     public void lecturePost(String name, long von, long bis, Raum raum){
-        //String jSon = builder.buildPOSTveranstaltungJson(veranstaltung); //TODO: buildPOSTveranstaltung ändern
-        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
+        String jSon = builder.buildPOSTveranstaltungJson(name, von, bis, raum);
+        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
         //TODO: Antwort verarbeiten
 
     }
 
-    public void lecturePut(long id, String name, long von, long bis, Raum raum){
-        //String jSon = builder.buildPUTveranstaltungJson(veranstaltung);TODO: buildPUTveranstaltung ändern
-        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
+    public void lecturePut(int id, String name, long von, long bis, Raum raum){
+        String jSon = builder.buildPUTveranstaltungJson(name, von, bis, raum);
+        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
         //TODO: Antwort verarbeiten
 
     }
 
-    public void lectureDelete(long id){
-        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_DELETE, null, id);
+    public void lectureDelete(int id){
+        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_DELETE, null, id);
 
 
     }
 
-    public Benutzer benutzerPut (String PW, int isProfessor, int isPush){
+    public Benutzer benutzerPut (String PW, int isAnonym, int isPush){
+        String jSON = builder.buildPUTbenutzerJson(PW, isAnonym, isPush);
+        String antwortJSon = restRequest(BENUTZER, HTTP_PUT, jSON);
 
-        //TODO: Daten an Server senden
-        //TODO: Benutzerobjekt des eingeloggten Benutzers zurückgeben
-        return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
+        return new Benutzer(builder.getFromJson(antwortJSon, "id"), builder.getFromJson(antwortJSon, "email"),builder.getFromJson(antwortJSon, "name"),builder.getFromJson(antwortJSon, "vorname"),builder.getFromJson(antwortJSon, "fotoURL"),builder.getFromJson(antwortJSon, "token"),Integer.valueOf(builder.getFromJson(antwortJSon, "istProfessor")),Integer.valueOf(builder.getFromJson(antwortJSon, "istAnonym")),Integer.valueOf(builder.getFromJson(antwortJSon, "istPush")));
+        //return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
+    }
+
+    public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
+        String jSon = builder.buildPOSTbenutzerJson(idn, email, name, vorname, fotoURL);
+        String antwortJSon = restPOSTBenutzer(jSon);
+
+        token = builder.getFromJson(antwortJSon, "token");
+        id = builder.getFromJson(antwortJSon, "id");
+        Log.d("myTag" ,token + " " + id);
+
+
+        //return new Benutzer(builder.getFrshowDialog(token + " + " + id);omJson(antwortJSon, "id"), builder.getFromJson(antwortJSon, "email"),builder.getFromJson(antwortJSon, "name"),builder.getFromJson(antwortJSon, "vorname"),builder.getFromJson(antwortJSon, "fotoURL"),builder.getFromJson(antwortJSon, "token"),Integer.valueOf(builder.getFromJson(antwortJSon, "istProfessor")),Integer.valueOf(builder.getFromJson(antwortJSon, "istAnonym")),Integer.valueOf(builder.getFromJson(antwortJSon, "istPush")));
+        //return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
 
     }
 
-    public Benutzer benutzerPost (String id, String email, String name, String vorname, String fotoURL) {
-        //TODO: Daten an Server senden
-        //TODO: Benutzerobjekt des eingeloggten Benutzers zurückgeben
-        //TODO: Benutzer kann neu sein oder schon bestehen
 
-        Log.d(TAG, "UserID: " + id);
-        Log.d(TAG, "email: " + email);
-        Log.d(TAG, "Vorname: " + vorname);
-        Log.d(TAG, "Nachname:" + name);
-        Log.d(TAG, "FotoURL:" + fotoURL);
 
-        //Hier später Serverantwort
-        return new Benutzer(id, email, name, vorname, fotoURL, "servertoken" , 0, 0, 1);
-    }
 }
