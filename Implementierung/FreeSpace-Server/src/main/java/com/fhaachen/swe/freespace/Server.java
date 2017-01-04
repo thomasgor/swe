@@ -70,17 +70,34 @@ public class Server {
     }
 
     /**
+     *
+     */
+
+    public static GoogleHelper startGoogleHelperThread() {
+        System.out.println("Starting GoogleHelperThread.");
+        GoogleHelper runnable = new GoogleHelper();
+        Thread t = new Thread(runnable);
+        t.start();
+        return runnable;
+    }
+
+
+
+    /**
      * Startet den Server mit oder ohne Testsuite und beendet diesen mit einem druecken der Eingabe-Taste
      */
 
     public static void main(String[] args) {
         boolean test = true;
         try {
-            HttpServer httpServer = startServer();
-            System.out.println("Webservice published to: " + URL);
-            System.out.println("Hit enter to Stop");
-            System.in.read();
-            httpServer.stop();
+            GoogleHelper g = startGoogleHelperThread();
+
+//            HttpServer httpServer = startServer();
+//            System.out.println("Webservice published to: " + URL);
+//            System.out.println("Hit enter to Stop");
+//            System.in.read();
+//            httpServer.stop();
+            g.stop();
 
             if(test == true){
                 //run Testsuite
