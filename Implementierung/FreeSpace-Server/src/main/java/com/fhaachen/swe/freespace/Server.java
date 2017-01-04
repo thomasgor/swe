@@ -90,14 +90,15 @@ public class Server {
     public static void main(String[] args) {
         boolean test = true;
         try {
-            GoogleHelper g = startGoogleHelperThread();
+//            für PushNots
+//            GoogleHelper g = startGoogleHelperThread();
 
             HttpServer httpServer = startServer();
             System.out.println("Webservice published to: " + URL);
             System.out.println("Hit enter to Stop");
             System.in.read();
             httpServer.stop();
-            g.stop();
+//            g.stop();
 
             if(test == true){
                 //run Testsuite
