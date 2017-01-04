@@ -92,11 +92,11 @@ public class Server {
         try {
             GoogleHelper g = startGoogleHelperThread();
 
-//            HttpServer httpServer = startServer();
-//            System.out.println("Webservice published to: " + URL);
-//            System.out.println("Hit enter to Stop");
-//            System.in.read();
-//            httpServer.stop();
+            HttpServer httpServer = startServer();
+            System.out.println("Webservice published to: " + URL);
+            System.out.println("Hit enter to Stop");
+            System.in.read();
+            httpServer.stop();
             g.stop();
 
             if(test == true){
