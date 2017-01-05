@@ -29,7 +29,7 @@ public class Server {
     public static final String URL = getURL();
 
     private static URI getBaseURI(){
-        return UriBuilder.fromUri("http://"+getIP()+"/").port(3456).build();
+        return UriBuilder.fromUri("http://"+getIP()+"/").port(8888).build();
     }
 
     /**
