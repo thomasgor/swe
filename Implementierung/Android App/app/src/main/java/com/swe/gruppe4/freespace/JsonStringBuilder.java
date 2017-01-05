@@ -40,15 +40,15 @@ public class JsonStringBuilder {
      * Antworten:   Status 200 OK: Wenn der Benutzer widerkehrend ist
      *              Status 201 CREATED: Wenn der Benutzer neu ist
      */
-    public String buildPOSTbenutzerJson(Benutzer benutzer)
+    public String buildPOSTbenutzerJson(String id, String email, String name, String vorname, String fotoURL)
     {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("id", benutzer.getId());
-            jsonObj.put("email", benutzer.getEmail());
-            jsonObj.put("name", benutzer.getName());
-            jsonObj.put("vorname", benutzer.getVorname());
-            jsonObj.put("fotoURL", benutzer.getFotoURL());
+            jsonObj.put("id", id);
+            jsonObj.put("email", email);
+            jsonObj.put("name", name);
+            jsonObj.put("vorname", vorname);
+            jsonObj.put("fotoURL", fotoURL);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -59,17 +59,17 @@ public class JsonStringBuilder {
      * benutzer PUT: Die Ressource wird benutzt, wenn das Masterpasswort eingegeben wurde
      * Antworten:   Status 200 OK: Masterpasswort korrekt
      *              Status 403 FORBIDDEN: Masterpasswort falsch
-     * @param benutzer
+     * @param
      * @param password
      * @return
      */
-    public String buildPUTbenutzerJson(Benutzer benutzer, String password)
+    public String buildPUTbenutzerJson(String password,int isAnonym, int isPush)
     {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put("masterpasswort", password);
-            jsonObj.put("isAnonym", benutzer.isAnonymous());
-            jsonObj.put("isPush", benutzer.isPush());
+            jsonObj.put("isAnonym", isAnonym);
+            jsonObj.put("isPush", isPush);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -137,17 +137,17 @@ public class JsonStringBuilder {
      * Antworten:   Status 201 CREATED: Verantstaltung erfolgreich erstellt
      *              Status 403 FORBIDDEN:
      *              Status 910 ROOM BLOCKED:
-     * @param veranstaltung
+     * @param
      * @return
      */
-    public String buildPOSTveranstaltungJson(Veranstaltung veranstaltung)
+    public String buildPOSTveranstaltungJson(String name, long von, long bis, Raum raum)
     {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("name", veranstaltung.getName());
-            jsonObj.put("von", veranstaltung.getVon());
-            jsonObj.put("bis", veranstaltung.getBis());
-            jsonObj.put("raum", veranstaltung.getRaum().getId());
+            jsonObj.put("name", name);
+            jsonObj.put("von", von);
+            jsonObj.put("bis", bis);
+            jsonObj.put("raum", raum);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -159,24 +159,17 @@ public class JsonStringBuilder {
      * Antworten:   Status 200 OK: Verantstaltung erfolgreich geaendert
      *              Status 403 FORBIDDEN:
      *              Status 910 ROOM BLOCKED:
-     * @param veranstaltung
+     * @param
      * @return
      */
-    public String buildPUTveranstaltungJson(Veranstaltung veranstaltung)//TODO: Man kann keine Veranstaltung übergeben, es müssen alle teile einzeln als Parameter übergeben werden, und nur ein Raum, keine Liste. Bitte ändern.
+    public String buildPUTveranstaltungJson(String name, long von, long bis, Raum raum)
     {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("name", veranstaltung.getName());
-            jsonObj.put("von", veranstaltung.getVon());
-            jsonObj.put("bis", veranstaltung.getBis());
-
-            List<String> raumList = new ArrayList<String>();
-            raumList.add(String.valueOf(veranstaltung.getRaum().getId()));
-            JSONArray array = new JSONArray();
-            for (int i = 0; i < raumList.size(); i++) {
-                array.put(raumList.get(i));
-            }
-            jsonObj.put("raum", array);
+            jsonObj.put("name", name);
+            jsonObj.put("von", von);
+            jsonObj.put("bis", bis);
+            jsonObj.put("raum", raum);
             //jsonObj.put("raum", veranstaltung.getRaum());
         } catch(JSONException e) {
             e.printStackTrace();
@@ -189,18 +182,15 @@ public class JsonStringBuilder {
      * Antworten:   Status 201 CREATED: Besteht bereits eine aktive Sitzung des Benutzers, wird
      *                                  diese überschrieben und trotzdem 201 zurückgegeben! Hier
      *                                  greift also nicht „insert und update“
-     * @param raumList
+     * @param
      * @return
      */
-    public String buildPOSTsitzungJson(List<Raum> raumList) //TODO: man braucht nur die RaumID zu senden, bitte ändern
+    public String buildPOSTsitzungJson(int raumID)
     {
         JSONObject jsonObj = new JSONObject();
         try {
-            JSONArray array = new JSONArray();
-            for (int i = 0; i < raumList.size(); i++) {
-                array.put(raumList.get(i).getId());
-            }
-            jsonObj.put("raum", array);
+
+            jsonObj.put("raum", raumID);
 
         } catch(JSONException e) {
             e.printStackTrace();
@@ -214,7 +204,7 @@ public class JsonStringBuilder {
     /**
      * Diese Methode wird dazu verwendet, ein Datum aus einem Json String zu extrahieren
      * @param jsonString
-     * @param metaData
+     * @param
      * @return
      */
     public String getFromJson(String jsonString, String metaData)
