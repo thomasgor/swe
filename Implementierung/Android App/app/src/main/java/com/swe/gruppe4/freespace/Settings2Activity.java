@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Intent;
 
 import com.swe.gruppe4.freespace.Objektklassen.*;
 import com.swe.gruppe4.freespace.RestConnection;
@@ -27,6 +28,9 @@ public class Settings2Activity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AktuellerBenutzer.getAktuellerBenutzer().istProfessor()){
+            super.setTheme(R.style.AppThemeProf);
+        }
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -39,20 +43,25 @@ public class Settings2Activity extends BaseActivity
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
         final CheckBox anonymChkB = (CheckBox) findViewById(R.id.checkBox);
         final CheckBox pushChkB = (CheckBox) findViewById(R.id.checkBox2);
-        final RestConnection verb = new RestConnection(this);
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        anonymChkB.setChecked(ben.isAnonymous());
+        pushChkB.setChecked(ben.isPush());
+
+        final VerbindungDUMMY verb = new VerbindungDUMMY();
+        //final RestConnection verb = new RestConnection(this);
         anonymChkB.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 if(anonymChkB.isChecked()){
 
                     Benutzer ben = verb.benutzerPut("",1,2);
-
+                    AktuellerBenutzer.setAktuellerBenutzer(ben);
 
                 }else{
                     Benutzer ben = verb.benutzerPut("",0,2);
-
+                    AktuellerBenutzer.setAktuellerBenutzer(ben);
                 }
             }
         });
@@ -60,15 +69,15 @@ public class Settings2Activity extends BaseActivity
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 if(pushChkB.isChecked()){
 
                     Benutzer ben = verb.benutzerPut("",2,1);
-
+                    AktuellerBenutzer.setAktuellerBenutzer(ben);
 
                 }else{
                     Benutzer ben = verb.benutzerPut("",2,0);
-
+                    AktuellerBenutzer.setAktuellerBenutzer(ben);
                 }
             }
         });
@@ -82,8 +91,25 @@ public class Settings2Activity extends BaseActivity
                 if(ben.istProfessor() == false) {
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
                 }else{
+                    AktuellerBenutzer.setAktuellerBenutzer(ben);
 
-                    //ToDo: Eingeloggten Benutzer aktualisieren, im Prof Features verfügbar zu machen
+                    //ToDo: Testen ob Activity erfolgreich neu startet und das andere Theme verwendet, wenn MasterPW korrekt eingegeben wurde
+
+
+                    //Settings2Activity.this.finish();
+                    //final Intent intent = Settings2Activity.this.getIntent();
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    //Settings2Activity.this.startActivity(intent);
+
+                    Intent intent = new Intent(Settings2Activity.this.getApplicationContext(), Settings2Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Settings2Activity.this.startActivity(intent);
+
+                    //Intent intent = getIntent();
+                    //finish();
+                    //startActivity(intent);
+
                 }
             }
         });
@@ -92,5 +118,12 @@ public class Settings2Activity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

@@ -7,17 +7,23 @@ import com.swe.gruppe4.freespace.Objektklassen.*;
  */
 
 public class AktuellerBenutzer {
-    private static Benutzer benutzer;
 
-    public AktuellerBenutzer(Benutzer benutzer) {
-        this.benutzer = benutzer;
+    //Todo = new Benutzer kann weg, wenn der aktuelle Benutzer per RestConnection geholt wird
+    private static Benutzer benutzer = new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "", 0, 1, 1);
+
+    public AktuellerBenutzer(Benutzer ben) {
+        benutzer = ben;
     }
 
     public static Benutzer getAktuellerBenutzer() {
 
         //ToDo: Testdaten gegen valide Daten austauschen
-        return new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "", 1, 0, 0);
-        //return this.benutzer;
+        return benutzer;
+
+    }
+
+    public static void setAktuellerBenutzer(Benutzer ben) {
+        benutzer = ben;
     }
 
 
