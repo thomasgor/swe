@@ -34,7 +34,7 @@ public class BaseActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //super.setTheme(R.style.AppThemeProf);
+        super.setTheme(R.style.AppThemeProf);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
