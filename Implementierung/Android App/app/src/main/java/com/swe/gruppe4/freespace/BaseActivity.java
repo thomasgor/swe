@@ -34,7 +34,11 @@ public class BaseActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.setTheme(R.style.AppThemeProf);
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(ben.istProfessor()) {
+            super.setTheme(R.style.AppThemeProf);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -49,16 +53,11 @@ public class BaseActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
         if(!ben.istProfessor()) {
             navigationView.getMenu().findItem(R.id.nav_professor).setVisible(false);
 
-        }else{
-            //activity.setTheme(R.style.BlackTheme);
-            //savedInstanceState.get
-
-            //super.setTheme(R.style.AppThemeProf);
         }
+
 
 
         View header=navigationView.getHeaderView(0);
@@ -96,10 +95,15 @@ public class BaseActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } /*else {
+        } else {
             super.onBackPressed();
-        }*/
+        }
     }
+
+    public void onBackPressedNoDrawer() {
+            super.onBackPressed();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,6 +143,11 @@ public class BaseActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void setTheme(int resid){
+        super.setTheme(resid);
     }
 
 }

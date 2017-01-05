@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 import static com.swe.gruppe4.freespace.R.id.time;
 
-public class LectureEditActivity extends AppCompatActivity implements View.OnClickListener{
+public class LectureEditActivity extends BaseActivity implements View.OnClickListener{
     private EditText veranstaltungsNameEtxt;
 
     private EditText fromDateEtxt;
@@ -237,5 +237,12 @@ public class LectureEditActivity extends AppCompatActivity implements View.OnCli
         } else if(view == toTimeEtxt) {
             toTimePickerDialog.show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressedNoDrawer();
+
     }
 }
