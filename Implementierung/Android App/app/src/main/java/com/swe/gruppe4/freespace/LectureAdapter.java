@@ -27,7 +27,8 @@ import com.swe.gruppe4.freespace.Objektklassen.*;
 class LectureAdapter extends ArrayAdapter<Veranstaltung> {
 
     private ArrayList<Veranstaltung> lectureList = new ArrayList<>();
-    Activity aufgerufenVon;
+    private Activity aufgerufenVon;
+    private Context context;
     /**
      *  add Room object  to the adapter
      */
@@ -46,6 +47,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
     public LectureAdapter(Context context , int textViewResourceId, Activity aufgerufenVon){
         super(context,textViewResourceId);
         this.aufgerufenVon = aufgerufenVon;
+        this.context = context;
     }
 
     /**
@@ -82,7 +84,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogDelete(view, lectureObj.getId());
+                showDialogDelete(view, lectureObj.getId(), context);
             }
         });
 
@@ -108,7 +110,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         return convertView;
     }
 
-    private void showDialogDelete(View v, final int lectureId){
+    private void showDialogDelete(View v, final int lectureId, final Context context){
         AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
         build.setCancelable(false);
 
@@ -126,8 +128,12 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
                 //RestConnection verb = new RestConnection(getContext());
 
                 verb.lectureDelete(lectureId);
-                //Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
                 notifyDataSetChanged();
+                //Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, LectureListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
+
 
 
             }
