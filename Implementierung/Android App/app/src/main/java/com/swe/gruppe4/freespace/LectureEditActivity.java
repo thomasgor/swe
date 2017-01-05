@@ -90,11 +90,11 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                 //String name = (String) textview.getText();
                 //textview = (TextView) convertView.findViewById(R.id.DateEditText);
                 //Date date = textview.getText();
-                int id = getIntent().getIntExtra("ID", 0);
+                int id = getIntent().getIntExtra("Id", 0);
 
 
                 try {
-                    SimpleDateFormat df = new SimpleDateFormat("dd.mm.yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("EEE dd.MM.yyyy");
                     java.util.Date fromDate;
                     fromDate = df.parse(fromDateEtxt.getText().toString());
                     Long longFromDate = fromDate.getTime();
@@ -103,12 +103,19 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     java.util.Date toTime;
                     toTime = df.parse(toTimeEtxt.getText().toString());
 
+                    String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
+                    SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
+
                     //Kann man die einfach addieren?
-                    Long longToTime = toTime.getTime() + longFromDate;
+
+                    Date longToTime = dfCombi.parse(combiFromDate);
+
 
                     java.util.Date fromTime;
                     toTime = df.parse(fromTimeEtxt.getText().toString());
-                    Long longFromTime = toTime.getTime() + longFromDate;
+                    String combiToDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
+
+                            Date longFromTime = dfCombi.parse(combiToDate);
 
                     String veranstaltungsName = veranstaltungsNameEtxt.getText().toString();
 
@@ -118,18 +125,38 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     Raum selectedRoom = raumliste.get(0);
 
                     for(Raum raum: raumliste){
-                        if(raum.getRaumname().toString() == selectedRoomName){
+                        if(raum.getRaumname().toString().equals(selectedRoomName)){
                             selectedRoom = raum;
                             break;
                         }
 
                     }
 
+                    ArrayList<Veranstaltung> veranstaltungsListe = v.lecturesGet();
+                    Boolean belegt = false;
+                    for(Veranstaltung veranstaltung: veranstaltungsListe){
+                        if(veranstaltung.getRaum().getId() == selectedRoom.getId() && veranstaltung.getId() != id){
+                            //if(veranstaltung.getVon() > longToTime.getTime()  || veranstaltung.getBis() < longFromTime.getTime()){
+                            if(veranstaltung.getVon() < longFromTime.getTime() && veranstaltung.getBis() > longFromTime.getTime() || veranstaltung.getVon() < longToTime.getTime() && veranstaltung.getBis() > longToTime.getTime() || veranstaltung.getVon() > longFromTime.getTime() && veranstaltung.getBis() < longToTime.getTime() || veranstaltung.getVon() == longFromTime.getTime() && veranstaltung.getBis() == longToTime.getTime()){
+                                belegt = true;
+                                break;
+                            }else{
+
+                            }
+
+                        }
+                    }
+
+                    if(belegt){
+                        Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
+                    }else{
+                        v.lecturePut(id, veranstaltungsName, longFromTime.getTime(),longToTime.getTime(),selectedRoom);
+                        Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    }
 
 
 
-                    v.lecturePut(id, veranstaltungsName, longFromTime,longToTime,selectedRoom);
-                    Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                 }catch(java.text.ParseException e)
                 {
                     // Auto-generated catch block
@@ -172,20 +199,25 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         final Veranstaltung veranstaltung = verbindung.lectureGet(id);
         long longFrom = veranstaltung.getVon();
         long longTo = veranstaltung.getBis();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy");
-        int yearFrom = Integer.parseInt(df.format(longFrom));
-        df = new SimpleDateFormat("mm");
-        int monthFrom = Integer.parseInt(df.format(longFrom));
-        df = new SimpleDateFormat("dd");
-        int dayFrom = Integer.parseInt(df.format(longFrom));
-        df = new SimpleDateFormat("HH");
-        String hourFrom = df.format(longFrom);
-        String hourTo = df.format(longTo);
-        df = new SimpleDateFormat("mm");
-        String minuteFrom = df.format(longFrom);
-        String minuteTo = df.format(longTo);
+        SimpleDateFormat dfYear = new SimpleDateFormat("YYYY");
+        int yearFrom = Integer.parseInt(dfYear.format(longFrom));
+        SimpleDateFormat dfMonth = new SimpleDateFormat("MM");
+        int monthFrom = Integer.parseInt(dfMonth.format(longFrom));
+        SimpleDateFormat dfDay = new SimpleDateFormat("dd");
+        int dayFrom = Integer.parseInt(dfDay.format(longFrom));
+        SimpleDateFormat dfHour = new SimpleDateFormat("HH");
+        String hourFrom = dfHour.format(longFrom);
+        int hourFromInt = Integer.parseInt(hourFrom);
+        String hourTo = dfHour.format(longTo);
+        int hourToInt = Integer.parseInt(hourTo);
+        SimpleDateFormat dfMin = new SimpleDateFormat("mm");
+        String minuteFrom = dfMin.format(longFrom);
+        int minuteFromInt = Integer.parseInt(minuteFrom);
+        String minuteTo = dfMin.format(longTo);
+        int minuteToInt =  Integer.parseInt(minuteTo);
         fromDateEtxt.setText(dateFormatter.format(longFrom));
         fromDateEtxt.setOnClickListener(this);
+
 
         Calendar newCalendar = Calendar.getInstance();
         fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -197,7 +229,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
 
             }
             //Hier werden die "Startwerte" für den DatePicker gesetzt.
-        },yearFrom, monthFrom, dayFrom);
+        },yearFrom, monthFrom-1, dayFrom);
 
         fromTimeEtxt.setText(hourFrom +":"+minuteFrom);
         fromTimeEtxt.setOnClickListener(this);
@@ -210,7 +242,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                 fromTimeEtxt.setText(TimeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
-
+        fromTimePickerDialog.updateTime(hourFromInt, minuteFromInt);
         toTimeEtxt.setText(hourTo+":"+minuteTo);
         toTimeEtxt.setOnClickListener(this);
         toTimePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
@@ -222,8 +254,8 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                 toTimeEtxt.setText(timeFromSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
-
-
+        toTimePickerDialog.updateTime(hourToInt, minuteToInt);
+        veranstaltungsNameEtxt.setText(veranstaltung.getName());
     }
 
 

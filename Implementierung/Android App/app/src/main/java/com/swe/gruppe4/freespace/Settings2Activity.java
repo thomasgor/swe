@@ -39,7 +39,7 @@ public class Settings2Activity extends BaseActivity
         drawer.addView(contentView, 0);
 
         Button masterpw = (Button) findViewById(R.id.setMasterPW);
-        //ToDo: Checkboxen auf Rückgabewerte von isAnonym() und isPush() des aktuellen Benutzers setzen.
+
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
         final CheckBox anonymChkB = (CheckBox) findViewById(R.id.checkBox);
         final CheckBox pushChkB = (CheckBox) findViewById(R.id.checkBox2);
@@ -92,8 +92,6 @@ public class Settings2Activity extends BaseActivity
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
                 }else{
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
-
-                    //ToDo: Testen ob Activity erfolgreich neu startet und das andere Theme verwendet, wenn MasterPW korrekt eingegeben wurde
 
 
                     //Settings2Activity.this.finish();

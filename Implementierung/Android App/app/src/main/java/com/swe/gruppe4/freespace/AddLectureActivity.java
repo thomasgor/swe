@@ -46,6 +46,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
     private TimePickerDialog toTimePickerDialog;
 
     private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat timeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +57,24 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-
+        findViewsById();
         final VerbindungDUMMY verb = new VerbindungDUMMY();
         //final RestConnection verb = new RestConnection(this);
 
         final ArrayList<Raum> raumliste = verb.raumGet();
+        veranstaltungsNameEtxt.setText("Veranstaltungsname");
+        dateFormatter = new SimpleDateFormat("EEE dd.MM.yyyy", Locale.GERMAN);
+        timeFormatter = new SimpleDateFormat("HH:mm", Locale.GERMAN);
+        Date heute = new Date();
+        fromDateEtxt.setText(dateFormatter.format(heute));
+        fromTimeEtxt.setText(timeFormatter.format(heute));
 
+        Calendar cal = Calendar.getInstance(); // creates calendar
+        cal.setTime(heute); // sets calendar time/date
+        cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
+        Date heutePlusEins = cal.getTime();
 
-
-
+        toTimeEtxt.setText(timeFormatter.format(heutePlusEins));
 
         List<String> spinnerArray =  new ArrayList<>();
         for(Raum raum: raumliste){
@@ -87,7 +97,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                 //textview = (TextView) convertView.findViewById(R.id.DateEditText);
                 //Date date = textview.getText();
                 try {
-                    SimpleDateFormat df = new SimpleDateFormat("dd.mm.yyyy");
+                    SimpleDateFormat df = dateFormatter;
                     java.util.Date fromDate;
 
                     fromDate = df.parse(fromDateEtxt.getText().toString());
@@ -97,12 +107,18 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                     java.util.Date toTime;
                     toTime = df.parse(toTimeEtxt.getText().toString());
 
-                    Long longToTime = toTime.getTime() + longFromDate;
+                    String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
+                    SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
+                    Date longToTime = dfCombi.parse(combiFromDate);
+
+                    //Long longToTime = toTime.getTime() + longFromDate;
 
                     java.util.Date fromTime;
                     toTime = df.parse(fromTimeEtxt.getText().toString());
-                    Long longFromTime = toTime.getTime() + longFromDate;
+                    //Long longFromTime = toTime.getTime() + longFromDate;
+                    String combiToDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
 
+                    Date longFromTime = dfCombi.parse(combiToDate);
                     String veranstaltungsName = veranstaltungsNameEtxt.getText().toString();
 
 
@@ -113,15 +129,35 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                     Raum selectedRoom = raumliste.get(0);
 
                     for(Raum raumInListe: raumliste){
-                        if(raumInListe.getRaumname().toString() == selectedRoomName){
+                        if(raumInListe.getRaumname().toString().equals(selectedRoomName)){
                             selectedRoom = raumInListe;
                             break;
                         }
 
                     }
 
+                    ArrayList<Veranstaltung> veranstaltungsListe = verb.lecturesGet();
+                    Boolean belegt = false;
+                    for(Veranstaltung veranstaltung: veranstaltungsListe){
+                        if(veranstaltung.getRaum().getId() == selectedRoom.getId()){
+                            if(veranstaltung.getVon() < longFromTime.getTime() && veranstaltung.getBis() > longFromTime.getTime() || veranstaltung.getVon() < longToTime.getTime() && veranstaltung.getBis() > longToTime.getTime() || veranstaltung.getVon() > longFromTime.getTime() && veranstaltung.getBis() < longToTime.getTime() || veranstaltung.getVon() == longFromTime.getTime() && veranstaltung.getBis() == longToTime.getTime()){
+                                belegt = true;
+                                break;
+                            }
 
-                    verb.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
+                        }
+                    }
+
+                    if(belegt){
+                        Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
+                    }else{
+                        verb.lecturePost(veranstaltungsName, longFromTime.getTime(),longToTime.getTime(),selectedRoom);
+                        Toast.makeText(getApplicationContext(),"Gespeichert", Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    }
+                    //Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
+                    //verb.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
+                    //onBackPressed();
                 }catch(java.text.ParseException e)
                 {
                     // Auto-generated catch block
@@ -134,9 +170,9 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
             }
         });
 
-        dateFormatter = new SimpleDateFormat("EEE dd.MM.yyyy", Locale.GERMAN);
 
-        findViewsById();
+
+
 
         setDateTimeField();
 
@@ -208,7 +244,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void onBackPressed() {
+    public final void onBackPressed() {
 
         super.onBackPressedNoDrawer();
 

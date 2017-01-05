@@ -362,12 +362,12 @@ public class VerbindungDUMMY {
         ArrayList<Veranstaltung> lectures = new ArrayList<Veranstaltung>();
         Veranstaltung[] veranstaltungen = new Veranstaltung[3];
         Benutzer[] benutzer = new Benutzer[5];
-        Raum room =  new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Hallo Welt"), benutzer, "gelb");
+        Raum room =  new Raum(100,"G100",22,6,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"grün");
         for(int i = 0; i < 3; i++){
-            Veranstaltung tmp = new Veranstaltung(i,"SWE Veranstaltung", new Benutzer(i,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1), 1293840001000L, 1481546700000L,room );
+            Veranstaltung tmp = new Veranstaltung(i,"SWE Veranstaltung", new Benutzer(i,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1), 1481546700000L, 1481550300000L,room );
             lectures.add(i, tmp);
         }
-        lectures.add(3, new Veranstaltung(3,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",1,0,1), 1293840001000L, 1481546700000L,room ));
+        lectures.add(3, new Veranstaltung(3,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",1,0,1), 1481559300000L, 1481564700000L,room ));
         //TODO: Daten vom Server statt DummyDaten
 
         return lectures;
@@ -378,8 +378,8 @@ public class VerbindungDUMMY {
     public Veranstaltung lectureGet(long id){
         //TODO: Daten vom Server holen
         Benutzer[] benutzer = new Benutzer[5];
-        Raum room =  new Raum(4711,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Hallo Welt"), benutzer, "grün");
-        Veranstaltung veranstaltung = new Veranstaltung(1,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Prof","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1), 1293840001000L, 1481546700000L,room);
+        Raum room =  new Raum(100,"W014",8,5,"http://i.imgur.com/LyzIuVj.jpg", new com.swe.gruppe4.freespace.Objektklassen.Tag(1,"Hallo Welt"), benutzer, "grün");
+        Veranstaltung veranstaltung = new Veranstaltung(3,"SWE Veranstaltung", new Benutzer(1,"abc@def.com","Pan","Prof","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1), 1481546700000L, 1481550300000L,room);
         return veranstaltung;
     }
 

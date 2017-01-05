@@ -38,15 +38,14 @@
         android:paddingBottom="10dp" />
 
     <EditText
+        android:id="@+id/fromTime"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:layout_below="@+id/spinner"
         android:layout_alignStart="@+id/spinner"
+        android:layout_below="@+id/spinner"
         android:layout_marginTop="19dp"
-        android:id="@+id/fromTime"
-        android:text="12:00" />
+        android:ems="10"
+        android:inputType="date" />
 
     <Button
         android:text="Speichern"
@@ -58,14 +57,13 @@
         android:id="@+id/saveLectureButton" />
 
     <EditText
+        android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Vorlesung SWE"
-        android:ems="10"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
-        android:id="@+id/editText2"
-        android:layout_alignParentEnd="true" />
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <TextView
         android:text="Bis"
@@ -78,16 +76,15 @@
         android:layout_marginStart="82dp" />
 
     <EditText
+        android:id="@+id/toTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/toTime"
-        android:text="13:00"
         android:layout_alignBaseline="@+id/fromTime"
         android:layout_alignBottom="@+id/fromTime"
+        android:layout_marginStart="17dp"
         android:layout_toEndOf="@+id/textView7"
-        android:layout_marginStart="17dp" />
+        android:ems="10"
+        android:inputType="date" />
 
     <TextView
         android:text="Datum"
@@ -107,14 +104,13 @@
         android:layout_alignStart="@+id/textViewDate" />
 
     <EditText
+        android:id="@+id/DateEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/DateEditText"
-        android:text="24.10.2016"
         android:layout_alignBaseline="@+id/textViewDate"
         android:layout_alignBottom="@+id/textViewDate"
-        android:layout_alignStart="@+id/spinner" />
+        android:layout_alignStart="@+id/spinner"
+        android:ems="10"
+        android:inputType="date" />
 
 </RelativeLayout>
