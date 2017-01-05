@@ -1,6 +1,8 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
 import java.io.Serializable;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 /**
  *
@@ -39,6 +41,26 @@ public class Benutzer implements Serializable {
         this.isProfessor = isProfessor;
         this.istAnonym = istAnonym;
         this.istPush = istPush;
+    }
+
+    public Benutzer(String jsonBenutzer) {
+        try {
+            JSONObject jsonObj = new JSONObject(jsonBenutzer);
+
+            this.id = jsonObj.getString("id");
+            this.email = jsonObj.getString("email");
+            this.name = jsonObj.getString("name");
+            this.vorname = jsonObj.getString("vorname");
+            this.fotoURL = jsonObj.getString("foto");
+            this.token = jsonObj.getString("token");
+            this.isProfessor = jsonObj.getInt("istProfessor");
+            this.istAnonym = jsonObj.getInt("istAnonym");
+            this.istPush = jsonObj.getInt("istPush");
+
+        } catch (JSONException e) {
+            //jsonBenutzer enthält keinen Benutzer!
+            e.printStackTrace();
+        }
     }
 
     public String getId() {

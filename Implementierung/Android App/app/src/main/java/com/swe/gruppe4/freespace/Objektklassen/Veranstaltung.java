@@ -1,6 +1,8 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
 import java.io.Serializable;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 /**
  *  * Created by Merlin on 22.11.2016.
@@ -21,6 +23,24 @@ public class Veranstaltung implements Serializable {
         this.von = von;
         this.bis = bis;
         this.raum = raum;
+    }
+
+    public Veranstaltung(String jsonVeranstaltung) {
+        try {
+            JSONObject jsonObj = new JSONObject(jsonVeranstaltung);
+
+            this.id = jsonObj.getInt("id");
+            this.name = jsonObj.getString("name");
+            this.dozent = new Benutzer(jsonObj.getString("dozent"));
+            this.von = jsonObj.getLong("von");
+            this.bis = jsonObj.getLong("bis");
+            this.raum = new Raum(jsonObj.getString("raum"));
+            //this.raum = jsonObj.getInt("id");
+
+        } catch (JSONException e) {
+            //JsonVeranstaltung enthält keine Veranstaltung!
+            e.printStackTrace();
+        }
     }
 
     public int getId() {

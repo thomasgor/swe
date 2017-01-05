@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.lang.Object;
 import android.os.AsyncTask;
+import 	java.io.BufferedOutputStream;
 
 /**
  * Created by Merlin on 04.12.2016.
@@ -242,22 +243,28 @@ public class RestConnection {
 
             protected String doInBackground(String... params) {
                 String response = "false";
+                publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + BENUTZER +"/");
+                    java.net.URL url = new java.net.URL("http://127.0.0.1:8888/" + BENUTZER +"/");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //String userPass = ""+":"+"";
                     //byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
                     //conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
                     conn.setRequestMethod(HTTP_POST);
+                    conn.setChunkedStreamingMode(0);
+                    Log.d("myTag3","now aftersetRequestMethod");
                     OutputStream os = conn.getOutputStream();
+                    Log.d("myTag5","now before if");
                     if(!Objects.equals(params[0], "")){
                         conn.setRequestProperty("Content-Type","application/json");
                         byte[] inputJsonBytes = params[0].getBytes("UTF-8");
                         os.write(inputJsonBytes);
+                        Log.d("myTag6","now in if");
                     }
                     os.flush();
 
                     int responseCode = conn.getResponseCode();
+                    Log.d("myTag3",""+ responseCode);
                     SparseIntArray acceptableCodes = acceptableCodes(BENUTZER,HTTP_POST);
                     if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
                         InputStream in = new BufferedInputStream(conn.getInputStream());
@@ -268,18 +275,21 @@ public class RestConnection {
 
 
                 } catch (IOException e) {
+                    Log.d("myTag20","fail");
                     e.printStackTrace();
                 }
+                Log.d("myTag2",response);
                 return response;
+
             }
 
             protected void onProgressUpdate(Integer... progress) {
-
+                showDialogLoad();
             }
 
             protected void onPostExecute(String result) {
                 resp = result;
-                Log.d("myTag2",result);
+
 
             }
 
@@ -442,22 +452,19 @@ public class RestConnection {
      */
     public Sitzung sitzungGet(){
         String antwortJSon = restRequest(SITZUNG, HTTP_GET, null);
-        //return builder.getFromJson(antwortJSon, "Sitzung");
-        return null;
+        return new Sitzung(antwortJSon);
 
     }
     public Sitzung sitzungPost(int raumID){
         String jSon = builder.buildPOSTsitzungJson(raumID);
         String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);
-        //TODO: Antwort verarbeiten
-        return null;
+        return new Sitzung(antwortJSon);
     }
 
     public Sitzung sitzungPut(int id){
 
         String antwortJSon = restRequest(SITZUNG, HTTP_PUT, null, id);
-        //TODO: Antwort verarbeiten
-        return null;
+        return new Sitzung(antwortJSon);
     }
 
     public void sitzungDelete(int id){
@@ -465,10 +472,8 @@ public class RestConnection {
     }
 
     public ArrayList<Freundschaft> freundschaftGet() {
-        ArrayList<Freundschaft> freunde = new ArrayList<Freundschaft>();
         String antwortJSon = restRequest(FREUNDSCHAFT, HTTP_GET, null);
-        //TODO: Antwort verarbeiten
-        return freunde;
+        return builder.getFreundschaftFromJson(antwortJSon);
     }
 
     public void freundschaftPost(String email) {
@@ -497,9 +502,8 @@ public class RestConnection {
 
     public ArrayList<Tag> tagGet() {
         String antwortJSon = restRequest(TAG, HTTP_GET, null);
-        //TODO: Antwort verarbeiten
+        return builder.getTagFromJson(antwortJSon);
 
-        return tagList;
     }
 
     /**
@@ -507,10 +511,8 @@ public class RestConnection {
      */
 
     public ArrayList<Raum> raumGet() {
-        ArrayList<Raum> raumListe = new ArrayList<>();
         String antwortJSon = restRequest(RAUM, HTTP_GET, null);
-        //TODO: Antwort verarbeiten
-        return null;
+        return builder.getRaumFromJson(antwortJSon);
     }
 
 
@@ -520,33 +522,31 @@ public class RestConnection {
      */
     public Raum raumGet(int id) {
         String antwortJSon = restRequest(RAUM, HTTP_GET, null, id);
-        //TODO: Antwort verarbeiten
+        return new Raum(antwortJSon,true);
 
 
-        return null;
     }
     public Raum raumPut(Tag tag){
         String jSon = builder.buildPUTraumJson(tag);
         String antwortJSon = restRequest(RAUM, HTTP_PUT, jSon);
-        //TODO: Antwort verarbeiten
+
+        return new Raum(antwortJSon,false);
 
 
-
-        return null;
     }
 
     public ArrayList<Veranstaltung> lecturesGet() {
-        ArrayList<Veranstaltung> lectures = new ArrayList<Veranstaltung>();
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, null);
-        //TODO: Antwort verarbeiten
-        return null;
+        return builder.getVeranstaltungFromJson(antwortJSon);
+
     }
 
 
 
     public Veranstaltung lectureGet(int id){
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, null, id);
-        //TODO: Antwort verarbeiten
+
+        //return new Veranstaltung(antwortJSon);
         return null;
     }
 
@@ -554,14 +554,14 @@ public class RestConnection {
     public void lecturePost(String name, long von, long bis, Raum raum){
         String jSon = builder.buildPOSTveranstaltungJson(name, von, bis, raum);
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
-        //TODO: Antwort verarbeiten
+
 
     }
 
     public void lecturePut(int id, String name, long von, long bis, Raum raum){
         String jSon = builder.buildPUTveranstaltungJson(name, von, bis, raum);
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
-        //TODO: Antwort verarbeiten
+
 
     }
 
@@ -575,8 +575,8 @@ public class RestConnection {
         String jSON = builder.buildPUTbenutzerJson(PW, isAnonym, isPush);
         String antwortJSon = restRequest(BENUTZER, HTTP_PUT, jSON);
 
-        return new Benutzer(builder.getFromJson(antwortJSon, "id"), builder.getFromJson(antwortJSon, "email"),builder.getFromJson(antwortJSon, "name"),builder.getFromJson(antwortJSon, "vorname"),builder.getFromJson(antwortJSon, "fotoURL"),builder.getFromJson(antwortJSon, "token"),Integer.valueOf(builder.getFromJson(antwortJSon, "istProfessor")),Integer.valueOf(builder.getFromJson(antwortJSon, "istAnonym")),Integer.valueOf(builder.getFromJson(antwortJSon, "istPush")));
-        //return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
+        //return new Benutzer(antwortJson);
+        return null;
     }
 
     public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
@@ -588,11 +588,19 @@ public class RestConnection {
         Log.d("myTag" ,token + " " + id);
 
 
-        //return new Benutzer(builder.getFrshowDialog(token + " + " + id);omJson(antwortJSon, "id"), builder.getFromJson(antwortJSon, "email"),builder.getFromJson(antwortJSon, "name"),builder.getFromJson(antwortJSon, "vorname"),builder.getFromJson(antwortJSon, "fotoURL"),builder.getFromJson(antwortJSon, "token"),Integer.valueOf(builder.getFromJson(antwortJSon, "istProfessor")),Integer.valueOf(builder.getFromJson(antwortJSon, "istAnonym")),Integer.valueOf(builder.getFromJson(antwortJSon, "istPush")));
-        //return new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0,0,1);
+
 
     }
 
+    private void showDialogLoad(){
+
+        AlertDialog.Builder build = new AlertDialog.Builder(context);
+        build.setCancelable(false);
+        build.setTitle("Laden...");
+        build.setMessage("Bitte warten...");
+        AlertDialog alert1 = build.create();
+        alert1.show();
+    }
 
 
 }

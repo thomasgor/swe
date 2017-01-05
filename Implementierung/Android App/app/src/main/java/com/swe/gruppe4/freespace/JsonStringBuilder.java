@@ -1,6 +1,7 @@
 package com.swe.gruppe4.freespace;
 
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
+import com.swe.gruppe4.freespace.Objektklassen.Freundschaft;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
@@ -48,7 +49,7 @@ public class JsonStringBuilder {
             jsonObj.put("email", email);
             jsonObj.put("name", name);
             jsonObj.put("vorname", vorname);
-            jsonObj.put("fotoURL", fotoURL);
+            jsonObj.put("foto", fotoURL);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -219,5 +220,108 @@ public class JsonStringBuilder {
             }
         }
         return value;
+    }
+    public ArrayList getFreundschaftFromJson(String jsonString) {
+        ArrayList<Freundschaft> list = new ArrayList<Freundschaft>();
+        try {
+            JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArray = new JSONArray();
+            jsonObj.toJSONArray(jsonArray);
+            if (jsonArray != null) {
+                int len = jsonArray.length();
+                for (int i = 0; i < len; i++) {
+                    list.add(new Freundschaft(jsonArray.get(i).toString()));
+                }
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+
+    }
+    public ArrayList getTagFromJson(String jsonString) {
+        ArrayList<Tag> list = new ArrayList<Tag>();
+        try {
+            JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArray = new JSONArray();
+            jsonObj.toJSONArray(jsonArray);
+            if (jsonArray != null) {
+                int len = jsonArray.length();
+                for (int i = 0; i < len; i++) {
+                    list.add(new Tag((jsonArray.get(i).toString())));
+                }
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+
+    }
+
+    public ArrayList getRaumFromJson(String jsonString) {
+        ArrayList<Raum> list = new ArrayList<Raum>();
+        try {
+            JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArray = new JSONArray();
+            jsonObj.toJSONArray(jsonArray);
+            if (jsonArray != null) {
+                int len = jsonArray.length();
+                for (int i = 0; i < len; i++) {
+                    list.add(new Raum(jsonArray.get(i).toString(),false));
+                }
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+
+    }
+
+    public ArrayList getVeranstaltungFromJson(String jsonString) {
+        ArrayList<Veranstaltung> list = new ArrayList<Veranstaltung>();
+        try {
+            JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArray = new JSONArray();
+            jsonObj.toJSONArray(jsonArray);
+            if (jsonArray != null) {
+                int len = jsonArray.length();
+                for (int i = 0; i < len; i++) {
+                    list.add(new Veranstaltung (jsonArray.get(i).toString()));
+                }
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+
+    }
+
+    public ArrayList getBenutzerFromJson(String jsonString) {
+        ArrayList<Benutzer> list = new ArrayList<Benutzer>();
+        try {
+            JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArray = new JSONArray();
+            jsonObj.toJSONArray(jsonArray);
+            if (jsonArray != null) {
+                int len = jsonArray.length();
+                for (int i = 0; i < len; i++) {
+                    list.add(new Benutzer (jsonArray.get(i).toString()));
+                }
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+
     }
 }
