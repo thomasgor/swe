@@ -1,5 +1,6 @@
 package com.fhaachen.swe.freespace.main;
 
+import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
@@ -12,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * Created by thomasgorgels on 19.12.16.
@@ -142,7 +144,7 @@ public class Konfiguration extends Datenbank{
 
     /**
      * Liest den Inhalt der Einstellungen-HTML-Seite ein.
-     * Anschlieend wird der Inhalt der eingelesenen Datei um die Tag-Liste und den Wert der Textboxes erweitert.
+     * Anschließend wird der Inhalt der eingelesenen Datei um die Tag-Liste und den Wert der Textboxes erweitert.
      * @return Inhalt der Einstellungen-HTML-Seite inkl. tags und Vorbelegungen der Werte-Felder
      */
     public static String getEinstellungenHTML() {
@@ -182,4 +184,116 @@ public class Konfiguration extends Datenbank{
                     "</div>");
         return doc.toString();
     }
+    /**
+     * Liest den Inhalt der Einstellungen-HTML-Seite ein und erweitert den body um eine Fehlerbox.
+     * @return Inhalt der Einstellungen-HTML-Seite inkl. Fehlerbox
+     */
+    public static String getEinstellungen_FehlerhaftHTML() {
+        String input = null;
+        try {
+            input = fileToString("admin/einstellungen.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        String html = Konfiguration.getEinstellungenHTML();
+        Document doc = Jsoup.parse(html, "UTF-8");
+        Element body = doc.getElementById("body");
+        body.prepend("<div class = \"alert alert-danger alert-dismissable\"> "+
+                "<button type = \"button\" class = \"close\" data-dismiss = \"alert\" aria-hidden = \"true\"> &times;</button> "+
+                "<strong>Fehler: Bitte geben sie g&uuml;ltige Daten ein!</strong>"+
+                "</div>");
+
+        return doc.toString();
+    }
+    /**
+     * Speichert die neuen Konfigurationen.
+     * @param altPasswort Das alte Passwort
+     * @param neuPasswort1 Das neue Passwort
+     * @param neuPasswort2 Das wiederholte neue Passwort
+     * @param tags Die Liste der neuen Tags
+     * @param neuerTag Der neuanzulegende Tag
+     * @param sitzungsintervall Die Dauer des neuen Sitzungsintervalls
+     * @return true, wenn das Speichern erfolgreich war.
+     */
+    public static boolean setKonfiguration(String altPasswort, String neuPasswort1, String neuPasswort2, List<String> tags, String neuerTag, String sitzungsintervall){
+        try{
+            if(neuPasswort1 != null ){
+                if(isMaster(altPasswort)) {
+                    System.out.println("Ändere Passwort");
+                    if (!setNeuesMasterpasswort(neuPasswort1, neuPasswort2)) {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+
+            //Neuen Tag hinzufügen
+            Tag.addNeuerTag(neuerTag);
+
+            //Tags löschen
+            Tag.deleteTags(tags);
+
+            //Sitzungsintervall ändern
+            setSitzungsIntervall(sitzungsintervall);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+    /**
+     * Speichert die neuen Konfigurationen.
+     * @param neuPW1 Das neue Passwort.
+     * @param neuPW2 Das wiederholte neue Passwort.
+     * @return true, wenn das Speichern erfolgreich war.
+     */
+    private static boolean setNeuesMasterpasswort(String neuPW1, String neuPW2){
+        try {
+            if(neuPW1 == null && neuPW1.length()<=0)
+                return false;
+            if(neuPW2 == null){
+                return false;
+            }
+
+            if(neuPW1.equals(neuPW2) ){
+                System.out.println("Ändere Passwort2");
+                connect();
+                System.out.println("UPDATE Konfiguration SET value = ? WHERE key == 'masterpasswort'");
+                Base.exec("UPDATE Konfiguration SET value = ? WHERE key == 'masterpasswort'", neuPW1);
+                disconnect();
+                // Benutzer.resetBenutzerRolle();
+            }else{
+                return false;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    /**
+     * Speichert die neuen Konfigurationen.
+     * @param neuesIntervall Das neue Intervall der Sitzung.
+     * @return true, wenn das Speichern erfolgreich war.
+     */
+    private static boolean setSitzungsIntervall(String neuesIntervall){
+        try {
+            if(neuesIntervall == null || Integer.parseInt(neuesIntervall) <= 1 ){
+                return false;
+            }
+            connect();
+            Base.exec("UPDATE Konfiguration SET value = ? WHERE key == 'sitzungsintervall' ", neuesIntervall);
+            disconnect();
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }
