@@ -34,6 +34,7 @@ public class BaseActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //super.setTheme(R.style.AppThemeProf);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,6 +52,12 @@ public class BaseActivity extends AppCompatActivity
         Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
         if(!ben.istProfessor()) {
             navigationView.getMenu().findItem(R.id.nav_professor).setVisible(false);
+
+        }else{
+            //activity.setTheme(R.style.BlackTheme);
+            //savedInstanceState.get
+
+            //super.setTheme(R.style.AppThemeProf);
         }
 
 

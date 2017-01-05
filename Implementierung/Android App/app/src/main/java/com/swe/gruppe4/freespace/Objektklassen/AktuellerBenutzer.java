@@ -16,7 +16,7 @@ public class AktuellerBenutzer {
     public static Benutzer getAktuellerBenutzer() {
 
         //ToDo: Testdaten gegen valide Daten austauschen
-        return new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "",1, 0, 0);
+        return new Benutzer(1,"abc@def.com","Pan","Peter","https://pbs.twimg.com/profile_images/775210778/peter_400x400.JPG", "", 1, 0, 0);
         //return this.benutzer;
     }
 
