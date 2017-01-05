@@ -1,7 +1,8 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
 import java.io.Serializable;
-
+import org.json.JSONObject;
+import org.json.JSONException;
 /**
  * @author Merlin
  * @version 1.0
@@ -24,6 +25,19 @@ public class Tag implements Serializable {
          * Name des Tags für Ausgabe
          */
         this.name = name;
+    }
+
+    public Tag(String jsonTag) {
+        try {
+            JSONObject jsonObj = new JSONObject(jsonTag);
+
+            this.id = jsonObj.getInt("id");
+            this.name = jsonObj.getString("name");
+
+        } catch (JSONException e) {
+            //jsonTag enthält keinen Tag!
+            e.printStackTrace();
+        }
     }
 
     public String getName() {

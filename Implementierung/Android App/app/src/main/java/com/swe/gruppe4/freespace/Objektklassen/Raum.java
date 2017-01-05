@@ -1,6 +1,10 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
 import java.io.Serializable;
+import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONArray;
+import java.util.ArrayList;
 
 /**
  * @author Merlin
@@ -42,6 +46,36 @@ public class Raum implements Serializable{
         this.tag = tag;
         this.benutzer = benutzer;
         this.status = status;
+    }
+    public Raum(String jsonRaum, boolean hasUserList) {
+        try {
+            JSONObject jsonObj = new JSONObject(jsonRaum);
+
+            this.id = jsonObj.getInt("id");
+            this.raumname = jsonObj.getString("raumname");
+            this.teilnehmer_max = jsonObj.getInt("teilnehmer_max");
+            this.teilnehmer_aktuell = jsonObj.getInt("teilnehmer_aktuell");
+            this.status = jsonObj.getString("status");
+            this.fotoURL = jsonObj.getString("foto");
+            this.tag = new Tag(jsonObj.getString("tag"));
+
+            if(hasUserList) {
+                JSONArray jsonArr = jsonObj.getJSONArray("benutzer");
+                ArrayList<Benutzer> benutzerListe = new ArrayList<Benutzer>();
+
+                for(int i = 0; i < jsonArr.length(); i++) {
+                    benutzerListe.add(new Benutzer(jsonArr.getString(i)));
+                }
+                Benutzer[] ben = new Benutzer[benutzerListe.size()];
+                ben = benutzerListe.toArray(ben);
+
+                this.benutzer = ben;
+            }
+
+        } catch (JSONException e) {
+            //jsonBenutzer enthält keinen Benutzer!
+            e.printStackTrace();
+        }
     }
 
     public int getId() {
