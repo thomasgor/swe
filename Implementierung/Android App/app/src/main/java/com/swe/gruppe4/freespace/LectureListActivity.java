@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
 
+import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
 
 public class LectureListActivity extends BaseActivity
@@ -53,7 +54,9 @@ public class LectureListActivity extends BaseActivity
 
 
         for(Veranstaltung v:veranstaltungen){
-            lectureAdapter.add(v);
+            if(v.getDozent().getId().equals(AktuellerBenutzer.getAktuellerBenutzer().getId())) {
+                lectureAdapter.add(v);
+            }
         }
         lectureAdapter.notifyDataSetChanged();
 
