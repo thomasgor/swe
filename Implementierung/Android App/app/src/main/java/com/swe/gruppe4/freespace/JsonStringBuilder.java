@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 /**
  * Mit der Klasse JsonStringBuilder können die Json Objekte als String erstellt werden, die fuer die
@@ -69,8 +70,8 @@ public class JsonStringBuilder {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put("masterpasswort", password);
-            jsonObj.put("isAnonym", isAnonym);
-            jsonObj.put("isPush", isPush);
+            jsonObj.put("istAnonym", isAnonym);
+            jsonObj.put("istPush", isPush);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -223,10 +224,12 @@ public class JsonStringBuilder {
     }
     public ArrayList getFreundschaftFromJson(String jsonString) {
         ArrayList<Freundschaft> list = new ArrayList<Freundschaft>();
+        Log.d("mylog24342","in freundschaftvonjson");
         try {
             JSONObject jsonObj = new JSONObject(jsonString);
             JSONArray jsonArray = new JSONArray();
             jsonObj.toJSONArray(jsonArray);
+            Log.d("mylog24342","" + jsonArray);
             if (jsonArray != null) {
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {

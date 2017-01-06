@@ -23,6 +23,7 @@ import com.swe.gruppe4.freespace.Objektklassen.*;
 class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
 
     private ArrayList<Freundschaft> friendInfoList = new ArrayList<Freundschaft>();
+    Context con;
     /**
      *  add PrivateContact object  to the adapter
      */
@@ -40,6 +41,7 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
 
     public FriendRequestAdapter(Context context , int textViewResourceId){
         super(context,textViewResourceId);
+        con = context;
     }
 
     /**
@@ -59,7 +61,11 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         acceptFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new VerbindungDUMMY().freundschaftPut(friendObj.getBenutzer());
+                new RestConnection(getContext()).freundschaftPut(friendObj.getBenutzer());
+                notifyDataSetChanged();
+                Intent intent = new Intent(getContext(), Freundesliste.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                con.startActivity(intent);
 
             }
         });
@@ -69,7 +75,11 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         declineFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new VerbindungDUMMY().freundschaftDelete(friendObj.getBenutzer());
+                new RestConnection(getContext()).freundschaftDelete(friendObj.getBenutzer());
+                notifyDataSetChanged();
+                Intent intent = new Intent(getContext(), Freundesliste.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                con.startActivity(intent);
 
             }
         });

@@ -24,7 +24,7 @@ public class Freundesliste extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getData();
+        freunde = new RestConnection(this).freundschaftGet();
         Freundschaft data;
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -92,8 +92,7 @@ public class Freundesliste extends BaseActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(getApplicationContext(),"Anfrage gesendet", Toast.LENGTH_LONG).show();
-                new VerbindungDUMMY().freundschaftPost(email.getText().toString());
-                getData();
+                new RestConnection(Freundesliste.this).freundschaftPost(email.getText().toString());
             }
         });
         build.setNegativeButton("Abbrechen", null);
@@ -101,9 +100,6 @@ public class Freundesliste extends BaseActivity
         alert1.show();
     }
 
-    public static void getData() {
-        freunde = new VerbindungDUMMY().freundschaftGet();
 
-    }
 
 }

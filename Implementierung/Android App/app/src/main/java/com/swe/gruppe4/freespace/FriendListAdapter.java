@@ -5,6 +5,7 @@ package com.swe.gruppe4.freespace;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.swe.gruppe4.freespace.Objektklassen.*;
 class FriendListAdapter extends ArrayAdapter<Freundschaft> {
 
     private ArrayList<Freundschaft> friendInfoList = new ArrayList<Freundschaft>();
+    Context con;
     /**
      *  add PrivateContact object  to the adapter
      */
@@ -43,6 +45,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
 
     public FriendListAdapter(Context context , int textViewResourceId){
         super(context,textViewResourceId);
+        con = context;
     }
 
     /**
@@ -89,9 +92,11 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                       {
                            @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            new VerbindungDUMMY().freundschaftDelete(ben);
-                               Freundesliste.getData();
-
+                            new RestConnection(getContext()).freundschaftDelete(ben);
+                               notifyDataSetChanged();
+                            Intent intent = new Intent(getContext(), Freundesliste.class);
+                               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            con.startActivity(intent);
                                 }
 
                         });

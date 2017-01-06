@@ -47,7 +47,7 @@ public class Settings2Activity extends BaseActivity
         anonymChkB.setChecked(ben.isAnonymous());
         pushChkB.setChecked(ben.isPush());
 
-        final VerbindungDUMMY verb = new VerbindungDUMMY();
+        final RestConnection verb = new RestConnection(this);
         //final RestConnection verb = new RestConnection(this);
         anonymChkB.setOnClickListener(new View.OnClickListener() {
 
