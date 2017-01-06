@@ -28,7 +28,6 @@ public class GoogleHelper {
     private static final String AUTH = "key=AAAAsSJNqV4:APA91bFvIDiNxLq1cUxth2_omCbf64Sa3IuIii5koTLzpOkJEGR3XdfOxomVXBW0C1lccB3YXcxu7tALvriaLP3cJearIP4c3pUuGlRGKOEw7NiXzBJGLXY3-Lb9qWhvTzQXi2kotD3GLPleaAumCeB33fK_hJaSTA";
     //FreeSpace TestToken
     private static final String testTO = "eDi76uv21oc:APA91bGBcGxqrxC1U1FnYR5GJyiJwf4mVzCS3sbx01ERX87ePbLoI_fRnL2kX5LCcJ5PCE4F730brLsph5aaM90LkjeD4RN8Hv15dvHvKG1aWa5jr7Se4XsyZZruIUZi-jIhm_Jvi4ZS";
-
     //testProject
     private static final String testAUTH = "key=AAAA9gPq8VM:APA91bGXgmQjlEpt0bv8-QTBm29004NOnekWWPS0R8T6rvvPIICAuXPc4xpxJfqFWmhQesCqLXxemmhpuvEBN3ooNZZ8TDF6wZOIFEsPSUETHNlE1NO9_YtQ1T5WH6TE3deMDrJS3KV3wbyjuOWK5E8tjTk9zBhHrQ";
     private static final String testTO2 = "cpOBRNZuxtk:APA91bGRe_8hNIJr9TPAlxz7wsbIxaqwcy09XGsYg9GnrcZCB6go9IK1PV96V9PlY1t75b7aZHDgcbmMao-ToVFBA24itGNUMAENLrW1m6ZN5l_ktRyGP8StBTg3K3RH39-UxTTalyRA";
@@ -61,37 +60,37 @@ public class GoogleHelper {
             this.active = true;
         }
         public void run() {
-        //while (true) {
-            if (!this.active) {
-                System.out.println("End Loop");
-                //break;
+            System.out.println("Start sitzungThread");
+            while (true) {
+                if (!this.active) {
+                    System.out.println("End sitzungThread");
+                    break;
+                }
+                checkDB();
+                try {
+                    Thread.sleep(min1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            checkDB();
-            try {
-                Thread.sleep(3000);
-                //Thread.sleep(min1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //}
         }
         public void stop(){
             this.active = false;
         }
-        public void checkDB() {
+        private void checkDB() {
             connect();
             try {
                 LazyList<Sitzung> list = Sitzung.find("notifySent=?", false);
                 long curTime = System.currentTimeMillis();
                 for (Sitzung s: list) {
-                    System.out.println("notifySent" + s.get("notifySent").toString());
                     long endzeit = Long.parseLong(s.get("endzeit").toString(),10);
                     if (endzeit > (curTime/1000L)
-                            && endzeit < ((curTime + min5) / 1000L)
-                            && !Boolean.getBoolean(s.get("notifySent").toString())) {
+                            && endzeit < ((curTime + min5) / 1000L)) {
                         Benutzer b = Benutzer.findById(s.get("benutzer"));
-                        erstelleNotfiyThread(b.get("tokenFCM").toString(),bodySitzung);
-                        s.set("notifySent",true).saveIt();
+                        if ("1".equals(b.get("istPush").toString())) {
+                            erstelleNotfiyThread(b.get("tokenFCM").toString(), bodySitzung);
+                            s.set("notifySent", true).saveIt();
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -107,9 +106,10 @@ public class GoogleHelper {
             this.active = true;
         }
         public void run() {
+            System.out.println("Start veranstaltungThread");
             //while (true) {
             if (!this.active) {
-                System.out.println("End Loop");
+                System.out.println("End veranstaltungThread");
                 //break;
             }
             checkDB();
@@ -125,7 +125,7 @@ public class GoogleHelper {
         public void stop(){
             this.active = false;
         }
-        public void checkDB(){
+        private void checkDB(){
             connect();
             long curTime = System.currentTimeMillis();
             try {
@@ -133,12 +133,13 @@ public class GoogleHelper {
                 for (Veranstaltung v: listV) {
                     long begin = Long.parseLong(v.get("von").toString(),10);
                     if (begin > (curTime/1000L)
-                            && begin < ((curTime + min5) / 1000L)
-                            && !Boolean.getBoolean(v.get("notifySent").toString())) {
+                            && begin < ((curTime + min5) / 1000L)) {
                         LazyList<Sitzung> listS = Sitzung.find("raum=?", v.get("raum"));
                         for (Sitzung s: listS) {
                             Benutzer b = Benutzer.findById(s.get("benutzer"));
-                            erstelleNotfiyThread(b.get("tokenFCM").toString(), bodyVeranstaltung);
+                            if ("1".equals(b.get("istPush").toString())) {
+                                erstelleNotfiyThread(b.get("tokenFCM").toString(), bodyVeranstaltung);
+                            }
                         }
                         v.set("notifySent",true).saveIt();
                     }
@@ -173,18 +174,16 @@ public class GoogleHelper {
         }
 
         synchronized void getJsonString() {
-            System.out.println("getJsonString");
             Map<String, Object> notify = new HashMap<String, Object>();
             notify.put("body", body);
 
             String to = this.token;
             Map<String, Object> param = new HashMap<String, Object>();
-            param.put("to",testTO);
+            param.put("to",to);
             param.put("notification", notify);
             this.json = JsonHelper.getJsonStringFromMap(param);
         }
         synchronized void sendToFCM() {
-            System.out.println("json: " + this.json);
             Response response = ClientBuilder.newClient()
                     .target(URL)
                     .request(MediaType.APPLICATION_JSON)
@@ -194,11 +193,6 @@ public class GoogleHelper {
             System.out.println("Status: " + response.getStatus());
             System.out.println("Response: " + response.readEntity(String.class));
         }
-    }
-
-    public static void main (String[] args) {
-        System.out.println(
-                (System.currentTimeMillis()+min5)/1000L);
     }
 }
 
