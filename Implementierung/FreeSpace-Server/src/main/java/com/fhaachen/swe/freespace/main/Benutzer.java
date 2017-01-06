@@ -72,6 +72,7 @@ public class Benutzer extends Datenbank{
             }
 
             try{
+                connect();
                 b.saveIt();
                 result = b.toJson(true);
             } catch (Exception e){
