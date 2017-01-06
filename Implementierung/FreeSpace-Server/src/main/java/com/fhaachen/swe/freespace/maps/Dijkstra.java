@@ -191,6 +191,8 @@ public class Dijkstra {
         }
         // korrekte Reihenfolge
         Collections.reverse(weg);
+        weg.removeFirst();
+        weg.removeLast();
         return weg;
     }
 }
