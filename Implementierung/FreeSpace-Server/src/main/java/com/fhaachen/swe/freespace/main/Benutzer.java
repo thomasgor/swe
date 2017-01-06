@@ -109,6 +109,7 @@ public class Benutzer extends Datenbank{
             neu.set("name", input.get("name"));
             neu.set("vorname", input.get("vorname"));
             neu.set("foto", input.get("foto"));
+            neu.set("tokenFCM", input.get("tokenFCM"));
 
             try {
                 neu.insert();
