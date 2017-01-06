@@ -219,7 +219,7 @@ public class Konfiguration extends Datenbank{
      */
     public static boolean setKonfiguration(String altPasswort, String neuPasswort1, String neuPasswort2, List<String> tags, String neuerTag, String sitzungsintervall){
         try{
-            if(neuPasswort1 != null ){
+            if(neuPasswort1 != null && neuPasswort1.length() > 0){
                 if(isMaster(altPasswort)) {
                     System.out.println("Ändere Passwort");
                     if (!setNeuesMasterpasswort(neuPasswort1, neuPasswort2)) {
