@@ -34,7 +34,7 @@ public class Veranstaltung implements Serializable {
             this.dozent = new Benutzer(jsonObj.getString("dozent"));
             this.von = jsonObj.getLong("von");
             this.bis = jsonObj.getLong("bis");
-            this.raum = new Raum(jsonObj.getString("raum"));
+            this.raum = new Raum(jsonObj.getString("raum"),false);
             //this.raum = jsonObj.getInt("id");
 
         } catch (JSONException e) {

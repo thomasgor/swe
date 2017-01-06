@@ -26,7 +26,7 @@ public class Freundschaft implements Serializable{
 
             this.benutzer = new Benutzer(jsonObj.getString("benutzer"));
             this.status = jsonObj.getBoolean("status");
-            this.raum = new Raum(jsonObj.getString("raum"));
+            this.raum = new Raum(jsonObj.getString("raum"),false);
 
         } catch (JSONException e) {
             //jsonTag enthält keinen Tag!
