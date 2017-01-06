@@ -1,5 +1,6 @@
 package com.swe.gruppe4.freespace;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -58,6 +59,7 @@ public class RestConnection {
 
     public static String id;
     public static String token;
+    private ProgressDialog mProgressDialog;
 
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
@@ -151,6 +153,7 @@ public class RestConnection {
 
             protected String doInBackground(String... params) {
                 String response = "false";
+                publishProgress(0);
                 try {
                     java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + restRessource +"/");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -158,16 +161,21 @@ public class RestConnection {
                     byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
                     conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
                     conn.setRequestMethod(httpMethod);
+                    conn.setChunkedStreamingMode(0);
+                    Log.d("myTag3","now aftersetRequestMethod");
                     OutputStream os = conn.getOutputStream();
+                    Log.d("myTag5","now before if");
                     if(!Objects.equals(params[0], "")){
                         conn.setRequestProperty("Content-Type","application/json");
                         byte[] inputJsonBytes = params[0].getBytes("UTF-8");
                         os.write(inputJsonBytes);
+                        Log.d("myTag6","now in if");
                     }
                     os.flush();
 
                     int responseCode = conn.getResponseCode();
-                    SparseIntArray acceptableCodes = acceptableCodes(BENUTZER,HTTP_POST);
+                    Log.d("myTag3",""+ responseCode);
+                    SparseIntArray acceptableCodes = acceptableCodes(restRessource,httpMethod);
                     if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
                         InputStream in = new BufferedInputStream(conn.getInputStream());
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
@@ -177,17 +185,22 @@ public class RestConnection {
 
 
                 } catch (IOException e) {
+                    Log.d("myTag20","fail");
                     e.printStackTrace();
                 }
+                Log.d("myTag2",response);
                 return response;
+
             }
 
             protected void onProgressUpdate(Integer... progress) {
-
+                showProgressDialog();
             }
 
             protected void onPostExecute(String result) {
+                hideProgressDialog();
                 resp = result;
+
 
             }
 
@@ -200,38 +213,70 @@ public class RestConnection {
 
     }
 
-    private String restRequest(String restRessource, String httpMethod, String inputJson, int idn) {
-        String response = "false";
-        try {
-            java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + restRessource +"/" + idn);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            String userPass = id+":"+token;
-            byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
-            conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
-            conn.setRequestMethod(httpMethod);
-            OutputStream os = conn.getOutputStream();
-            if(!Objects.equals(inputJson, "")){
-                conn.setRequestProperty("Content-Type","application/json");
-                byte[] inputJsonBytes = inputJson.getBytes("UTF-8");
-                os.write(inputJsonBytes);
+    private String restRequest(final String restRessource, final String httpMethod, String input, final int idn) {
+        class RestCon extends AsyncTask<String,Integer,String> {
+            String resp;
+
+            protected String doInBackground(String... params) {
+                String response = "false";
+                publishProgress(0);
+                try {
+                    java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + restRessource +"/" + idn + "/");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    String userPass = id+":"+token;
+                    byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
+                    conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
+                    conn.setRequestMethod(httpMethod);
+                    conn.setChunkedStreamingMode(0);
+                    Log.d("myTag3","now aftersetRequestMethod");
+                    OutputStream os = conn.getOutputStream();
+                    Log.d("myTag5","now before if");
+                    if(!Objects.equals(params[0], "")){
+                        conn.setRequestProperty("Content-Type","application/json");
+                        byte[] inputJsonBytes = params[0].getBytes("UTF-8");
+                        os.write(inputJsonBytes);
+                        Log.d("myTag6","now in if");
+                    }
+                    os.flush();
+
+                    int responseCode = conn.getResponseCode();
+                    Log.d("myTag3",""+ responseCode);
+                    SparseIntArray acceptableCodes = acceptableCodes(restRessource,httpMethod);
+                    if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
+                        InputStream in = new BufferedInputStream(conn.getInputStream());
+                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+                    } else {
+                        showErrorMessage(responseCode);
+                    }
+
+
+                } catch (IOException e) {
+                    Log.d("myTag20","fail");
+                    e.printStackTrace();
+                }
+                Log.d("myTag2",response);
+                return response;
+
             }
-            os.flush();
 
-            int responseCode = conn.getResponseCode();
-            SparseIntArray acceptableCodes = acceptableCodes(restRessource,httpMethod);
-            if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
-                InputStream in = new BufferedInputStream(conn.getInputStream());
-                response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-            } else {
-                showErrorMessage(responseCode);
+            protected void onProgressUpdate(Integer... progress) {
+                showProgressDialog();
             }
 
+            protected void onPostExecute(String result) {
+                hideProgressDialog();
+                resp = result;
 
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            }
+
         }
 
-        return response;
+        RestCon connn = new RestCon();
+        connn.execute(input);
+        return connn.resp;
+
+
     }
 
     private String restPOSTBenutzer(String input) {
@@ -245,7 +290,7 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://127.0.0.1:8888/" + BENUTZER +"/");
+                    java.net.URL url = new java.net.URL("http://192.168.56.1:8888/" + BENUTZER +"/");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //String userPass = ""+":"+"";
                     //byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
@@ -284,10 +329,11 @@ public class RestConnection {
             }
 
             protected void onProgressUpdate(Integer... progress) {
-                showDialogLoad();
+                showProgressDialog();
             }
 
             protected void onPostExecute(String result) {
+                hideProgressDialog();
                 resp = result;
 
 
@@ -592,15 +638,22 @@ public class RestConnection {
 
     }
 
-    private void showDialogLoad(){
-
-        AlertDialog.Builder build = new AlertDialog.Builder(context);
-        build.setCancelable(false);
-        build.setTitle("Laden...");
-        build.setMessage("Bitte warten...");
-        AlertDialog alert1 = build.create();
-        alert1.show();
+    private void showProgressDialog() {
+        if(mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage("Loading");
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
     }
 
+    /**
+     * Entfernt Progressdialog, wenn vorhanden
+     */
+    private void hideProgressDialog() {
+        if(mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
 
 }
