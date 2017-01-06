@@ -240,7 +240,10 @@ public class Sitzung extends Datenbank {
 
             long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (Integer.parseInt(Konfiguration.getSitzungsintervall()) * 60);
 
-            sitz.set("endzeit", endzeit).saveIt();
+            sitz.set("endzeit", endzeit);
+            sitz.set("notifySent", 0);
+            sitz.saveIt();
+
             antwort = sitz.toJson(true);
             antwort = includeRaumInSitzung(antwort);
         } catch(Exception e) {

@@ -73,8 +73,8 @@ public class Benutzer extends Datenbank{
                 b.set("istPush", input_istPush);
             }
 
-            //Wenn istPush gesetzt ist, setze die Flag
-            if(input_istPush != null){
+            //Wenn tokenFCM gesetzt ist, setze die Flag
+            if(input_token_fcm != null){
                 b.set("tokenFCM", input_token_fcm);
             }
 
