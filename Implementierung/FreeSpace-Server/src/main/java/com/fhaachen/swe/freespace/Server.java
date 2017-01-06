@@ -27,9 +27,10 @@ public class Server {
     public static final URI BASE_URI = getBaseURI();
     // Attribut zur Speicherung der URL des Servers
     public static final String URL = getURL();
+    public static final String PORT = "8888";
 
     private static URI getBaseURI(){
-        return UriBuilder.fromUri("http://"+getIP()+"/").port(8888).build();
+        return UriBuilder.fromUri("http://"+getIP()+"/").port(Integer.parseInt(PORT)).build();
     }
 
     /**
@@ -40,7 +41,7 @@ public class Server {
 
     private static String getURL(){
         try{
-            String url = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":8888/";
+            String url = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":" + PORT + "/";
             return url;
         }catch (Exception e){
             e.printStackTrace();
