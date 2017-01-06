@@ -157,13 +157,13 @@ public class G1 extends Karte{
         Knoten etageHoch = new Knoten(ETAGE_HOCH); //
 
         //FlurKnoten
-        Knoten g131 = new Knoten("G131"); //siehe Knoten 1
-        Knoten g132 = new Knoten("G132"); //siehe Knoten 2
-        Knoten g133 = new Knoten("G133"); //siehe Knoten 3
-        Knoten g134 = new Knoten("G134"); //siehe Knoten 4
-        Knoten g135 = new Knoten("G135"); //siehe Knoten 5
-        Knoten g136 = new Knoten("G136"); //siehe Knoten 6
-        Knoten g137 = new Knoten("G137"); //siehe Knoten 7
+        Knoten g131 = new Knoten("240"); //siehe Knoten 1 - G131
+        Knoten g132 = new Knoten("440"); //siehe Knoten 2
+        Knoten g133 = new Knoten("510"); //siehe Knoten 3
+        Knoten g134 = new Knoten("515"); //siehe Knoten 4
+        Knoten g135 = new Knoten("550"); //siehe Knoten 5
+        Knoten g136 = new Knoten("650"); //siehe Knoten 6
+        Knoten g137 = new Knoten("700"); //siehe Knoten 7
 
         //Kanten, da ungerichtet, jede kante in beide Richtungen
         Kante g161 = new Kante("G161", g131, g101,2);       //siehe Kante 1, Gewicht = grobe Entfernung in Meter
