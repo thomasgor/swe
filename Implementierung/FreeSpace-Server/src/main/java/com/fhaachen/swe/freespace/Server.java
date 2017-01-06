@@ -23,9 +23,13 @@ public class Server {
      *
      * @return Erzeugte URI
      */
+    // Attribut zur Speicherung der URI des Servers
+    public static final URI BASE_URI = getBaseURI();
+    // Attribut zur Speicherung der URL des Servers
+    public static final String URL = getURL();
 
     private static URI getBaseURI(){
-        return UriBuilder.fromUri("http://localhost/").port(8888).build();
+        return UriBuilder.fromUri("http://"+getIP()+"/").port(8888).build();
     }
 
     /**
@@ -36,7 +40,18 @@ public class Server {
 
     private static String getURL(){
         try{
-            String ip = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":8888/";
+            String url = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":8888/";
+            return url;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private static String getIP(){
+        try{
+            String ip =InetAddress.getLocalHost().getHostAddress().toString();
+            System.out.println("IP ausgelesen: " + ip);
             return ip;
         }catch (Exception e){
             e.printStackTrace();
@@ -44,10 +59,7 @@ public class Server {
         return "";
     }
 
-    // Attribut zur Speicherung der URI des Servers
-    public static final URI BASE_URI = getBaseURI();
-    // Attribut zur Speicherung der URL des Servers
-    public static final String URL = getURL();
+
 
     /**
      * Erzeugt einen Grizzly-HTTP-Server, laedt die vorher definierten Server-Klassen und gibt den Server dann zurueck
