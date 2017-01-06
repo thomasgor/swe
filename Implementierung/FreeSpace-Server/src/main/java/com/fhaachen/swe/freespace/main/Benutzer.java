@@ -52,12 +52,14 @@ public class Benutzer extends Datenbank{
         String input_pw = input.get("masterpasswort").toString();
         String input_istAnonym = input.get("istAnonym").toString();
         String input_istPush = input.get("istPush").toString();
+        String input_token_fcm = input.get("tokenFCM").toString();
 
         connect();
         Benutzer b = Benutzer.findById(benutzerID);
         if(b != null){
+
             //Wenn Masterpasswort richtig, setze ist istProfessor
-            if(!Konfiguration.isMaster(input_pw)){
+            if(Konfiguration.isMaster(input_pw)){
                 b.set("istProfessor", 1);
             }
 
@@ -71,7 +73,13 @@ public class Benutzer extends Datenbank{
                 b.set("istPush", input_istPush);
             }
 
+            //Wenn istPush gesetzt ist, setze die Flag
+            if(input_istPush != null){
+                b.set("tokenFCM", input_token_fcm);
+            }
+
             try{
+                connect();
                 b.saveIt();
                 result = b.toJson(true);
             } catch (Exception e){
@@ -109,6 +117,7 @@ public class Benutzer extends Datenbank{
             neu.set("name", input.get("name"));
             neu.set("vorname", input.get("vorname"));
             neu.set("foto", input.get("foto"));
+            neu.set("tokenFCM", input.get("tokenFCM"));
 
             try {
                 neu.insert();

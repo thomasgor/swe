@@ -23,9 +23,14 @@ public class Server {
      *
      * @return Erzeugte URI
      */
+    // Attribut zur Speicherung der URI des Servers
+    public static final URI BASE_URI = getBaseURI();
+    // Attribut zur Speicherung der URL des Servers
+    public static final String URL = getURL();
+    public static final String PORT = "8888";
 
     private static URI getBaseURI(){
-        return UriBuilder.fromUri("http://localhost/").port(8888).build();
+        return UriBuilder.fromUri("http://"+getIP()+"/").port(Integer.parseInt(PORT)).build();
     }
 
     /**
@@ -36,7 +41,18 @@ public class Server {
 
     private static String getURL(){
         try{
-            String ip = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":8888/";
+            String url = "http://" + InetAddress.getLocalHost().getHostAddress().toString() + ":" + PORT + "/";
+            return url;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private static String getIP(){
+        try{
+            String ip =InetAddress.getLocalHost().getHostAddress().toString();
+            System.out.println("IP ausgelesen: " + ip);
             return ip;
         }catch (Exception e){
             e.printStackTrace();
@@ -44,10 +60,7 @@ public class Server {
         return "";
     }
 
-    // Attribut zur Speicherung der URI des Servers
-    public static final URI BASE_URI = getBaseURI();
-    // Attribut zur Speicherung der URL des Servers
-    public static final String URL = getURL();
+
 
     /**
      * Erzeugt einen Grizzly-HTTP-Server, laedt die vorher definierten Server-Klassen und gibt den Server dann zurueck
@@ -70,20 +83,6 @@ public class Server {
     }
 
     /**
-     *
-     */
-
-    public static GoogleHelper startGoogleHelperThread() {
-        System.out.println("Starting GoogleHelperThread.");
-        GoogleHelper runnable = new GoogleHelper();
-        Thread t = new Thread(runnable);
-        t.start();
-        return runnable;
-    }
-
-
-
-    /**
      * Startet den Server mit oder ohne Testsuite und beendet diesen mit einem druecken der Eingabe-Taste
      */
 
@@ -91,9 +90,10 @@ public class Server {
         boolean test = true;
         try {
 //            für PushNots
-//            GoogleHelper g = startGoogleHelperThread();
+//            GoogleHelper g = new GoogleHelper();
 
             HttpServer httpServer = startServer();
+
             System.out.println("Webservice published to: " + URL);
             System.out.println("Hit enter to Stop");
             System.in.read();
