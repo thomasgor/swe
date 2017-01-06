@@ -90,14 +90,15 @@ public class Server {
         boolean test = true;
         try {
 //            für PushNots
-            GoogleHelper g = new GoogleHelper();
+//            GoogleHelper g = new GoogleHelper();
 
-//            HttpServer httpServer = startServer();
-//            System.out.println("Webservice published to: " + URL);
+            HttpServer httpServer = startServer();
+
+            System.out.println("Webservice published to: " + URL);
             System.out.println("Hit enter to Stop");
             System.in.read();
-//            httpServer.stop();
-            g.stop();
+            httpServer.stop();
+//            g.stop();
 
             if(test == true){
                 //run Testsuite
