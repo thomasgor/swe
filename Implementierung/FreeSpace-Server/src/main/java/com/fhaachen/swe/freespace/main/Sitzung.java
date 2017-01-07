@@ -181,8 +181,8 @@ public class Sitzung extends Datenbank {
             s.set("endzeit", endzeit);
             s.set("raum", raum);
             s.set("hasTag", 0);
+            connect();
             boolean erfolg = s.insert();
-
             disconnect();
             System.out.println("Neue sitzung wurde erstellt");
             antwort = s.toJson(true);

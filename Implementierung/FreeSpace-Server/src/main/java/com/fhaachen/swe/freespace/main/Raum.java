@@ -112,10 +112,14 @@ public class Raum extends Datenbank {
     public static String putRaumID(String raumID,String tagID, String benutzerID){
         connect();
         Raum raum = Raum.findById(raumID);
+        disconnect();
         if(raum == null){
             //Raum nicht vorhanden
             return null;
         }
+        connect();
+
+
 
         raum.set("tag", tagID);
         try{
