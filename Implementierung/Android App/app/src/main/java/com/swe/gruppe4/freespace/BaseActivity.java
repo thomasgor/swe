@@ -36,8 +36,9 @@ public class BaseActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
         if(ben.istProfessor()) {
-            super.setTheme(R.style.AppThemeProf);
+            super.setTheme(R.style.AppThemeProf_NoActionBar);
         }
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
@@ -133,6 +134,7 @@ public class BaseActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_raeume) {
+            MainActivity.startingPointId = 0;
             Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
             startActivity(intent);
             finish();

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Freundschaft;
+import com.swe.gruppe4.freespace.Objektklassen.Karte;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
@@ -70,7 +71,7 @@ public class RestConnection {
 
     // Hostname und Port des Servers
     // TODO Hostname anpassen
-    private final String hostname = "137.226.239.248";
+    private final String hostname = "192.168.178.29:8888";
     private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
@@ -253,7 +254,7 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://192.168.178.31:8888/" + restRessource + "/" + idn);
+                    java.net.URL url = new java.net.URL("http://"+hostname + ":" + port +"/" + restRessource + "/" + idn);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     String userPass = id + ":" + token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -771,6 +772,10 @@ public class RestConnection {
         Log.d("myTag" ,token + " " + id);
         Log.d("edu", "benutzerPost token:" + token);
 
+    }
+
+    public Karte karteGet (int start, int ziel){
+        return null;
     }
 
     private void showProgressDialog() {

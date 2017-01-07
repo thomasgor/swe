@@ -9,10 +9,16 @@ import org.javalite.activejdbc.Model;
 
 public class Datenbank extends Model {
     public static void connect(){
-        Base.open("org.sqlite.JDBC", "jdbc:sqlite:./freespace.db", "root", "p@ssw0rd");
+        if(!Base.hasConnection()){
+            Base.open("org.sqlite.JDBC", "jdbc:sqlite:./freespace.db", "root", "p@ssw0rd");
+            Base.exec("PRAGMA foreign_keys = ON");
+        }
     }
 
     public static void disconnect(){
-        Base.close();
+        if(Base.hasConnection()){
+            Base.close();
+        }
+
     }
 }

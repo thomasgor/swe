@@ -2,8 +2,11 @@ package com.swe.gruppe4.freespace;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,12 +39,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
     TextView leute;
     Button gehezu;
     RelativeLayout rlTop;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final int id = getIntent().getIntExtra("id",4711);
-        //raum = new VerbindungDUMMY().raumGet(id);
-        raum = new RestConnection(this).raumGet(id);
+        id = getIntent().getIntExtra("id",4711);
+        raum = new VerbindungDUMMY().raumGet(id);
+        //raum = new RestConnection(this).raumGet(id);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
@@ -57,17 +61,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         setData();
 
-        gehezu=(Button) findViewById(R.id.btn_goto);
-        gehezu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Kein Startpunkt vorhanden: MainActivity.startingPointId = 0!
-                Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                //Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert" ,Toast.LENGTH_SHORT).show();
-            }
-        });
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             rlTop=(RelativeLayout) findViewById(R.id.activity_room_details2);
@@ -136,5 +129,21 @@ public class RoomDetailsActivity extends AppCompatActivity {
         int max = raum.getTeilnehmer_max();
         int crnt = raum.getTeilnehmer_aktuell();
         leute.setText(getString(R.string.people_in_room_cnt,crnt,max,getResources().getQuantityString(R.plurals.people_in_room_cnt_anon,crnt-nichtAnonym,crnt-nichtAnonym)));
+
+        gehezu=(Button) findViewById(R.id.btn_goto);
+        if(MainActivity.startingPointId != 0){
+            gehezu.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_directions_white_24dp, 0,0,0);
+        } else {
+            gehezu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Kein Startpunkt vorhanden: MainActivity.startingPointId = 0!
+                    Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                    //Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert" ,Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

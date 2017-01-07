@@ -1,5 +1,7 @@
 package com.fhaachen.swe.freespace.filter;
 
+import com.fhaachen.swe.freespace.main.Benutzer;
+
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.security.Principal;
@@ -17,7 +19,7 @@ public class Authorizer implements SecurityContext {
         this.user = user;
         this.principal = new Principal() {
             public String getName() {
-                return user.username;
+                return user.userid;
             }
         };
     }
@@ -27,12 +29,18 @@ public class Authorizer implements SecurityContext {
     }
 
     public boolean isUserInRole(String role) {
-        return (role.equals(user.role));
+        String rolle = Benutzer.getRolle(user.userid);
+
+        //Administratoren stehen nicht in der Datenbank, daher hier ausnahme!
+        if(role.equals("admin")){
+            if(Benutzer.istAdministrator(user.userid, user.token))
+                return true;
+        }
+        return (role.equals(rolle));
     }
 
     public boolean isSecure() {
         //"https".equals(uriInfo.get().getRequestUri().getScheme());)
-        System.out.println("Server frag nach isSecure");
         return true;
     }
 

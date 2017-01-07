@@ -1,5 +1,8 @@
 package com.fhaachen.swe.freespace.filter;
 
+import com.fhaachen.swe.freespace.Antwort;
+import com.fhaachen.swe.freespace.main.Benutzer;
+
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.naming.AuthenticationException;
@@ -37,12 +40,18 @@ public class AuthFilter implements ContainerRequestFilter {
     }
 
     private User authenticate(ContainerRequestContext filterContext){
+
         //Extrahieren der login informationen
         String authentication = filterContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         //Ist der String null sind keine Informationen im Header gewesen
         if(authentication == null){
             System.out.println("Anfrage ohne Authorization im HTTP-Header");
+            String uri = filterContext.getUriInfo().getPath();
+
+            if(uri.equals("benutzer") || uri.equals("benutzer/")){
+                return new User("","");
+            }
             return null;
         }
 
@@ -63,16 +72,18 @@ public class AuthFilter implements ContainerRequestFilter {
             return null;
         }
 
-        String username = values[0];
-        String password = values[1];
+        String userid = values[0];
+        String token = values[1];
+
 
         //Validieren der Benutzerdaten
         User user;
-        if(username.equals("user") && password.equals("password")){
-            user = new User(username , "user");
+        if(Benutzer.istBenutzer(userid) && Benutzer.prüfeToken(userid, token)){
+            user = new User(userid , token);
             System.out.println("Benutzer authentifiziert");
             return user;
         }else{
+            filterContext.abortWith(Antwort.UNAUTHORIZED);
             System.out.println("Benutzer nicht authentifiziert");
         }
 
