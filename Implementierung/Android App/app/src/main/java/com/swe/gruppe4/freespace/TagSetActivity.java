@@ -28,7 +28,7 @@ public class TagSetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        tagList = new VerbindungDUMMY().tagGet();
+        tagList = new RestConnection(this).tagGet();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tags_set);

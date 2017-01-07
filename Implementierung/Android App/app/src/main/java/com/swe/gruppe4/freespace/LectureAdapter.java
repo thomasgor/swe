@@ -114,8 +114,8 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
         build.setCancelable(false);
 
-        VerbindungDUMMY verb = new VerbindungDUMMY();
-        //RestConnection verb = new RestConnection(this.aufgerufenVon);
+        //VerbindungDUMMY verb = new VerbindungDUMMY();
+        RestConnection verb = new RestConnection(this.aufgerufenVon);
 
         //build.setTitle("Freund wirklich löschen?");
         build.setMessage("Möchten Sie die Veranstaltung " + verb.lectureGet(lectureId).getName()+ " wirklich löschen?");
@@ -124,8 +124,8 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                VerbindungDUMMY verb = new VerbindungDUMMY();
-                //RestConnection verb = new RestConnection(getContext());
+                //VerbindungDUMMY verb = new VerbindungDUMMY();
+                RestConnection verb = new RestConnection(getContext());
 
                 verb.lectureDelete(lectureId);
                 notifyDataSetChanged();

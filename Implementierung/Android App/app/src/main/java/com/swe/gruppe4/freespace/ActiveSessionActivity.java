@@ -82,7 +82,7 @@ public class ActiveSessionActivity extends BaseActivity
         erneuern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                data = new VerbindungDUMMY().sitzungPut(data.getId());
+                data = new RestConnection(ActiveSessionActivity.this).sitzungPut(data.getId());
                 raum = data.getRaum();
                 setData();
             }
@@ -92,7 +92,7 @@ public class ActiveSessionActivity extends BaseActivity
         beenden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new VerbindungDUMMY().sitzungDelete(data.getId());
+                new RestConnection(ActiveSessionActivity.this).sitzungDelete(data.getId());
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -195,7 +195,7 @@ public class ActiveSessionActivity extends BaseActivity
         switch(requestCode){
             case BACK_FROM_TAG:
                 int tagID = data.getIntExtra("id",0);
-                raum = new VerbindungDUMMY().raumPut(tagID,raum.getId());
+                raum = new RestConnection(ActiveSessionActivity.this).raumPut(tag.getId());
                 setData();
         }
     }

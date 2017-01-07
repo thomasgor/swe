@@ -20,6 +20,7 @@ import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
+import com.swe.gruppe4.freespace.Objektklassen.Karte;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +71,7 @@ public class RestConnection {
 
     // Hostname und Port des Servers
     // TODO Hostname anpassen
-    private final String hostname = "137.226.239.248";
+    private final String hostname = "192.168.178.36";
     private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
@@ -158,81 +159,70 @@ public class RestConnection {
         return res;
     }
 
-    private String restRequest(final String restRessource, final String httpMethod, final String input){
-        Log.d("edu", "restRequest methode!");
+    private String restRequest(final String restRessource, final String httpMethod, final String input) {
         String res = "";
-        class RestCon extends AsyncTask<String,Integer,String> {
+        class RestCon extends AsyncTask<String, Integer, String> {
             String resp;
 
             protected String doInBackground(String... params) {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    URL url = new URL("http://" + hostname + ":" + port + "/" + restRessource + "/");
-                    //String url2 = "http://" + hostname + ":" + port + "/" + restRessource + "/";
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource + "/");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    String userPass = id+":"+token;
+                    String userPass = id + ":" + token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
                     conn.setRequestProperty("Authorization", "Basic " + encoding);
                     conn.setRequestMethod(httpMethod);
                     conn.setChunkedStreamingMode(0);
-                    conn.setRequestProperty("Content-Type","application/json");
-                    publishProgress(0);
-                    Log.d("edu", "restRequest methode! T1");
-                    //InputStream resp = new URL(url2).openStream();
-                    // TODO unterscheiden zwischen get und post
-                    //OutputStream os = conn.getOutputStream();
-                    conn.connect();
-                    Log.d("edu", "restRequest methode! T2");
-                    publishProgress(0);
-                    /*
-                    if(!Objects.equals(input, "")){
-                        byte[] inputJsonBytes = input.getBytes("UTF-8");
-                        os.write(inputJsonBytes);
+                    conn.setRequestProperty("Content-Type", "application/json");
+
+                    if(httpMethod != HTTP_GET) {
+                        OutputStream os = conn.getOutputStream();
+
+                        if (!Objects.equals(input, "")) {
+                            byte[] inputJsonBytes = input.getBytes("UTF-8");
+                            os.write(inputJsonBytes);
+
+                        }
+                        os.flush();
+                        os.close();
                     }
-                    os.flush();
-                    os.close();
-                    */
+                    else
+                    conn.connect();
 
                     int responseCode = conn.getResponseCode();
-                    Log.d("myTag3",""+ responseCode);
-                    SparseIntArray acceptableCodes = acceptableCodes(restRessource,httpMethod);
-                    if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
+                    Log.d("myTag3", "" + responseCode);
+                    SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
+                    if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0) {
                         InputStream in = new BufferedInputStream(conn.getInputStream());
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
                         in.close();
-                        Log.d("edu", "restRequest methode! Toll: " + response);
                     } else {
                         //showErrorMessage(responseCode);
-                        Log.d("edu", "restRequest methode! Error Code");
-
                     }
-                    Log.d("edu", "restRequest methode! Response Code: " + responseCode);
                     conn.disconnect();
 
 
                 } catch (IOException e) {
-                    Log.d("myTag20","fail");
-                    Log.d("edu", "exception!");
+                    Log.d("myTag20", "fail");
                     e.printStackTrace();
                 }
-                Log.d("myTag2",response);
+                Log.d("myTag2", response);
                 return response;
 
             }
-
             protected void onProgressUpdate(Integer... progress) {
-                showProgressDialog();
+                //showProgressDialog();
             }
 
             protected void onPostExecute(String result) {
                 hideProgressDialog();
                 resp = result;
 
+
             }
-
         }
-
         RestCon connn = new RestCon();
         try {
             res = connn.execute(input).get();
@@ -240,9 +230,9 @@ public class RestConnection {
         {}
 
         return res;
-
-
     }
+
+
 
     private String restRequest(final String restRessource, final String httpMethod, final String input, final String idn) {
         String res = "";
@@ -253,7 +243,7 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://192.168.178.31:8888/" + restRessource + "/" + idn);
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource + "/" + idn);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     String userPass = id + ":" + token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -294,11 +284,11 @@ public class RestConnection {
 
             }
             protected void onProgressUpdate(Integer... progress) {
-                showProgressDialog();
+                //showProgressDialog();
             }
 
             protected void onPostExecute(String result) {
-                //hideProgressDialog();
+                hideProgressDialog();
                 resp = result;
 
 
@@ -322,7 +312,7 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://" + hostname + ":"+ port + "/" + restRessource +"/" + idn + "/");
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource +"/" + idn);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     String userPass = id+":"+token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -331,17 +321,17 @@ public class RestConnection {
                     conn.setChunkedStreamingMode(0);
                     Log.d("myTag3","now aftersetRequestMethod");
                     conn.setRequestProperty("Content-Type","application/json");
-                    //OutputStream os = conn.getOutputStream();
-                    conn.connect();
+                    OutputStream os = conn.getOutputStream();
+                    //conn.connect();
                     Log.d("myTag5","now before if");
-                    /*
+
                     if(!Objects.equals(params[0], "")){
                         byte[] inputJsonBytes = params[0].getBytes("UTF-8");
                         os.write(inputJsonBytes);
                     }
                     os.flush();
                     os.close();
-                    */
+
                     int responseCode = conn.getResponseCode();
                     SparseIntArray acceptableCodes = acceptableCodesID(restRessource,httpMethod);
                     if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
@@ -363,11 +353,11 @@ public class RestConnection {
             }
 
             protected void onProgressUpdate(Integer... progress) {
-                showProgressDialog();
+                //showProgressDialog();
             }
 
             protected void onPostExecute(String result) {
-                //hideProgressDialog();
+                hideProgressDialog();
                 resp = result;
 
 
@@ -406,6 +396,7 @@ public class RestConnection {
                     conn.setChunkedStreamingMode(0);
                     conn.setRequestProperty("Content-Type","application/json");
                     OutputStream os = conn.getOutputStream();
+                    Log.d("myTag", "conn aufgebaut");
                     if(!Objects.equals(input, "")){
                         byte[] inputJsonBytes = input.getBytes("UTF-8");
                         os.write(inputJsonBytes);
@@ -441,7 +432,7 @@ public class RestConnection {
             }
 
             protected void onPostExecute(String result) {
-                //hideProgressDialog();
+                hideProgressDialog();
                 resp = result;
 
 
@@ -619,57 +610,54 @@ public class RestConnection {
 
     }
     public Sitzung sitzungPost(int raumID){
+
         String jSon = builder.buildPOSTsitzungJson(raumID);
         String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);
         return new Sitzung(antwortJSon);
     }
 
     public Sitzung sitzungPut(int id){
-
         String antwortJSon = restRequest(SITZUNG, HTTP_PUT, "", id);
         return new Sitzung(antwortJSon);
     }
 
     public void sitzungDelete(int id){
+
         String antwortJSon = restRequest(SITZUNG, HTTP_DELETE, "", id);
+
     }
 
     public ArrayList<Freundschaft> freundschaftGet() {
         String antwortJSon = restRequest(FREUNDSCHAFT, HTTP_GET, "");
+
+        Log.d("myTag", "" + builder.getFreundschaftFromJson(antwortJSon));
         return builder.getFreundschaftFromJson(antwortJSon);
-
-        /*ArrayList<Freundschaft> freunde = new ArrayList<Freundschaft>();
-        Benutzer[] benutzer = new Benutzer[10];
-        for(int i = 0; i < 3; i++){
-            Benutzer tmp = new Benutzer(i,"abc@def.com","Peter","Pan","https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg", "",0, 0, 0);
-            benutzer[i]=tmp;
-        }
-        Raum room = new Raum(101,"G101",22,3,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer, "grün");
-        Raum room2 = new Raum(4711,"G102",22,15,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Ruhe"),benutzer, "gelb");
-
-        freunde.add(new Freundschaft(new Benutzer(1,"abc@def.com","Pan","Peter","http://img.lum.dolimg.com/v1/images/open-uri20150422-20810-r3neg5_4c4b3ee3.jpeg", "",0, 0, 0), true, room));
-        freunde.add(new Freundschaft(new Benutzer(2,"abc@def.com","Beutlin","Frodo","http://thewallmachine.com/files/1376423116.jpg", "",0, 0, 0), false, room));
-        freunde.add(new Freundschaft(new Benutzer(3,"abc@def.com","Potter","Harry","http://intouch.wunderweib.de/assets/styles/600x600/public/intouch/media/redaktionell/wunderweib/intouch_2/1news/2014_10/juli_33/woche2_22/thilo_7/harrypotter_3/harry-potter-h.jpg?itok=xOtudiW3", "",0, 0, 0), true, room2));
-        freunde.add(new Freundschaft(new Benutzer(3,"abc@def.com","Yoda","Meister","http://starwars.gamona.de/wp-content/gallery/yoda-bilder/13_Yoda.jpg", "",0, 0, 0), false, room));
-        return freunde;*/
     }
+
+
 
     public void freundschaftPost(String email) {
         String JSon = builder.buildPOSTfreundschaftJson(email);
+
         String answerJSon = restRequest(FREUNDSCHAFT, HTTP_POST,JSon);
+
 
 
 
     }
 
     public void freundschaftPut(Benutzer benutzer){
+
         String answerJSon = restRequest(FREUNDSCHAFT, HTTP_PUT, "", benutzer.getId());
+
 
 
     }
 
     public void freundschaftDelete(Benutzer benutzer){
+
         String answerJSon = restRequest(FREUNDSCHAFT, HTTP_DELETE, "", benutzer.getId());
+
 
 
     }
@@ -679,7 +667,9 @@ public class RestConnection {
      */
 
     public ArrayList<Tag> tagGet() {
+
         String antwortJSon = restRequest(TAG, HTTP_GET, "");
+
         return builder.getTagFromJson(antwortJSon);
 
     }
@@ -691,6 +681,7 @@ public class RestConnection {
     public ArrayList<Raum> raumGet() {
         Log.d("edu", "raumGet in RestConnection");
         String antwortJSon = restRequest(RAUM, HTTP_GET, "");
+
         return builder.getRaumListFromJson(antwortJSon);
     }
 
@@ -701,15 +692,19 @@ public class RestConnection {
      */
     public Raum raumGet(int id) {
         Log.d("edu", "soweit so gut");
+
         String antwortJSon = restRequest(RAUM, HTTP_GET, "", id);
+
         Log.d("edu", "soweit so gut???" + antwortJSon);
         return new Raum(antwortJSon,true);
 
 
     }
-    public Raum raumPut(Tag tag){
-        String jSon = builder.buildPUTraumJson(tag);
+    public Raum raumPut(int tagID){
+        String jSon = builder.buildPUTraumJson(tagID);
+
         String antwortJSon = restRequest(RAUM, HTTP_PUT, jSon);
+
 
         return new Raum(antwortJSon,false);
 
@@ -717,7 +712,9 @@ public class RestConnection {
     }
 
     public ArrayList<Veranstaltung> lecturesGet() {
+
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "");
+
         return builder.getVeranstaltungFromJson(antwortJSon);
 
     }
@@ -725,7 +722,9 @@ public class RestConnection {
 
 
     public Veranstaltung lectureGet(int id){
+
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "", id);
+
 
         //return new Veranstaltung(antwortJSon);
         return null;
@@ -734,26 +733,33 @@ public class RestConnection {
 
     public void lecturePost(String name, long von, long bis, Raum raum){
         String jSon = builder.buildPOSTveranstaltungJson(name, von, bis, raum);
+
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
+
 
 
     }
 
     public void lecturePut(int id, String name, long von, long bis, Raum raum){
         String jSon = builder.buildPUTveranstaltungJson(name, von, bis, raum);
+
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
+
 
 
     }
 
     public void lectureDelete(int id){
+
         String antwortJSon = restRequest(VERANSTALTUNG, HTTP_DELETE,"", id);
+
 
 
     }
 
     public Benutzer benutzerPut (String PW, int isAnonym, int isPush){
         String jSON = builder.buildPUTbenutzerJson(PW, isAnonym, isPush);
+
         String antwortJSon = restRequest(BENUTZER, HTTP_PUT, jSON);
 
         return new Benutzer(antwortJSon);
@@ -762,16 +768,20 @@ public class RestConnection {
 
     public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
         String jSon = builder.buildPOSTbenutzerJson(idn, email, name, vorname, fotoURL);
-        Log.d("edu", "benutzerPost!!!");
+
         String antwortJSon = restPOSTBenutzer(jSon);
+
 
         token = builder.getFromJson(antwortJSon, "token");
         id = builder.getFromJson(antwortJSon, "id");
         AktuellerBenutzer.setAktuellerBenutzer(new Benutzer(antwortJSon));
         Log.d("myTag" ,token + " " + id);
-        Log.d("edu", "benutzerPost token:" + token);
 
     }
+
+    public Karte karteGet (int start, int ziel){
+               return null;
+            }
 
     private void showProgressDialog() {
         if(mProgressDialog == null) {

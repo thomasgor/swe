@@ -57,8 +57,8 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
 
-        VerbindungDUMMY verb = new VerbindungDUMMY();
-        //RestConnection verb = new RestConnection(this);
+       // VerbindungDUMMY verb = new VerbindungDUMMY();
+        RestConnection verb = new RestConnection(this);
 
         final ArrayList<Raum> raumliste = verb.raumGet();
 
@@ -80,8 +80,8 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
 
         Button saveLecture = (Button) findViewById(R.id.saveLectureButton);
 
-        final VerbindungDUMMY v = new VerbindungDUMMY();
-        //final RestConnection v = new RestConnection(this);
+        //final VerbindungDUMMY v = new VerbindungDUMMY();
+        final RestConnection v = new RestConnection(this);
 
         saveLecture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,8 +193,8 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
     private void setDateTimeField() {
         final int id = getIntent().getIntExtra("ID", 0);
 
-        final VerbindungDUMMY verbindung = new VerbindungDUMMY();
-        //final RestConnection verbindung = new RestConnection(this);
+        //final VerbindungDUMMY verbindung = new VerbindungDUMMY();
+        final RestConnection verbindung = new RestConnection(this);
 
         final Veranstaltung veranstaltung = verbindung.lectureGet(id);
         long longFrom = veranstaltung.getVon();

@@ -60,7 +60,7 @@ public class QRScanActivity extends AppCompatActivity {
             }
             else {
                 if ( isInteger(result.getContents())) {
-                    VerbindungDUMMY verbindung = new VerbindungDUMMY();
+                    RestConnection verbindung = new RestConnection(this);
                     Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
 
                     if(meinRaum == null) {
@@ -102,7 +102,7 @@ public class QRScanActivity extends AppCompatActivity {
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                VerbindungDUMMY connect = new VerbindungDUMMY();
+                RestConnection connect = new RestConnection(QRScanActivity.this);
                 Sitzung data = connect.sitzungGet();
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));

@@ -58,7 +58,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
         findViewsById();
-        final VerbindungDUMMY verb = new VerbindungDUMMY();
+        final RestConnection verb = new RestConnection(this);
         //final RestConnection verb = new RestConnection(this);
 
         final ArrayList<Raum> raumliste = verb.raumGet();

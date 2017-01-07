@@ -121,14 +121,14 @@ public class JsonStringBuilder {
      * Antworten:   Status 200 OK: Tag wurde gesetzt
      *              Status 403 FORBIDDEN: Wenn schon ein Tag gesetzt wurde, bevor der Client den
      *                                    Tag gesetzt hat. Antwort enthält trotzdem Raumobjekt.
-     * @param tag
+     * @param
      * @return
      */
-    public String buildPUTraumJson(Tag tag)
+    public String buildPUTraumJson(int tagID)
     {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("tag", tag.getId());
+            jsonObj.put("tag", tagID);
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -227,9 +227,7 @@ public class JsonStringBuilder {
         ArrayList<Freundschaft> list = new ArrayList<Freundschaft>();
         Log.d("mylog24342","in freundschaftvonjson");
         try {
-            JSONObject jsonObj = new JSONObject(jsonString);
-            JSONArray jsonArray = new JSONArray();
-            jsonObj.toJSONArray(jsonArray);
+            JSONArray jsonArray = new JSONArray(jsonString);
             Log.d("mylog24342","" + jsonArray);
             if (jsonArray != null) {
                 int len = jsonArray.length();
@@ -248,9 +246,8 @@ public class JsonStringBuilder {
     public ArrayList getTagFromJson(String jsonString) {
         ArrayList<Tag> list = new ArrayList<Tag>();
         try {
-            JSONObject jsonObj = new JSONObject(jsonString);
-            JSONArray jsonArray = new JSONArray();
-            jsonObj.toJSONArray(jsonArray);
+
+            JSONArray jsonArray = new JSONArray(jsonString);
             if (jsonArray != null) {
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {
@@ -329,9 +326,7 @@ public class JsonStringBuilder {
     public ArrayList getVeranstaltungFromJson(String jsonString) {
         ArrayList<Veranstaltung> list = new ArrayList<Veranstaltung>();
         try {
-            JSONObject jsonObj = new JSONObject(jsonString);
-            JSONArray jsonArray = new JSONArray();
-            jsonObj.toJSONArray(jsonArray);
+            JSONArray jsonArray = new JSONArray(jsonString);
             if (jsonArray != null) {
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {
@@ -350,9 +345,7 @@ public class JsonStringBuilder {
     public ArrayList getBenutzerFromJson(String jsonString) {
         ArrayList<Benutzer> list = new ArrayList<Benutzer>();
         try {
-            JSONObject jsonObj = new JSONObject(jsonString);
-            JSONArray jsonArray = new JSONArray();
-            jsonObj.toJSONArray(jsonArray);
+            JSONArray jsonArray = new JSONArray(jsonString);
             if (jsonArray != null) {
                 int len = jsonArray.length();
                 for (int i = 0; i < len; i++) {

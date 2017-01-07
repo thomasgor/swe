@@ -277,7 +277,7 @@ public class RoomActivity extends BaseActivity
      * @return gefilterte Liste
      */
     private ArrayList<Raum> getRoomsWithFriends(ArrayList<Raum> fullRoomList) {
-        friendListUser = new VerbindungDUMMY().freundschaftGet();
+        friendListUser = new RestConnection(this).freundschaftGet();
         ArrayList<Raum> friendListRoom = new ArrayList<>();
         boolean found = false;
 
