@@ -102,11 +102,13 @@ public class Sitzung extends Datenbank {
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
             }
+
             boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
             if(outOfTime) {
                 sitz.delete();
                 return Antwort.NO_ACTIVE_SESSION;
             }
+
             antwort = sitz.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
