@@ -119,8 +119,6 @@ public class Raum extends Datenbank {
         }
         connect();
 
-
-
         raum.set("tag", tagID);
         try{
             raum.saveIt();
@@ -200,19 +198,17 @@ public class Raum extends Datenbank {
         if(raumMap.get("tag") != null) {
             String tagID = raumMap.get("tag").toString();
             //LADE TAG nach
-            String jsonTag = Tag.getTagById(tagID);
-            if (jsonTag != null) {
-                Map tagMap = JsonHelper.toMap(jsonTag);
-                String res = raumMap.put("tag", tagMap).toString(); //jsonTag
-
-                //kein Fehler
-                if (res == null) {
-                    //tag wurde nachgeladen
-                    System.out.print(raumMap.toString());
+            if(!tagID.equals("")){
+                String jsonTag = Tag.getTagById(tagID);
+                if (jsonTag != null) {
+                    Map tagMap = JsonHelper.toMap(jsonTag);
+                    String res = raumMap.put("tag", tagMap).toString(); //jsonTag
                 }
+            }else{
+                raumMap.put("tag", null);
             }
-            //TAG ist nachgeladen
         }
+
         return raumMap;
     }
 

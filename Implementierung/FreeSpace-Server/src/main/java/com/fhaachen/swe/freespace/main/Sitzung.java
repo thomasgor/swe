@@ -105,7 +105,8 @@ public class Sitzung extends Datenbank {
 
             boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
             if(outOfTime) {
-                sitz.delete();
+                //sitz.delete();
+                deleteSitzung(sitz.get("benutzer").toString());
                 return Antwort.NO_ACTIVE_SESSION;
             }
 

@@ -42,7 +42,7 @@ public class Freundschaft extends Datenbank{
      * @return Liste aller Freundesschaften eines Benutzers als String-Objekt im Json-Format mit eingefügten Benutzer-Objekten
      */
 
-    private static String includeBenutzerMaps(String json) {
+    private static String includeBenutzerMaps(String json, String benutzerID) {
         Map[] map = JsonHelper.toMaps(json);
         String antwort = "[]";
         if(map != null) {
@@ -64,6 +64,7 @@ public class Freundschaft extends Datenbank{
                         Map benutzer = JsonHelper.toMap(jsonBenutzer);
                         element.put("benutzer", benutzer);
                     }
+
                     if (fre != null) {
 
                         Sitzung sitz = Sitzung.findFirst("benutzer = ?", fre.getId());
@@ -111,6 +112,7 @@ public class Freundschaft extends Datenbank{
                 System.out.println(map.toString());
                 Benutzer ben = Benutzer.findById(map.get("benutzer"));
                 Benutzer fre = Benutzer.findById(map.get("freund"));
+
                 if (ben != null) {
                     if(ben.get("istAnonym") == null){
                         ben.set("istAnonym", 0);
@@ -120,6 +122,7 @@ public class Freundschaft extends Datenbank{
                     Map benutzer = JsonHelper.toMap(jsonBenutzer);
                     map.put("benutzer", benutzer);
                 }
+
                 if (fre != null) {
                     if(fre.get("istAnonym") == null){
                         fre.set("istAnonym", 0);
@@ -167,7 +170,7 @@ public class Freundschaft extends Datenbank{
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzerMaps(antwort);
+        antwort = includeBenutzerMaps(antwort, benutzerID);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
     }
 
