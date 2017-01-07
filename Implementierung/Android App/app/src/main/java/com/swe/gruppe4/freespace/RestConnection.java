@@ -72,11 +72,8 @@ public class RestConnection {
 
     // Hostname und Port des Servers
     // TODO Hostname anpassen
-<<<<<<< HEAD
     private final String hostname = "192.168.178.36";
-=======
-    private final String hostname = "192.168.178.29:8888";
->>>>>>> origin/AndroidDevelopment
+
     private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
@@ -248,11 +245,10 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-<<<<<<< HEAD
+
                     java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource + "/" + idn);
-=======
-                    java.net.URL url = new java.net.URL("http://"+hostname + ":" + port +"/" + restRessource + "/" + idn);
->>>>>>> origin/AndroidDevelopment
+
+
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     String userPass = id + ":" + token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -789,13 +785,10 @@ public class RestConnection {
     }
 
     public Karte karteGet (int start, int ziel){
-<<<<<<< HEAD
-               return null;
-            }
-=======
+
         return null;
     }
->>>>>>> origin/AndroidDevelopment
+
 
     private void showProgressDialog() {
         if(mProgressDialog == null) {
