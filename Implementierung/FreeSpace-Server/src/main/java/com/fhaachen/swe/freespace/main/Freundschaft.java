@@ -56,7 +56,9 @@ public class Freundschaft extends Datenbank{
                     element.put("raum", null);
 
                     if (ben != null) {
-                        ben.set("istAnonym", null);
+                        if(ben.get("istAnonym") == null){
+                            ben.set("istAnonym", 0);
+                        }
                         ben.set("token", null);
                         String jsonBenutzer = ben.toJson(true);
                         Map benutzer = JsonHelper.toMap(jsonBenutzer);
@@ -70,7 +72,9 @@ public class Freundschaft extends Datenbank{
                             Map raumMap = JsonHelper.toMap(raum);
                             element.put("raum", raumMap);
                         }
-                        fre.set("istAnonym", null);
+                        if(fre.get("istAnonym") == null){
+                            fre.set("istAnonym", 0);
+                        }
                         fre.set("token", null);
                         String jsonFreund = fre.toJson(true);
                         Map freund = JsonHelper.toMap(jsonFreund);
@@ -108,14 +112,18 @@ public class Freundschaft extends Datenbank{
                 Benutzer ben = Benutzer.findById(map.get("benutzer"));
                 Benutzer fre = Benutzer.findById(map.get("freund"));
                 if (ben != null) {
-                    ben.set("istAnonym", null);
+                    if(ben.get("istAnonym") == null){
+                        ben.set("istAnonym", 0);
+                    }
                     ben.set("token", null);
                     String jsonBenutzer = ben.toJson(true);
                     Map benutzer = JsonHelper.toMap(jsonBenutzer);
                     map.put("benutzer", benutzer);
                 }
                 if (fre != null) {
-                    fre.set("istAnonym", null);
+                    if(fre.get("istAnonym") == null){
+                        fre.set("istAnonym", 0);
+                    }
                     fre.set("token", null);
                     String jsonFreund = fre.toJson(true);
                     Map freund = JsonHelper.toMap(jsonFreund);
