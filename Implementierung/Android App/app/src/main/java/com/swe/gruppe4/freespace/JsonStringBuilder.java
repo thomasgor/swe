@@ -51,6 +51,7 @@ public class JsonStringBuilder {
             jsonObj.put("name", name);
             jsonObj.put("vorname", vorname);
             jsonObj.put("foto", fotoURL);
+            //jsonObj.put("tokenFCM", "123abc"); //TODO Firebase Token
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -265,25 +266,64 @@ public class JsonStringBuilder {
 
     }
 
-    public ArrayList getRaumFromJson(String jsonString) {
-        ArrayList<Raum> list = new ArrayList<Raum>();
+    /*
+    public Raum getRaumFromJson(String jsonString) {
         try {
             JSONObject jsonObj = new JSONObject(jsonString);
-            JSONArray jsonArray = new JSONArray();
-            jsonObj.toJSONArray(jsonArray);
-            if (jsonArray != null) {
-                int len = jsonArray.length();
+
+            return new Raum()
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d("edu", "EXCEPTION in getRaum!");
+        }
+
+        return null;
+    }
+    */
+
+    //jsonString muss ein JsonArray als String sein, kein JsonObjekt! / Raum OHNE Benutzer!
+    public ArrayList getRaumListFromJson(String jsonString) {
+        ArrayList<Raum> list = new ArrayList<Raum>();
+        //Log.d("edu", "in getRaumFromJson" + jsonString);
+        try {
+            //JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArr = new JSONArray(jsonString);
+            //JSONArray jsonArray = new JSONArray();
+
+            //jsonObj.toJSONArray(jsonArray);
+            if (jsonArr != null) {
+                int len = jsonArr.length();
+                //Benutzer[] benList = new Benutzer[0];
                 for (int i = 0; i < len; i++) {
-                    list.add(new Raum(jsonArray.get(i).toString(),false));
+                    //list.add(new Raum(jsonArray.get(i).toString(),false));
+                    JSONObject raumObj = jsonArr.getJSONObject(i);
+
+                    Tag tag;
+
+                    if(raumObj.isNull("tag")) {
+                        tag = null;
+                        //Log.d("edu", "RaumTEST: Tag ist NULL! bei : " + i);
+                    } else {
+                        JSONObject tagObj = raumObj.getJSONObject("tag");
+                        tag = new Tag(tagObj.getInt("id"), tagObj.getString("name"));
+                    }
+
+                    list.add(new Raum(  raumObj.getInt("id"),
+                                        raumObj.getString("raumnummer"),
+                                        raumObj.getInt("teilnehmer_max"),
+                                        raumObj.getInt("teilnehmer_anz"),
+                                        raumObj.getString("foto"),
+                                        tag,
+                                        null, //Keine Benutzer????
+                                        raumObj.getString("status")));
                 }
             }
         }
         catch (JSONException e) {
             e.printStackTrace();
+            //Log.d("edu", "EXCEPTION in getRaumListe!");
         }
         return list;
-
-
     }
 
     public ArrayList getVeranstaltungFromJson(String jsonString) {

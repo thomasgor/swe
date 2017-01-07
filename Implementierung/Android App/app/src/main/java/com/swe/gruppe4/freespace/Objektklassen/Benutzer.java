@@ -1,5 +1,7 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -53,12 +55,13 @@ public class Benutzer implements Serializable {
             this.vorname = jsonObj.getString("vorname");
             this.fotoURL = jsonObj.getString("foto");
             this.token = jsonObj.getString("token");
-            this.isProfessor = jsonObj.getInt("istProfessor");
-            this.istAnonym = jsonObj.getInt("istAnonym");
-            this.istPush = jsonObj.getInt("istPush");
+            this.isProfessor = jsonObj.getInt("istprofessor");
+            //this.istAnonym = jsonObj.getInt("istanonym"); //TODO <<- Server gibt noch null anstatt 0 aus
+            this.istAnonym = 0;                             //TODO <<- Löschen nach fix
+            this.istPush = jsonObj.getInt("istpush");
 
         } catch (JSONException e) {
-            //jsonBenutzer enthält keinen Benutzer!
+            Log.d("edu", "Benutzer EXCEPTION!!!");
             e.printStackTrace();
         }
     }

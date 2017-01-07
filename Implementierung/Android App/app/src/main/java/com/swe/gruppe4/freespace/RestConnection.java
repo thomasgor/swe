@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -67,6 +68,10 @@ public class RestConnection {
     public static String token;
     private ProgressDialog mProgressDialog;
 
+    // Hostname und Port des Servers
+    // TODO Hostname anpassen
+    private final String hostname = "137.226.239.248";
+    private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
         add(new Tag(4711,"Präsentation"));
@@ -152,7 +157,9 @@ public class RestConnection {
         }
         return res;
     }
+
     private String restRequest(final String restRessource, final String httpMethod, final String input){
+        Log.d("edu", "restRequest methode!");
         String res = "";
         class RestCon extends AsyncTask<String,Integer,String> {
             String resp;
@@ -161,7 +168,8 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://192.168.178.31:8888/" + restRessource + "/");
+                    URL url = new URL("http://" + hostname + ":" + port + "/" + restRessource + "/");
+                    //String url2 = "http://" + hostname + ":" + port + "/" + restRessource + "/";
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     String userPass = id+":"+token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -170,14 +178,21 @@ public class RestConnection {
                     conn.setChunkedStreamingMode(0);
                     conn.setRequestProperty("Content-Type","application/json");
                     publishProgress(0);
-                    OutputStream os = conn.getOutputStream();
+                    Log.d("edu", "restRequest methode! T1");
+                    //InputStream resp = new URL(url2).openStream();
+                    // TODO unterscheiden zwischen get und post
+                    //OutputStream os = conn.getOutputStream();
+                    conn.connect();
+                    Log.d("edu", "restRequest methode! T2");
                     publishProgress(0);
+                    /*
                     if(!Objects.equals(input, "")){
                         byte[] inputJsonBytes = input.getBytes("UTF-8");
                         os.write(inputJsonBytes);
                     }
                     os.flush();
                     os.close();
+                    */
 
                     int responseCode = conn.getResponseCode();
                     Log.d("myTag3",""+ responseCode);
@@ -186,14 +201,19 @@ public class RestConnection {
                         InputStream in = new BufferedInputStream(conn.getInputStream());
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
                         in.close();
+                        Log.d("edu", "restRequest methode! Toll: " + response);
                     } else {
                         //showErrorMessage(responseCode);
+                        Log.d("edu", "restRequest methode! Error Code");
+
                     }
+                    Log.d("edu", "restRequest methode! Response Code: " + responseCode);
                     conn.disconnect();
 
 
                 } catch (IOException e) {
                     Log.d("myTag20","fail");
+                    Log.d("edu", "exception!");
                     e.printStackTrace();
                 }
                 Log.d("myTag2",response);
@@ -208,7 +228,6 @@ public class RestConnection {
             protected void onPostExecute(String result) {
                 hideProgressDialog();
                 resp = result;
-
 
             }
 
@@ -303,7 +322,7 @@ public class RestConnection {
                 String response = "false";
                 publishProgress(0);
                 try {
-                    java.net.URL url = new java.net.URL("http://192.168.178.31:8888/" + restRessource +"/" + idn + "/");
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":"+ port + "/" + restRessource +"/" + idn + "/");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     String userPass = id+":"+token;
                     String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -312,15 +331,17 @@ public class RestConnection {
                     conn.setChunkedStreamingMode(0);
                     Log.d("myTag3","now aftersetRequestMethod");
                     conn.setRequestProperty("Content-Type","application/json");
-                    OutputStream os = conn.getOutputStream();
+                    //OutputStream os = conn.getOutputStream();
+                    conn.connect();
                     Log.d("myTag5","now before if");
+                    /*
                     if(!Objects.equals(params[0], "")){
                         byte[] inputJsonBytes = params[0].getBytes("UTF-8");
                         os.write(inputJsonBytes);
                     }
                     os.flush();
                     os.close();
-
+                    */
                     int responseCode = conn.getResponseCode();
                     SparseIntArray acceptableCodes = acceptableCodesID(restRessource,httpMethod);
                     if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
@@ -368,7 +389,6 @@ public class RestConnection {
     private String restPOSTBenutzer(final String input) {
         String res = "";
 
-
         class RestCon extends AsyncTask<String,Integer,String> {
              String resp;
 
@@ -377,7 +397,7 @@ public class RestConnection {
                 publishProgress(0);
 
                 try {
-                    java.net.URL url = new java.net.URL("http://192.168.178.31:8888/" + BENUTZER +"/");
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + BENUTZER +"/");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     //String userPass = ""+":"+"";
                     //byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
@@ -669,8 +689,9 @@ public class RestConnection {
      */
 
     public ArrayList<Raum> raumGet() {
+        Log.d("edu", "raumGet in RestConnection");
         String antwortJSon = restRequest(RAUM, HTTP_GET, "");
-        return builder.getRaumFromJson(antwortJSon);
+        return builder.getRaumListFromJson(antwortJSon);
     }
 
 
@@ -679,7 +700,9 @@ public class RestConnection {
      * Die folgenden Methoden werden für die REST-Ressourcen Raum(id) benutzt
      */
     public Raum raumGet(int id) {
+        Log.d("edu", "soweit so gut");
         String antwortJSon = restRequest(RAUM, HTTP_GET, "", id);
+        Log.d("edu", "soweit so gut???" + antwortJSon);
         return new Raum(antwortJSon,true);
 
 
@@ -739,16 +762,14 @@ public class RestConnection {
 
     public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
         String jSon = builder.buildPOSTbenutzerJson(idn, email, name, vorname, fotoURL);
-
+        Log.d("edu", "benutzerPost!!!");
         String antwortJSon = restPOSTBenutzer(jSon);
 
         token = builder.getFromJson(antwortJSon, "token");
         id = builder.getFromJson(antwortJSon, "id");
         AktuellerBenutzer.setAktuellerBenutzer(new Benutzer(antwortJSon));
         Log.d("myTag" ,token + " " + id);
-
-
-
+        Log.d("edu", "benutzerPost token:" + token);
 
     }
 

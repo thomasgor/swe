@@ -34,7 +34,8 @@ public class MainActivity extends BaseActivity
 
         Log.d("FirebaseToken", FirebaseInstanceId.getInstance().getToken());
 
-        final VerbindungDUMMY connection = new VerbindungDUMMY();
+        //final VerbindungDUMMY connection = new VerbindungDUMMY();
+        RestConnection connection = new RestConnection(this);
 
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
@@ -87,7 +88,9 @@ public class MainActivity extends BaseActivity
         roomAdapter.add(new Raum(104,"G104",22,0,"",new Tag(0,""),new Benutzer[0]));
         roomAdapter.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer)); */
 
+        Log.d("edu", "in MainActivity");
         ArrayList<Raum> räume = connection.raumGet();
+
         for (Raum r:räume) {
             if(r.getTeilnehmer_aktuell() < r.getTeilnehmer_max())
                 roomAdapter.add(r);

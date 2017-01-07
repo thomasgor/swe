@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -39,11 +40,15 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final int id = getIntent().getIntExtra("id",4711);
-        raum = new VerbindungDUMMY().raumGet(id);
+        //raum = new VerbindungDUMMY().raumGet(id);
+        raum = new RestConnection(this).raumGet(id);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         imgRoom = (ImageView) findViewById(R.id.img_room_photo);
 

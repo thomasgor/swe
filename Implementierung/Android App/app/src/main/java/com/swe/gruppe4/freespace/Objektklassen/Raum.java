@@ -1,5 +1,7 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -49,16 +51,22 @@ public class Raum implements Serializable{
     }
     public Raum(String jsonRaum, boolean hasUserList) {
         try {
+            Log.d("edu", "Raum! T1");
             JSONObject jsonObj = new JSONObject(jsonRaum);
-
+            Log.d("edu", "Raum! T2");
             this.id = jsonObj.getInt("id");
-            this.raumname = jsonObj.getString("raumname");
+            this.raumname = jsonObj.getString("raumnummer");
             this.teilnehmer_max = jsonObj.getInt("teilnehmer_max");
-            this.teilnehmer_aktuell = jsonObj.getInt("teilnehmer_aktuell");
+            this.teilnehmer_aktuell = jsonObj.getInt("teilnehmer_anz");
             this.status = jsonObj.getString("status");
             this.fotoURL = jsonObj.getString("foto");
-            this.tag = new Tag(jsonObj.getString("tag"));
-
+            Log.d("edu", "Raum! T3");
+            if(jsonObj.isNull("tag")) {
+                this.tag = null;
+            } else {
+                this.tag = new Tag(jsonObj.getString("tag"));
+            }
+            Log.d("edu", "Raum! T4");
             if(hasUserList) {
                 JSONArray jsonArr = jsonObj.getJSONArray("benutzer");
                 ArrayList<Benutzer> benutzerListe = new ArrayList<Benutzer>();
@@ -73,7 +81,8 @@ public class Raum implements Serializable{
             }
 
         } catch (JSONException e) {
-            //jsonBenutzer enthält keinen Benutzer!
+            //jsonRaum enthält keinen Raum!
+            Log.d("edu", "Raum! Enthält kein raum??");
             e.printStackTrace();
         }
     }
