@@ -204,7 +204,7 @@ public class Sitzung extends Datenbank {
      * @return Liste aller Räume als String im Json-Format
      */
 
-    public static String getNoActiceSession() {
+    public static String getNoActiveSession() {
         Map homescreen = JsonHelper.toMap("{\"räume\": null}");
         try{
             String raumliste = Raum.getRaum();

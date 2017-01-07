@@ -39,7 +39,7 @@ public class Antwort {
     public static final Response NOT_IMPLEMENTED = Response.status(Response.Status.NOT_IMPLEMENTED).build();
 
     //900
-    public static final Response NO_ACTIVE_SESSION = Response.status(900).entity(Sitzung.getNoActiceSession()).build();
+    public static final Response NO_ACTIVE_SESSION = Response.status(900).entity(Sitzung.getNoActiveSession()).build();
 
     //901
     public static final Response ROOM_BLOCKED = Response.status(901).build();
