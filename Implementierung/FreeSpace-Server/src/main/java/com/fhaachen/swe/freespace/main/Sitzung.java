@@ -181,8 +181,8 @@ public class Sitzung extends Datenbank {
             s.set("endzeit", endzeit);
             s.set("raum", raum);
             s.set("hasTag", 0);
+            connect();
             boolean erfolg = s.insert();
-
             disconnect();
             System.out.println("Neue sitzung wurde erstellt");
             antwort = s.toJson(true);
@@ -240,7 +240,10 @@ public class Sitzung extends Datenbank {
 
             long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (Integer.parseInt(Konfiguration.getSitzungsintervall()) * 60);
 
-            sitz.set("endzeit", endzeit).saveIt();
+            sitz.set("endzeit", endzeit);
+            sitz.set("notifySent", 0);
+            sitz.saveIt();
+
             antwort = sitz.toJson(true);
             antwort = includeRaumInSitzung(antwort);
         } catch(Exception e) {

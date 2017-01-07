@@ -92,6 +92,10 @@ public class RaumREST {
         String answer = null;
 
 
+        //Prüfe ob ein tag angegeben ist
+        if(!json.contains("\"tag\":")){
+            return Antwort.INTERNAL_SERVER_ERROR;
+        }
 
 
         boolean raumHasTagHolder = Sitzung.raumHasTag(id);
@@ -109,6 +113,10 @@ public class RaumREST {
                     String s = Raum.getRaumdetails(id);
                     return Response.status(Response.Status.FORBIDDEN).entity(s).build();
                 }
+
+
+                if(tag.equals("null"))
+                    tag = null;
                 //Ich bin der Tagholder
                 answer = Raum.putRaumID(id, tag, username);
 
