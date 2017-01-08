@@ -67,14 +67,17 @@ public class Freundschaft extends Datenbank{
         String result = "";
         connect();
         Freundschaft freundschaft = Freundschaft.findByCompositeKeys(benutzer1, benutzer2);
+        if(freundschaft == null){
+            freundschaft = Freundschaft.findByCompositeKeys(benutzer2, benutzer1);
+        }
         disconnect();
 
         //Wurde eine Freundschaft gefunden
         if(freundschaft != null){
             result = freundschaft.toJson(true);
-        }
+            result = completeFreundschaft(result, benutzer1);
 
-        result = completeFreundschaft(result, benutzer1);
+        }
         return result;
     }
 
