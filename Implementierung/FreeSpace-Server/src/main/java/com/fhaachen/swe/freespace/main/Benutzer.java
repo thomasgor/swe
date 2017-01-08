@@ -85,7 +85,7 @@ public class Benutzer extends Datenbank{
             try{
                 connect();
                 b.saveIt();
-                result = b.toJson(true);
+                result = b.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -121,11 +121,17 @@ public class Benutzer extends Datenbank{
             neu.set("name", input.get("name"));
             neu.set("vorname", input.get("vorname"));
             neu.set("foto", input.get("foto"));
-            neu.set("tokenFCM", input.get("tokenFCM"));
+
+            if(input.containsKey("tokenfcm")) {
+                String input_token_fcm = input.get("tokenfcm").toString();
+                if (input_token_fcm != null) {
+                    neu.set("tokenFCM", input_token_fcm);
+                }
+            }
 
             try {
                 neu.insert();
-                result = neu.toJson(true);
+                result = neu.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
                 System.out.println("postBenutzer: Neuer Benutzer angelegt "+ result);
             }catch(Exception e){
                 System.out.println(e);
