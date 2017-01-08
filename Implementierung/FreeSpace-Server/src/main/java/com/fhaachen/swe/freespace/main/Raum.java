@@ -170,7 +170,7 @@ public class Raum extends Datenbank {
         int unixTime_Int = Integer.parseInt(String.valueOf(unixTime));
 
         try{
-            aktiveVeranstaltung =Veranstaltung.istRaumFrei(unixTime_Int,unixTime_Int,raumID);
+            aktiveVeranstaltung =!Veranstaltung.istRaumFrei(unixTime_Int,unixTime_Int,raumID);
         }catch(Exception e) {
             e.printStackTrace();
         }
