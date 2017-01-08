@@ -47,6 +47,19 @@ public class Settings2Activity extends BaseActivity
         anonymChkB.setChecked(ben.isAnonymous());
         pushChkB.setChecked(ben.isPush());
 
+        final int anonFlag, pushFlag;
+        if(ben.isAnonymous()){
+            anonFlag = 1;
+        }else{
+            anonFlag = 0;
+        }
+
+        if(ben.isPush()){
+            pushFlag = 1;
+        }else{
+            pushFlag = 0;
+        }
+
         final RestConnection verb = new RestConnection(this);
         //final RestConnection verb = new RestConnection(this);
 
@@ -56,11 +69,11 @@ public class Settings2Activity extends BaseActivity
             public void onClick(View v) {
 
                 if(anonymChkB.isChecked()){
-                    Benutzer ben = verb.benutzerPut("",1,2);
+                    Benutzer ben = verb.benutzerPut("",1,pushFlag);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
 
                 }else{
-                    Benutzer ben = verb.benutzerPut("",0,2);
+                    Benutzer ben = verb.benutzerPut("",0,pushFlag);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
                 }
             }
@@ -71,11 +84,11 @@ public class Settings2Activity extends BaseActivity
             public void onClick(View v) {
 
                 if(pushChkB.isChecked()){
-                    Benutzer ben = verb.benutzerPut("",2,1);
+                    Benutzer ben = verb.benutzerPut("",anonFlag,1);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
 
                 }else{
-                    Benutzer ben = verb.benutzerPut("",2,0);
+                    Benutzer ben = verb.benutzerPut("",anonFlag,0);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
                 }
             }
@@ -86,7 +99,7 @@ public class Settings2Activity extends BaseActivity
             public void onClick(View view) {
 
 
-                Benutzer ben = verb.benutzerPut(passwordEtxt.getText().toString(),2,2);
+                Benutzer ben = verb.benutzerPut(passwordEtxt.getText().toString(),anonFlag,pushFlag);
                 if(ben.istProfessor() == false) {
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
                 }else{
