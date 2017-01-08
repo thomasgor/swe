@@ -73,7 +73,7 @@ public class RestConnection {
     // Hostname und Port des Servers
     // TODO Hostname anpassen
     //private final String hostname = "192.168.178.36";
-    private final String hostname = "137.226.239.248";
+    private final String hostname = "192.168.178.20";
     private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{

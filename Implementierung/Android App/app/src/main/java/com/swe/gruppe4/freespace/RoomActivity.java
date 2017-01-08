@@ -110,8 +110,8 @@ public class RoomActivity extends BaseActivity
         roomView.setAdapter(roomAdapter);
         roomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
-        //RestConnection connection = new RestConnection(this);
-        VerbindungDUMMY connection = new VerbindungDUMMY();
+        RestConnection connection = new RestConnection(this);
+        //VerbindungDUMMY connection = new VerbindungDUMMY();
         roomListFromConnection = connection.raumGet();
         roomsWithFriendsList = getRoomsWithFriends(roomListFromConnection);
         emptyRoomsList = getEmptyRooms(roomListFromConnection);
@@ -310,7 +310,7 @@ public class RoomActivity extends BaseActivity
         }
         for(Raum room : raumList) {
             for (String filterTagString : filterTags) {
-                if (room.getTag().getName().equals(filterTagString)) {
+                if(room.getTag()!=null && room.getTag().getName().equals(filterTagString)) {
                     tmpList.add(room);
                     break;
                 }
