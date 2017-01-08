@@ -57,7 +57,7 @@ public class Freundschaft extends Datenbank{
                 Map freundschaftMap = JsonHelper.toMap(freundschaftJson);
 
                 //Wenn die Freundschaft eine aktive Sitzung hat, dann speichern
-                if(freundschaftMap.get("raum") != null){
+                if(freundschaftMap.get("raum") != null || freundschaftMap.get("status").toString().equals("0")){
                     output.add(JsonHelper.toMap(freundschaftJson));
                 }
 
