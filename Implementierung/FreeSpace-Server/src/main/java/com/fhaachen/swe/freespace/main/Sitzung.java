@@ -242,7 +242,7 @@ public class Sitzung extends Datenbank {
             }
 
             long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (Integer.parseInt(Konfiguration.getSitzungsintervall()) * 60);
-
+            connect();
             sitz.set("endzeit", endzeit);
             sitz.set("notifySent", 0);
             sitz.saveIt();
