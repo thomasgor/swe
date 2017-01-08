@@ -98,7 +98,7 @@ public class Sitzung extends Datenbank {
         connect();
         String antwort = null;
         try {
-            Sitzung sitz = Sitzung.findFirst("benutzer = ?", Integer.parseInt(id));
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", id);
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
             }

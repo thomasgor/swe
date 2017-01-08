@@ -111,7 +111,7 @@ public class Veranstaltung extends Datenbank {
 
         if(Veranstaltung.istRaumFrei(von,bis,raum)){
             connect();
-            v.set("benutzer", Integer.parseInt(professorID));
+            v.set("benutzer",professorID);
             v.set("raum", input.get("raum"));
             v.set("name", input.get("name"));
             v.set("bis", input.get("bis"));
