@@ -43,8 +43,13 @@ public class Freundschaft extends Datenbank{
             for( Freundschaft f : freundschaften){
                 //Herausfinden wer der Fragende Benutzer ist:
                 String benutzer2 = f.get("freund").toString();
+
                 if(benutzer1.equals(benutzer2)){
                     benutzer2 = f.get("benutzer").toString();
+                }else{
+                    if(f.get("status").toString().equals("0")){
+                        continue;
+                    }
                 }
 
                 //Hole die Freundschaft!!
@@ -52,7 +57,7 @@ public class Freundschaft extends Datenbank{
                 Map freundschaftMap = JsonHelper.toMap(freundschaftJson);
 
                 //Wenn die Freundschaft eine aktive Sitzung hat, dann speichern
-                if(freundschaftMap.get("raum") != null || (freundschaftMap.get("status").toString().equals("0") && freundschaftMap.get("benutzer") != benutzer1)){
+                if(freundschaftMap.get("raum") != null){
                     output.add(JsonHelper.toMap(freundschaftJson));
                 }
 
