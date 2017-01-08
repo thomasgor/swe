@@ -8,6 +8,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -33,6 +34,85 @@ public class Freundschaft extends Datenbank{
         validatePresenceOf("Benutzer", "Freund").message("ein oder mehrere Primärschlüssel fehlen!!!");
     }
 
+    public static  String getFreundschaften2(String benutzer1){
+        String result = "[]";
+        connect();
+        LazyList<Freundschaft> freundschaften = Freundschaft.where("benutzer=? OR freund=?", benutzer1, benutzer1);
+        if(freundschaften != null){
+            ArrayList<Map> output = new ArrayList<Map>();
+            for( Freundschaft f : freundschaften){
+                //Herausfinden wer der Fragende Benutzer ist:
+                String benutzer2 = f.get("freund").toString();
+                if(benutzer1.equals(benutzer2)){
+                    benutzer2 = f.get("benutzer").toString();
+                }
+
+                //Hole die Freundschaft!!
+                String freundschaftJson = getFreundschaft(benutzer1, benutzer2);
+                Map freundschaftMap = JsonHelper.toMap(freundschaftJson);
+
+                //Wenn die Freundschaft eine aktive Sitzung hat, dann speichern
+                if(freundschaftMap.get("raum") != null){
+                    output.add(JsonHelper.toMap(freundschaftJson));
+                }
+
+            }
+            result = JsonHelper.getJsonStringFromMap(output);
+        }
+        return result;
+    }
+    // Benutzer1 ist IMMER DER FRAGENDE BENUTEZR !!!!
+    public static  String getFreundschaft(String benutzer1, String benutzer2){
+        //Freundschaft suchen
+        String result = "";
+        connect();
+        Freundschaft freundschaft = Freundschaft.findByCompositeKeys(benutzer1, benutzer2);
+        disconnect();
+
+        //Wurde eine Freundschaft gefunden
+        if(freundschaft != null){
+            result = freundschaft.toJson(true);
+        }
+
+        result = completeFreundschaft(result, benutzer1);
+        return result;
+    }
+
+    public static String completeFreundschaft(String json, String fragenderBenutzer){
+        Map input = JsonHelper.toMap(json);
+        String freundID = "";
+        connect();
+
+        //Wer ist der fragende Benutzer
+        if (input.get("benutzer").toString().equals(fragenderBenutzer)){
+            freundID = input.get("freund").toString();
+            input.remove("freund");
+            input.put("benutzer", freundID);
+        }else{
+            freundID = input.get("benutzer").toString();
+            input.remove("freund");
+        }
+
+        String freund = Benutzer.findById(input.get("benutzer").toString()).toJson(true, "id", "name", "vorname", "foto", "email");
+        Map freundMap = JsonHelper.toMap(freund);
+        input.put("benutzer", freundMap);
+
+        //include Raum von Freund!!!
+        input.put("raum", null);
+
+        Sitzung sitzungFreund = Sitzung.findById(freundID);
+
+        if(sitzungFreund != null){
+            String raumdetails = Raum.getRaumdetails(sitzungFreund.get("raum").toString());
+            Map raumdetailsMap = JsonHelper.toMap(raumdetails);
+            input.put("raum", raumdetailsMap);
+        }
+
+        disconnect();
+        return JsonHelper.getJsonStringFromMap(input);
+    }
+
+
     /**
      * Der Übergabeparameter json beinhaltet eine Liste aller Freundschaften des aufrufenden Benutzers als String-Objekt
      * im Json-Format. Diese Methode ersetzt alle Benutzer- und Freunde-ID's in der Liste durch deren zugehörige
@@ -41,7 +121,6 @@ public class Freundschaft extends Datenbank{
      * @param json Liste aller Freundesschaften eines Benutzers als String-Objekt im Json-Format
      * @return Liste aller Freundesschaften eines Benutzers als String-Objekt im Json-Format mit eingefügten Benutzer-Objekten
      */
-
     private static String includeBenutzerMaps(String json, String benutzerID) {
         Map[] map = JsonHelper.toMaps(json);
         String antwort = "[]";
@@ -222,7 +301,8 @@ public class Freundschaft extends Datenbank{
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzerMap(antwort);
+        //antwort = includeBenutzerMap(antwort);
+        antwort = getFreundschaft(benutzerID, freundID);
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 
@@ -253,13 +333,14 @@ public class Freundschaft extends Datenbank{
             }
 
             freu.set("Status", 1).saveIt();
-            antwort = freu.toJson(true);
+            //antwort = freu.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
             return Antwort.INTERNAL_SERVER_ERROR;
         }
         disconnect();
-        antwort = includeBenutzerMap(antwort);
+        //antwort = includeBenutzerMap(antwort);
+        antwort = getFreundschaft(benutzerID, freund);
         return Response.ok(antwort,MediaType.APPLICATION_JSON).build();
     }
 

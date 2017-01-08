@@ -62,9 +62,7 @@ public class Raum extends Datenbank {
             Benutzer b = Benutzer.findById(benutzerID);
 
             if(b != null && !"1".equals(b.get("istAnonym").toString())){
-                b.set("istAnonym",0);
-                b.set("token",null);
-                String bJson = b.toJson(true);
+                String bJson = b.toJson(true, "id", "name", "vorname", "foto", "email");;
                 Map bMap = JsonHelper.toMap(bJson);
                 benutzer.add(bMap);
             }

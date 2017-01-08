@@ -37,7 +37,7 @@ public class FreundschaftREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFreundschaften(@Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        return Freundschaft.getFreundschaften(benutzerID);
+        return Response.ok( Freundschaft.getFreundschaften2(benutzerID)).build();
     }
 
     /**
