@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -61,9 +62,6 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         RestConnection verb = new RestConnection(this);
 
         final ArrayList<Raum> raumliste = verb.raumGet();
-
-
-
 
 
         List<String> spinnerArray =  new ArrayList<>();
@@ -150,6 +148,11 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     if(belegt){
                         Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
                     }else{
+                        if(selectedRoom == null) {
+                            Log.d("edu", "raum ist nULL!!");
+                        } else {
+                            Log.d("edu", "raum ist nicht null!! " + selectedRoom.getRaumname());
+                        }
                         v.lecturePut(id, veranstaltungsName, longFromTime.getTime(),longToTime.getTime(),selectedRoom);
                         Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
                         onBackPressed();

@@ -48,7 +48,6 @@ public class Benutzer implements Serializable {
     public Benutzer(String jsonBenutzer) {
         try {
             JSONObject jsonObj = new JSONObject(jsonBenutzer);
-
             this.id = jsonObj.getString("id");
             this.email = jsonObj.getString("email");
             this.name = jsonObj.getString("name");
@@ -56,12 +55,11 @@ public class Benutzer implements Serializable {
             this.fotoURL = jsonObj.getString("foto");
             this.token = jsonObj.getString("token");
             this.isProfessor = jsonObj.getInt("istprofessor");
-            //this.istAnonym = jsonObj.getInt("istanonym"); //TODO <<- Server gibt noch null anstatt 0 aus
-            this.istAnonym = 0;                             //TODO <<- Löschen nach fix
+            this.istAnonym = jsonObj.getInt("istanonym");
             this.istPush = jsonObj.getInt("istpush");
 
         } catch (JSONException e) {
-            Log.d("edu", "Benutzer EXCEPTION!!!");
+            Log.d("edu", "EXCEPTION in Benutzer");
             e.printStackTrace();
         }
     }

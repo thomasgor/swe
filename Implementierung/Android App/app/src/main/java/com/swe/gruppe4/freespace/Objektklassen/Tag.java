@@ -1,5 +1,7 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -36,6 +38,7 @@ public class Tag implements Serializable {
 
         } catch (JSONException e) {
             //jsonTag enthält keinen Tag!
+            Log.d("edu", "EXCEPTION in Tag!");
             e.printStackTrace();
         }
     }

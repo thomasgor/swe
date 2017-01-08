@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
+import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 /**
  * @author
@@ -44,23 +45,19 @@ public class RoomDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         id = getIntent().getIntExtra("id",4711);
-        raum = new VerbindungDUMMY().raumGet(id);
-        //raum = new RestConnection(this).raumGet(id);
+        //raum = new VerbindungDUMMY().raumGet(id);
+        raum = new RestConnection(this).raumGet(id);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
 
         imgRoom = (ImageView) findViewById(R.id.img_room_photo);
 
         //Daten holen
         //raum = (Raum) getIntent().getSerializableExtra("raum");
-
         setData();
-
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             rlTop=(RelativeLayout) findViewById(R.id.activity_room_details2);
@@ -96,13 +93,23 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void setData(){
+        Log.d("edu","raumDetails 1");
         raumName = (TextView) findViewById(R.id.txt_room_number);
+
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
         getSupportActionBar().setTitle(getString(R.string.room_number, raum.getRaumname()));
 
         tag = (TextView) findViewById(R.id.txt_tag);
-        tag.setText(raum.getTag().getName());
-        tag.setText(getString(R.string.tag, raum.getTag().getName()));
+        Tag tag2 = raum.getTag();
+        if(raum.getTag() != null) {
+            tag.setText(raum.getTag().getName());
+        } else {
+            tag.setText("Kein Tag gesetzt"); // TODO eventuell diese Nachricht entfernen
+        }
+
+        //tag.setText(getString(R.string.tag, raum.getTag().getName()));
+
+
 
         Ion.with(getApplicationContext())
                 .load(raum.getFotoURL())
@@ -119,6 +126,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
         listPeopleInRoomView.setAdapter(raumLeuteAdapter);
         listPeopleInRoomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         int nichtAnonym = 0;
+
+        Log.d("edu","raumDetails bei benutzer");
         for(Benutzer ben : raum.getBenutzer()){
             nichtAnonym++;
             raumLeuteAdapter.add(ben);

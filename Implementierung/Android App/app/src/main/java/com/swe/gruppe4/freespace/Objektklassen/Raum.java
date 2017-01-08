@@ -51,22 +51,18 @@ public class Raum implements Serializable{
     }
     public Raum(String jsonRaum, boolean hasUserList) {
         try {
-            Log.d("edu", "Raum! T1");
             JSONObject jsonObj = new JSONObject(jsonRaum);
-            Log.d("edu", "Raum! T2");
             this.id = jsonObj.getInt("id");
             this.raumname = jsonObj.getString("raumnummer");
             this.teilnehmer_max = jsonObj.getInt("teilnehmer_max");
             this.teilnehmer_aktuell = jsonObj.getInt("teilnehmer_anz");
             this.status = jsonObj.getString("status");
             this.fotoURL = jsonObj.getString("foto");
-            Log.d("edu", "Raum! T3");
             if(jsonObj.isNull("tag")) {
                 this.tag = null;
             } else {
                 this.tag = new Tag(jsonObj.getString("tag"));
             }
-            Log.d("edu", "Raum! T4");
             if(hasUserList) {
                 JSONArray jsonArr = jsonObj.getJSONArray("benutzer");
                 ArrayList<Benutzer> benutzerListe = new ArrayList<Benutzer>();
@@ -82,7 +78,7 @@ public class Raum implements Serializable{
 
         } catch (JSONException e) {
             //jsonRaum enthält keinen Raum!
-            Log.d("edu", "Raum! Enthält kein raum??");
+            Log.d("edu", "EXCEPTION in Raum!");
             e.printStackTrace();
         }
     }

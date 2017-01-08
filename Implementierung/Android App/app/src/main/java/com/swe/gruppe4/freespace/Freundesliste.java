@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,7 @@ public class Freundesliste extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("edu", "In der Freundesliste!");
         freunde = new RestConnection(this).freundschaftGet();
         Freundschaft data;
         super.onCreate(savedInstanceState);

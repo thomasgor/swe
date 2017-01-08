@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
@@ -145,12 +146,18 @@ public class JsonStringBuilder {
      */
     public String buildPOSTveranstaltungJson(String name, long von, long bis, Raum raum)
     {
+
         JSONObject jsonObj = new JSONObject();
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+            String dateVon = sdf.format(von);
+            String dateBis = sdf.format(bis);
+
             jsonObj.put("name", name);
-            jsonObj.put("von", von);
-            jsonObj.put("bis", bis);
-            jsonObj.put("raum", raum);
+            jsonObj.put("von", String.valueOf(dateVon));
+            jsonObj.put("bis", String.valueOf(dateBis));
+            //JSONObject raumObj = new JSONObject();
+            jsonObj.put("raum", String.valueOf(raum.getId()));
         } catch(JSONException e) {
             e.printStackTrace();
         }
@@ -172,7 +179,26 @@ public class JsonStringBuilder {
             jsonObj.put("name", name);
             jsonObj.put("von", von);
             jsonObj.put("bis", bis);
-            jsonObj.put("raum", raum);
+
+            JSONObject raumObj = new JSONObject();
+
+            raumObj.put("id", raum.getId());
+            raumObj.put("raumnummer", raum.getRaumname());
+            raumObj.put("teilnehmer_max", raum.getTeilnehmer_max());
+            raumObj.put("teilnehmer_aktuell", raum.getTeilnehmer_aktuell()); // TODO teilnehmer_aktuell oder teilnehmer_akt?
+            raumObj.put("status", raum.getStatus());
+            raumObj.put("foto", raum.getFotoURL());
+
+            JSONObject tagObj = new JSONObject();
+            tagObj.put("id", raum.getTag().getId());
+            tagObj.put("name", raum.getTag().getName());
+            raumObj.put("tag", tagObj);
+
+            JSONArray benutzerArr = new JSONArray(); // TODO Sollen überhaubt benutzer übertragen werden????
+            raumObj.put("benutzer", benutzerArr);
+
+
+            jsonObj.put("raum", raumObj);
             //jsonObj.put("raum", veranstaltung.getRaum());
         } catch(JSONException e) {
             e.printStackTrace();
@@ -192,8 +218,11 @@ public class JsonStringBuilder {
     {
         JSONObject jsonObj = new JSONObject();
         try {
+            JSONObject raumObj = new JSONObject();
+            raumObj.put("raum", String.valueOf(raumID));
 
-            jsonObj.put("raum", raumID);
+            jsonObj.put("sitzung", raumObj);
+            //jsonObj.put("raum", String.valueOf(raumID));
 
         } catch(JSONException e) {
             e.printStackTrace();
@@ -225,7 +254,8 @@ public class JsonStringBuilder {
     }
     public ArrayList getFreundschaftFromJson(String jsonString) {
         ArrayList<Freundschaft> list = new ArrayList<Freundschaft>();
-        Log.d("mylog24342","in freundschaftvonjson");
+        //Log.d("edu","in freundschaftvonjson");
+
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             Log.d("mylog24342","" + jsonArray);
@@ -238,6 +268,7 @@ public class JsonStringBuilder {
         }
         catch (JSONException e) {
             e.printStackTrace();
+            Log.d("edu","EXCEPTION in JsonStringBuilder/getFreundschaftFromJson");
         }
         return list;
 
@@ -318,7 +349,7 @@ public class JsonStringBuilder {
         }
         catch (JSONException e) {
             e.printStackTrace();
-            //Log.d("edu", "EXCEPTION in getRaumListe!");
+            Log.d("edu", "EXCEPTION in JsonStringBuidler/getRaumListe!");
         }
         return list;
     }

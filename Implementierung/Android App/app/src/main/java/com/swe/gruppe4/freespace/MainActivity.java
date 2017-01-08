@@ -34,8 +34,8 @@ public class MainActivity extends BaseActivity
 
         Log.d("FirebaseToken", FirebaseInstanceId.getInstance().getToken());
 
-        final VerbindungDUMMY connection = new VerbindungDUMMY();
-        //RestConnection connection = new RestConnection(this);
+        //final VerbindungDUMMY connection = new VerbindungDUMMY();
+        RestConnection connection = new RestConnection(this);
 
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_main, null, false);

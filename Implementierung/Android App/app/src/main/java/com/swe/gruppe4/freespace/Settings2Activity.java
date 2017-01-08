@@ -49,13 +49,13 @@ public class Settings2Activity extends BaseActivity
 
         final RestConnection verb = new RestConnection(this);
         //final RestConnection verb = new RestConnection(this);
+
         anonymChkB.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
                 if(anonymChkB.isChecked()){
-
                     Benutzer ben = verb.benutzerPut("",1,2);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
 
@@ -71,7 +71,6 @@ public class Settings2Activity extends BaseActivity
             public void onClick(View v) {
 
                 if(pushChkB.isChecked()){
-
                     Benutzer ben = verb.benutzerPut("",2,1);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
 

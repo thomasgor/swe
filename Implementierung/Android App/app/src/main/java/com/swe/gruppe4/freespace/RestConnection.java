@@ -72,8 +72,8 @@ public class RestConnection {
 
     // Hostname und Port des Servers
     // TODO Hostname anpassen
-    private final String hostname = "192.168.178.36";
-
+    //private final String hostname = "192.168.178.36";
+    private final String hostname = "137.226.239.248";
     private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
@@ -161,6 +161,79 @@ public class RestConnection {
         return res;
     }
 
+    private String doRestRequest(final String restRessource, final String httpMethod, final String outputJson, final String value, final boolean expectResponseJson, final boolean isAuthorized) {
+        String res = "";
+        class RestCon extends AsyncTask<String, Integer, String> {
+            String resp;
+
+            protected String doInBackground(String... params) {
+                String response = "false";
+                publishProgress(0);
+                try {
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource + "/" + value);
+                    Log.d("edu", "doRestRequest URL: " + url.toString());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    if(isAuthorized) {
+                        String userPass = id + ":" + token;
+                        String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
+                        conn.setRequestProperty("Authorization", "Basic " + encoding);
+                    }
+                    conn.setRequestMethod(httpMethod);
+                    conn.setChunkedStreamingMode(0);
+                    conn.setRequestProperty("Content-Type", "application/json");
+
+                    if(!Objects.equals(outputJson, "")) {
+                        OutputStream os = conn.getOutputStream();
+                        byte[] inputJsonBytes = outputJson.getBytes("UTF-8");
+                        os.write(inputJsonBytes);
+                        os.flush();
+                        os.close();
+                    }
+                    else {
+                        conn.connect();
+                    }
+
+                    int responseCode = conn.getResponseCode();
+                    Log.d("edu", "doRestRequest ResponseCode: " + responseCode);
+                    SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
+                    if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0 && expectResponseJson) {
+                        InputStream in = new BufferedInputStream(conn.getInputStream());
+                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+                        in.close();
+                    } else {
+                        //showErrorMessage(responseCode);
+                    }
+                    conn.disconnect();
+
+
+                } catch (IOException e) {
+                    Log.d("edu", "EXCEPTION IN doRestRequest!");
+                    e.printStackTrace();
+                }
+
+                return response;
+
+            }
+            protected void onProgressUpdate(Integer... progress) {
+                //showProgressDialog();
+            }
+
+            protected void onPostExecute(String result) {
+                hideProgressDialog();
+                resp = result;
+
+
+            }
+        }
+        RestCon connn = new RestCon();
+        try {
+            res = connn.execute(outputJson).get();
+        }catch (Exception e)
+        {}
+
+        return res;
+    }
+
     private String restRequest(final String restRessource, final String httpMethod, final String input) {
         String res = "";
         class RestCon extends AsyncTask<String, Integer, String> {
@@ -193,7 +266,9 @@ public class RestConnection {
                     else
                     conn.connect();
 
+                    //Log.d("edu", "restRequest! versendet");
                     int responseCode = conn.getResponseCode();
+                    Log.d("edu", "restRequest! ResponseCode: " + responseCode);
                     Log.d("myTag3", "" + responseCode);
                     SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
                     if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0) {
@@ -208,9 +283,11 @@ public class RestConnection {
 
                 } catch (IOException e) {
                     Log.d("myTag20", "fail");
+                    Log.d("edu", "EXCEPTION IN restRequest!");
                     e.printStackTrace();
                 }
                 Log.d("myTag2", response);
+                //Log.d("edu", "das ist der Response: " + response);
                 return response;
 
             }
@@ -233,8 +310,6 @@ public class RestConnection {
 
         return res;
     }
-
-
 
     private String restRequest(final String restRessource, final String httpMethod, final String input, final String idn) {
         String res = "";
@@ -257,7 +332,25 @@ public class RestConnection {
                     conn.setChunkedStreamingMode(0);
                     conn.setRequestProperty("Content-Type", "application/json");
                     Log.d("myTag3", "now aftersetRequestMethod");
+                    Log.d("edu", "RestRequest a");
+
+                    if(httpMethod != HTTP_GET && httpMethod != HTTP_DELETE) {
+                        OutputStream os = conn.getOutputStream();
+
+                        if (!Objects.equals(input, "")) {
+                            byte[] inputJsonBytes = input.getBytes("UTF-8");
+                            os.write(inputJsonBytes);
+
+                        }
+                        os.flush();
+                        os.close();
+                    }
+                    else
+                        conn.connect();
+
+                    /*
                     OutputStream os = conn.getOutputStream();
+
                     Log.d("myTag5", "now before if");
                     if (!Objects.equals(input, "")) {
                         byte[] inputJsonBytes = input.getBytes("UTF-8");
@@ -266,11 +359,14 @@ public class RestConnection {
                     }
                     os.flush();
                     os.close();
+                    */
 
                     int responseCode = conn.getResponseCode();
+                    Log.d("edu", "RestRequest Response Code: " + responseCode);
                     Log.d("myTag3", "" + responseCode);
                     SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
-                    if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0) {
+
+                    if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0 && responseCode != 400) {
                         InputStream in = new BufferedInputStream(conn.getInputStream());
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
                         in.close();
@@ -282,9 +378,11 @@ public class RestConnection {
 
                 } catch (IOException e) {
                     Log.d("myTag20", "fail");
+                    Log.d("edu", "EXCEPTIOn in RestRequest");
                     e.printStackTrace();
                 }
                 Log.d("myTag2", response);
+
                 return response;
 
             }
@@ -308,7 +406,7 @@ public class RestConnection {
         return res;
     }
 
-    private String restRequest(final String restRessource, final String httpMethod, String input, final int idn) {
+    private String restRequest(final String restRessource, final String httpMethod, final String input, final int idn) {
         String res = "";
         class RestCon extends AsyncTask<String,Integer,String> {
             String resp;
@@ -326,16 +424,31 @@ public class RestConnection {
                     conn.setChunkedStreamingMode(0);
                     Log.d("myTag3","now aftersetRequestMethod");
                     conn.setRequestProperty("Content-Type","application/json");
-                    OutputStream os = conn.getOutputStream();
+                    //OutputStream os = conn.getOutputStream();
+                    if(httpMethod != HTTP_GET) {
+                        OutputStream os = conn.getOutputStream();
+
+                        if (!Objects.equals(input, "")) {
+                            byte[] inputJsonBytes = input.getBytes("UTF-8");
+                            os.write(inputJsonBytes);
+
+                        }
+                        os.flush();
+                        os.close();
+                    }
+                    else
+                        conn.connect();
                     //conn.connect();
                     Log.d("myTag5","now before if");
 
+                    /*
                     if(!Objects.equals(params[0], "")){
                         byte[] inputJsonBytes = params[0].getBytes("UTF-8");
                         os.write(inputJsonBytes);
                     }
                     os.flush();
                     os.close();
+                    */
 
                     int responseCode = conn.getResponseCode();
                     SparseIntArray acceptableCodes = acceptableCodesID(restRessource,httpMethod);
@@ -610,32 +723,56 @@ public class RestConnection {
      * Die folgenden Methoden werden für die REST-Ressourcen Sitzung benutzt
      */
     public Sitzung sitzungGet(){
-        String antwortJSon = restRequest(SITZUNG, HTTP_GET, null);
-        return new Sitzung(antwortJSon);
+        Log.d("edu", "sitzungGet Request..");
+        //String antwortJSon = restRequest(SITZUNG, HTTP_GET, null);
+        String antwortJSon = doRestRequest(SITZUNG, HTTP_GET, "", "", true, true);
+        Log.d("edu", "sitzungGet Response: " + antwortJSon);
+
+        if(antwortJSon == "false") {
+            return null;
+        } else {
+            return new Sitzung(antwortJSon);
+        }
+
 
     }
     public Sitzung sitzungPost(int raumID){
-
         String jSon = builder.buildPOSTsitzungJson(raumID);
-        String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);
-        return new Sitzung(antwortJSon);
+
+        Log.d("edu", "sitzungPost Request.." + jSon);
+        //String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);
+        String antwortJSon = doRestRequest(SITZUNG, HTTP_POST, jSon, "", true, true);
+        Log.d("edu", "sitzungPost Response: " + antwortJSon);
+
+        if(antwortJSon == "false") {
+            return null;
+        } else {
+            return new Sitzung(antwortJSon);
+        }
+
     }
 
     public Sitzung sitzungPut(int id){
-        String antwortJSon = restRequest(SITZUNG, HTTP_PUT, "", id);
+        Log.d("edu", "sitzungPut Request..");
+        //String antwortJSon = restRequest(SITZUNG, HTTP_PUT, "", id);
+        String antwortJSon = doRestRequest(SITZUNG, HTTP_PUT, "", String.valueOf(id), true, true);
+        Log.d("edu", "sitzungPut Response: " + antwortJSon);
         return new Sitzung(antwortJSon);
     }
 
     public void sitzungDelete(int id){
 
-        String antwortJSon = restRequest(SITZUNG, HTTP_DELETE, "", id);
-
+        Log.d("edu", "sitzungDelete Request..");
+        //String antwortJSon = restRequest(SITZUNG, HTTP_DELETE, "", id);
+        String antwortJSon = doRestRequest(SITZUNG, HTTP_DELETE, "", String.valueOf(id), false, true);
+        Log.d("edu", "sitzungDelete Response: " + antwortJSon);
     }
 
     public ArrayList<Freundschaft> freundschaftGet() {
-        String antwortJSon = restRequest(FREUNDSCHAFT, HTTP_GET, "");
-
-        Log.d("myTag", "" + builder.getFreundschaftFromJson(antwortJSon));
+        Log.d("edu", "FreundschaftGet(liste) Request..");
+        //String antwortJSon = restRequest(FREUNDSCHAFT, HTTP_GET, "");
+        String antwortJSon = doRestRequest(FREUNDSCHAFT, HTTP_GET, "", "", true, true);
+        Log.d("edu", "FreundschaftGet(liste) Response: " + antwortJSon);
         return builder.getFreundschaftFromJson(antwortJSon);
     }
 
@@ -644,26 +781,25 @@ public class RestConnection {
     public void freundschaftPost(String email) {
         String JSon = builder.buildPOSTfreundschaftJson(email);
 
-        String answerJSon = restRequest(FREUNDSCHAFT, HTTP_POST,JSon);
-
-
-
-
+        Log.d("edu", "freundschaftPost Request.." + email);
+        //String answerJSon = restRequest(FREUNDSCHAFT, HTTP_POST,JSon);
+        String antwortJSon = doRestRequest(FREUNDSCHAFT, HTTP_POST, JSon, "", false, true);
+        Log.d("edu", "freundschaftPost Response: " + antwortJSon);
     }
 
     public void freundschaftPut(Benutzer benutzer){
 
-        String answerJSon = restRequest(FREUNDSCHAFT, HTTP_PUT, "", benutzer.getId());
-
-
-
+        Log.d("edu", "freundschaftPut Request..");
+        //String answerJSon = restRequest(FREUNDSCHAFT, HTTP_PUT, "", benutzer.getId());
+        String antwortJSon = doRestRequest(FREUNDSCHAFT, HTTP_PUT, "", benutzer.getId(), false, true);
+        Log.d("edu", "freundschaftPut Response: " + antwortJSon);
     }
 
     public void freundschaftDelete(Benutzer benutzer){
-
-        String answerJSon = restRequest(FREUNDSCHAFT, HTTP_DELETE, "", benutzer.getId());
-
-
+        Log.d("edu", "freundschaftDelete Request..");
+        //String antwortJSon = restRequest(FREUNDSCHAFT, HTTP_DELETE, "", benutzer.getId());
+        String antwortJSon = doRestRequest(FREUNDSCHAFT, HTTP_DELETE, "", benutzer.getId(), false, true);
+        Log.d("edu", "freundschaftDelete Response: " + antwortJSon);
 
     }
 
@@ -672,9 +808,10 @@ public class RestConnection {
      */
 
     public ArrayList<Tag> tagGet() {
-
-        String antwortJSon = restRequest(TAG, HTTP_GET, "");
-
+        Log.d("edu", "tagGet(liste) Request..");
+        //String antwortJSon = restRequest(TAG, HTTP_GET, "");
+        String antwortJSon = doRestRequest(TAG, HTTP_GET, "", "", true, true);
+        Log.d("edu", "tagGet(liste) Response: " + antwortJSon);
         return builder.getTagFromJson(antwortJSon);
 
     }
@@ -684,9 +821,10 @@ public class RestConnection {
      */
 
     public ArrayList<Raum> raumGet() {
-        Log.d("edu", "raumGet in RestConnection");
-        String antwortJSon = restRequest(RAUM, HTTP_GET, "");
-
+        Log.d("edu", "raumGet(liste) Request..");
+        //String antwortJSon = restRequest(RAUM, HTTP_GET, "");
+        String antwortJSon = doRestRequest(RAUM, HTTP_GET, "", "", true, true);
+        Log.d("edu", "raumGet(liste) Response: " + antwortJSon);
         return builder.getRaumListFromJson(antwortJSon);
     }
 
@@ -696,29 +834,39 @@ public class RestConnection {
      * Die folgenden Methoden werden für die REST-Ressourcen Raum(id) benutzt
      */
     public Raum raumGet(int id) {
-        Log.d("edu", "soweit so gut");
-
-        String antwortJSon = restRequest(RAUM, HTTP_GET, "", id);
-
-        Log.d("edu", "soweit so gut???" + antwortJSon);
-        return new Raum(antwortJSon,true);
-
+        Log.d("edu", "raumGet(id) Request..");
+        //String antwortJSon = restRequest(RAUM, HTTP_GET, "", id);
+        String antwortJSon = doRestRequest(RAUM, HTTP_GET, "", String.valueOf(id), true, true);
+        Log.d("edu", "raumGet(id) Response: " + antwortJSon);
+        if(antwortJSon == "false") { // kein raum mit der id gefunden :code 400
+            return null;
+        } else {
+            return new Raum(antwortJSon,true);
+        }
 
     }
     public Raum raumPut(int tagID){
         String jSon = builder.buildPUTraumJson(tagID);
 
-        String antwortJSon = restRequest(RAUM, HTTP_PUT, jSon);
-
+        Log.d("edu", "raumPut Request...");
+        //String antwortJSon = restRequest(RAUM, HTTP_PUT, jSon);
+        String antwortJSon = doRestRequest(RAUM, HTTP_PUT, jSon, String.valueOf(tagID), true, true);
+        Log.d("edu", "raumPut Response: " + antwortJSon);
 
         return new Raum(antwortJSon,false);
-
-
     }
 
+    // Wird wahrscheinlich nicht gebraucht, da die Foto URL im Raumobjekt gespeichert ist. Siehe raumGet(int id)
+    public String raumGetFoto(int raumId) {
+        String antwortJSon = doRestRequest(RAUM, HTTP_GET, "", String.valueOf(raumId) + "/foto", true, true);
+        return antwortJSon; // Bild ULR?
+    }
     public ArrayList<Veranstaltung> lecturesGet() {
 
-        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "");
+        Log.d("edu", "lectureGet Request...");
+        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "");
+        String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_GET, "", "", true, true);
+        Log.d("edu", "lecturesGet Response: " + antwortJSon);
 
         return builder.getVeranstaltungFromJson(antwortJSon);
 
@@ -728,9 +876,10 @@ public class RestConnection {
 
     public Veranstaltung lectureGet(int id){
 
-        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "", id);
-
-
+        Log.d("edu", "lectureGet(id) Request...");
+        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "", id);
+        String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_GET, "", String.valueOf(id), true, true);
+        Log.d("edu", "lectureGet(id) Response ACHTUNG RETURN NULL!: " + antwortJSon);
         //return new Veranstaltung(antwortJSon);
         return null;
     }
@@ -739,33 +888,39 @@ public class RestConnection {
     public void lecturePost(String name, long von, long bis, Raum raum){
         String jSon = builder.buildPOSTveranstaltungJson(name, von, bis, raum);
 
-        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
-
-
+        Log.d("edu", "lecturePost Request..." + jSon);
+        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
+        String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_POST, jSon, "", true, true);
+        Log.d("edu", "lecturePost Response: " + antwortJSon);
 
     }
 
     public void lecturePut(int id, String name, long von, long bis, Raum raum){
         String jSon = builder.buildPUTveranstaltungJson(name, von, bis, raum);
 
-        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
-
+        Log.d("edu", "lecturePut Request... with id:" + id);
+        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
+        String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_PUT, jSon, String.valueOf(id), true, true);
+        Log.d("edu", "lecturePut Response: " + antwortJSon);
 
 
     }
 
     public void lectureDelete(int id){
 
-        String antwortJSon = restRequest(VERANSTALTUNG, HTTP_DELETE,"", id);
-
-
-
+        Log.d("edu", "lectureDelete Request... with id:" + id);
+        //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_DELETE,"", id);
+        String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_DELETE, "", String.valueOf(id), false, true);
+        Log.d("edu", "lectureDelete Response: " + antwortJSon);
     }
 
     public Benutzer benutzerPut (String PW, int isAnonym, int isPush){
         String jSON = builder.buildPUTbenutzerJson(PW, isAnonym, isPush);
 
-        String antwortJSon = restRequest(BENUTZER, HTTP_PUT, jSON);
+        Log.d("edu", "benutzerPut Request...with:" + PW + isAnonym + isPush);
+        //String antwortJSon = restRequest(BENUTZER, HTTP_PUT, jSON);
+        String antwortJSon = doRestRequest(BENUTZER, HTTP_PUT, jSON, "", true, true);
+        Log.d("edu", "benutzerPut Response: " + antwortJSon);
 
         return new Benutzer(antwortJSon);
 
@@ -774,8 +929,10 @@ public class RestConnection {
     public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
         String jSon = builder.buildPOSTbenutzerJson(idn, email, name, vorname, fotoURL);
 
-        String antwortJSon = restPOSTBenutzer(jSon);
-
+        Log.d("edu", "benutzerPost Request...");
+        //String antwortJSon = restPOSTBenutzer(jSon);
+        String antwortJSon = doRestRequest(BENUTZER, HTTP_POST, jSon, "", true, false);
+        Log.d("edu", "benutzerPost Response: " + antwortJSon);
 
         token = builder.getFromJson(antwortJSon, "token");
         id = builder.getFromJson(antwortJSon, "id");

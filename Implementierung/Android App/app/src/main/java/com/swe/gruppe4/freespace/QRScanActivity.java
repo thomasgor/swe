@@ -103,7 +103,7 @@ public class QRScanActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 RestConnection connect = new RestConnection(QRScanActivity.this);
-                Sitzung data = connect.sitzungGet();
+                Sitzung data = connect.sitzungPost(meinRaum.getId());
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));
                 startActivity(intent);

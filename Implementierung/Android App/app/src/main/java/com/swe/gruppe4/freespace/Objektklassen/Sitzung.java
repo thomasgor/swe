@@ -1,5 +1,7 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -32,6 +34,7 @@ public class Sitzung implements Serializable{
 
         } catch (JSONException e) {
             //jsonSitzung enthält keine Sitzung!
+            Log.d("edu", "EXCEPTION in Sitzung!");
             e.printStackTrace();
         }
     }
