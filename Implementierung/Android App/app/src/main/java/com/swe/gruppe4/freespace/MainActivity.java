@@ -1,6 +1,9 @@
 package com.swe.gruppe4.freespace;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import android.widget.TabHost;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity
@@ -26,6 +30,7 @@ public class MainActivity extends BaseActivity
     private Button qrScanner;
     private ListView roomView;
     private RoomAdapter roomAdapter;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,11 @@ public class MainActivity extends BaseActivity
         spec.setContent(R.id.mapTab);
         spec.setIndicator("Karte");
         host.addTab(spec);
+
+        mapView = (MapView) findViewById(R.id.mapView);
+        //old map
+        //http://i.imgur.com/BcirZp6.png
+        new LoadMapImage(mapView,400,900).execute("http://i.imgur.com/8F3lTML.png");
 
         //ArrayList<Raum> roomListFromConnection = new ArrayList<>(connection.raumListeGet());
 
@@ -112,6 +122,40 @@ public class MainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
+    }
+
+
+    private class LoadMapImage extends AsyncTask<String, Void, Bitmap> {
+
+        MapView bmImage;
+        int width;
+        int height;
+
+        LoadMapImage(MapView bmImage, int width, int height) {
+            this.bmImage = bmImage;
+            this.width = width;
+            this.height=height;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result)
+        {
+            bmImage.setImageBitmap(result);
+        }
     }
 
 

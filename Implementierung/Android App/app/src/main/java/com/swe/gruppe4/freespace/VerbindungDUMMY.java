@@ -265,18 +265,34 @@ public class VerbindungDUMMY {
 
 
         //Mokupdaten, später über GET vom Server
-        raumListe.add(new Raum(100,"G100",22,6,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"grün"));
+        raumListe.add(new Raum(114,"G114",22,6,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"grün"));
         raumListe.add(new Raum(101,"G101",22,3,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"grün"));
-        raumListe.add(new Raum(4711,"G102",22,15,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Ruhe"),benutzer,"gelb"));
-        raumListe.add(new Raum(103,"G103",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0],"grün"));
+        raumListe.add(new Raum(102,"G102",22,15,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Ruhe"),benutzer,"gelb"));
+        raumListe.add(new Raum(111,"G111",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0],"grün"));
         raumListe.add(new Raum(104,"G104",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0],"grün"));
         raumListe.add(new Raum(4711,"G105",22,22,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"rot"));
-        raumListe.add(new Raum(106,"G106",22,22,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"rot"));
+        raumListe.add(new Raum(115,"G115",22,22,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"rot"));
         raumListe.add(new Raum(107,"G107",22,15,"http://i.imgur.com/LyzIuVj.jpg",new Tag(4711,"Präsentation"),benutzer,"gelb"));
-        raumListe.add(new Raum(108,"G108",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0],"grün"));
+        raumListe.add(new Raum(116,"G116",22,0,"http://i.imgur.com/LyzIuVj.jpg",new Tag(0,""),new Benutzer[0],"grün"));
 
         return raumListe;
     }
+
+
+    public ArrayList<RoomEnterance> raumEingangGet() {
+        Karte roomEnterance = new Karte();
+        roomEnterance.addRoomEnterance(111,"G1111",(float)1.3,700);
+        roomEnterance.addRoomEnterance(1111,"G1110",(float)1.3,550);
+        roomEnterance.addRoomEnterance(116,"G116",(float)2.5,700);
+        roomEnterance.addRoomEnterance(115,"G115",(float)2,750);
+        roomEnterance.addRoomEnterance(114,"G114",(float)2.5,550);
+        roomEnterance.addRoomEnterance(1071,"G1071",(float)1.3,380);
+        roomEnterance.addRoomEnterance(107,"G1072",(float)1.3,240);
+        roomEnterance.addRoomEnterance(102,"G102",(float)2.5,240);
+        roomEnterance.addRoomEnterance(101,"G101",(float)2,200);
+        return roomEnterance.getRooms();
+    }
+
 
     /*
     public Raum raumGet(int id){

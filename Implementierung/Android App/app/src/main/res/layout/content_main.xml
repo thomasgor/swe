@@ -66,6 +66,23 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <com.swe.gruppe4.freespace.MapView
+                                android:id="@+id/mapView"
+                                android:layout_width="match_parent"
+                                android:scaleType="fitXY"
+                                android:layout_height="900dp" />
+                            />
+                        </LinearLayout>
+                    </ScrollView>
                 </LinearLayout>
 
             </FrameLayout>
