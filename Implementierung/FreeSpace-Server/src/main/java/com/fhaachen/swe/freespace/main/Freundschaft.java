@@ -60,7 +60,6 @@ public class Freundschaft extends Datenbank{
                 if(freundschaftMap.get("raum") != null || freundschaftMap.get("status").toString().equals("0")){
                     output.add(JsonHelper.toMap(freundschaftJson));
                 }
-
             }
             result = JsonHelper.getJsonStringFromMap(output);
         }
