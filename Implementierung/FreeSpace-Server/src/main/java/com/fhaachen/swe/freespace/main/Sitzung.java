@@ -98,15 +98,18 @@ public class Sitzung extends Datenbank {
         connect();
         String antwort = null;
         try {
-            Sitzung sitz = Sitzung.findFirst("benutzer = ?", Integer.parseInt(id));
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", id);
             if (sitz == null) {
                 return Antwort.NO_ACTIVE_SESSION;
             }
+
             boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
             if(outOfTime) {
-                sitz.delete();
+                //sitz.delete();
+                deleteSitzung(sitz.get("benutzer").toString());
                 return Antwort.NO_ACTIVE_SESSION;
             }
+
             antwort = sitz.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
@@ -204,7 +207,7 @@ public class Sitzung extends Datenbank {
      * @return Liste aller Räume als String im Json-Format
      */
 
-    public static String getNoActiceSession() {
+    public static String getNoActiveSession() {
         Map homescreen = JsonHelper.toMap("{\"räume\": null}");
         try{
             String raumliste = Raum.getRaum();
@@ -239,7 +242,7 @@ public class Sitzung extends Datenbank {
             }
 
             long endzeit = ((Long) System.currentTimeMillis() / 1000L) + (Integer.parseInt(Konfiguration.getSitzungsintervall()) * 60);
-
+            connect();
             sitz.set("endzeit", endzeit);
             sitz.set("notifySent", 0);
             sitz.saveIt();

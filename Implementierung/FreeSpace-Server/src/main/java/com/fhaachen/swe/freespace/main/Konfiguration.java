@@ -231,7 +231,7 @@ public class Konfiguration extends Datenbank{
             }
 
             //Neuen Tag hinzufügen
-            Tag.addNeuerTag(neuerTag);
+            if(!neuerTag.equals("")){Tag.addNeuerTag(neuerTag);}
 
             //Tags löschen
             Tag.deleteTags(tags);

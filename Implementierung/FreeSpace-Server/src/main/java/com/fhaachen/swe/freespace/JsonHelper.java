@@ -2,6 +2,7 @@ package com.fhaachen.swe.freespace;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -112,6 +113,17 @@ public class JsonHelper {
      */
 
     public static String getJsonStringFromMap(Map[] m){
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            //   string a = mapper.writeValue();
+            return mapper.writeValueAsString(m);
+
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public static String getJsonStringFromMap(ArrayList<Map> m){
         try {
             ObjectMapper mapper = new ObjectMapper();
             //   string a = mapper.writeValue();

@@ -62,9 +62,7 @@ public class Raum extends Datenbank {
             Benutzer b = Benutzer.findById(benutzerID);
 
             if(b != null && !"1".equals(b.get("istAnonym").toString())){
-                b.set("istAnonym",0);
-                b.set("token",null);
-                String bJson = b.toJson(true);
+                String bJson = b.toJson(true, "id", "name", "vorname", "foto", "email");;
                 Map bMap = JsonHelper.toMap(bJson);
                 benutzer.add(bMap);
             }
@@ -119,8 +117,6 @@ public class Raum extends Datenbank {
         }
         connect();
 
-
-
         raum.set("tag", tagID);
         try{
             raum.saveIt();
@@ -172,7 +168,7 @@ public class Raum extends Datenbank {
         int unixTime_Int = Integer.parseInt(String.valueOf(unixTime));
 
         try{
-            aktiveVeranstaltung =Veranstaltung.istRaumFrei(unixTime_Int,unixTime_Int,raumID);
+            aktiveVeranstaltung =!Veranstaltung.istRaumFrei(unixTime_Int,unixTime_Int,raumID);
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -200,19 +196,17 @@ public class Raum extends Datenbank {
         if(raumMap.get("tag") != null) {
             String tagID = raumMap.get("tag").toString();
             //LADE TAG nach
-            String jsonTag = Tag.getTagById(tagID);
-            if (jsonTag != null) {
-                Map tagMap = JsonHelper.toMap(jsonTag);
-                String res = raumMap.put("tag", tagMap).toString(); //jsonTag
-
-                //kein Fehler
-                if (res == null) {
-                    //tag wurde nachgeladen
-                    System.out.print(raumMap.toString());
+            if(!tagID.equals("")){
+                String jsonTag = Tag.getTagById(tagID);
+                if (jsonTag != null) {
+                    Map tagMap = JsonHelper.toMap(jsonTag);
+                    String res = raumMap.put("tag", tagMap).toString(); //jsonTag
                 }
+            }else{
+                raumMap.put("tag", null);
             }
-            //TAG ist nachgeladen
         }
+
         return raumMap;
     }
 

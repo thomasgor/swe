@@ -49,33 +49,37 @@ public class Benutzer extends Datenbank{
     public static String putBenutzer(String json, String benutzerID){
         String result = "";
         Map input = JsonHelper.toMap(json);
-        String input_pw = input.get("masterpasswort").toString();
-        String input_istAnonym = input.get("istAnonym").toString();
-        String input_istPush = input.get("istPush").toString();
-        String input_token_fcm = input.get("tokenFCM").toString();
 
         connect();
         Benutzer b = Benutzer.findById(benutzerID);
         if(b != null){
-
             //Wenn Masterpasswort richtig, setze ist istProfessor
-            if(Konfiguration.isMaster(input_pw)){
+            if(input.containsKey("masterpasswort") && Konfiguration.isMaster(input.get("masterpasswort").toString())){
                 b.set("istProfessor", 1);
             }
 
             //Wenn istAnony gesetzt ist, setze die Flag
-            if(input_istAnonym != null && (input_istAnonym.equals("1") ||input_istAnonym.equals("0"))){
-                b.set("istAnonym", input_istAnonym);
+            if(input.containsKey("istanonym")) {
+                String input_istAnonym = input.get("istanonym").toString();
+                if (input_istAnonym.equals("1") || input_istAnonym.equals("0")) {
+                    b.set("istAnonym", input_istAnonym);
+                }
             }
 
             //Wenn istPush gesetzt ist, setze die Flag
-            if(input_istPush != null && (input_istPush.equals("1") ||input_istPush.equals("0"))){
-                b.set("istPush", input_istPush);
+            if(input.containsKey("istpush")) {
+                String input_istPush = input.get("istpush").toString();
+                if (input_istPush != null && (input_istPush.equals("1") || input_istPush.equals("0"))) {
+                    b.set("istPush", input_istPush);
+                }
             }
 
             //Wenn tokenFCM gesetzt ist, setze die Flag
-            if(input_token_fcm != null){
-                b.set("tokenFCM", input_token_fcm);
+            if(input.containsKey("tokenfcm")) {
+                String input_token_fcm = input.get("tokenfcm").toString();
+                if (input_token_fcm != null) {
+                    b.set("tokenFCM", input_token_fcm);
+                }
             }
 
             try{
