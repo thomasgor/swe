@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 @Provider
 public class ExampleExceptionMapper implements ExceptionMapper<Throwable> {
-    private static final Logger log = Logger.getLogger(ExampleExceptionMapper.class.getName() );
+    //private static final Logger log = Logger.getLogger(ExampleExceptionMapper.class.getName() );
 
 
     public Response toResponse(Throwable t) {
