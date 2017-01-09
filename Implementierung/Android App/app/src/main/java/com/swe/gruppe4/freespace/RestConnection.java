@@ -699,6 +699,9 @@ public class RestConnection {
             case RAUM:
                 res.append(200,0);
                 break;
+            case TAG:
+                res.append(200,0);
+                break;
             case KARTE:
                 switch (httpMethod){
                     case HTTP_GET:

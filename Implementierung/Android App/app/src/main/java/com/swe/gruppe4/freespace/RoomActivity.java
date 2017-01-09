@@ -285,7 +285,7 @@ public class RoomActivity extends BaseActivity
             Raum tmpRoom = fullRoomList.get(i);
             found = false;
             for(int j = 0; j < friendListUser.size(); j++) {
-                if(friendListUser.get(j).getRaum().getId() == tmpRoom.getId()) {
+                if(friendListUser.get(j).getRaum() != null && friendListUser.get(j).getRaum().getId() == tmpRoom.getId()) {
                     found = true;
                 }
             }
