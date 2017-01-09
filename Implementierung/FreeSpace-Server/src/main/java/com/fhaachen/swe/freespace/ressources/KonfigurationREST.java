@@ -78,6 +78,7 @@ public class KonfigurationREST {
          */
 
         @POST
+        @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
         @Produces(MediaType.TEXT_HTML)
         public Response login (@FormParam("user") String user, @FormParam("pw") String pw, @FormParam("action") String
         action, @FormParam("input_masterpassword_1") String master1, @FormParam("input_masterpassword_2") String
@@ -87,14 +88,16 @@ public class KonfigurationREST {
             String html = "";
 
             if (action.equals("login")) {
-
+                System.out.println("User:" + user + " Passwort: " + pw);
                 @SuppressWarnings("Since15") String base = Base64.getEncoder().encodeToString((user + ":" + pw).getBytes());
-                NewCookie cookie = new NewCookie("Basic", base, "/", "", "FreeSpace-Server", 600, false);
+                NewCookie cookie = new NewCookie("Basic", base, "/", "", "FreeSpace-Server", 600, false, true);
                 try {
                     //Login erfolgreich
                     if (Benutzer.istAdministrator(user, pw)) {
+                        System.out.println("Benutzer konnte sich erfolgreich im Interface anmelden!");
                         html = Konfiguration.getEinstellungenHTML();
                     } else {
+                        System.out.println("Benutzer konnte sich NCIHT im Interface anmelden!");
                         html = Konfiguration.getLoginFehlerHTML();
                     }
                 } catch (Exception e) {
@@ -124,12 +127,10 @@ public class KonfigurationREST {
                     if (myCookie != null) {
                         cookieValue = myCookie.getValue();
                     }
-             /*   byte[] code =  Base64.getDecoder().decode(cookieValue);
-                String klartext = new String(code); // UTF8 als zweiten parameter mitgeben
-                String[] userAndPw = klartext.split(":");
-                System.out.println("Klartext:"+ klartext); */
+
                     //Login erfolgreich
                     if (Benutzer.istAdministrator(cookieValue)) { //userAndPw[0],userAndPw[1]
+                        System.out.println("Benutzer erfolgreich im interface eingeloogt");
                         if (!Konfiguration.setKonfiguration(altMaster, master1, master2, tags, neuerTag, intervall)) {
                             System.out.println("Fehlerhafte HTML");
                             html = Konfiguration.getEinstellungen_FehlerhaftHTML();
@@ -137,7 +138,6 @@ public class KonfigurationREST {
                         }
 
                         html = Konfiguration.getEinstellungenSaved();
-                        //return Response.ok(html, MediaType.TEXT_HTML).cookie(myCookie).build();
 
                     } else {
                         html = Konfiguration.fileToString("admin/login.html");

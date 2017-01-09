@@ -49,16 +49,16 @@ public class AuthFilter implements ContainerRequestFilter {
             System.out.println("Anfrage ohne Authorization im HTTP-Header");
             String uri = filterContext.getUriInfo().getPath();
 
-            if(uri.equals("benutzer") || uri.equals("benutzer/")){
+            if(uri.equals("benutzer") || uri.equals("benutzer/") || uri.equals("")){
                 return new User("","");
             }
-            return null;
+            return new User("","");
         }
 
         //Wir unterstützen nur Basic Auth, das funktioniert mit Username und Password
         if(!authentication.startsWith("Basic ")){
             System.out.println("Wir unterstützen nur Basic Auth");
-            return null;
+            return new User("","");
         }
 
         //User name und Passwort befinden sich nach dem String basic
@@ -69,7 +69,7 @@ public class AuthFilter implements ContainerRequestFilter {
 
         //Falsche Syntax
         if(values.length < 2){
-            return null;
+            return new User("","");
         }
 
         String userid = values[0];

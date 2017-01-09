@@ -185,6 +185,9 @@ public class Benutzer extends Datenbank{
         Benutzer b = Benutzer.findById(id);
         String rolle = null;
 
+        if(b == null){
+            return "";
+        }
         if((Integer) b.get("istProfessor") == 1){
             rolle = "professor";
         }else if((Integer) b.get("istProfessor") == 0){

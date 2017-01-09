@@ -78,6 +78,7 @@ public class Server {
         rc.register(com.fhaachen.swe.freespace.filter.AuthFilter.class);
         rc.register(com.fhaachen.swe.freespace.filter.Authorizer.class);
         rc.register(com.fhaachen.swe.freespace.filter.User.class);
+        rc.register(com.fhaachen.swe.freespace.filter.ExampleExceptionMapper.class);
 
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
