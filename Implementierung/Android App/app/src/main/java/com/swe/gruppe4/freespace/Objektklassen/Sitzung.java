@@ -11,13 +11,20 @@ import org.json.JSONException;
  */
 
 public class Sitzung implements Serializable{
-    private int id;
+    private String id;
     private Raum raum;
     private boolean myTag;
     private long endzeit;
 
-    public Sitzung(int id, Raum raum, boolean myTag, long endzeit) {
+    public Sitzung(String id, Raum raum, boolean myTag, long endzeit) {
         this.id = id;
+        this.raum = raum;
+        this.myTag = myTag;
+        this.endzeit = endzeit;
+    }
+
+    public Sitzung(int id, Raum raum, boolean myTag, long endzeit) {
+        this.id = String.valueOf(id);
         this.raum = raum;
         this.myTag = myTag;
         this.endzeit = endzeit;
@@ -27,7 +34,7 @@ public class Sitzung implements Serializable{
         try {
             JSONObject jsonObj = new JSONObject(jsonSitzung);
 
-            this.id = jsonObj.getInt("benutzer");
+            this.id = jsonObj.getString("benutzer");
             this.myTag = (jsonObj.getInt("hastag") != 0);
             this.endzeit = jsonObj.getLong("endzeit");
             this.raum = new Raum(jsonObj.getString("raum"),true);
@@ -42,11 +49,11 @@ public class Sitzung implements Serializable{
         }
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -50,7 +50,11 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.friends_box, parent, false);
         }
         TextView nickName = (TextView) convertView.findViewById(R.id.friendsName);
-        nickName.setText(benutzer.getVorname() + " " + benutzer.getName());
+        String name = benutzer.getVorname();
+        if(benutzer.getName()!=null) {
+            name = name + " " + benutzer.getName();
+        }
+        nickName.setText(name);
         TextView roomName = (TextView) convertView.findViewById(R.id.friend_room);
         roomName.setText("");
         final ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);

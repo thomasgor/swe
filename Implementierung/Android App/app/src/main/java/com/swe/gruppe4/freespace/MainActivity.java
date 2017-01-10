@@ -36,13 +36,20 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RestConnection connection = new RestConnection(this);
+        connection.sitzungGet();
+        if(RestConnection.lastStatusCode != 900){
+            Intent intent =new Intent(getApplicationContext(),ActiveSessionActivity.class);
+            startActivity(intent);
+            finish();
+        }
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         Log.d("FirebaseToken", FirebaseInstanceId.getInstance().getToken());
 
         //final VerbindungDUMMY connection = new VerbindungDUMMY();
-        RestConnection connection = new RestConnection(this);
+
 
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
@@ -130,10 +137,11 @@ public class MainActivity extends BaseActivity
         roomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                MainActivity.startingPointId=0;
                 Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
                 intent.putExtra("id",roomAdapter.getItem(position).getId());
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }

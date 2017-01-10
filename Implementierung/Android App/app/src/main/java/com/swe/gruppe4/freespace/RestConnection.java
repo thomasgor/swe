@@ -68,6 +68,7 @@ public class RestConnection {
 
     public static String id;
     public static String token;
+    public static int lastStatusCode = 0;
     private ProgressDialog mProgressDialog;
 
     // Hostname und Port des Servers
@@ -182,7 +183,7 @@ public class RestConnection {
                     conn.setRequestMethod(httpMethod);
                     conn.setChunkedStreamingMode(0);
 
-	                if(!httpMethod.equals(HTTP_GET)) {
+	                if(!httpMethod.equals(HTTP_GET) && !httpMethod.equals(HTTP_DELETE)) {
                         conn.setRequestProperty("Content-Type", "application/json");
 		            }
 
@@ -198,6 +199,7 @@ public class RestConnection {
                     }
 
                     int responseCode = conn.getResponseCode();
+                    lastStatusCode = responseCode;
                     Log.d("edu", "doRestRequest ResponseCode: " + responseCode);
                     SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
                     if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0 && expectResponseJson) {
@@ -237,7 +239,7 @@ public class RestConnection {
 
 
         if(res.equals("false")){
-            showErrorMessage(500);
+            //showErrorMessage(500);
         }
         return res;
     }
@@ -770,19 +772,19 @@ public class RestConnection {
 
     }
 
-    public Sitzung sitzungPut(int id){
+    public Sitzung sitzungPut(String id){
         Log.d("edu", "sitzungPut Request..");
         //String antwortJSon = restRequest(SITZUNG, HTTP_PUT, "", id);
-        String antwortJSon = doRestRequest(SITZUNG, HTTP_PUT, "", String.valueOf(id), true, true);
+        String antwortJSon = doRestRequest(SITZUNG, HTTP_PUT, "", id, true, true);
         Log.d("edu", "sitzungPut Response: " + antwortJSon);
         return new Sitzung(antwortJSon);
     }
 
-    public void sitzungDelete(int id){
+    public void sitzungDelete(String id){
 
         Log.d("edu", "sitzungDelete Request..");
         //String antwortJSon = restRequest(SITZUNG, HTTP_DELETE, "", id);
-        String antwortJSon = doRestRequest(SITZUNG, HTTP_DELETE, "", String.valueOf(id), false, true);
+        String antwortJSon = doRestRequest(SITZUNG, HTTP_DELETE, "", id, false, true);
         Log.d("edu", "sitzungDelete Response: " + antwortJSon);
     }
 

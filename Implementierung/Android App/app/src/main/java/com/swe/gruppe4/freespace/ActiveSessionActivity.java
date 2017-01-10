@@ -67,8 +67,8 @@ public class ActiveSessionActivity extends BaseActivity
         //data = new VerbindungDUMMY().sitzungGet();
 
         data = new RestConnection(this).sitzungGet();
-        //raum = data.getRaum();
-        raum = new RestConnection(this).raumGet(data.getRaum().getId());
+        raum = data.getRaum();
+        //raum = new RestConnection(this).raumGet(data.getRaum().getId());
 
 
         super.onCreate(savedInstanceState);
@@ -173,7 +173,9 @@ public class ActiveSessionActivity extends BaseActivity
 
 
         setTag = (Button) findViewById(R.id.btn_set_tag);
-        if(data.getRaum().getTag() == null || !data.isMyTag()){
+        if(data.getRaum().getTag() == null){
+            setTag.setEnabled(true);
+        } else {
             setTag.setEnabled(data.isMyTag());
         }
 
@@ -203,7 +205,7 @@ public class ActiveSessionActivity extends BaseActivity
         calendar.setTime(untilTime);
         activeUntil.setText(getString(R.string.session_active_until_clock, DateFormat.getTimeInstance(DateFormat.SHORT).format(untilTime)));
 
-        long delay = data.getEndzeit()*1000 - System.currentTimeMillis();
+        //long delay = data.getEndzeit()*1000 - System.currentTimeMillis();
 
 
         leute = (TextView) findViewById(R.id.txt_people_in_room_cnt);
@@ -217,7 +219,8 @@ public class ActiveSessionActivity extends BaseActivity
         switch(requestCode){
             case BACK_FROM_TAG:
                 int tagID = data.getIntExtra("id",0);
-                raum = new RestConnection(ActiveSessionActivity.this).raumPut(tagID, raum.getId());
+                new RestConnection(ActiveSessionActivity.this).raumPut(tagID, raum.getId());
+                raum = new RestConnection(ActiveSessionActivity.this).raumGet(raum.getId());
                 setData();
         }
     }

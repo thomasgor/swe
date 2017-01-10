@@ -172,6 +172,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             intent.putExtra("profilePicture",pictureURL);
             startActivity(intent);
+            finish();
 
         } else {
             // Signed out, show unauthenticated UI.
