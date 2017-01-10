@@ -1,4 +1,4 @@
-package com.swe.gruppe4.freespace;
+﻿package com.swe.gruppe4.freespace;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -180,7 +180,10 @@ public class RestConnection {
                     }
                     conn.setRequestMethod(httpMethod);
                     conn.setChunkedStreamingMode(0);
-                    conn.setRequestProperty("Content-Type", "application/json");
+
+	            if(httpMethod != HTTP_GET) {
+                        conn.setRequestProperty("Content-Type", "application/json");
+		    }
 
                     if(!Objects.equals(outputJson, "")) {
                         OutputStream os = conn.getOutputStream();
