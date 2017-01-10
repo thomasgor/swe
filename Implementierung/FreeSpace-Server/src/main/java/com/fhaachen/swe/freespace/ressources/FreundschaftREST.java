@@ -71,6 +71,7 @@ public class FreundschaftREST {
      */
 
     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response putFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context){

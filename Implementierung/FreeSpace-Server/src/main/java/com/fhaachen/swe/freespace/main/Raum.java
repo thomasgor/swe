@@ -42,7 +42,7 @@ public class Raum extends Datenbank {
                 }
             }
 
-            System.out.println(raeumeMap.toString());
+            //System.out.println(raeumeMap.toString());
             result = JsonHelper.getJsonStringFromMap(raeumeMap);
         }
 
@@ -134,7 +134,7 @@ public class Raum extends Datenbank {
         //raumMap = completeRaumDetails(raumMap);
 
         json = getRaumdetails(raumID);
-        System.out.println(" Das ist mein JsonString: " + json);
+        //System.out.println(" Das ist mein JsonString: " + json);
         return json;
     }
 
@@ -156,7 +156,7 @@ public class Raum extends Datenbank {
         int teilnehmer_max = Integer.parseInt((raumMap.get("teilnehmer_max")).toString());
 
         double auslastung = 100;
-        System.out.println("teilnehmer_max = " + teilnehmer_max);
+        //System.out.println("teilnehmer_max = " + teilnehmer_max);
         if(teilnehmer_max == 0){
             auslastung = 100;
         }else{

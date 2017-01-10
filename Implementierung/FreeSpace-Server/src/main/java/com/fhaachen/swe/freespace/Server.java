@@ -1,14 +1,26 @@
 package com.fhaachen.swe.freespace;
 
+import com.fhaachen.swe.freespace.filter.AuthFilter;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Klasse Server erzeugt und startet einen HTTP-Server um den REST-Service zur Verfuegung stellen zu koennen
@@ -16,7 +28,9 @@ import java.net.URI;
  * @author Thomas Gorgels
  * @version 1.0
  */
-public class Server {
+public class Server extends ResourceConfig {
+
+    private static final Logger log = Logger.getLogger( Server.class.getName() );
 
     /**
      * Erzeugt eine URI fuer den Server auf dem Localhost mit dem Port 8888 und gibt diese zurueck
@@ -74,11 +88,18 @@ public class Server {
 
 
         rc.register(RolesAllowedDynamicFeature.class);
-
         rc.register(com.fhaachen.swe.freespace.filter.AuthFilter.class);
         rc.register(com.fhaachen.swe.freespace.filter.Authorizer.class);
         rc.register(com.fhaachen.swe.freespace.filter.User.class);
         rc.register(com.fhaachen.swe.freespace.filter.ExampleExceptionMapper.class);
+
+        rc.property(ServerProperties.TRACING, "ALL");
+        rc.property("com.sun.jersey.api.json.POJOMappingFeature", Boolean.TRUE);
+        rc.property(ServerProperties.TRACING_THRESHOLD, "VERBOSE");
+        rc.property("com.sun.jersey.api.json.POJOMappingFeature", Boolean.TRUE);
+
+        rc.registerInstances(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY, Integer.MAX_VALUE));
+        //rc.registerInstances(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, Integer.MAX_VALUE));
 
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
