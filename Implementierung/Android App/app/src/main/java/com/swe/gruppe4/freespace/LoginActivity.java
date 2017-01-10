@@ -168,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             RestConnection connection = new RestConnection(this);
             connection.benutzerPost(acct.getId(),acct.getEmail(), acct.getFamilyName(), acct.getGivenName(), pictureURL);
+            connection.benutzerPut(FirebaseInstanceId.getInstance().getToken());
 
             intent.putExtra("profilePicture",pictureURL);
             startActivity(intent);

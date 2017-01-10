@@ -934,6 +934,21 @@ public class RestConnection {
 
     }
 
+    public void benutzerPut (String token){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("tokenfcm",token);
+            String antwortJSon = doRestRequest(BENUTZER, HTTP_PUT, json.toString(), "", true, true);
+            Log.d("edu", "benutzerPut Response: " + antwortJSon);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("edu", "benutzerPut Request to send Token...with:" + token);
+        //String antwortJSon = restRequest(BENUTZER, HTTP_PUT, jSON);
+
+    }
+
     public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
         String jSon = builder.buildPOSTbenutzerJson(idn, email, name, vorname, fotoURL);
 
