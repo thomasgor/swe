@@ -4,6 +4,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -11,14 +12,15 @@ import java.util.logging.Logger;
  */
 @Provider
 public class ExampleExceptionMapper implements ExceptionMapper<Throwable> {
-    //private static final Logger log = Logger.getLogger(ExampleExceptionMapper.class.getName() );
+    private static final Logger log = Logger.getLogger(ExampleExceptionMapper.class.getName() );
 
 
     public Response toResponse(Throwable t) {
         if (t instanceof WebApplicationException) {
             return ((WebApplicationException)t).getResponse();
         } else {
-            //log.error("Uncaught exception thrown by REST service", t);
+            log.log(Level.WARNING, "Uncaught exception thrown by REST service", t);
+            System.out.println("ExceptionMapper::");
             t.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

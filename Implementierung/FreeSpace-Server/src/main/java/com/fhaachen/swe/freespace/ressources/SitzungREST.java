@@ -37,7 +37,8 @@ public class SitzungREST {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSitzung(@Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
-        return Sitzung.getSitzungById(benutzerID);
+        //return Sitzung.getSitzungById(benutzerID);
+        return Response.ok(Sitzung.getSitzungByIdJSON(benutzerID)).build();
     }
 
     /**

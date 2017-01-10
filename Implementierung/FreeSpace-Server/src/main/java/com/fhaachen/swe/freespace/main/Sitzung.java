@@ -103,21 +103,47 @@ public class Sitzung extends Datenbank {
                 return Antwort.NO_ACTIVE_SESSION;
             }
 
-            boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
+            boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= (System.currentTimeMillis() / 1000L);
             if(outOfTime) {
-                //sitz.delete();
                 deleteSitzungFromDB(sitz.get("benutzer").toString());
                 return Antwort.NO_ACTIVE_SESSION;
             }
 
+            connect();
             antwort = sitz.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
-            return Antwort.INTERNAL_SERVER_ERROR;
+            System.out.println("Exception");
         }
         disconnect();
         antwort = includeRaumInSitzung(antwort);
         return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
+    }
+
+    public static String getSitzungByIdJSON(String id){
+        connect();
+        String antwort = null;
+        try {
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", id);
+            if (sitz == null) {
+                return getNoActiveSession();
+            }
+
+            boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= (System.currentTimeMillis() / 1000L);
+            if(outOfTime) {
+                deleteSitzungFromDB(sitz.get("benutzer").toString());
+                return getNoActiveSession();
+            }
+
+            connect();
+            antwort = sitz.toJson(true);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Exception");
+        }
+        disconnect();
+        antwort = includeRaumInSitzung(antwort);
+        return antwort;
     }
 
     /**
@@ -290,7 +316,6 @@ public class Sitzung extends Datenbank {
 
     public static void deleteSitzungFromDB(String benutzer) {
         connect();
-        String antwort = null;
         try {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzer);
             if (sitz != null) {
@@ -300,6 +325,7 @@ public class Sitzung extends Datenbank {
                 sitz.delete();
             }
         } catch(Exception e) {
+            System.out.println("Exception beim löschen von Sitzung");
             e.printStackTrace();
         }
         disconnect();
