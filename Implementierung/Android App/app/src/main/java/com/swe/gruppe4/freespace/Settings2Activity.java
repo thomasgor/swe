@@ -25,7 +25,9 @@ import com.swe.gruppe4.freespace.RestConnection;
 
 public class Settings2Activity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    int anonFlag, pushFlag;
+    CheckBox anonymChkB;
+    CheckBox pushChkB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(AktuellerBenutzer.getAktuellerBenutzer().istProfessor()){
@@ -41,13 +43,13 @@ public class Settings2Activity extends BaseActivity
         Button masterpw = (Button) findViewById(R.id.setMasterPW);
 
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
-        final CheckBox anonymChkB = (CheckBox) findViewById(R.id.checkBox);
-        final CheckBox pushChkB = (CheckBox) findViewById(R.id.checkBox2);
+        anonymChkB = (CheckBox) findViewById(R.id.checkBox);
+        pushChkB = (CheckBox) findViewById(R.id.checkBox2);
         Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
         anonymChkB.setChecked(ben.isAnonymous());
         pushChkB.setChecked(ben.isPush());
 
-        final int anonFlag, pushFlag;
+
         if(ben.isAnonymous()){
             anonFlag = 1;
         }else{
@@ -71,10 +73,12 @@ public class Settings2Activity extends BaseActivity
                 if(anonymChkB.isChecked()){
                     Benutzer ben = verb.benutzerPut("",1,pushFlag);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
+                    anonFlag = 1;
 
                 }else{
                     Benutzer ben = verb.benutzerPut("",0,pushFlag);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
+                    anonFlag = 0;
                 }
             }
         });
@@ -86,10 +90,11 @@ public class Settings2Activity extends BaseActivity
                 if(pushChkB.isChecked()){
                     Benutzer ben = verb.benutzerPut("",anonFlag,1);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
-
+                    pushFlag = 1;
                 }else{
                     Benutzer ben = verb.benutzerPut("",anonFlag,0);
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
+                    pushFlag = 0;
                 }
             }
         });
@@ -104,7 +109,8 @@ public class Settings2Activity extends BaseActivity
                     Toast.makeText(getApplicationContext(),"Falsches Passwort", Toast.LENGTH_LONG).show();
                 }else{
                     AktuellerBenutzer.setAktuellerBenutzer(ben);
-
+                    anonymChkB.setChecked(ben.isAnonymous());
+                    pushChkB.setChecked(ben.isPush());
 
                     //Settings2Activity.this.finish();
                     //final Intent intent = Settings2Activity.this.getIntent();
