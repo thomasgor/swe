@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
+import java.text.DateFormat;
 
 /**
  * Mit der Klasse JsonStringBuilder können die Json Objekte als String erstellt werden, die fuer die
@@ -72,11 +73,12 @@ public class JsonStringBuilder {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put("masterpasswort", password);
-            jsonObj.put("istAnonym", isAnonym);
-            jsonObj.put("istPush", isPush);
+            jsonObj.put("istanonym", isAnonym);
+            jsonObj.put("istpush", isPush);
         } catch(JSONException e) {
             e.printStackTrace();
         }
+        Log.d("edu", "benutzerPut with bla: " + jsonObj.toString());
         return jsonObj.toString();
     }
 
