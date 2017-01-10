@@ -200,7 +200,7 @@ public class Sitzung extends Datenbank {
             Sitzung sitz = Sitzung.findById(benutzerID);
             if (sitz != null) {
                 System.out.println("Benutzer hat bereits eine aktive Sitzung:" + benutzerID);
-                deleteSitzung(benutzerID);
+                deleteSitzungFromDB(benutzerID);
             }
 
             connect();
