@@ -161,7 +161,7 @@ public class Sitzung extends Datenbank {
         String raumID = input.get("raum").toString();
         String raum = null;
         try {
-            raum = Raum.getRaumByID(raumID);
+            raum = Raum.getRaumdetails(raumID);
         } catch(Exception e) {
             e.printStackTrace();
             return json;
