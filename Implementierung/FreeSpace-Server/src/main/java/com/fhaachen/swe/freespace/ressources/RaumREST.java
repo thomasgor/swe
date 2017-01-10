@@ -94,7 +94,7 @@ public class RaumREST {
 
         //Prüfe ob ein tag angegeben ist
         if(!json.contains("\"tag\":")){
-            return Antwort.INTERNAL_SERVER_ERROR;
+            return Antwort.BAD_REQUEST;
         }
 
 
@@ -126,7 +126,8 @@ public class RaumREST {
                 }
             }
         } else {
-            return Antwort.NO_ACTIVE_SESSION;
+            //return Antwort.NO_ACTIVE_SESSION;
+            return Response.status(900).entity(Sitzung.getNoActiveSession()).build();
         }
 
 

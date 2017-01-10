@@ -126,13 +126,13 @@ public class Sitzung extends Datenbank {
         try {
             Sitzung sitz = Sitzung.findFirst("benutzer = ?", id);
             if (sitz == null) {
-                return getNoActiveSession();
+                return "NOACTIVESESSION";
             }
 
             boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= (System.currentTimeMillis() / 1000L);
             if(outOfTime) {
                 deleteSitzungFromDB(sitz.get("benutzer").toString());
-                return getNoActiveSession();
+                return "NOACTIVESESSION";
             }
 
             connect();
@@ -305,6 +305,7 @@ public class Sitzung extends Datenbank {
             if(sitz.get("hasTag").toString().equals("1")) {
                 Raum.putRaumID(sitz.get("raum").toString(), null, benutzer);
             }
+            connect();
             sitz.delete();
         } catch(Exception e) {
             e.printStackTrace();

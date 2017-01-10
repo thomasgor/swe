@@ -38,6 +38,11 @@ public class SitzungREST {
     public Response getSitzung(@Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
         //return Sitzung.getSitzungById(benutzerID);
+        String result = Sitzung.getSitzungByIdJSON(benutzerID);
+        if(result.equals("NOACTIVESESSION")){
+            result = Sitzung.getNoActiveSession();
+            return Response.status(900).entity(result).build();
+        }
         return Response.ok(Sitzung.getSitzungByIdJSON(benutzerID)).build();
     }
 
@@ -72,7 +77,6 @@ public class SitzungREST {
      */
 
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response deleteSitzungID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();

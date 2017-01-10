@@ -130,10 +130,10 @@ public class Raum extends Datenbank {
         String json = raum.toJson(true);
 
         //lade Details nach..
-        Map raumMap = JsonHelper.toMap(json);
-        raumMap = completeRaumDetails(raumMap);
+        //Map raumMap = JsonHelper.toMap(json);
+        //raumMap = completeRaumDetails(raumMap);
 
-        json = JsonHelper.getJsonStringFromMap(raumMap);
+        json = getRaumdetails(raumID);
         System.out.println(" Das ist mein JsonString: " + json);
         return json;
     }
