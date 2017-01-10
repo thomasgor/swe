@@ -34,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Objects;
 import java.lang.Object;
 import android.os.AsyncTask;
@@ -900,8 +901,8 @@ public class RestConnection {
         //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_GET, "", id);
         String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_GET, "", String.valueOf(id), true, true);
         Log.d("edu", "lectureGet(id) Response ACHTUNG RETURN NULL!: " + antwortJSon);
-        //return new Veranstaltung(antwortJSon);
-        return null;
+        return new Veranstaltung(antwortJSon);
+
     }
 
 

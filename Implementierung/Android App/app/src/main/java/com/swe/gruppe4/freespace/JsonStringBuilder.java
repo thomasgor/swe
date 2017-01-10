@@ -10,8 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import android.util.Log;
 import java.text.DateFormat;
@@ -151,13 +153,18 @@ public class JsonStringBuilder {
 
         JSONObject jsonObj = new JSONObject();
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-            String dateVon = sdf.format(von);
-            String dateBis = sdf.format(bis);
+
+
+
+            //long timevon = von.getTime()/1000;
+            //long timebis = bis.getTime()/1000;
+
+
+
 
             jsonObj.put("name", name);
-            jsonObj.put("von", String.valueOf(dateVon));
-            jsonObj.put("bis", String.valueOf(dateBis));
+            jsonObj.put("von", String.valueOf(von/1000));
+            jsonObj.put("bis", String.valueOf(bis/1000));
             //JSONObject raumObj = new JSONObject();
             jsonObj.put("raum", String.valueOf(raum.getId()));
         } catch(JSONException e) {

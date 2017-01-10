@@ -54,9 +54,9 @@ public class LectureListActivity extends BaseActivity
 
 
         for(Veranstaltung v:veranstaltungen){
-            if(v.getDozent().getId().equals(AktuellerBenutzer.getAktuellerBenutzer().getId())) {
+
                 lectureAdapter.add(v);
-            }
+
         }
         lectureAdapter.notifyDataSetChanged();
 
