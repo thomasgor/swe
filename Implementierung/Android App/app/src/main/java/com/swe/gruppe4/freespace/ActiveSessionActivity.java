@@ -67,7 +67,8 @@ public class ActiveSessionActivity extends BaseActivity
         //data = new VerbindungDUMMY().sitzungGet();
 
         data = new RestConnection(this).sitzungGet();
-        raum = data.getRaum();
+        //raum = data.getRaum();
+        raum = new RestConnection(this).raumGet(data.getRaum().getId());
 
 
         super.onCreate(savedInstanceState);
@@ -142,8 +143,14 @@ public class ActiveSessionActivity extends BaseActivity
         getSupportActionBar().setTitle(raum.getRaumname());
 
         tag = (TextView) findViewById(R.id.txt_tag);
-        tag.setText(raum.getTag().getName());
-        tag.setText(getString(R.string.tag, raum.getTag().getName()));
+
+        if(raum.getTag() != null){
+            tag.setText(getString(R.string.tag, raum.getTag().getName()));
+        }
+        else{
+            tag.setText(getString(R.string.tag, "Kein Tag vorhanden"));
+        }
+
 
         String userPass = RestConnection.id + ":" + RestConnection.token;
         String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
@@ -166,7 +173,10 @@ public class ActiveSessionActivity extends BaseActivity
 
 
         setTag = (Button) findViewById(R.id.btn_set_tag);
-        setTag.setEnabled(data.isMyTag());
+        if(data.getRaum().getTag() == null || !data.isMyTag()){
+            setTag.setEnabled(data.isMyTag());
+        }
+
 
         setTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +217,7 @@ public class ActiveSessionActivity extends BaseActivity
         switch(requestCode){
             case BACK_FROM_TAG:
                 int tagID = data.getIntExtra("id",0);
-                raum = new RestConnection(ActiveSessionActivity.this).raumPut(tag.getId());
+                raum = new RestConnection(ActiveSessionActivity.this).raumPut(tagID, raum.getId());
                 setData();
         }
     }

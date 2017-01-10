@@ -163,6 +163,7 @@ public class RestConnection {
 
     private String doRestRequest(final String restRessource, final String httpMethod, final String outputJson, final String value, final boolean expectResponseJson, final boolean isAuthorized) {
         String res = "";
+        //showProgressDialog();
         class RestCon extends AsyncTask<String, Integer, String> {
             String resp;
 
@@ -204,7 +205,7 @@ public class RestConnection {
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
                         in.close();
                     } else {
-                        showErrorMessage(responseCode);
+                        //showErrorMessage(responseCode);
                     }
                     conn.disconnect();
 
@@ -234,6 +235,10 @@ public class RestConnection {
         }catch (Exception e)
         {}
 
+
+        if(res.equals("false")){
+            showErrorMessage(500);
+        }
         return res;
     }
 
@@ -574,12 +579,17 @@ public class RestConnection {
 
 
 
-    private void showErrorMessage(int responseCode) {
+    private void showErrorMessage(final int responseCode) {
 
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.errormsgTitle, responseCode))
-                .setMessage("BlablablaMrFreeman")
-                .setPositiveButton("Verstanden", null)
+                .setMessage("Leider ist ein Fehler aufgetreten.\nBitte starten Sie die App neu.")
+                .setPositiveButton("Verstanden", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
                 .create()
                 .show();
     }
@@ -853,12 +863,12 @@ public class RestConnection {
         }
 
     }
-    public Raum raumPut(int tagID){
+    public Raum raumPut(int tagID, int raumID){
         String jSon = builder.buildPUTraumJson(tagID);
 
         Log.d("edu", "raumPut Request...");
         //String antwortJSon = restRequest(RAUM, HTTP_PUT, jSon);
-        String antwortJSon = doRestRequest(RAUM, HTTP_PUT, jSon, String.valueOf(tagID), true, true);
+        String antwortJSon = doRestRequest(RAUM, HTTP_PUT, jSon, String.valueOf(raumID), true, true);
         Log.d("edu", "raumPut Response: " + antwortJSon);
 
         return new Raum(antwortJSon,false);

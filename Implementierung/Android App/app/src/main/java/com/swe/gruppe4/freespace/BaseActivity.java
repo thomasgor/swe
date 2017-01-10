@@ -123,15 +123,18 @@ public class BaseActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
+            finish();
         } else if (id == R.id.nav_einstellungen) {
             Intent intent = new Intent(getApplicationContext(),Settings2Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_freundesliste) {
             Intent intent = new Intent(getApplicationContext(),Freundesliste.class);
             startActivity(intent);
+            finish();
         } else if (id == R.id.nav_professor_stundenplan) {
             Intent intent = new Intent(getApplicationContext(), LectureListActivity.class);
             startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_raeume) {
             MainActivity.startingPointId = 0;

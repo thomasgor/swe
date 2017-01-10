@@ -27,10 +27,13 @@ public class Sitzung implements Serializable{
         try {
             JSONObject jsonObj = new JSONObject(jsonSitzung);
 
-            this.id = jsonObj.getInt("id");
-            this.raum = new Raum(jsonObj.getString("raum"),true);
-            this.myTag = jsonObj.getBoolean("myTag");
+            this.id = jsonObj.getInt("benutzer");
+            this.myTag = (jsonObj.getInt("hastag") != 0);
             this.endzeit = jsonObj.getLong("endzeit");
+            this.raum = new Raum(jsonObj.getString("raum"),true);
+
+
+
 
         } catch (JSONException e) {
             //jsonSitzung enthält keine Sitzung!

@@ -17,7 +17,9 @@ import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
+import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity
                 //intent.putExtra("raumliste",roomListFromConnection);
                 intent.putExtra("id", 0);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -73,7 +76,16 @@ public class MainActivity extends BaseActivity
         mapView = (MapView) findViewById(R.id.mapView);
         //old map
         //http://i.imgur.com/BcirZp6.png
-        new LoadMapImage(mapView,400,900).execute("http://i.imgur.com/8F3lTML.png");
+        //new LoadMapImage(mapView,400,900).execute("http://i.imgur.com/8F3lTML.png");
+
+        Ion.with(getApplicationContext())
+                .load("http://i.imgur.com/8F3lTML.png")
+                //.setHeader("Authorization", auth)
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(mapView);
 
         //ArrayList<Raum> roomListFromConnection = new ArrayList<>(connection.raumListeGet());
 
@@ -99,6 +111,7 @@ public class MainActivity extends BaseActivity
         roomAdapter.add(new Raum(107,"G107",22,15,"",new Tag(4711,"Präsentation"),benutzer)); */
 
         Log.d("edu", "in MainActivity");
+        //Sitzung sitzung = connection.sitzungGet();
         ArrayList<Raum> räume = connection.raumGet();
 
         for (Raum r:räume) {
@@ -120,6 +133,7 @@ public class MainActivity extends BaseActivity
                 Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
                 intent.putExtra("id",roomAdapter.getItem(position).getId());
                 startActivity(intent);
+                finish();
             }
         });
     }

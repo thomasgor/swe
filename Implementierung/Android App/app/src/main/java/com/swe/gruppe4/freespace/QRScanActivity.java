@@ -114,6 +114,7 @@ public class QRScanActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));
                 startActivity(intent);
+                finish();
             }
         });
         build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
@@ -122,6 +123,7 @@ public class QRScanActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
                 //intent.putExtra("raumliste",(ArrayList<Raum>) getIntent().getSerializableExtra("raumliste"));
                 startActivity(intent);
+                finish();
             }
         });
         AlertDialog alert1 = build.create();
