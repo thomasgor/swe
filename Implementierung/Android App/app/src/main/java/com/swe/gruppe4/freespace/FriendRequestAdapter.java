@@ -62,7 +62,8 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
             @Override
             public void onClick(View view) {
                 new RestConnection(getContext()).freundschaftPut(friendObj.getBenutzer());
-                //notifyDataSetChanged();
+                friendInfoList.remove(friendObj.getBenutzer());
+                notifyDataSetChanged();
                 //Intent intent = new Intent(getContext(), Freundesliste.class);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //con.startActivity(intent);
@@ -76,7 +77,8 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
             @Override
             public void onClick(View view) {
                 new RestConnection(getContext()).freundschaftDelete(friendObj.getBenutzer());
-                //notifyDataSetChanged();
+                friendInfoList.remove(friendObj.getBenutzer());
+                notifyDataSetChanged();
                 //Intent intent = new Intent(getContext(), Freundesliste.class);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //con.startActivity(intent);

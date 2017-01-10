@@ -64,6 +64,24 @@ public class Benutzer implements Serializable {
         }
     }
 
+    public Benutzer(String jsonBenutzer, int a) {
+        try {
+            JSONObject jsonObj = new JSONObject(jsonBenutzer);
+            this.id = jsonObj.getString("id");
+            this.email = jsonObj.getString("email");
+            this.name = jsonObj.getString("name");
+            this.vorname = jsonObj.getString("vorname");
+            this.fotoURL = jsonObj.getString("foto");
+
+
+        } catch (JSONException e) {
+            Log.d("edu", "EXCEPTION in Benutzer");
+            e.printStackTrace();
+        }
+    }
+
+
+
     public String getId() {
         return id;
     }
