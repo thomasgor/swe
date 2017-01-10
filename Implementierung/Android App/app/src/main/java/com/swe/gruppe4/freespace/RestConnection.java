@@ -181,9 +181,9 @@ public class RestConnection {
                     conn.setRequestMethod(httpMethod);
                     conn.setChunkedStreamingMode(0);
 
-	            if(httpMethod != HTTP_GET) {
+	                if(!httpMethod.equals(HTTP_GET)) {
                         conn.setRequestProperty("Content-Type", "application/json");
-		    }
+		            }
 
                     if(!Objects.equals(outputJson, "")) {
                         OutputStream os = conn.getOutputStream();
@@ -204,7 +204,7 @@ public class RestConnection {
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
                         in.close();
                     } else {
-                        //showErrorMessage(responseCode);
+                        showErrorMessage(responseCode);
                     }
                     conn.disconnect();
 
@@ -744,6 +744,8 @@ public class RestConnection {
     }
     public Sitzung sitzungPost(int raumID){
         String jSon = builder.buildPOSTsitzungJson(raumID);
+
+
 
         Log.d("edu", "sitzungPost Request.." + jSon);
         //String antwortJSon = restRequest(SITZUNG, HTTP_POST, jSon);

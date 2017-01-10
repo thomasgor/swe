@@ -221,7 +221,7 @@ public class JsonStringBuilder {
             JSONObject raumObj = new JSONObject();
             raumObj.put("raum", String.valueOf(raumID));
 
-            jsonObj.put("sitzung", raumObj);
+            jsonObj.put("raum", String.valueOf(raumID));
             //jsonObj.put("raum", String.valueOf(raumID));
 
         } catch(JSONException e) {

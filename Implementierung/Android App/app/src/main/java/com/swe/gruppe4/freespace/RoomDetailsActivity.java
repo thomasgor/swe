@@ -117,10 +117,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         Log.d("edu",auth);
 
+        auth = auth.replace("\n", "").replace("\r", "");
+
 
         Ion.with(getApplicationContext())
                 .load(raum.getFotoURL())
-                .setHeader("Authorization", "Basic " + encoding)
+                .setHeader("Authorization", auth)
                 .withBitmap()
                 .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
                 .error(R.drawable.ic_hourglass_empty_black_24dp)

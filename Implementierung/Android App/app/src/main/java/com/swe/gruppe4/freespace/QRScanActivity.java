@@ -96,8 +96,15 @@ public class QRScanActivity extends AppCompatActivity {
         AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
         build.setCancelable(false);
         build.setTitle(meinRaum.getRaumname());
-        build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
-                                                            + " Leute\nTag: " + meinRaum.getTag().getName() );
+
+        if(meinRaum.getTag()!=null){
+            build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
+                    + " Leute\nTag: " + meinRaum.getTag().getName() );
+        } else {
+            build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
+                    + " Leute");
+        }
+
 
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override

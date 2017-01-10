@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -143,8 +145,18 @@ public class ActiveSessionActivity extends BaseActivity
         tag.setText(raum.getTag().getName());
         tag.setText(getString(R.string.tag, raum.getTag().getName()));
 
+        String userPass = RestConnection.id + ":" + RestConnection.token;
+        String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
+
+        String auth = "Basic " + encoding;
+
+        Log.d("edu",auth);
+
+        auth = auth.replace("\n", "").replace("\r", "");
+
         Ion.with(getApplicationContext())
                 .load(raum.getFotoURL())
+                .setHeader("Authorization", auth)
                 .withBitmap()
                 .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
                 .error(R.drawable.ic_hourglass_empty_black_24dp)
