@@ -100,6 +100,7 @@ public class SitzungREST {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path(value="/{param}")
     public Response putSitzungID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
