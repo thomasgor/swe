@@ -1,6 +1,9 @@
 package com.swe.gruppe4.freespace.Objektklassen;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONObject;
 import org.json.JSONException;
 
@@ -28,12 +31,19 @@ public class Veranstaltung implements Serializable {
     public Veranstaltung(String jsonVeranstaltung) {
         try {
             JSONObject jsonObj = new JSONObject(jsonVeranstaltung);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
             this.id = jsonObj.getInt("id");
             this.name = jsonObj.getString("name");
-            this.dozent = new Benutzer(jsonObj.getString("dozent"));
-            this.von = jsonObj.getLong("von");
-            this.bis = jsonObj.getLong("bis");
+            this.dozent = new Benutzer(jsonObj.getString("benutzer"));
+            //Date von = new Date(jsonObj.getLong("von")*1000);
+            //Date bis = new Date(jsonObj.getLong("von")*1000);
+            //String vonS = sdf.format(von);
+            //String bisS = sdf.format(von);
+            //this.von = Long.valueOf(vonS);
+            //this.bis = Long.valueOf(bisS);
+            this.von = jsonObj.getLong("von")*1000;
+            this.bis = jsonObj.getLong("bis")*1000;
             this.raum = new Raum(jsonObj.getString("raum"),false);
             //this.raum = jsonObj.getInt("id");
 
