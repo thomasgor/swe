@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -109,10 +110,17 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         //tag.setText(getString(R.string.tag, raum.getTag().getName()));
 
+        String userPass = RestConnection.id + ":" + RestConnection.token;
+        String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
+
+        String auth = "Basic " + encoding;
+
+        Log.d("edu",auth);
 
 
         Ion.with(getApplicationContext())
                 .load(raum.getFotoURL())
+                .setHeader("Authorization", "Basic " + encoding)
                 .withBitmap()
                 .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
                 .error(R.drawable.ic_hourglass_empty_black_24dp)

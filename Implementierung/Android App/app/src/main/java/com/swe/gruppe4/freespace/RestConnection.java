@@ -1,4 +1,4 @@
-﻿package com.swe.gruppe4.freespace;
+package com.swe.gruppe4.freespace;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -73,7 +73,7 @@ public class RestConnection {
     // Hostname und Port des Servers
     // TODO Hostname anpassen
     //private final String hostname = "192.168.178.36";
-    private final String hostname = "192.168.178.20";
+    private final String hostname = "mtn-it.de";
     private final String port = "8888";
 
     private static ArrayList<Tag> tagList = new ArrayList<Tag>(){{
