@@ -85,7 +85,8 @@ public class Benutzer extends Datenbank{
             try{
                 connect();
                 b.saveIt();
-                result = b.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
+                //result = b.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
+                result = b.toJson(true);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -131,7 +132,8 @@ public class Benutzer extends Datenbank{
 
             try {
                 neu.insert();
-                result = neu.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
+                //result = neu.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
+                result = neu.toJson(true);
                 System.out.println("postBenutzer: Neuer Benutzer angelegt "+ result);
             }catch(Exception e){
                 System.out.println(e);
