@@ -252,5 +252,4 @@ public class Benutzer extends Datenbank{
 
         return cookieValue.equals(Base64.getEncoder().encodeToString((admin_name+":"+admin_pw).getBytes()));
     }
-
 }

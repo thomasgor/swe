@@ -106,7 +106,7 @@ public class Sitzung extends Datenbank {
             boolean outOfTime = Long.parseLong(sitz.get("endzeit").toString()) <= System.currentTimeMillis() / 1000L;
             if(outOfTime) {
                 //sitz.delete();
-                deleteSitzung(sitz.get("benutzer").toString());
+                deleteSitzungFromDB(sitz.get("benutzer").toString());
                 return Antwort.NO_ACTIVE_SESSION;
             }
 
@@ -286,6 +286,23 @@ public class Sitzung extends Datenbank {
         }
         disconnect();
         return Response.ok().build();
+    }
+
+    public static void deleteSitzungFromDB(String benutzer) {
+        connect();
+        String antwort = null;
+        try {
+            Sitzung sitz = Sitzung.findFirst("benutzer = ?", benutzer);
+            if (sitz != null) {
+                if(sitz.get("hasTag").toString().equals("1")) {
+                    Raum.putRaumID(sitz.get("raum").toString(), null, benutzer);
+                }
+                sitz.delete();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        disconnect();
     }
 
     /**
