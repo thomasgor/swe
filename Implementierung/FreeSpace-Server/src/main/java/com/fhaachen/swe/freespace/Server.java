@@ -124,7 +124,6 @@ public class Server extends ResourceConfig {
             if(test == true){
                 //run Testsuite
             }
-
         }catch (Exception e){
             System.out.println(e);
         }
