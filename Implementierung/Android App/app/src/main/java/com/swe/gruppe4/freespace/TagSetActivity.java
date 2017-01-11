@@ -105,4 +105,13 @@ public class TagSetActivity extends AppCompatActivity {
         listIndex = newIndex;
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent result = new Intent();
+        result.putExtra("id",0);
+        setResult(Activity.RESULT_OK,result);
+        //new VerbindungDUMMY().raumPut(rg.getCheckedRadioButtonId(),raumID);
+        finish();
+    }
+
 }

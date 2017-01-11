@@ -199,6 +199,7 @@ public class RestConnection {
                     else {
                         conn.connect();
                     }
+
                     //Log.d("edu","Output Objekt: " + new Gson().toJson(conn));
 
                     int responseCode = conn.getResponseCode();
