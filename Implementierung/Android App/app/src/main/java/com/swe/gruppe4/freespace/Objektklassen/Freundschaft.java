@@ -35,7 +35,7 @@ public class Freundschaft implements Serializable{
                 this.status = false;
             }
 
-            if(jsonObj.getString("raum") != null) {
+            if(status == true) {
                 this.raum = new Raum(jsonObj.getString("raum"),false);
             }
             else
