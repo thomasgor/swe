@@ -14,15 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
-import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
-import com.swe.gruppe4.freespace.Objektklassen.Freundschaft;
-import com.swe.gruppe4.freespace.Objektklassen.Karte;
-import com.swe.gruppe4.freespace.Objektklassen.Raum;
-import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
-import com.swe.gruppe4.freespace.Objektklassen.Tag;
-import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
-import com.swe.gruppe4.freespace.Objektklassen.Karte;
+import com.swe.gruppe4.freespace.Objektklassen.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
