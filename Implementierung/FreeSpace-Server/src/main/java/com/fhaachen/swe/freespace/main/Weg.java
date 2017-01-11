@@ -234,7 +234,7 @@ public class Weg {
 
     private static boolean checkFormat(Knoten knoten) {
         String id = knoten.getId();
-        if(id.length() == 4) {
+        if(id.length() >= 4) {
             if (       id.charAt(0) >= 'A' && id.charAt(0) <= 'Z'
                     && id.charAt(1) >= '0' && id.charAt(1) <= '9'
                     && id.charAt(2) >= '0' && id.charAt(2) <= '9'

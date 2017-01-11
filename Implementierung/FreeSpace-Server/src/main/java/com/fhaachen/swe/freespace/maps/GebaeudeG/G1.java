@@ -51,9 +51,9 @@ public class G1 extends Karte{
      *       |XXXXXXX|    |XXXXXXXX|
      *       |       | 5  |        |
      *       | G112  |    |        |
-     *       |       | 6  |  G111  |
+     *       |       |    |  G111  |
      *       |_______|    |        |
-     *       |       | 7  |        |
+     *       |       | 6  |        |
      *       |       |____|________|
      *       | G116  |             |
      *       |       |             |
@@ -80,10 +80,8 @@ public class G1 extends Karte{
      *       id = G134
      *   5 = Flurknoten verbunden über Kanten mit G111, G112, 4, 6
      *       id = G135
-     *   6 = Flurknoten verbunden über Kanten mit G111, 5, 7
+     *   6 = Flurknoten verbunden über Kanten mit G116 u G115 u G111 u 6
      *       id = G136
-     *   7 = Flurknoten verbunden über Kanten mit G116 u G115 u 6
-     *       id = G137
      *
      *
      *   Kanten:
@@ -112,13 +110,9 @@ public class G1 extends Karte{
      *              |        |
      *              13     G111
      *              |        |
-     *            G136--14---
+     *   G116-15--G136--14---
      *              |
-     *              15
-     *              |
-     *   G116-16--G137
-     *              |
-     *              17
+     *              16
      *              |
      *            G115
      *
@@ -138,7 +132,6 @@ public class G1 extends Karte{
      *   14 = Kanten mit ID G174
      *   15 = Kanten mit ID G175
      *   16 = Kanten mit ID G176
-     *   17 = Kanten mit ID G177
      */
 
     private void setUp() {
@@ -158,12 +151,11 @@ public class G1 extends Karte{
 
         //FlurKnoten
         Knoten g131 = new Knoten("240"); //siehe Knoten 1 - G131
-        Knoten g132 = new Knoten("440"); //siehe Knoten 2
-        Knoten g133 = new Knoten("510"); //siehe Knoten 3
-        Knoten g134 = new Knoten("515"); //siehe Knoten 4
+        Knoten g132 = new Knoten("380"); //siehe Knoten 2
+        Knoten g133 = new Knoten("450"); //siehe Knoten 3
+        Knoten g134 = new Knoten("510"); //siehe Knoten 4
         Knoten g135 = new Knoten("550"); //siehe Knoten 5
-        Knoten g136 = new Knoten("650"); //siehe Knoten 6
-        Knoten g137 = new Knoten("700"); //siehe Knoten 7
+        Knoten g136 = new Knoten("700"); //siehe Knoten 6
 
         //Kanten, da ungerichtet, jede kante in beide Richtungen
         Kante g161 = new Kante("G161", g131, g101,2);       //siehe Kante 1, Gewicht = grobe Entfernung in Meter
@@ -180,9 +172,8 @@ public class G1 extends Karte{
         Kante g172 = new Kante("G172", g135, g111,2);       //siehe Kante 12, Gewicht = grobe Entfernung in Meter
         Kante g173 = new Kante("G173", g135, g136,4);       //siehe Kante 13, Gewicht = grobe Entfernung in Meter
         Kante g174 = new Kante("G174", g136, g111,2);       //siehe Kante 14, Gewicht = grobe Entfernung in Meter
-        Kante g175 = new Kante("G175", g136, g137,3);       //siehe Kante 15, Gewicht = grobe Entfernung in Meter
-        Kante g176 = new Kante("G176", g137, g116,2);       //siehe Kante 16, Gewicht = grobe Entfernung in Meter
-        Kante g177 = new Kante("G177", g137, g115,2);       //siehe Kante 17, Gewicht = grobe Entfernung in Meter
+        Kante g175 = new Kante("G175", g136, g116,2);       //siehe Kante 15, Gewicht = grobe Entfernung in Meter
+        Kante g176 = new Kante("G176", g136, g115,2);       //siehe Kante 16, Gewicht = grobe Entfernung in Meter
 
         ArrayList<Knoten> knotenListe = new ArrayList<Knoten>();
 
@@ -201,7 +192,6 @@ public class G1 extends Karte{
         knotenListe.add(g134);
         knotenListe.add(g135);
         knotenListe.add(g136);
-        knotenListe.add(g137);
 
         this.setKnoten(knotenListe);
 
@@ -223,7 +213,6 @@ public class G1 extends Karte{
         kantenListe.add(g174);
         kantenListe.add(g175);
         kantenListe.add(g176);
-        kantenListe.add(g177);
 
         this.setKanten(kantenListe);
     }
