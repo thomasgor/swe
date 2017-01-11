@@ -14,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.swe.gruppe4.freespace.Objektklassen.*;
 import java.util.ArrayList;
@@ -52,6 +53,10 @@ public class Freundesliste extends BaseActivity
         }
         requestAdapter.notifyDataSetChanged();
         friendsAdapter.notifyDataSetChanged();
+        if(!requestAdapter.isEmpty()) {
+            TextView tw = (TextView) findViewById(R.id.freundschaftsanfragen);
+            tw.setVisibility(View.VISIBLE);
+        }
         friendView.setClickable(true);
         friendView.setOnItemClickListener(new OnItemClickListener() {
             @Override
