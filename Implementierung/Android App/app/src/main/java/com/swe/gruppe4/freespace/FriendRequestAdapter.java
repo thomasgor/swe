@@ -88,6 +88,10 @@ class FriendRequestAdapter extends ArrayAdapter<Freundschaft> {
         return convertView;
     }
 
+    public boolean isEmpty(){
+        return friendInfoList.isEmpty();
+    }
+
 
 
 

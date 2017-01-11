@@ -3,6 +3,7 @@ package com.swe.gruppe4.freespace;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -104,7 +105,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
                     SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
 
-                    //Kann man die einfach addieren?
+
 
                     Date longToTime = dfCombi.parse(combiFromDate);
 
@@ -130,38 +131,36 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
 
                     }
 
-                    ArrayList<Veranstaltung> veranstaltungsListe = v.lecturesGet();
-                    Boolean belegt = false;
-                    for(Veranstaltung veranstaltung: veranstaltungsListe){
-                        if(veranstaltung.getRaum().getId() == selectedRoom.getId() && veranstaltung.getId() != id){
-                            //if(veranstaltung.getVon() > longToTime.getTime()  || veranstaltung.getBis() < longFromTime.getTime()){
-                            if(veranstaltung.getVon() < longFromTime.getTime() && veranstaltung.getBis() > longFromTime.getTime() || veranstaltung.getVon() < longToTime.getTime() && veranstaltung.getBis() > longToTime.getTime() || veranstaltung.getVon() > longFromTime.getTime() && veranstaltung.getBis() < longToTime.getTime() || veranstaltung.getVon() == longFromTime.getTime() && veranstaltung.getBis() == longToTime.getTime()){
-                                belegt = true;
-                                break;
-                            }else{
 
-                            }
-
-                        }
-                    }
-
-                    if(belegt){
-                        Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
-                    }else{
                         if(selectedRoom == null) {
                             Log.d("edu", "raum ist nULL!!");
                         } else {
                             Log.d("edu", "raum ist nicht null!! " + selectedRoom.getRaumname());
                         }
-                        v.lecturePut(id, veranstaltungsName, longFromTime.getTime(),longToTime.getTime(),selectedRoom);
-                        Toast.makeText(getApplicationContext(),"Änderungen gespeichert", Toast.LENGTH_LONG).show();
-                        onBackPressed();
-                    }
+
+                        if(longFromTime.getTime()>= longToTime.getTime() ){
+                            Toast.makeText(getApplicationContext(),"Die Startzeit liegt vor der Endzeit.", Toast.LENGTH_LONG).show();
+                        }else {
+                            Log.d("Mat", "Id: " + Integer.toString(id) + " Name: " + veranstaltungsName);
+                            if(v.lecturePut(id, veranstaltungsName, longFromTime.getTime() / 1000L, longToTime.getTime() / 1000L, selectedRoom)) {
+                                Toast.makeText(getApplicationContext(), "Änderungen gespeichert", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(LectureEditActivity.this.getApplicationContext(), LectureListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                LectureEditActivity.this.startActivity(intent);
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        //onBackPressed();
+
 
 
 
                 }catch(java.text.ParseException e)
                 {
+
                     // Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -177,6 +176,9 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         findViewsById();
 
         setDateTimeField();
+        fromDateEtxt.setInputType(0);
+        fromTimeEtxt.setInputType(0);
+        toTimeEtxt.setInputType(0);
 
     }
 
@@ -194,7 +196,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void setDateTimeField() {
-        final int id = getIntent().getIntExtra("ID", 0);
+        final int id = getIntent().getIntExtra("Id", 0);
 
         //final VerbindungDUMMY verbindung = new VerbindungDUMMY();
         final RestConnection verbindung = new RestConnection(this);
@@ -258,7 +260,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
         toTimePickerDialog.updateTime(hourToInt, minuteToInt);
-        veranstaltungsNameEtxt.setText(veranstaltung.getName());
+        veranstaltungsNameEtxt.setText(veranstaltung.getName(), TextView.BufferType.EDITABLE);
     }
 
 
