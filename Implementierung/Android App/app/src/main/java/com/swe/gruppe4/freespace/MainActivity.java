@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity
 
         //final VerbindungDUMMY connection = new VerbindungDUMMY();
 
-
+        startingPointId=0;
         //inflate your activity layout here!
         View contentView = inflater.inflate(R.layout.activity_main, null, false);
         drawer.addView(contentView, 0);
