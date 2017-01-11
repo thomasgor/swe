@@ -906,24 +906,31 @@ public class RestConnection {
     }
 
 
-    public void lecturePost(String name, long von, long bis, Raum raum){
+    public boolean lecturePost(String name, long von, long bis, Raum raum){
         String jSon = builder.buildPOSTveranstaltungJson(name, von, bis, raum);
 
         Log.d("edu", "lecturePost Request..." + jSon);
         //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_POST, jSon);
         String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_POST, jSon, "", true, true);
         Log.d("edu", "lecturePost Response: " + antwortJSon);
+        if(antwortJSon.equals("false")){
+            return false;
+        }
+        return true;
 
     }
 
-    public void lecturePut(int id, String name, long von, long bis, Raum raum){
+    public boolean lecturePut(int id, String name, long von, long bis, Raum raum){
         String jSon = builder.buildPUTveranstaltungJson(name, von, bis, raum);
 
         Log.d("edu", "lecturePut Request... with id:" + id);
         //String antwortJSon = restRequest(VERANSTALTUNG, HTTP_PUT, jSon);
         String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_PUT, jSon, String.valueOf(id), true, true);
         Log.d("edu", "lecturePut Response: " + antwortJSon);
-
+        if(antwortJSon.equals("false")){
+            return false;
+        }
+        return true;
 
     }
 

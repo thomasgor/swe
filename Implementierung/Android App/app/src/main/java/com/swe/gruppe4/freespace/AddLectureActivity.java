@@ -3,10 +3,13 @@ package com.swe.gruppe4.freespace;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -69,6 +72,10 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         fromDateEtxt.setText(dateFormatter.format(heute));
         fromTimeEtxt.setText(timeFormatter.format(heute));
 
+        fromDateEtxt.setInputType(0);
+        fromTimeEtxt.setInputType(0);
+        toTimeEtxt.setInputType(0);
+
         Calendar cal = Calendar.getInstance(); // creates calendar
         cal.setTime(heute); // sets calendar time/date
         cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
@@ -104,27 +111,31 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                     Long longFromDate = fromDate.getTime();
 
                     df = new SimpleDateFormat("hh:mm");
-                    java.util.Date toTime;
-                    toTime = df.parse(toTimeEtxt.getText().toString());
+                    //java.util.Date toTime;
+                    //toTime = df.parse(toTimeEtxt.getText().toString());
 
-                    String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
+                    String combiFromDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
                     SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
-                    Date longToTime = dfCombi.parse(combiFromDate);
+                    Log.d(AddLectureActivity.class.getSimpleName(), "CombiFromDate: " + combiFromDate);
+
+                    Date longFromTime = dfCombi.parse(combiFromDate);
 
                     //Long longToTime = toTime.getTime() + longFromDate;
 
-                    java.util.Date fromTime;
-                    toTime = df.parse(fromTimeEtxt.getText().toString());
+                    //java.util.Date fromTime;
+                    //toTime = df.parse(fromTimeEtxt.getText().toString());
                     //Long longFromTime = toTime.getTime() + longFromDate;
-                    String combiToDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
+                    String combiToDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
 
-                    Date longFromTime = dfCombi.parse(combiToDate);
+                    Log.d(AddLectureActivity.class.getSimpleName(), "CombiToDate: " + combiToDate);
+                    Date longToTime = dfCombi.parse(combiToDate);
+
                     String veranstaltungsName = veranstaltungsNameEtxt.getText().toString();
 
 
 
-                    String selectedRoomName = sItems.getSelectedItem().toString();
-
+                    String selectedRoomName = (String) sItems.getSelectedItem();
+                    Log.d(AddLectureActivity.class.getSimpleName(), "selectedRoomName: " + selectedRoomName);
                     //Nur damit selectedRoom initialisiert ist.
                     Raum selectedRoom = raumliste.get(0);
 
@@ -136,25 +147,32 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
                     }
 
-                    ArrayList<Veranstaltung> veranstaltungsListe = verb.lecturesGet();
-                    Boolean belegt = false;
-                    for(Veranstaltung veranstaltung: veranstaltungsListe){
-                        if(veranstaltung.getRaum().getId() == selectedRoom.getId()){
-                            if(veranstaltung.getVon() < longFromTime.getTime() && veranstaltung.getBis() > longFromTime.getTime() || veranstaltung.getVon() < longToTime.getTime() && veranstaltung.getBis() > longToTime.getTime() || veranstaltung.getVon() > longFromTime.getTime() && veranstaltung.getBis() < longToTime.getTime() || veranstaltung.getVon() == longFromTime.getTime() && veranstaltung.getBis() == longToTime.getTime()){
-                                belegt = true;
-                                break;
-                            }
 
+
+
+
+
+
+                    if(longFromTime.getTime()>= longToTime.getTime() ){
+                        Toast.makeText(getApplicationContext(),"Die Startzeit liegt vor der Endzeit.", Toast.LENGTH_LONG).show();
+                    }else{
+
+
+                        if(verb.lecturePost(veranstaltungsName, longFromTime.getTime(),longToTime.getTime(),selectedRoom)){
+
+
+                            Toast.makeText(getApplicationContext(),"Gespeichert", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(AddLectureActivity.this.getApplicationContext(), LectureListActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            AddLectureActivity.this.startActivity(intent);
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
                         }
                     }
 
-                    if(belegt){
-                        Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
-                    }else{
-                        verb.lecturePost(veranstaltungsName, longFromTime.getTime(),longToTime.getTime(),selectedRoom);
-                        Toast.makeText(getApplicationContext(),"Gespeichert", Toast.LENGTH_LONG).show();
-                        onBackPressed();
-                    }
+
+
                     //Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
                     //verb.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
                     //onBackPressed();
