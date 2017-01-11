@@ -97,7 +97,6 @@ public class MapView extends ImageView {
 
     private void speciaRooms(ArrayList<String> weg){
         //Start
-        invalidate();
         if(weg.get(0).equals("G107") && weg.get(1).equals("240")){
             weg.remove(0);
             weg.add(0,"G1070");
