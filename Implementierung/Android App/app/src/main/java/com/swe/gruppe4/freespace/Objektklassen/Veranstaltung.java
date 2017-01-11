@@ -35,13 +35,8 @@ public class Veranstaltung implements Serializable {
 
             this.id = jsonObj.getInt("id");
             this.name = jsonObj.getString("name");
-            this.dozent = new Benutzer(jsonObj.getString("benutzer"));
-            //Date von = new Date(jsonObj.getLong("von")*1000);
-            //Date bis = new Date(jsonObj.getLong("von")*1000);
-            //String vonS = sdf.format(von);
-            //String bisS = sdf.format(von);
-            //this.von = Long.valueOf(vonS);
-            //this.bis = Long.valueOf(bisS);
+            long hi = 123;
+            this.dozent = new Benutzer(jsonObj.getString("benutzer"), hi);
             this.von = jsonObj.getLong("von")*1000;
             this.bis = jsonObj.getLong("bis")*1000;
             this.raum = new Raum(jsonObj.getString("raum"),false);

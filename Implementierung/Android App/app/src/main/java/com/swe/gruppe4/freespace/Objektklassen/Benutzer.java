@@ -64,7 +64,7 @@ public class Benutzer implements Serializable {
         }
     }
 
-    public Benutzer(String jsonBenutzer, int a) {
+    public Benutzer(String jsonBenutzer, int nurFürFreundschaften) {
         try {
             JSONObject jsonObj = new JSONObject(jsonBenutzer);
             this.id = jsonObj.getString("id");
@@ -78,6 +78,14 @@ public class Benutzer implements Serializable {
             Log.d("edu", "EXCEPTION in Benutzer");
             e.printStackTrace();
         }
+    }
+
+    public Benutzer(String jsonBenutzer, long nurFürVeranstaltungen) {
+
+
+            this.id = jsonBenutzer;
+
+
     }
 
 

@@ -95,8 +95,8 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                            @Override
                     public void onClick(DialogInterface dialog, int which) {
                             new RestConnection(getContext()).freundschaftDelete(ben);
-                               friendInfoList.remove(ben);
-                               notifyDataSetChanged();
+                               //friendInfoList.remove(ben);
+                               //notifyDataSetChanged();
                             //Intent intent = new Intent(getContext(), Freundesliste.class);
                                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             //con.startActivity(intent);
