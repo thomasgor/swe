@@ -323,6 +323,7 @@ public class Sitzung extends Datenbank {
                 if(sitz.get("hasTag").toString().equals("1")) {
                     Raum.putRaumID(sitz.get("raum").toString(), null, benutzer);
                 }
+                connect();
                 sitz.delete();
             }
         } catch(Exception e) {
