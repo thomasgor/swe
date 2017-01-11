@@ -22,6 +22,7 @@ import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 import com.swe.gruppe4.freespace.Objektklassen.Veranstaltung;
 import com.swe.gruppe4.freespace.Objektklassen.Karte;
+import com.swe.gruppe4.freespace.Objektklassen.RoomEnterance;
 
 import org.json.JSONException;
 import org.json.JSONObject;

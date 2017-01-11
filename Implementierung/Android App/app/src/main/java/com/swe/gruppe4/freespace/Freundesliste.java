@@ -39,8 +39,8 @@ public class Freundesliste extends BaseActivity
         ListView requestView = (ListView) findViewById(R.id.friendRequestList);
         ListView friendView = (ListView) findViewById(R.id.friendList);
 
-        FriendRequestAdapter requestAdapter = new FriendRequestAdapter(getApplicationContext(), R.layout.friends_request_box);
-        final FriendListAdapter friendsAdapter = new FriendListAdapter(getApplicationContext(), R.layout.friends_box);
+        FriendRequestAdapter requestAdapter = new FriendRequestAdapter(this, R.layout.friends_request_box);
+        final FriendListAdapter friendsAdapter = new FriendListAdapter(this, R.layout.friends_box);
         requestView.setAdapter(requestAdapter);
         friendView.setAdapter(friendsAdapter);
         requestView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
@@ -51,6 +51,7 @@ public class Freundesliste extends BaseActivity
             else
                 requestAdapter.add(f);
         }
+
         requestAdapter.notifyDataSetChanged();
         friendsAdapter.notifyDataSetChanged();
         if(!requestAdapter.isEmpty()) {
@@ -107,6 +108,9 @@ public class Freundesliste extends BaseActivity
         alert1.show();
     }
 
+    public void update(){
+        recreate();
+    }
 
 
 }
