@@ -128,6 +128,8 @@ public class QRScanActivity extends AppCompatActivity {
      */
     private void invalidQRCode() {
         Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
