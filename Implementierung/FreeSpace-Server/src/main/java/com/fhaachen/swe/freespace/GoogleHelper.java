@@ -17,12 +17,16 @@ import java.util.Map;
 import static com.fhaachen.swe.freespace.main.Datenbank.connect;
 import static com.fhaachen.swe.freespace.main.Datenbank.disconnect;
 
+import java.util.logging.Logger;
+
 
 /**
  * Die Klasse GoogleHelper ist eine Hilfsklasse zum Kommunizieren mit FCM zum Organisieren von Push-Benachrichtigungen
  * Created by xpd on 02.01.2017.
  */
 public class GoogleHelper {
+
+    private static final Logger log = Logger.getLogger( GoogleHelper.class.getName() );
 
     private static final String URL = "https://fcm.googleapis.com/fcm/send";
     private static final String AUTH = "key=AAAAsSJNqV4:APA91bFvIDiNxLq1cUxth2_omCbf64Sa3IuIii5koTLzpOkJEGR3XdfOxomVXBW0C1lccB3YXcxu7tALvriaLP3cJearIP4c3pUuGlRGKOEw7NiXzBJGLXY3-Lb9qWhvTzQXi2kotD3GLPleaAumCeB33fK_hJaSTA";
@@ -41,8 +45,6 @@ public class GoogleHelper {
     private veranstaltungThread runnableV = new veranstaltungThread();
 
     public GoogleHelper() {
-        System.out.println("Starting GoogleHelperThreads.");
-
         Thread t1 = new Thread(this.runnableS);
         Thread t2 = new Thread(this.runnableV);
         t1.start();
@@ -60,10 +62,10 @@ public class GoogleHelper {
             this.active = true;
         }
         public void run() {
-            System.out.println("Start sitzungThread");
+            log.info("Start sitzungThread");
             while (true) {
                 if (!this.active) {
-                    System.out.println("End sitzungThread");
+                    log.info("End sitzungThread");
                     break;
                 }
                 checkDB();
@@ -106,10 +108,10 @@ public class GoogleHelper {
             this.active = true;
         }
         public void run() {
-            System.out.println("Start veranstaltungThread");
+            log.info("Start veranstaltungThread");
             while (true) {
                 if (!this.active) {
-                    System.out.println("End veranstaltungThread");
+                    log.info("End veranstaltungThread");
                     break;
                 }
                 checkDB();
@@ -182,14 +184,15 @@ public class GoogleHelper {
             this.json = JsonHelper.getJsonStringFromMap(param);
         }
         synchronized void sendToFCM() {
+            log.info("sendToFCM");
             Response response = ClientBuilder.newClient()
                     .target(URL)
                     .request(MediaType.APPLICATION_JSON)
                     .header("Authorization",AUTH)
                     .post(Entity.json(this.json));
 
-            System.out.println("Status: " + response.getStatus());
-            System.out.println("Response: " + response.readEntity(String.class));
+            log.info("Status: " + response.getStatus());
+            log.info("Response: " + response.readEntity(String.class));
         }
     }
 }
