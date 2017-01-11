@@ -37,7 +37,9 @@ public class MapView extends ImageView {
     ArrayList<Raum> rooms;
     private ArrayList<RoomEnterance> roomEnterance;
     private static final String TAG = "MapView";
-    private int opacity;
+    public int opacity;
+    public static String endPoint = "";
+    public static String startPoint = "";
     public MapView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -46,7 +48,7 @@ public class MapView extends ImageView {
         navigationPaint.setColor(Color.BLUE);
         navigationPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         navigationPaint.setStrokeWidth(20);
-        rooms = new RestConnection(context).raumGet();;
+        rooms = new RestConnection(context).raumGet();
         roomEnterance =  new RestConnection(context).raumEingangGet();
         //initPaint(connection);
     }
@@ -71,8 +73,10 @@ public class MapView extends ImageView {
         //        getTop()+(getBottom()-getTop())/3,
         //        getRight()-(getRight()-getLeft())/3,
         //        getBottom()-(getBottom()-getTop())/3,mapPaint);
-        //weg = new RestConnection(context).wegGet("G102","G116");
-        //canvas.drawPath(drawFloorNodes(weg),navigationPaint);
+        if(!startPoint.equals("") && !endPoint.equals("")){
+            weg = new RestConnection(context).wegGet(startPoint,endPoint);
+            canvas.drawPath(drawFloorNodes(weg),navigationPaint);
+        }
         //canvas.drawPath(drawNavigation(),navigationPaint);
         //canvas.drawRect(GetDipsFromPixel(280),0,GetDipsFromPixel(200),GetDipsFromPixel(190),mapPaint);
 
@@ -86,8 +90,14 @@ public class MapView extends ImageView {
         return (int) (pixels * scale + 0.5f);
     }
 
+    public static void startNavigation(String start,String end){
+        startPoint = start;
+        endPoint = end;
+    }
+
     private void speciaRooms(ArrayList<String> weg){
         //Start
+        invalidate();
         if(weg.get(0).equals("G107") && weg.get(1).equals("240")){
             weg.remove(0);
             weg.add(0,"G1070");
@@ -381,4 +391,5 @@ public class MapView extends ImageView {
          **/
         return true;
     }
+
 }

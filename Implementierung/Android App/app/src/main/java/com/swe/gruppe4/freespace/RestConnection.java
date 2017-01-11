@@ -1030,13 +1030,15 @@ public class RestConnection {
         Karte roomEnterance = new Karte();
         roomEnterance.addRoomEnterance(1111,"G1111",(float)1.3,700);
         roomEnterance.addRoomEnterance(1110,"G1110",(float)1.3,550);
-        roomEnterance.addRoomEnterance(116,"G116",(float)2.5,700);
-        roomEnterance.addRoomEnterance(115,"G115",(float)2,750);
-        roomEnterance.addRoomEnterance(112,"G112",(float)2.5,550);
+        roomEnterance.addRoomEnterance(5,"G111",(float)1.3,550);
+        roomEnterance.addRoomEnterance(7,"G116",(float)2.5,700);
+        roomEnterance.addRoomEnterance(6,"G115",(float)2,750);
+        roomEnterance.addRoomEnterance(4,"G112",(float)2.5,550);
         roomEnterance.addRoomEnterance(1071,"G1071",(float)1.3,380);
         roomEnterance.addRoomEnterance(1070,"G1070",(float)1.3,240);
-        roomEnterance.addRoomEnterance(102,"G102",(float)2.5,240);
-        roomEnterance.addRoomEnterance(101,"G101",(float)2,200);
+        roomEnterance.addRoomEnterance(3,"G107",(float)1.3,240);
+        roomEnterance.addRoomEnterance(2,"G102",(float)2.5,240);
+        roomEnterance.addRoomEnterance(1,"G101",(float)2,200);
         return roomEnterance.getRooms();
     }
 
