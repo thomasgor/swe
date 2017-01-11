@@ -1,4 +1,4 @@
-package com.swe.gruppe4.freespace;
+﻿package com.swe.gruppe4.freespace;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -145,6 +145,13 @@ public class QRScanActivity extends AppCompatActivity {
      */
     private void cancelledScan() {
         Toast.makeText(this, "Scanvorgang abgebrochen" ,Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
