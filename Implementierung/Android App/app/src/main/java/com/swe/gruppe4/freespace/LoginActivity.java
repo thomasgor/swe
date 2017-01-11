@@ -151,26 +151,49 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount acct = result.getSignInAccount();
 
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            intent.putExtra("profileName",acct.getDisplayName());
-            intent.putExtra("profileEmail",acct.getEmail());
-            //Log.d(TAG, "UserID: " + acct.getId());
-            //Log.d(TAG, "Vorname: " + acct.getGivenName());
-            //Log.d(TAG, "Nachname:" + acct.getFamilyName());
-            //Log.d(TAG, "UserIDToken: " + acct.getIdToken());
+
+
             String pictureURL;
             if(acct.getPhotoUrl() != null) {
                 pictureURL = acct.getPhotoUrl().toString();
                 //Log.d(TAG, "PictureURL: " + pictureURL);
 
             } else {
-                pictureURL = "https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg";
+                pictureURL = "https://support.plymouth.edu/kb_images/Yammer/default.jpeg";
             }
 
+            String familyName, givenName;
+            if(acct.getFamilyName() == null || acct.getFamilyName().equals("null")) {
+                familyName = "";
+            }
+            else {
+                familyName = acct.getFamilyName();
+            }
+
+            if(acct.getGivenName()== null || acct.getGivenName().equals("null")) {
+                givenName = "NA";
+            }
+            else {
+                givenName = acct.getGivenName();
+            }
+
+            String displayName;
+            if(acct.getDisplayName() == null || acct.getDisplayName() == "null") {
+                displayName = "NA";
+            }
+            else {
+                displayName = acct.getDisplayName();
+            }
+
+
             RestConnection connection = new RestConnection(this);
-            connection.benutzerPost(acct.getId(),acct.getEmail(), acct.getFamilyName(), acct.getGivenName(), pictureURL);
+            connection.benutzerPost(acct.getId(),acct.getEmail(), familyName, givenName, pictureURL);
             connection.benutzerPut(FirebaseInstanceId.getInstance().getToken());
 
             intent.putExtra("profilePicture",pictureURL);
+            intent.putExtra("profileName",displayName);
+            intent.putExtra("profileEmail",acct.getEmail());
+
             startActivity(intent);
             finish();
 
