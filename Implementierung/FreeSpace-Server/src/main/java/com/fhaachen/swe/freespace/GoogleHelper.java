@@ -36,8 +36,10 @@ public class GoogleHelper {
     private static final String testAUTH = "key=AAAA9gPq8VM:APA91bGXgmQjlEpt0bv8-QTBm29004NOnekWWPS0R8T6rvvPIICAuXPc4xpxJfqFWmhQesCqLXxemmhpuvEBN3ooNZZ8TDF6wZOIFEsPSUETHNlE1NO9_YtQ1T5WH6TE3deMDrJS3KV3wbyjuOWK5E8tjTk9zBhHrQ";
     private static final String testTO2 = "cpOBRNZuxtk:APA91bGRe_8hNIJr9TPAlxz7wsbIxaqwcy09XGsYg9GnrcZCB6go9IK1PV96V9PlY1t75b7aZHDgcbmMao-ToVFBA24itGNUMAENLrW1m6ZN5l_ktRyGP8StBTg3K3RH39-UxTTalyRA";
 
-    private static final String bodySitzung = "5minutes";
-    private static final String bodyVeranstaltung = "roomBlocked";
+    //private static final String bodySitzung = "5minutes";
+    private static final String bodySitzung = "Ihre Sitzung läuft bald aus...";
+    //private static final String bodyVeranstaltung = "roomBlocked";
+    private static final String bodyVeranstaltung = "In ihrem aktuellen Raum findet gleich eine Veranstaltung statt.";
     private static final long min5 = 300000;
     private static final long min1 = 60000;
 
