@@ -151,8 +151,7 @@ public class VeranstaltungREST {
      */
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path(value="/{param}")
     public Response deleteVeranstaltungID(@PathParam(value="param") String id, @Context SecurityContext context){
         String professorID = context.getUserPrincipal().getName();

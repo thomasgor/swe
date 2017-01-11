@@ -90,7 +90,7 @@ public class FreundschaftREST {
      */
 
     @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path(value="/{param}")
     public Response deleteFreundschaftID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();

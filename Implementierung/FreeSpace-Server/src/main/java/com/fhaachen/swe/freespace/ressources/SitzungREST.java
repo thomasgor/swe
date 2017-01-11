@@ -78,6 +78,7 @@ public class SitzungREST {
 
     @DELETE
     @Path(value="/{param}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response deleteSitzungID(@PathParam(value="param") String id, @Context SecurityContext context){
         String benutzerID = context.getUserPrincipal().getName();
         if(!id.equals(benutzerID)){
