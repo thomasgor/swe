@@ -73,7 +73,7 @@ public class Veranstaltung extends Datenbank {
             if(nichtBeachten.equals(v.get("id").toString())){
                 continue;
             }
-
+            /*
             if(von >= von1 && von <= bis1){
                 return false;
             }
@@ -87,6 +87,10 @@ public class Veranstaltung extends Datenbank {
             }
 
             if(bis1 >= von && bis <=bis){
+                return false;
+            }*/
+
+            if(! ((von < von1 && bis <= von) || (von >= bis1 && bis >=bis1))){
                 return false;
             }
         }
