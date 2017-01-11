@@ -140,7 +140,7 @@ public class ActiveSessionActivity extends BaseActivity
         raumName = (TextView) findViewById(R.id.txt_room_number);
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
 
-        getSupportActionBar().setTitle(raum.getRaumname());
+        getSupportActionBar().setTitle("Aktive Sitzung in " + raum.getRaumname());
 
         tag = (TextView) findViewById(R.id.txt_tag);
 
