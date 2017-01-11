@@ -1,4 +1,4 @@
-﻿package com.swe.gruppe4.freespace;
+package com.swe.gruppe4.freespace;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -96,15 +96,8 @@ public class QRScanActivity extends AppCompatActivity {
         AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
         build.setCancelable(false);
         build.setTitle(meinRaum.getRaumname());
-
-        if(meinRaum.getTag()!=null){
-            build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
-                    + " Leute\nTag: " + meinRaum.getTag().getName() );
-        } else {
-            build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
-                    + " Leute");
-        }
-
+        build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
+                                                            + " Leute\nTag: " + meinRaum.getTag().getName() );
 
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
@@ -114,7 +107,6 @@ public class QRScanActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),ActiveSessionActivity.class);
                 intent.putExtra("sitzung",new Sitzung(4711,meinRaum,false,(System.currentTimeMillis()/1000L)+2700));
                 startActivity(intent);
-                finish();
             }
         });
         build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
@@ -123,7 +115,6 @@ public class QRScanActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
                 //intent.putExtra("raumliste",(ArrayList<Raum>) getIntent().getSerializableExtra("raumliste"));
                 startActivity(intent);
-                finish();
             }
         });
         AlertDialog alert1 = build.create();
