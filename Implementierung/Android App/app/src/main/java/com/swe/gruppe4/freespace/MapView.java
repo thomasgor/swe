@@ -71,8 +71,8 @@ public class MapView extends ImageView {
         //        getTop()+(getBottom()-getTop())/3,
         //        getRight()-(getRight()-getLeft())/3,
         //        getBottom()-(getBottom()-getTop())/3,mapPaint);
-        weg = new RestConnection(context).wegGet("G102","G107");
-        canvas.drawPath(drawFloorNodes(weg),navigationPaint);
+        //weg = new RestConnection(context).wegGet("G102","G116");
+        //canvas.drawPath(drawFloorNodes(weg),navigationPaint);
         //canvas.drawPath(drawNavigation(),navigationPaint);
         //canvas.drawRect(GetDipsFromPixel(280),0,GetDipsFromPixel(200),GetDipsFromPixel(190),mapPaint);
 
@@ -194,7 +194,7 @@ public class MapView extends ImageView {
         mapPaint = new Paint();
         for(Raum r : rooms){
             switch (r.getId()){
-                case 101:
+                case 1:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -206,7 +206,7 @@ public class MapView extends ImageView {
                     mapPaint.setAlpha(opacity);
                     canvas.drawRect(G101, mapPaint);
                     break;
-                case 102:
+                case 2:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -218,7 +218,7 @@ public class MapView extends ImageView {
                     mapPaint.setAlpha(opacity);
                     canvas.drawRect(G102, mapPaint);
                     break;
-                case 107:
+                case 3:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -230,7 +230,7 @@ public class MapView extends ImageView {
                     mapPaint.setAlpha(opacity);
                     canvas.drawRect(G107, mapPaint);
                     break;
-                case 111:
+                case 4:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -242,7 +242,7 @@ public class MapView extends ImageView {
                     mapPaint.setAlpha(opacity);
                     canvas.drawRect(G111, mapPaint);
                     break;
-                case 112:
+                case 5:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -254,7 +254,7 @@ public class MapView extends ImageView {
                     mapPaint.setAlpha(opacity);
                     canvas.drawRect(G112, mapPaint);
                     break;
-                case 115:
+                case 6:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -266,7 +266,7 @@ public class MapView extends ImageView {
                     mapPaint.setAlpha(opacity);
                     canvas.drawRect(G115, mapPaint);
                     break;
-                case 116:
+                case 7:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
                     } else if(r.getStatus().equals("gelb")){
@@ -311,46 +311,46 @@ public class MapView extends ImageView {
         float y = event.getY();
         //Toast.makeText(getApplicationContext(),"X: "+x+" Y: "+y,Toast.LENGTH_SHORT).show();
         if( event.getAction() == MotionEvent.ACTION_UP) {
-            if (x > 0 && x < GetDipsFromPixel(135) && y > 0 && y < GetDipsFromPixel(280)) {
+            if (x > 0 && x < getLeft()+(int)(getRight()/2.43) && y > 0 && y < GetDipsFromPixel(280)) {
                 // for (Raum r:räume) {
                 //     if( r.getId() == 4711){
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 102);
+                intent.putExtra("id", 2);
                 context.startActivity(intent);
                 //    }
                 //  }
             }
-            if (x > GetDipsFromPixel(135) && x < GetDipsFromPixel(335) && y > 0 && y < GetDipsFromPixel(200)) {
+            if (x > getLeft()+(int)(getRight()/2.43) && x < GetDipsFromPixel(335) && y > 0 && y < GetDipsFromPixel(200)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 101);
+                intent.putExtra("id", 1);
                 context.startActivity(intent);
             }
 
             if (x > GetDipsFromPixel(250) && x < GetDipsFromPixel(335) && y > GetDipsFromPixel(200) && y < getBottom()-GetDipsFromPixel(480)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 107);
+                intent.putExtra("id", 3);
                 context.startActivity(intent);
             }
-            if (x > 0 && x < GetDipsFromPixel(130) && y > GetDipsFromPixel(600) && y < getBottom()) {
+            if (x > 0 && x < getLeft()+(int)(getRight()/2.43) && y > GetDipsFromPixel(600) && y < getBottom()) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 116);
+                intent.putExtra("id", 7);
                 context.startActivity(intent);
             }
-            if (x > GetDipsFromPixel(130) && x < GetDipsFromPixel(430) && y > GetDipsFromPixel(750) && y < getBottom()) {
+            if (x > getLeft()+(int)(getRight()/2.43) && x < GetDipsFromPixel(430) && y > GetDipsFromPixel(750) && y < getBottom()) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 115);
+                intent.putExtra("id", 6);
                 context.startActivity(intent);
             }
 
-            if (x > 0 && x < GetDipsFromPixel(130) && y > GetDipsFromPixel(500) && y < getBottom()-GetDipsFromPixel(300)) {
+            if (x > 0 && x < getLeft()+(int)(getRight()/2.43) && y > GetDipsFromPixel(500) && y < getBottom()-GetDipsFromPixel(300)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 112);
+                intent.putExtra("id", 5);
                 context.startActivity(intent);
             }
 
             if (x > GetDipsFromPixel(250) && x < GetDipsFromPixel(330) && y > GetDipsFromPixel(525) && y < getBottom()-GetDipsFromPixel(150)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
-                intent.putExtra("id", 111);
+                intent.putExtra("id", 4);
                 context.startActivity(intent);
             }
         }
