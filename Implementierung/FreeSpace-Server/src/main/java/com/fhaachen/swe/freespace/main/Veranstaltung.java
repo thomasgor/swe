@@ -149,6 +149,7 @@ public class Veranstaltung extends Datenbank {
         if(v == null){
             result = "NOT_FOUND";
         }
+
         else if(!v.get("benutzer").equals(professorID)){
             result = "FORBIDDEN";
         }
@@ -157,7 +158,12 @@ public class Veranstaltung extends Datenbank {
         }
         else {
             connect();
-            v.set("raum", input.get("raum"));
+
+            String raumJSON = input.get("raum").toString();
+            Map raumMAP = JsonHelper.toMap(raumJSON);
+            String raumID = raumMAP.get("id").toString();
+
+            v.set("raum", input.get(raumID);
             v.set("name", input.get("name"));
             v.set("von", input.get("von"));
             v.set("bis", input.get("bis"));

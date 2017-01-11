@@ -163,6 +163,7 @@ public class Konfiguration extends Datenbank{
         Integer count = new Integer(1);
         for(Tag element: tagList) {
             divTag.appendElement("label").appendElement("input").attr("type", "checkbox").attr("id", "tag" + count.toString()).attr("name", "tags").attr("value", element.getId().toString()).text((String)element.get("name"));
+            divTag.append("<br />");
             count++;
         }
         return doc.toString();
