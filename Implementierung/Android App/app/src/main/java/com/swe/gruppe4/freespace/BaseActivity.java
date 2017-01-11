@@ -1,10 +1,13 @@
 package com.swe.gruppe4.freespace;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -153,6 +156,20 @@ public class BaseActivity extends AppCompatActivity
     @Override
     public void setTheme(int resid){
         super.setTheme(resid);
+    }
+
+    public static void showEndDialog(Context context){
+        new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.errormsgTitle, RestConnection.lastStatusCode))
+                .setMessage("Leider ist ein Fehler aufgetreten.\nBitte starten Sie die App neu.")
+                .setPositiveButton("Verstanden", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.exit(0);
+                    }
+                })
+                .create()
+                .show();
     }
 
 }

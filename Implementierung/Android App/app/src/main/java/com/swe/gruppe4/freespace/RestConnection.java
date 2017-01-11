@@ -180,7 +180,7 @@ public class RestConnection {
                         conn.setRequestProperty("Authorization", "Basic " + encoding);
                     }
                     if(httpMethod.equals(HTTP_DELETE)){
-                        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded" );
+                        //conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded" );
                         //conn.setDoOutput(true);
                     }
 
@@ -789,12 +789,82 @@ public class RestConnection {
         return new Sitzung(antwortJSon);
     }
 
-    public void sitzungDelete(String id){
+    public void sitzungDelete(final String id){
 
         Log.d("edu", "sitzungDelete Request..");
+
+        class RestCon extends AsyncTask<String, Integer, String> {
+            String resp;
+
+            protected String doInBackground(String... params) {
+                String response = "false";
+                publishProgress(0);
+                try {
+                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + SITZUNG + "/" + id);
+                    Log.d("edu", "doRestRequest URL: " + url.toString());
+                    /*HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    String userPass = id + ":" + token;
+                    String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
+                    conn.setRequestProperty("Authorization", "Basic " + encoding);
+
+                    conn.setDoOutput(true);
+                    conn.setRequestProperty(
+                            "Content-Type", "application/x-www-form-urlencoded" );
+
+                    conn.setRequestMethod(HTTP_DELETE);
+                    Log.d("edu","doRestRequest Method: " + conn.getRequestMethod());
+                    //conn.setChunkedStreamingMode(0);
+                    conn.connect();
+
+                    //Log.d("edu","Output Objekt: " + new Gson().toJson(conn));
+
+                    int responseCode = conn.getResponseCode();
+                    lastStatusCode = responseCode;
+                    Log.d("edu", "doRestRequest ResponseCode: " + responseCode);
+                    conn.disconnect();*/
+
+                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+                    String userPass = id + ":" + token;
+                    String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
+                    httpCon.setRequestProperty("Authorization", "Basic " + encoding);
+                    //httpCon.setDoOutput(true);
+                    //httpCon.setRequestProperty(
+                    //        "Content-Type", "application/x-www-form-urlencoded" );
+                    httpCon.setRequestMethod("DELETE");
+                    httpCon.connect();
+
+
+                    int responseCode = httpCon.getResponseCode();
+                    lastStatusCode = responseCode;
+                    Log.d("edu","doRestRequest" + HTTP_DELETE +" Response: " + responseCode);
+
+
+
+                } catch (IOException e) {
+                    Log.d("edu", "EXCEPTION IN doRestRequest!");
+                    e.printStackTrace();
+                }
+
+                return response;
+
+            }
+            protected void onProgressUpdate(Integer... progress) {
+                //showProgressDialog();
+            }
+
+            protected void onPostExecute(String result) {
+                hideProgressDialog();
+                resp = result;
+
+
+            }
+        }
+
+        RestCon con = new RestCon();
+        con.execute("");
         //String antwortJSon = restRequest(SITZUNG, HTTP_DELETE, "", id);
-        String antwortJSon = doRestRequest(SITZUNG, HTTP_DELETE, "", id, false, true);
-        Log.d("edu", "sitzungDelete Response: " + antwortJSon);
+        //String antwortJSon = doRestRequest(SITZUNG, HTTP_DELETE, "", id, false, true);
+        Log.d("edu", "sitzungDelete Response: " + lastStatusCode);
     }
 
     public ArrayList<Freundschaft> freundschaftGet() {

@@ -38,6 +38,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,6 +68,14 @@ public class ActiveSessionActivity extends BaseActivity
         //data = new VerbindungDUMMY().sitzungGet();
 
         data = new RestConnection(this).sitzungGet();
+
+        if(data == null){
+            Toast.makeText(this, "Leider ist ein Fehler aufgetreten, bitte starten Sie die App neu." , Toast.LENGTH_LONG).show();
+            //Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+            //startActivity(intent);
+            finish();
+        }
+
         raum = data.getRaum();
         //raum = new RestConnection(this).raumGet(data.getRaum().getId());
 
@@ -224,6 +233,8 @@ public class ActiveSessionActivity extends BaseActivity
                 setData();
         }
     }
+
+
 
 }
 

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
+import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
@@ -45,6 +46,11 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(ben.istProfessor()) {
+            super.setTheme(R.style.AppThemeProf_NoActionBar);
+        }
+
         id = getIntent().getIntExtra("id",4711);
         //raum = new VerbindungDUMMY().raumGet(id);
         raum = new RestConnection(this).raumGet(id);
@@ -152,6 +158,15 @@ public class RoomDetailsActivity extends AppCompatActivity {
         gehezu=(Button) findViewById(R.id.btn_goto);
         if(MainActivity.startingPointId != 0){
             gehezu.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_directions_white_24dp, 0,0,0);
+            gehezu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
+                    intent.putExtra("end",2);
+                    startActivity(intent);
+                    finish();
+                }
+            });
         } else {
             gehezu.setOnClickListener(new View.OnClickListener() {
                 @Override
