@@ -144,7 +144,8 @@ public class Veranstaltung extends Datenbank {
 
         int von = Integer.parseInt(input.get("von").toString());
         int bis = Integer.parseInt(input.get("bis").toString());
-        String raum = input.get("raum").toString();
+
+        String raumID = ((Map)input.get("raum")).get("id").toString();
 
         if(v == null){
             result = "NOT_FOUND";
@@ -153,17 +154,13 @@ public class Veranstaltung extends Datenbank {
         else if(!v.get("benutzer").equals(professorID)){
             result = "FORBIDDEN";
         }
-        else if(!Veranstaltung.istRaumFrei(von,bis, raum, id)){
+        else if(!Veranstaltung.istRaumFrei(von,bis, raumID, id)){
             result = "ROOM_BLOCKED";
         }
         else {
             connect();
 
-            String raumJSON = input.get("raum").toString();
-            Map raumMAP = JsonHelper.toMap(raumJSON);
-            String raumID = raumMAP.get("id").toString();
-
-            v.set("raum", input.get(raumID);
+            v.set("raum", raumID);
             v.set("name", input.get("name"));
             v.set("von", input.get("von"));
             v.set("bis", input.get("bis"));
@@ -175,7 +172,6 @@ public class Veranstaltung extends Datenbank {
                 System.out.println(e);
             }
         }
-
 
         disconnect();
         return result;
