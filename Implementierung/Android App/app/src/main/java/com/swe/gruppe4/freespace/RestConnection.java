@@ -3,6 +3,7 @@ package com.swe.gruppe4.freespace;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64.*;
 import android.util.Base64;
@@ -181,7 +182,13 @@ public class RestConnection {
                         String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
                         conn.setRequestProperty("Authorization", "Basic " + encoding);
                     }
+                    if(httpMethod.equals(HTTP_DELETE)){
+                        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded" );
+                        //conn.setDoOutput(true);
+                    }
+
                     conn.setRequestMethod(httpMethod);
+                    Log.d("edu","doRestRequest Method: " + conn.getRequestMethod());
                     conn.setChunkedStreamingMode(0);
 
 	                if(!httpMethod.equals(HTTP_GET) && !httpMethod.equals(HTTP_DELETE)) {
@@ -198,6 +205,7 @@ public class RestConnection {
                     else {
                         conn.connect();
                     }
+                    //Log.d("edu","Output Objekt: " + new Gson().toJson(conn));
 
                     int responseCode = conn.getResponseCode();
                     lastStatusCode = responseCode;
@@ -208,6 +216,7 @@ public class RestConnection {
                         response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
                         in.close();
                     } else {
+                        Log.d("edu","Responsecode unbekannt");
                         //showErrorMessage(responseCode);
                     }
                     conn.disconnect();
