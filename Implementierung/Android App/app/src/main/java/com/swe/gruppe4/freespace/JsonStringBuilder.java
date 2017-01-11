@@ -400,4 +400,31 @@ public class JsonStringBuilder {
 
 
     }
+
+    public ArrayList getWegListFromJson(String jsonString) {
+        ArrayList<String> list = new ArrayList<String>();
+        //Log.d("edu", "in getRaumFromJson" + jsonString);
+        try {
+            //JSONObject jsonObj = new JSONObject(jsonString);
+            JSONArray jsonArr = new JSONArray(jsonString);
+            //JSONArray jsonArray = new JSONArray();
+
+            //jsonObj.toJSONArray(jsonArray);
+            if (jsonArr != null) {
+                int len = jsonArr.length();
+                //Benutzer[] benList = new Benutzer[0];
+                for (int i = 0; i < len; i++) {
+                    //list.add(new Raum(jsonArray.get(i).toString(),false));
+                    JSONObject wegObj = jsonArr.getJSONObject(i);
+
+                    list.add(wegObj.getString("id"));
+                }
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+            Log.d("edu", "EXCEPTION in JsonStringBuidler/getRaumListe!");
+        }
+        return list;
+    }
 }

@@ -62,7 +62,7 @@ public class RestConnection {
     private static final String VERANSTALTUNG = "veranstaltung";
     private static final String RAUM = "raum";
     private static final String TAG = "tag";
-    private static final String KARTE = "karte";
+    private static final String WEG = "weg";
     JsonStringBuilder builder = new JsonStringBuilder();
 
 
@@ -143,7 +143,7 @@ public class RestConnection {
             case TAG:
                 res.append(200,0);
                 break;
-            case KARTE:
+            case WEG:
                 switch (httpMethod){
                     case HTTP_GET:
                         break;
@@ -625,7 +625,7 @@ public class RestConnection {
                 break;
             case TAG:
                 break;
-            case KARTE:
+            case WEG:
                 break;
             default:
                 return "false";
@@ -683,7 +683,7 @@ public class RestConnection {
                 break;
             case TAG:
                 break;
-            case KARTE:
+            case WEG:
                 break;
             default:
                 return "false";
@@ -718,9 +718,11 @@ public class RestConnection {
             case TAG:
                 res.append(200,0);
                 break;
-            case KARTE:
+            case WEG:
                 switch (httpMethod){
                     case HTTP_GET:
+                        res.append(200,0);
+                        res.append(400,0);
                         break;
                     case HTTP_POST:
                         break;
@@ -1007,5 +1009,30 @@ public class RestConnection {
             mProgressDialog.hide();
         }
     }
+
+    public ArrayList<String> wegGet(String start, String ende) {
+        String antwortJSon = doRestRequest(WEG, HTTP_GET, "",  (start+"/"+ende), true, true);
+        if(antwortJSon == "false") { // kein raum mit der id gefunden :code 400
+            return null;
+        } else {
+            return builder.getWegListFromJson(antwortJSon);
+        }
+
+    }
+
+    public ArrayList<RoomEnterance> raumEingangGet() {
+        Karte roomEnterance = new Karte();
+        roomEnterance.addRoomEnterance(1111,"G1111",(float)1.3,700);
+        roomEnterance.addRoomEnterance(1110,"G1110",(float)1.3,550);
+        roomEnterance.addRoomEnterance(116,"G116",(float)2.5,700);
+        roomEnterance.addRoomEnterance(115,"G115",(float)2,750);
+        roomEnterance.addRoomEnterance(112,"G112",(float)2.5,550);
+        roomEnterance.addRoomEnterance(1071,"G1071",(float)1.3,380);
+        roomEnterance.addRoomEnterance(1070,"G1070",(float)1.3,240);
+        roomEnterance.addRoomEnterance(102,"G102",(float)2.5,240);
+        roomEnterance.addRoomEnterance(101,"G101",(float)2,200);
+        return roomEnterance.getRooms();
+    }
+
 
 }
