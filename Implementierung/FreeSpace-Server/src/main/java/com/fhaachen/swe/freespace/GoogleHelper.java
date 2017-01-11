@@ -107,20 +107,18 @@ public class GoogleHelper {
         }
         public void run() {
             System.out.println("Start veranstaltungThread");
-            //while (true) {
-            if (!this.active) {
-                System.out.println("End veranstaltungThread");
-                //break;
+            while (true) {
+                if (!this.active) {
+                    System.out.println("End veranstaltungThread");
+                    break;
+                }
+                checkDB();
+                try {
+                    Thread.sleep(min1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            checkDB();
-            try {
-                //zum testen
-                Thread.sleep(3000);
-                //Thread.sleep(min1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //}
         }
         public void stop(){
             this.active = false;
