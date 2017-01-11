@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -67,9 +68,12 @@ public class QRScanActivity extends AppCompatActivity {
                         invalidQRCode();
                     }
                     else {
-                        if(id == 0) { //!= NULL?? 0 Id in DB?
+                        Log.d("edu", "QRScan: ");
+                        if(id == 0) { //!= NULL?? 0 Id in DB? // id == 0, wenn QR scanner NICHT von den Raumdetails "Gehe Zu" aufgerufen wurde
+                            Log.d("edu", "QRScan: id = 0");
                             showDialog(meinRaum);
                         } else {
+                            Log.d("edu", "QRScan: id != 0");
                             Intent intent = new Intent(getApplicationContext(),EmptyActivity.class);
                             intent.putExtra("destinationId", meinRaum.getId());
                             intent.putExtra("sourceId", id);
@@ -96,8 +100,16 @@ public class QRScanActivity extends AppCompatActivity {
         AlertDialog.Builder build = new AlertDialog.Builder(QRScanActivity.this);
         build.setCancelable(false);
         build.setTitle(meinRaum.getRaumname());
+
+        String tagMessage = "";
+        if(meinRaum.getTag() == null) {
+            tagMessage = "Tag: Kein Tag gesetzt";
+        } else {
+            tagMessage = "Tag: " + meinRaum.getTag().getName();
+        }
         build.setMessage( meinRaum.getTeilnehmer_aktuell()  + "/" + meinRaum.getTeilnehmer_max()
-                                                            + " Leute\nTag: " + meinRaum.getTag().getName() );
+                                                            + " Leute\n" + tagMessage );
+
 
         build.setPositiveButton("Einchecken", new DialogInterface.OnClickListener() {
             @Override
@@ -109,6 +121,7 @@ public class QRScanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         build.setNegativeButton("Raum suchen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -117,6 +130,7 @@ public class QRScanActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         AlertDialog alert1 = build.create();
 
         alert1.show();
