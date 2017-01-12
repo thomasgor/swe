@@ -25,7 +25,7 @@ public class NavigationActivity extends BaseActivity
         drawer.addView(contentView, 0);
         String startPoint = "G111";
         String endPoint = "G116";
-        int startPointExtra = getIntent().getIntExtra("end",7);
+        int startPointExtra = getIntent().getIntExtra("start",7);
         int endPointExtra = getIntent().getIntExtra("end",1);
         roomEnterance =  new RestConnection(this).raumEingangGet();
         for(int i=0; i< roomEnterance.size();i++){
