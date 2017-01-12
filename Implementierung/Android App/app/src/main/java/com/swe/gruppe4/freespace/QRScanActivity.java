@@ -60,25 +60,35 @@ public class QRScanActivity extends AppCompatActivity {
                 cancelledScan();
             }
             else {
+                Log.w("edu", "AUSGABE: " + result.getContents());
                 if ( isInteger(result.getContents())) {
                     RestConnection verbindung = new RestConnection(this);
                     Raum meinRaum = verbindung.raumGet(Integer.parseInt(result.getContents()));
 
                     if(meinRaum == null) {
+                        Log.d("edu", "eingescannter Code existiert nicht in der DB!: ");
                         invalidQRCode();
                     }
                     else {
-                        Log.d("edu", "QRScan: ");
+
                         if(id == 0) { //!= NULL?? 0 Id in DB? // id == 0, wenn QR scanner NICHT von den Raumdetails "Gehe Zu" aufgerufen wurde
-                            Log.d("edu", "QRScan: id = 0");
+                            Log.d("edu", "Komme von der Startseite: ");
                             showDialog(meinRaum);
                         } else {
-                            Log.d("edu", "QRScan: id != 0");
-                            Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
-                            intent.putExtra("end", meinRaum.getId());
-                            intent.putExtra("start", id);
-                            startActivity(intent);
-                            finish();
+                            Log.d("edu", "Komme von den Raumdetails");
+                            if(meinRaum.getId() == id) { //Start und Ziel sind gleich!
+                                Toast.makeText(this, "Start- und Zielraum sind identisch!" ,Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
+                                intent.putExtra("end", meinRaum.getId());
+                                intent.putExtra("start", id);
+                                startActivity(intent);
+                                finish();
+                            }
+
                         }
                     }
                 }
@@ -88,7 +98,8 @@ public class QRScanActivity extends AppCompatActivity {
             }
         }
         else {
-            super.onActivityResult(requestCode, resultCode, data);
+            invalidQRCode();
+            //super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -144,7 +155,15 @@ public class QRScanActivity extends AppCompatActivity {
      */
     private void invalidQRCode() {
         Toast.makeText(this, "Unbekannter QR Code" ,Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent;
+        if(id != 0) {
+            intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+            intent.putExtra("id", id);
+        } else {
+            intent = new Intent(getApplicationContext(),MainActivity.class);
+        }
+
+
         startActivity(intent);
         finish();
     }
@@ -154,7 +173,14 @@ public class QRScanActivity extends AppCompatActivity {
      */
     private void cancelledScan() {
         Toast.makeText(this, "Scanvorgang abgebrochen" ,Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+
+        Intent intent;
+        if(id != 0) {
+            intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+            intent.putExtra("id", id);
+        } else {
+            intent = new Intent(getApplicationContext(),MainActivity.class);
+        }
         startActivity(intent);
         finish();
     }

@@ -176,6 +176,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
                     intent.putExtra("id", id);
                     startActivity(intent);
+                    finish();
                     //Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert" ,Toast.LENGTH_SHORT).show();
                 }
             });
