@@ -79,6 +79,7 @@ public class QRScanActivity extends AppCompatActivity {
                             if(meinRaum.getId() == id) { //Start und Ziel sind gleich!
                                 Toast.makeText(this, "Start- und Zielraum sind identisch!" ,Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(),RoomDetailsActivity.class);
+                                intent.putExtra("id", id);
                                 startActivity(intent);
                                 finish();
                             } else {

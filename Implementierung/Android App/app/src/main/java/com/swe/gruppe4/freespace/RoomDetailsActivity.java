@@ -101,7 +101,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void setData(){
-        Log.d("edu","raumDetails 1");
         raumName = (TextView) findViewById(R.id.txt_room_number);
 
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
