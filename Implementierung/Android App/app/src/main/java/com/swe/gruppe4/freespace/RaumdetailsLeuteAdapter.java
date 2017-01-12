@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.koushikdutta.ion.Ion;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 
 import java.io.InputStream;
@@ -57,13 +58,13 @@ public class RaumdetailsLeuteAdapter extends ArrayAdapter<Benutzer> {
         nickName.setText(name);
         TextView roomName = (TextView) convertView.findViewById(R.id.friend_room);
         roomName.setText("");
-        final ImageView profilePicture = (ImageView) convertView.findViewById(R.id.profileImg);
+        final RoundedImageView profilePicture = (RoundedImageView) convertView.findViewById(R.id.profileImg);
 
         Ion.with(this.getContext())
                 .load(benutzer.getFotoURL())
                 .withBitmap()
                 .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.nopp)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(profilePicture);
 

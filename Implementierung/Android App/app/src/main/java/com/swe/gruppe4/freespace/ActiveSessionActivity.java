@@ -202,6 +202,7 @@ public class ActiveSessionActivity extends BaseActivity
         listPeopleInRoomView.setAdapter(raumLeuteAdapter);
         listPeopleInRoomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         int nichtAnonym = 0;
+
         for(Benutzer ben : raum.getBenutzer()){
             nichtAnonym++;
             raumLeuteAdapter.add(ben);

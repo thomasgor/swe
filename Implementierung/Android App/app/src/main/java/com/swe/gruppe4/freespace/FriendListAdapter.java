@@ -69,7 +69,7 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
                 .load(friendObj.getBenutzer().getFotoURL())
                 .withBitmap()
                 .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.nopp)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(profilePicture);
 
