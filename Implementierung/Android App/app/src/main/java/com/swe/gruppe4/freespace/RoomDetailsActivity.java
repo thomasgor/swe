@@ -163,7 +163,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
                     intent.putExtra("start",MainActivity.startingPointId);
-                    intent.putExtra("ende",id);
+                    intent.putExtra("end",id);
                     startActivity(intent);
                     finish();
                 }
