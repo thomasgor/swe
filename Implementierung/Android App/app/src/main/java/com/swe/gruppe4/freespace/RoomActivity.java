@@ -239,6 +239,7 @@ public class RoomActivity extends BaseActivity
 
         result = getRoomsInAlphanumericOrder(result);
         result = orderFullRoomsToBottomOfList(result);
+        result = removeStartRoom(result);
 
         addRoomsInAdapter(result);
         roomAdapter.notifyDataSetChanged();
@@ -358,6 +359,23 @@ public class RoomActivity extends BaseActivity
 
         return tmpList;
     }
+
+    public ArrayList<Raum> removeStartRoom(ArrayList<Raum> roomList) {
+        ArrayList<Raum> tmpList = new ArrayList<>();
+        int startroomID = MainActivity.startingPointId;
+        if(startroomID == 0) {
+            return roomList;
+        }
+        else {
+            for(int i = 0; i < roomList.size(); i++) {
+                if(roomList.get(i).getId() != startroomID) {
+                    tmpList.add(roomList.get(i));
+                }
+            }
+        }
+        return tmpList;
+    }
+
 
     //Nicht mehr nötig, da das Room Objekt durch Raum abgelöst wurde
     /*
