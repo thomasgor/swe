@@ -31,13 +31,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="Thomas Siepmann"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/profileEmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="thomas.siepman@fhaachen.de" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

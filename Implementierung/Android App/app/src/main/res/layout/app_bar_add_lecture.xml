@@ -22,7 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_add_lecture"
-        android:layout_height="509dp" />
+        android:layout_height="488dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>

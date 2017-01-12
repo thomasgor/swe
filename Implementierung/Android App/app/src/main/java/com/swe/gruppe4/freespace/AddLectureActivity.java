@@ -2,21 +2,25 @@ package com.swe.gruppe4.freespace;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,6 +28,8 @@ import android.widget.Toast;
 
 
 import android.widget.TextView;
+
+import com.koushikdutta.ion.Ion;
 import com.swe.gruppe4.freespace.Objektklassen.*;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
@@ -65,6 +71,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         findViewsById();
         final RestConnection verb = new RestConnection(this);
         //final RestConnection verb = new RestConnection(this);
+
 
         final ArrayList<Raum> raumliste = verb.raumGet();
         veranstaltungsNameEtxt.setText("Veranstaltungsname");
@@ -197,8 +204,43 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
 
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+
+        TextView profileName = (TextView)header.findViewById(R.id.profileName);
+        TextView profileEmail = (TextView)header.findViewById(R.id.profileEmail);
+        ImageView profileImage = (ImageView) header.findViewById(R.id.profileImage);
+
+        Bundle profileInfo = getIntent().getExtras();
+        if(BaseActivity.profileName.equals("")){
+            BaseActivity.profileName=(profileInfo.get("profileName").toString());
+        }
+        if(BaseActivity.profileEmail.equals("")){
+            BaseActivity.profileEmail=(profileInfo.get("profileEmail").toString());
+        }
+        if(BaseActivity.profileImageUrl.equals("")){
+            BaseActivity.profileImageUrl=(profileInfo.get("profilePicture").toString());
+        }
+        profileName.setText(BaseActivity.profileName);
+        profileEmail.setText(BaseActivity.profileEmail);
+
+        Ion.with(getApplicationContext())
+                .load(BaseActivity.profileImageUrl)
+                .withBitmap()
+                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.nopp)
+                .animateIn(android.R.anim.fade_in)
+                .intoImageView(profileImage);
 
 
+        //drawer.setVisibility(View.GONE);
+        //Log.d("Matthias", "LockDrawer");
+        //super.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        //drawer.removeDrawerListener(toggle);
+        //toggle.setDrawerIndicatorEnabled(false);
+        //toggle.syncState();
         setDateTimeField();
 
     }
@@ -270,8 +312,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public final void onBackPressed() {
-
-        super.onBackPressedNoDrawer();
+        super.onBackPressed();
 
     }
 }

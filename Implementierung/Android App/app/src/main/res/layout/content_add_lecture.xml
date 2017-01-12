@@ -42,11 +42,10 @@
         android:id="@+id/fromTime"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/spinner"
-        android:layout_below="@+id/spinner"
-        android:layout_marginTop="19dp"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_below="@+id/DateEditText"
+        android:layout_alignStart="@+id/DateEditText" />
 
     <Button
         android:id="@+id/saveLectureButton"
@@ -61,10 +60,12 @@
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_marginEnd="30dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="43dp" />
 
     <TextView
         android:id="@+id/textView7"
@@ -108,11 +109,10 @@
         android:id="@+id/DateEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewDate"
-        android:layout_alignBottom="@+id/textViewDate"
-        android:layout_alignStart="@+id/spinner"
         android:ems="10"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_below="@+id/spinner"
+        android:layout_alignStart="@+id/spinner" />
 
 
 </RelativeLayout>
