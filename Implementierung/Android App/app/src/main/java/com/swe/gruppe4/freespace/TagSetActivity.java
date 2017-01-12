@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
+import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.util.ArrayList;
@@ -28,6 +30,12 @@ public class TagSetActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(ben.istProfessor()) {
+            super.setTheme(R.style.AppThemeProf);
+        }
+
         tagList = new RestConnection(this).tagGet();
 
         super.onCreate(savedInstanceState);
