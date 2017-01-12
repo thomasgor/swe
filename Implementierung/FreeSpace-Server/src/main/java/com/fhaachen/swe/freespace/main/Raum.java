@@ -126,15 +126,10 @@ public class Raum extends Datenbank {
             System.out.println(e.toString());
             return null;
         }
+
         disconnect();
-        String json = raum.toJson(true);
+        String json = getRaumdetails(raumID);
 
-        //lade Details nach..
-        //Map raumMap = JsonHelper.toMap(json);
-        //raumMap = completeRaumDetails(raumMap);
-
-        json = getRaumdetails(raumID);
-        //System.out.println(" Das ist mein JsonString: " + json);
         return json;
     }
 
@@ -176,6 +171,13 @@ public class Raum extends Datenbank {
 
         if(aktiveVeranstaltung){
             raumMap.put("status","grau");
+            String tagGeblocktJSON  = "{\"id\": \"0\", \"name\": \"Geblockt\"}";
+            Map tagGeblockMap = JsonHelper.toMap(tagGeblocktJSON);
+            raumMap.put("tag", tagGeblockMap);
+
+            Raum raum = Raum.findById(raumID);
+            raum.set("tag", null);
+            raum.saveIt();
         }else{
 
             if(auslastung >= 80)

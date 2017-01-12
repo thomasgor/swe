@@ -134,15 +134,26 @@ public class Sitzung extends Datenbank {
                 deleteSitzungFromDB(sitz.get("benutzer").toString());
                 return "NOACTIVESESSION";
             }
-
             connect();
             antwort = sitz.toJson(true);
+            antwort = includeRaumInSitzung(antwort);
+
+            //Prüfen ob Raum grau, wenn ja dann hasTag auf 0 setzen
+            Map antwortMap = JsonHelper.toMap(antwort);
+            String hasTag = sitz.get("hasTag").toString();
+
+            //Benutzer hat Tag gesetzt, aber raum ist grau
+            if(hasTag.equals("1") && ((Map)antwortMap.get("raum")).get("status").toString().equals("grau")){
+                sitz.set("hasTag", 0);
+                sitz.saveIt();
+                antwortMap.put("hastag", 0);
+                antwort = JsonHelper.getJsonStringFromMap(antwortMap);
+            }
         } catch(Exception e) {
             e.printStackTrace();
             System.out.println("Exception");
         }
         disconnect();
-        antwort = includeRaumInSitzung(antwort);
         return antwort;
     }
 
