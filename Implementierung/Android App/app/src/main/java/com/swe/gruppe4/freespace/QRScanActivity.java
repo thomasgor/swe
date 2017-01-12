@@ -74,10 +74,11 @@ public class QRScanActivity extends AppCompatActivity {
                             showDialog(meinRaum);
                         } else {
                             Log.d("edu", "QRScan: id != 0");
-                            Intent intent = new Intent(getApplicationContext(),EmptyActivity.class);
-                            intent.putExtra("destinationId", meinRaum.getId());
-                            intent.putExtra("sourceId", id);
+                            Intent intent = new Intent(getApplicationContext(),NavigationActivity.class);
+                            intent.putExtra("end", meinRaum.getId());
+                            intent.putExtra("start", id);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 }
