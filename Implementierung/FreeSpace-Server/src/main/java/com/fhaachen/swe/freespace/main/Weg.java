@@ -32,13 +32,15 @@ public class Weg {
      */
 
     public static Response getWeg(String startID, String zielID) {
-        String antwort = "{}";
-        Knoten start = new Knoten(startID);
-        Knoten ziel = new Knoten(zielID);
-        LinkedList<Knoten> weg = getWeg(start, ziel);
-        if (weg != null) {
-            antwort = JsonHelper.getJsonStringFromMap(weg);
-            return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
+        if(!startID.equals(zielID)) {
+            String antwort = "{}";
+            Knoten start = new Knoten(startID);
+            Knoten ziel = new Knoten(zielID);
+            LinkedList<Knoten> weg = getWeg(start, ziel);
+            if (weg != null) {
+                antwort = JsonHelper.getJsonStringFromMap(weg);
+                return Response.ok(antwort, MediaType.APPLICATION_JSON).build();
+            }
         }
         return Antwort.BAD_REQUEST;
     }
