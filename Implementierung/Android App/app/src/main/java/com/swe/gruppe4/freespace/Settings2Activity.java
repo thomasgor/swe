@@ -41,8 +41,16 @@ public class Settings2Activity extends BaseActivity
         drawer.addView(contentView, 0);
 
         Button masterpw = (Button) findViewById(R.id.setMasterPW);
-
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
+
+        if(AktuellerBenutzer.getAktuellerBenutzer().istProfessor()) {
+            masterpw.setVisibility(View.GONE);
+            passwordEtxt.setVisibility(View.GONE);
+        } else {
+            masterpw.setVisibility(View.VISIBLE);
+            passwordEtxt.setVisibility(View.VISIBLE);
+        }
+
         anonymChkB = (CheckBox) findViewById(R.id.checkBox);
         pushChkB = (CheckBox) findViewById(R.id.checkBox2);
         Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
