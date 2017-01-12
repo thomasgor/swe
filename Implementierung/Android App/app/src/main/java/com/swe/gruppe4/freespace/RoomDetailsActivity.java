@@ -49,7 +49,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
         if(ben.istProfessor()) {
-            super.setTheme(R.style.AppThemeProf_NoActionBar);
+            super.setTheme(R.style.AppThemeProf);
         }
 
         id = getIntent().getIntExtra("id",4711);
