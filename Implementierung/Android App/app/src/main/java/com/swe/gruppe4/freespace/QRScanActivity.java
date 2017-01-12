@@ -154,6 +154,8 @@ public class QRScanActivity extends AppCompatActivity {
      */
     private void cancelledScan() {
         Toast.makeText(this, "Scanvorgang abgebrochen" ,Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
