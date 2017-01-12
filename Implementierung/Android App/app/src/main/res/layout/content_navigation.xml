@@ -13,23 +13,32 @@
     tools:context="com.swe.gruppe4.freespace.NavigationActivity"
     tools:showIn="@layout/app_bar_navigation">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Button style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/button"
+        android:background="@drawable/qrbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="80dp"
+        android:layout_width="210dp" />
 
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.swe.gruppe4.freespace.MapView
-                android:id="@+id/navView"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/button">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:scaleType="fitXY"
-                android:layout_height="900dp" />
-            />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.swe.gruppe4.freespace.MapView
+                    android:id="@+id/navView"
+                    android:layout_width="match_parent"
+                    android:scaleType="fitXY"
+                    android:layout_height="900dp" />
+                />
+            </LinearLayout>
+        </ScrollView>
 
 </RelativeLayout>
 
