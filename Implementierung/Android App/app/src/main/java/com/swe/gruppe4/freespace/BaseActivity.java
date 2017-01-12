@@ -87,7 +87,7 @@ public class BaseActivity extends AppCompatActivity
                 .load(BaseActivity.profileImageUrl)
                 .withBitmap()
                 .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .error(R.drawable.nopp)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(profileImage);
 

@@ -144,7 +144,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
         listPeopleInRoomView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         int nichtAnonym = 0;
 
-        Log.d("edu","raumDetails bei benutzer");
         for(Benutzer ben : raum.getBenutzer()){
             nichtAnonym++;
             raumLeuteAdapter.add(ben);

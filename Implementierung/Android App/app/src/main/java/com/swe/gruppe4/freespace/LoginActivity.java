@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         String pictureURL;
 
-        pictureURL = "https://lernperspektiventest.files.wordpress.com/2014/06/2502728-bewerbungsfotos-in-berlin1.jpg";
+        pictureURL = "https://support.plymouth.edu/kb_images/Yammer/default.jpeg";
 
         intent.putExtra("profilePicture",pictureURL);
         startActivity(intent);
