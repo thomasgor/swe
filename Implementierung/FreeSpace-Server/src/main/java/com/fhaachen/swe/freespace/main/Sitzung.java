@@ -144,6 +144,7 @@ public class Sitzung extends Datenbank {
 
             //Benutzer hat Tag gesetzt, aber raum ist grau
             if(hasTag.equals("1") && ((Map)antwortMap.get("raum")).get("status").toString().equals("grau")){
+                connect();
                 sitz.set("hasTag", 0);
                 sitz.saveIt();
                 antwortMap.put("hastag", 0);
