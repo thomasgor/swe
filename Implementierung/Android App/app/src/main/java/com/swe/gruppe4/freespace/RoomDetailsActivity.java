@@ -101,7 +101,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
     }
 
     private void setData(){
-        Log.d("edu","raumDetails 1");
         raumName = (TextView) findViewById(R.id.txt_room_number);
 
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
@@ -176,6 +175,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
                     intent.putExtra("id", id);
                     startActivity(intent);
+                    finish();
                     //Toast.makeText(getApplicationContext(),"Das ist noch nicht implementiert" ,Toast.LENGTH_SHORT).show();
                 }
             });
