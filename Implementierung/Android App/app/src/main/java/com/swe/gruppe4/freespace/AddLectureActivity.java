@@ -4,10 +4,12 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -76,6 +78,9 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         fromTimeEtxt.setInputType(0);
         toTimeEtxt.setInputType(0);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         Calendar cal = Calendar.getInstance(); // creates calendar
         cal.setTime(heute); // sets calendar time/date
         cal.add(Calendar.HOUR_OF_DAY, 1); // adds one hour
@@ -94,6 +99,8 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setTitle("FreeSpace");
+
 
         Button saveLecture = (Button) findViewById(R.id.saveLectureButton);
         saveLecture.setOnClickListener(new View.OnClickListener() {

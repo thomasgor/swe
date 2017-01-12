@@ -72,8 +72,16 @@
             android:name="com.swe.gruppe4.freespace.LectureListActivity"
             android:label="Veranstaltungen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.swe.gruppe4.freespace.AddLectureActivity" />
-        <activity android:name="com.swe.gruppe4.freespace.LectureEditActivity" />
+        <activity
+            android:name="com.swe.gruppe4.freespace.AddLectureActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/app_name"
+            android:parentActivityName="com.swe.gruppe4.freespace.LectureListActivity"/>
+
+        <activity
+            android:name="com.swe.gruppe4.freespace.LectureEditActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.swe.gruppe4.freespace.LectureListActivity"/>
         <activity
             android:name="com.swe.gruppe4.freespace.RoomActivity"
             android:label="@string/title_activity_room"
