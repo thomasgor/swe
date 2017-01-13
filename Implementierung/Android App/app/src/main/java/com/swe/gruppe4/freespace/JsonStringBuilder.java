@@ -199,8 +199,10 @@ public class JsonStringBuilder {
             raumObj.put("foto", raum.getFotoURL());
 
             JSONObject tagObj = new JSONObject();
-            tagObj.put("id", raum.getTag().getId());
-            tagObj.put("name", raum.getTag().getName());
+            if(raum.getTag() != null) {
+                tagObj.put("id", raum.getTag().getId());
+                tagObj.put("name", raum.getTag().getName());
+            }
             raumObj.put("tag", tagObj);
 
             JSONArray benutzerArr = new JSONArray(); // TODO Sollen überhaubt benutzer übertragen werden????
