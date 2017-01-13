@@ -41,7 +41,7 @@ public class NavigationActivity extends BaseActivity
                 endPoint = roomEnterance.get(i).getName();
             }
         }
-        mapView = (MapView) findViewById(R.id.navView);
+        mapView = ((MapView) findViewById(R.id.navView)).startNavigation(startPoint,endPoint);
         Ion.with(getApplicationContext())
                 .load("http://i.imgur.com/8F3lTML.png")
                 //.setHeader("Authorization", auth)
@@ -50,8 +50,6 @@ public class NavigationActivity extends BaseActivity
                 .error(R.drawable.ic_hourglass_empty_black_24dp)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(mapView);
-        MapView.startNavigation(startPoint,endPoint);
-        mapView.invalidate();
 
         qrScanner = (Button) findViewById(R.id.button);
 

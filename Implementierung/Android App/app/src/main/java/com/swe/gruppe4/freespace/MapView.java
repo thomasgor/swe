@@ -36,16 +36,16 @@ public class MapView extends ImageView {
     private Rect G111;
     ArrayList<String> weg;
     Paint mapPaint;
-    Paint colorG101;
-    Paint colorG102;
+    Paint startPaint;
+    Paint zielPaint;
     Paint navigationPaint;
     ArrayList<Raum> rooms;
     SparseArray<Rect> roomMap;
     private ArrayList<RoomEnterance> roomEnterance;
     private static final String TAG = "MapView";
     public int opacity;
-    public static String endPoint = "";
-    public static String startPoint = "";
+    public  String endPoint = "";
+    public  String startPoint = "";
     public MapView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -54,6 +54,16 @@ public class MapView extends ImageView {
         navigationPaint.setColor(Color.BLUE);
         navigationPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         navigationPaint.setStrokeWidth(20);
+
+        startPaint = new Paint();
+        startPaint.setColor(Color.GREEN);
+        startPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        startPaint.setStrokeWidth(20);
+
+        zielPaint = new Paint();
+        zielPaint.setColor(Color.RED);
+        zielPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        zielPaint.setStrokeWidth(20);
         rooms = new RestConnection(context).raumGet();
         roomEnterance =  new RestConnection(context).raumEingangGet();
         roomMap = new SparseArray<Rect>();
@@ -65,27 +75,10 @@ public class MapView extends ImageView {
         super.onDraw(canvas);
         setCoordinates();
         drawMap(canvas);
-        //G116
-        //canvas.drawRect(0,GetDipsFromPixel(600),GetDipsFromPixel(133),getBottom(),colorG101);
-        //G112
-        //canvas.drawRect(0,GetDipsFromPixel(500),GetDipsFromPixel(133),getBottom()-GetDipsFromPixel(300),colorG102);
-        //G111
-        // canvas.drawRect(GetDipsFromPixel(250),GetDipsFromPixel(525),GetDipsFromPixel(330),getBottom()-GetDipsFromPixel(150),colorG101);
-        //G107
-        // canvas.drawRect(GetDipsFromPixel(250),GetDipsFromPixel(200),GetDipsFromPixel(330),getBottom()-GetDipsFromPixel(480),mapPaint);
-        //G115
-        //canvas.drawRect(GetDipsFromPixel(130),GetDipsFromPixel(750),GetDipsFromPixel(430),getBottom(),colorG101);
-        //canvas.drawRect(
-        //        getLeft()+(getRight()-getLeft())/3,
-        //        getTop()+(getBottom()-getTop())/3,
-        //        getRight()-(getRight()-getLeft())/3,
-        //        getBottom()-(getBottom()-getTop())/3,mapPaint);
         if(!startPoint.equals("") && !endPoint.equals("")){
             weg = new RestConnection(context).wegGet(startPoint,endPoint);
             canvas.drawPath(drawFloorNodes(weg,canvas),navigationPaint);
         }
-        //canvas.drawPath(drawNavigation(),navigationPaint);
-        //canvas.drawRect(GetDipsFromPixel(280),0,GetDipsFromPixel(200),GetDipsFromPixel(190),mapPaint);
 
     }
 
@@ -97,9 +90,10 @@ public class MapView extends ImageView {
         return (int) (pixels * scale + 0.5f);
     }
 
-    public static void startNavigation(String start,String end){
+    public MapView startNavigation(String start, String end){
         startPoint = start;
         endPoint = end;
+        return this;
     }
 
     private void speciaRooms(ArrayList<String> weg){
@@ -155,6 +149,7 @@ public class MapView extends ImageView {
         //Start
         for(int i=0;i<roomEnterance.size();i++){
             if(roomEnterance.get(i).getName().equals(start)){
+                canvas.drawCircle(getLeft()+(getRight()/roomEnterance.get(i).getX()),GetDipsFromPixel(roomEnterance.get(i).getY()),20,startPaint);
                 nav.moveTo(getLeft()+(getRight()/roomEnterance.get(i).getX()),GetDipsFromPixel(roomEnterance.get(i).getY()));
             }
         }
@@ -167,6 +162,7 @@ public class MapView extends ImageView {
         //Ziel
         for(int i=0;i<roomEnterance.size();i++){
             if(roomEnterance.get(i).getName().equals(end)){
+                canvas.drawCircle(getLeft()+(getRight()/roomEnterance.get(i).getX()),GetDipsFromPixel(roomEnterance.get(i).getY()),20,zielPaint);
                 nav.lineTo(getLeft()+(getRight()/roomEnterance.get(i).getX()),GetDipsFromPixel(roomEnterance.get(i).getY()));
             }
         }
@@ -216,108 +212,6 @@ public class MapView extends ImageView {
     private void drawMap(Canvas canvas){
         mapPaint = new Paint();
         for(Raum r : rooms){
-            /*switch (r.getId()){
-                case 1:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    } else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G101, mapPaint);
-                    break;
-                case 2:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    }else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G102, mapPaint);
-                    break;
-                case 3:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    }else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G107, mapPaint);
-                    break;
-                case 4:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    }else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G111, mapPaint);
-                    break;
-                case 5:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    }else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G112, mapPaint);
-                    break;
-                case 6:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    }else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G115, mapPaint);
-                    break;
-                case 7:
-                    if(r.getStatus().equals("grün")){
-                        mapPaint.setColor(Color.GREEN);
-                    } else if(r.getStatus().equals("gelb")){
-                        mapPaint.setColor(Color.YELLOW);
-                    } else if(r.getStatus().equals("rot")){
-                        mapPaint.setColor(Color.RED);
-                    }else {
-                        mapPaint.setColor(Color.BLACK);
-                    }
-                    mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-                    mapPaint.setAlpha(opacity);
-                    canvas.drawRect(G116, mapPaint);
-                    break;
-
-            }*/
-
             switch (r.getStatus()) {
                 case "grün":
                     mapPaint.setColor(Color.GREEN);
@@ -337,43 +231,15 @@ public class MapView extends ImageView {
             canvas.drawRect(roomMap.get(r.getId()),mapPaint);
         }
     }
-
-    private void initPaint(VerbindungDUMMY connection){
-        ArrayList<Raum> rooms = connection.raumGet();
-        mapPaint = new Paint();
-        colorG101 = new Paint();
-        // Line color
-        colorG101.setColor(Color.RED);
-        colorG101.setStyle(Paint.Style.FILL);
-        colorG101.setAlpha(80);
-
-        colorG102 = new Paint();
-        // Line color
-        colorG102.setColor(Color.YELLOW);
-        colorG102.setStyle(Paint.Style.FILL_AND_STROKE);
-        colorG102.setAlpha(80);
-
-        mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mapPaint.setAlpha(60);
-        // Line width in pixels
-        mapPaint.setStrokeWidth(8);
-        mapPaint.setAntiAlias(true);
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        //Toast.makeText(getApplicationContext(),"X: "+x+" Y: "+y,Toast.LENGTH_SHORT).show();
         if( event.getAction() == MotionEvent.ACTION_UP) {
             if (x > 0 && x < getLeft()+(int)(getRight()/2.43) && y > 0 && y < GetDipsFromPixel(280)) {
-                // for (Raum r:räume) {
-                //     if( r.getId() == 4711){
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
                 intent.putExtra("id", 2);
                 context.startActivity(intent);
-                //    }
-                //  }
             }
             if (x > getLeft()+(int)(getRight()/2.43) && x < GetDipsFromPixel(335) && y > 0 && y < GetDipsFromPixel(200)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
@@ -409,31 +275,6 @@ public class MapView extends ImageView {
                 context.startActivity(intent);
             }
         }
-        /**
-         switch (event.getAction()) {
-
-         case MotionEvent.ACTION_DOWN:
-         //Check if the x and y position of the touch is inside the bitmap
-         if (x > 0 && x < GetDipsFromPixel(135) && y > 0 && y < GetDipsFromPixel(280)) {
-         // for (Raum r:räume) {
-         //     if( r.getId() == 4711){
-         Intent intent = new Intent(context, RoomDetailsActivity.class);
-         intent.putExtra("id", 4711);
-         context.startActivity(intent);
-         //    }
-         //  }
-         }
-
-         if (x > GetDipsFromPixel(135) && x < GetDipsFromPixel(335) && y > 0 && y < GetDipsFromPixel(200)) {
-         Intent intent = new Intent(context, RoomDetailsActivity.class);
-         intent.putExtra("id", 101);
-         context.startActivity(intent);
-         }
-         //Toast.makeText(context,"X: "+GetDipsFromPixel(x)+" Y: "+GetDipsFromPixel(y),Toast.LENGTH_SHORT).show();
-         Log.d(TAG, "Pixels : " + "X: " + x + " Y: " + y);
-         return false;
-         }
-         **/
         return true;
     }
 
