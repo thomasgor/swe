@@ -59,12 +59,9 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lecture);
 
-        //Spinner dropdown = (Spinner)findViewById(R.id.spinner);
-        //String[] items = new String[]{"G101", "G102", "G103"};
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //dropdown.setAdapter(adapter);
+
         final int id = getIntent().getIntExtra("Id", 0);
-       // VerbindungDUMMY verb = new VerbindungDUMMY();
+        //VerbindungDUMMY verb = new VerbindungDUMMY();
         RestConnection verb = new RestConnection(this);
 
         final ArrayList<Raum> raumliste = verb.raumGet();
@@ -92,7 +89,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setTitle("FreeSpace");
+
 
         Button saveLecture = (Button) findViewById(R.id.saveLectureButton);
 
@@ -102,22 +99,12 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         saveLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //EditText edittext = (TextView) convertView.findViewById(R.id.editText2);
-                //String name = (String) textview.getText();
-                //textview = (TextView) convertView.findViewById(R.id.DateEditText);
-                //Date date = textview.getText();
+
                 int id = getIntent().getIntExtra("Id", 0);
 
 
                 try {
-                    //SimpleDateFormat df = new SimpleDateFormat("EEE dd.MM.yyyy");
-                    //java.util.Date fromDate;
-                    //fromDate = df.parse(fromDateEtxt.getText().toString());
-                    //Long longFromDate = fromDate.getTime();
 
-                    //df = new SimpleDateFormat("HH:mm");
-                    //java.util.Date toTime;
-                    //toTime = df.parse(toTimeEtxt.getText().toString());
 
                     String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
                     SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm",Locale.GERMANY);
@@ -127,8 +114,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     Date longToTime = dfCombi.parse(combiFromDate);
 
 
-                    //java.util.Date fromTime;
-                    //toTime = df.parse(fromTimeEtxt.getText().toString());
+
                     String combiToDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
                     Log.d("Matthias", "Kombiniertes String Datum: " + combiToDate);
                             Date longFromTime = dfCombi.parse(combiToDate);
@@ -184,7 +170,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
 
 
 
-                //Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
+
             }
         });
 

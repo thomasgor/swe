@@ -93,8 +93,6 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
         ImageView editButton = (ImageView) convertView.findViewById(R.id.imageView2);
         editButton.setImageResource(android.R.drawable.ic_menu_edit);
 
-        //editButton.setClickable(true);
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
