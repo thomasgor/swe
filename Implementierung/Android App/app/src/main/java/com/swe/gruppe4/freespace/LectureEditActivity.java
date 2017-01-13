@@ -294,6 +294,10 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String TimeFromSet = df1.format(newDate.getTime());
                 fromTimeEtxt.setText(TimeFromSet);
+                toTimePickerDialog.updateTime(hourOfDay+1, minute);
+                newDate.set(1970,1,1,hourOfDay + 1,minute);
+                String TimeToSet = df1.format(newDate.getTime());
+                toTimeEtxt.setText(TimeToSet);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
         fromTimePickerDialog.updateTime(hourFromInt, minuteFromInt);

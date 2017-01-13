@@ -280,6 +280,10 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                 SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
                 String TimeFromSet = df1.format(newDate.getTime());
                 fromTimeEtxt.setText(TimeFromSet);
+                newDate.set(1970,1,1,hourOfDay + 1,minute);
+                String TimeToSet = df1.format(newDate.getTime());
+                toTimeEtxt.setText(TimeToSet);
+                toTimePickerDialog.updateTime(hourOfDay + 1, minute);
             }
         },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
 
@@ -292,7 +296,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                 String TimeToSet = df1.format(newDate.getTime());
                 toTimeEtxt.setText(TimeToSet);
             }
-        },newCalendar.get(Calendar.HOUR_OF_DAY),newCalendar.get(Calendar.MINUTE),true);
+        },newCalendar.get(Calendar.HOUR_OF_DAY)+1,newCalendar.get(Calendar.MINUTE),true);
 
 
     }
