@@ -174,8 +174,8 @@ public class ActiveSessionActivity extends BaseActivity
                 .load(raum.getFotoURL())
                 .setHeader("Authorization", auth)
                 .withBitmap()
-                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .placeholder(R.drawable.loadingpic)
+                .error(R.drawable.error_loading)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(imgRoom);
 

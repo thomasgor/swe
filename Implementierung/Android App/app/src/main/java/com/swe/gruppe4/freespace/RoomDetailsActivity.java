@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -43,6 +44,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     TextView leute;
     Button gehezu;
     RelativeLayout rlTop;
+    ActionBar actionBar;
     int id;
 
     @Override
@@ -58,8 +60,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_details);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
+
 
         imgRoom = (ImageView) findViewById(R.id.img_room_photo);
 
@@ -104,14 +110,16 @@ public class RoomDetailsActivity extends AppCompatActivity {
         raumName = (TextView) findViewById(R.id.txt_room_number);
 
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
-        getSupportActionBar().setTitle(getString(R.string.room_number, raum.getRaumname()));
+        if(actionBar != null){
+            actionBar.setTitle(getString(R.string.room_number, raum.getRaumname()));
+        }
 
         tag = (TextView) findViewById(R.id.txt_tag);
         Tag tag2 = raum.getTag();
         if(raum.getTag() != null) {
             tag.setText(raum.getTag().getName());
         } else {
-            tag.setText("Kein Tag gesetzt"); // TODO eventuell diese Nachricht entfernen
+            tag.setText(R.string.noTag); // TODO eventuell diese Nachricht entfernen
         }
 
         //tag.setText(getString(R.string.tag, raum.getTag().getName()));
@@ -130,8 +138,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 .load(raum.getFotoURL())
                 .setHeader("Authorization", auth)
                 .withBitmap()
-                .placeholder(R.drawable.ic_hourglass_empty_black_24dp)
-                .error(R.drawable.ic_hourglass_empty_black_24dp)
+                .placeholder(R.drawable.loadingpic)
+                .error(R.drawable.error_loading)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(imgRoom);
 
