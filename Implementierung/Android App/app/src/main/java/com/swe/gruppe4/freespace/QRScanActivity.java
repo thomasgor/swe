@@ -27,6 +27,11 @@ public class QRScanActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(ben.istProfessor()) {
+            super.setTheme(R.style.AppThemeProf);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty);
         id = getIntent().getIntExtra("id", 0);
