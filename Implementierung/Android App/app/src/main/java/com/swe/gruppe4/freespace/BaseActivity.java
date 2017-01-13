@@ -128,6 +128,7 @@ public class BaseActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(),Settings2Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_freundesliste) {
+            MainActivity.startingPointId=0;
             Intent intent = new Intent(getApplicationContext(),Freundesliste.class);
             startActivity(intent);
             finish();
