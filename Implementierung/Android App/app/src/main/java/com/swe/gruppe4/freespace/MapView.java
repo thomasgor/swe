@@ -2,6 +2,8 @@ package com.swe.gruppe4.freespace;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -75,7 +77,7 @@ public class MapView extends ImageView {
         //        getBottom()-(getBottom()-getTop())/3,mapPaint);
         if(!startPoint.equals("") && !endPoint.equals("")){
             weg = new RestConnection(context).wegGet(startPoint,endPoint);
-            canvas.drawPath(drawFloorNodes(weg),navigationPaint);
+            canvas.drawPath(drawFloorNodes(weg,canvas),navigationPaint);
         }
         //canvas.drawPath(drawNavigation(),navigationPaint);
         //canvas.drawRect(GetDipsFromPixel(280),0,GetDipsFromPixel(200),GetDipsFromPixel(190),mapPaint);
@@ -138,7 +140,7 @@ public class MapView extends ImageView {
 
     }
 
-    public Path drawFloorNodes(ArrayList<String> weg){
+    public Path drawFloorNodes(ArrayList<String> weg , Canvas canvas){
         speciaRooms(weg);
         String start = weg.get(0);
         String end = weg.get(weg.size()-1);
@@ -210,6 +212,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    } else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
@@ -222,6 +226,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    }else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
@@ -234,6 +240,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    }else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
@@ -246,6 +254,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    }else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
@@ -258,6 +268,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    }else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
@@ -270,6 +282,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    }else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
@@ -282,6 +296,8 @@ public class MapView extends ImageView {
                         mapPaint.setColor(Color.YELLOW);
                     } else if(r.getStatus().equals("rot")){
                         mapPaint.setColor(Color.RED);
+                    }else {
+                        mapPaint.setColor(Color.BLACK);
                     }
                     mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
                     mapPaint.setAlpha(opacity);
