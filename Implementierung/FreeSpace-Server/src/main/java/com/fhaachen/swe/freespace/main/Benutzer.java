@@ -110,7 +110,7 @@ public class Benutzer extends Datenbank{
 
         if(istBenutzer(benutzerID)){
             connect();
-            System.out.println("Benutzer mit der id="+benutzerID+" ist schon vorhanden");
+            //System.out.println("Benutzer mit der id="+benutzerID+" ist schon vorhanden");
             Benutzer b = Benutzer.findById(benutzerID);
             result = b.toJson(true);
         }else{

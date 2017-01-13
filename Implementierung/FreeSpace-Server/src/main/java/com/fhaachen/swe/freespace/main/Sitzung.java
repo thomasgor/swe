@@ -41,7 +41,7 @@ public class Sitzung extends Datenbank {
             e.printStackTrace();
         }
         disconnect();
-        System.out.print(result);
+        //System.out.print(result);
         return result;
     }
 
