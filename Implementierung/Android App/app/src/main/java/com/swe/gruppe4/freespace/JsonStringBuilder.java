@@ -186,8 +186,8 @@ public class JsonStringBuilder {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put("name", name);
-            jsonObj.put("von", von);
-            jsonObj.put("bis", bis);
+            jsonObj.put("von", von/1000);
+            jsonObj.put("bis", bis/1000);
 
             JSONObject raumObj = new JSONObject();
 

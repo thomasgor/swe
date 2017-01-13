@@ -132,6 +132,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
                 //Toast.makeText(getApplicationContext(),"Veranstaltung gelöscht", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(context, LectureListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
 
