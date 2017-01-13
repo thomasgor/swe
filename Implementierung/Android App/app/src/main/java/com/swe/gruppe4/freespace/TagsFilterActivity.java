@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
+import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.util.ArrayList;
@@ -39,6 +41,10 @@ public class TagsFilterActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(ben.istProfessor()) {
+            super.setTheme(R.style.AppThemeProf);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tags_filter);
 
@@ -71,7 +77,10 @@ public class TagsFilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Context context = getApplicationContext();
-                String text = "Tag Filter setzen!";
+                String text = "Tags:";
+                if(tagAdapt.getCheckedTags().size()==0) {
+                    text += "\nKeine";
+                }
                 for (int i = 0; i < tagAdapt.getCheckedTags().size(); i++) {
                     text += "\n";
                     text += tagAdapt.getCheckedTags().get(i);
