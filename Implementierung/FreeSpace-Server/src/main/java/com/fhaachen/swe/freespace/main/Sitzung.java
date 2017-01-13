@@ -29,7 +29,7 @@ public class Sitzung extends Datenbank {
      */
 
     public static int getRaumteilnehmer_anz(String raumID){
-        System.out.print("getRaumteilnehmer_anz: " + raumID + " ");
+        //System.out.print("getRaumteilnehmer_anz: " + raumID + " ");
         connect();
         int result = Integer.MAX_VALUE;
         try {
@@ -56,7 +56,7 @@ public class Sitzung extends Datenbank {
 
 
     private static String includeBenutzer(String json) {
-        System.out.println("Include Benutzer");
+        //System.out.println("Include Benutzer");
         connect();
         Map map = JsonHelper.toMap(json);
         try {
@@ -68,7 +68,7 @@ public class Sitzung extends Datenbank {
                 Map benutzer = JsonHelper.toMap(jsonBenutzer);
                 map.put("benutzer", benutzer);
             }
-            System.out.println(map.toString());
+      //      System.out.println(map.toString());
         } catch(Exception e) {
             e.printStackTrace();
             return json;
@@ -211,7 +211,7 @@ public class Sitzung extends Datenbank {
         try {
             Sitzung sitz = Sitzung.findById(benutzerID);
             if (sitz != null) {
-                System.out.println("Benutzer hat bereits eine aktive Sitzung:" + benutzerID);
+                //System.out.println("Benutzer hat bereits eine aktive Sitzung:" + benutzerID);
                 deleteSitzungFromDB(benutzerID);
             }
 
@@ -225,7 +225,7 @@ public class Sitzung extends Datenbank {
             connect();
             boolean erfolg = s.insert();
             disconnect();
-            System.out.println("Neue sitzung wurde erstellt");
+            //System.out.println("Neue sitzung wurde erstellt");
             antwort = s.toJson(true);
         } catch(Exception e) {
             e.printStackTrace();
@@ -249,7 +249,7 @@ public class Sitzung extends Datenbank {
         Map homescreen = JsonHelper.toMap("{\"räume\": null}");
         try{
             String raumliste = Raum.getRaum();
-            System.out.println(raumliste);
+            //System.out.println(raumliste);
             homescreen.put("räume", JsonHelper.toMaps(raumliste));
         }catch(Exception e){
             e.printStackTrace();

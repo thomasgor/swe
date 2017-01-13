@@ -33,7 +33,7 @@ public class Veranstaltung extends Datenbank {
     }
 
     public static String getVeranstaltungByID(String id){
-        System.out.println("getVeranstaltungByID "+  id);
+        //System.out.println("getVeranstaltungByID "+  id);
         String result = null;
         connect();
 
@@ -210,7 +210,7 @@ public class Veranstaltung extends Datenbank {
 
     public static String includeRaum(String json){
         connect();
-        System.out.println("includeRAUM");
+        //System.out.println("includeRAUM");
         Map input = JsonHelper.toMap(json);
         String raumJSON = Raum.getRaumByID(input.get("raum").toString());
         if(raumJSON != null){

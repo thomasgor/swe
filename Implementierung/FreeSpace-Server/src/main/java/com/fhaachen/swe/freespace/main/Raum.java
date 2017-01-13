@@ -86,17 +86,17 @@ public class Raum extends Datenbank {
             if(raum != null) {
                 String json = raum.toJson(true);
                 Map raumMap = JsonHelper.toMap(json);
-                System.out.println("completeRaumDetails");
+               // System.out.println("completeRaumDetails");
                 raumMap = completeRaumDetails(raumMap);
                 if(raumMap == null){
-                    System.out.println("RaumMap ist null");
+                    //System.out.println("RaumMap ist null");
                 }
 
                 result = JsonHelper.getJsonStringFromMap(raumMap);
                 result = includeBenutzerInRaumdetails(result);
                 result = includeRaumFoto(result);
             } else{
-                System.out.println("Raum wurde nicht gefunden");
+                //System.out.println("Raum wurde nicht gefunden");
             }
 
 
@@ -142,8 +142,8 @@ public class Raum extends Datenbank {
         String raumID = raumMap.get("id").toString();
 
         int teilnehmer_anz = Sitzung.getRaumteilnehmer_anz(raumID);
-        if(teilnehmer_anz == 0)
-            System.out.println("Teilnehmer_anz ist null: " + raumID);
+      /*  if(teilnehmer_anz == 0)
+            System.out.println("Teilnehmer_anz ist null: " + raumID); */
 
         raumMap.put("teilnehmer_anz",teilnehmer_anz);
 

@@ -222,7 +222,7 @@ public class Konfiguration extends Datenbank{
         try{
             if(neuPasswort1 != null && neuPasswort1.length() > 0){
                 if(isMaster(altPasswort)) {
-                    System.out.println("Ändere Passwort");
+                    //System.out.println("Ändere Passwort");
                     if (!setNeuesMasterpasswort(neuPasswort1, neuPasswort2)) {
                         return false;
                     }
@@ -261,9 +261,9 @@ public class Konfiguration extends Datenbank{
             }
 
             if(neuPW1.equals(neuPW2) ){
-                System.out.println("Ändere Passwort2");
+                //System.out.println("Ändere Passwort2");
                 connect();
-                System.out.println("UPDATE Konfiguration SET value = ? WHERE key == 'masterpasswort'");
+                //System.out.println("UPDATE Konfiguration SET value = ? WHERE key == 'masterpasswort'");
                 Base.exec("UPDATE Konfiguration SET value = ? WHERE key == 'masterpasswort'", neuPW1);
                 disconnect();
                 // Benutzer.resetBenutzerRolle();
