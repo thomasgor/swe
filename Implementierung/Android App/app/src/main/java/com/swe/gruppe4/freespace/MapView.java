@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -17,6 +18,8 @@ import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.RoomEnterance;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Kiesa on 03.01.2017.
@@ -37,6 +40,7 @@ public class MapView extends ImageView {
     Paint colorG102;
     Paint navigationPaint;
     ArrayList<Raum> rooms;
+    SparseArray<Rect> roomMap;
     private ArrayList<RoomEnterance> roomEnterance;
     private static final String TAG = "MapView";
     public int opacity;
@@ -52,6 +56,7 @@ public class MapView extends ImageView {
         navigationPaint.setStrokeWidth(20);
         rooms = new RestConnection(context).raumGet();
         roomEnterance =  new RestConnection(context).raumEingangGet();
+        roomMap = new SparseArray<Rect>();
         //initPaint(connection);
     }
 
@@ -193,18 +198,25 @@ public class MapView extends ImageView {
 
     private void setCoordinates(){
         G101 = new Rect(getLeft()+(int)(getRight()/2.5),0,getRight(),GetDipsFromPixel(195));
+        roomMap.put(1,G101);
         G102 = new Rect(0,0,getLeft()+(int)(getRight()/2.43),GetDipsFromPixel(280));
+        roomMap.put(2,G102);
         G107 = new Rect(getLeft()+(int)(getRight()/1.31),GetDipsFromPixel(195),getRight(),getBottom()-GetDipsFromPixel(480));
+        roomMap.put(3,G107);
         G111 = new Rect(getLeft()+(int)(getRight()/1.31),GetDipsFromPixel(525),getRight(),getBottom()-GetDipsFromPixel(150));
+        roomMap.put(4,G111);
         G112 = new Rect(0,GetDipsFromPixel(500),getLeft()+(int)(getRight()/2.5),getBottom()-GetDipsFromPixel(300));
+        roomMap.put(5,G112);
         G115 = new Rect(getLeft()+(int)(getRight()/2.5),GetDipsFromPixel(750),getRight(),getBottom());
+        roomMap.put(6,G115);
         G116 = new Rect(0,GetDipsFromPixel(600),getLeft()+(int)(getRight()/2.5),getBottom());
+        roomMap.put(7,G116);
     }
 
     private void drawMap(Canvas canvas){
         mapPaint = new Paint();
         for(Raum r : rooms){
-            switch (r.getId()){
+            /*switch (r.getId()){
                 case 1:
                     if(r.getStatus().equals("grün")){
                         mapPaint.setColor(Color.GREEN);
@@ -304,7 +316,25 @@ public class MapView extends ImageView {
                     canvas.drawRect(G116, mapPaint);
                     break;
 
+            }*/
+
+            switch (r.getStatus()) {
+                case "grün":
+                    mapPaint.setColor(Color.GREEN);
+                    break;
+                case "gelb":
+                    mapPaint.setColor(Color.YELLOW);
+                    break;
+                case "rot":
+                    mapPaint.setColor(Color.RED);
+                    break;
+                default:
+                    mapPaint.setColor(Color.BLACK);
+                    break;
             }
+            mapPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+            mapPaint.setAlpha(opacity);
+            canvas.drawRect(roomMap.get(r.getId()),mapPaint);
         }
     }
 
