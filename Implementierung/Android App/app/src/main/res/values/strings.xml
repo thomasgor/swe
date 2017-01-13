@@ -131,6 +131,7 @@
     <string name="room_number">%1$s</string>
     <string name="tag">%1$s</string>
     <string name="errormsgTitle">"Fehler %d"</string>
+    <string name="versioncode">"FreeSpace Version %1$s-%2$d</string>
 
 
 

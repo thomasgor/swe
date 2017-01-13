@@ -43,7 +43,7 @@
         android:text="FreeSpace Version 0ae30-15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/versionCode"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 

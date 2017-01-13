@@ -1,6 +1,8 @@
 package com.swe.gruppe4.freespace;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
@@ -28,6 +31,7 @@ public class Settings2Activity extends BaseActivity
     int anonFlag, pushFlag;
     CheckBox anonymChkB;
     CheckBox pushChkB;
+    TextView versionCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(AktuellerBenutzer.getAktuellerBenutzer().istProfessor()){
@@ -42,6 +46,16 @@ public class Settings2Activity extends BaseActivity
 
         Button masterpw = (Button) findViewById(R.id.setMasterPW);
         final EditText passwordEtxt = (EditText) findViewById(R.id.editText);
+
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionCode = (TextView) (findViewById(R.id.versionCode));
+            versionCode.setText(getString(R.string.versioncode, pInfo.versionName, pInfo.versionCode));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 
         if(AktuellerBenutzer.getAktuellerBenutzer().istProfessor()) {
             masterpw.setVisibility(View.GONE);
