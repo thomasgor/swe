@@ -100,6 +100,7 @@ class LectureAdapter extends ArrayAdapter<Veranstaltung> {
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), LectureEditActivity.class);
                 i.putExtra("Id", lectureObj.getId());
+                i.setFlags(i.FLAG_ACTIVITY_NEW_TASK);
                 view.getContext().startActivity(i);
             }
         });

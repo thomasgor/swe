@@ -101,10 +101,10 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
 
 
                 try {
-                    SimpleDateFormat df = new SimpleDateFormat("EEE dd.MM.yyyy");
-                    java.util.Date fromDate;
-                    fromDate = df.parse(fromDateEtxt.getText().toString());
-                    Long longFromDate = fromDate.getTime();
+                    //SimpleDateFormat df = new SimpleDateFormat("EEE dd.MM.yyyy");
+                    //java.util.Date fromDate;
+                    //fromDate = df.parse(fromDateEtxt.getText().toString());
+                    //Long longFromDate = fromDate.getTime();
 
                     //df = new SimpleDateFormat("HH:mm");
                     //java.util.Date toTime;
@@ -244,7 +244,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         final Veranstaltung veranstaltung = verbindung.lectureGet(id);
         long longFrom = veranstaltung.getVon();
         long longTo = veranstaltung.getBis();
-        SimpleDateFormat dfYear = new SimpleDateFormat("YYYY");
+        SimpleDateFormat dfYear = new SimpleDateFormat("yyyy");
         int yearFrom = Integer.parseInt(dfYear.format(longFrom));
         SimpleDateFormat dfMonth = new SimpleDateFormat("MM");
         int monthFrom = Integer.parseInt(dfMonth.format(longFrom));
