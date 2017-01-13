@@ -106,9 +106,9 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     fromDate = df.parse(fromDateEtxt.getText().toString());
                     Long longFromDate = fromDate.getTime();
 
-                    df = new SimpleDateFormat("HH:mm");
-                    java.util.Date toTime;
-                    toTime = df.parse(toTimeEtxt.getText().toString());
+                    //df = new SimpleDateFormat("HH:mm");
+                    //java.util.Date toTime;
+                    //toTime = df.parse(toTimeEtxt.getText().toString());
 
                     String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
                     SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
@@ -118,10 +118,10 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     Date longToTime = dfCombi.parse(combiFromDate);
 
 
-                    java.util.Date fromTime;
-                    toTime = df.parse(fromTimeEtxt.getText().toString());
+                    //java.util.Date fromTime;
+                    //toTime = df.parse(fromTimeEtxt.getText().toString());
                     String combiToDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
-
+                    Log.d("Matthias", "Kombiniertes String Datum: " + combiToDate);
                             Date longFromTime = dfCombi.parse(combiToDate);
 
                     String veranstaltungsName = veranstaltungsNameEtxt.getText().toString();
@@ -149,8 +149,8 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                         if(longFromTime.getTime()>= longToTime.getTime() ){
                             Toast.makeText(getApplicationContext(),"Die Startzeit liegt vor der Endzeit.", Toast.LENGTH_LONG).show();
                         }else {
-                            Log.d("Mat", "Id: " + Integer.toString(id) + " Name: " + veranstaltungsName);
-                            if(v.lecturePut(id, veranstaltungsName, longFromTime.getTime() / 1000L, longToTime.getTime() / 1000L, selectedRoom)) {
+                            Log.d("Mat", "Id: " + Integer.toString(id) + " Name: " + veranstaltungsName + " from: " + Long.toString(longFromTime.getTime()) + " to: " + Long.toString(longToTime.getTime()));
+                            if(v.lecturePut(id, veranstaltungsName, longFromTime.getTime(), longToTime.getTime(), selectedRoom)) {
                                 Toast.makeText(getApplicationContext(), "Änderungen gespeichert", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(LectureEditActivity.this.getApplicationContext(), LectureListActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
