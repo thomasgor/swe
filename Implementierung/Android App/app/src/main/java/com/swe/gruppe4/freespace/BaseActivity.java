@@ -3,12 +3,11 @@ package com.swe.gruppe4.freespace;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.swe.gruppe4.freespace.Objektklassen.*;
-import java.io.InputStream;
 import com.koushikdutta.ion.Ion;
 
 public class BaseActivity extends AppCompatActivity
@@ -90,7 +88,6 @@ public class BaseActivity extends AppCompatActivity
                 .error(R.drawable.nopp)
                 .animateIn(android.R.anim.fade_in)
                 .intoImageView(profileImage);
-
 
     }
 

@@ -124,12 +124,12 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                     fromDate = df.parse(fromDateEtxt.getText().toString());
                     Long longFromDate = fromDate.getTime();
 
-                    df = new SimpleDateFormat("hh:mm");
+                    df = new SimpleDateFormat("hh:mm",Locale.GERMANY);
                     //java.util.Date toTime;
                     //toTime = df.parse(toTimeEtxt.getText().toString());
 
                     String combiFromDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
-                    SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
+                    SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm",Locale.GERMANY);
                     Log.d(AddLectureActivity.class.getSimpleName(), "CombiFromDate: " + combiFromDate);
 
                     Date longFromTime = dfCombi.parse(combiFromDate);
