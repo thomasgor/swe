@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.swe.gruppe4.freespace.Objektklassen.AktuellerBenutzer;
+import com.swe.gruppe4.freespace.Objektklassen.Benutzer;
 import com.swe.gruppe4.freespace.Objektklassen.Sitzung;
 
 /**
@@ -21,6 +23,11 @@ public class EmptyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Benutzer ben = AktuellerBenutzer.getAktuellerBenutzer();
+        if(ben.istProfessor()) {
+            super.setTheme(R.style.AppThemeProf);
+        }
         super.onCreate(savedInstanceState);
         destinationId = getIntent().getIntExtra("destinationId", 0);
         sourceId = getIntent().getIntExtra("sourceId", 0);
