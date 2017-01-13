@@ -43,7 +43,7 @@ public class QRScanActivity extends AppCompatActivity {
         integrator.setCameraId(0);
         integrator.setBeepEnabled(false);
         integrator.setBarcodeImageEnabled(false);
-        integrator.setOrientationLocked(false);
+        integrator.setOrientationLocked(true);
         integrator.setTimeout(20000);
         integrator.initiateScan();
 
