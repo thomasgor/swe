@@ -35,10 +35,10 @@ public class LectureListActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //ArrayList<Veranstaltung> veranstaltungen = new VerbindungDUMMY().lecturesGet();
+
         ArrayList<Veranstaltung> veranstaltungen = new RestConnection(this).lecturesGet();
 
-        Veranstaltung data;
+
         super.onCreate(savedInstanceState);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -75,7 +75,7 @@ public class LectureListActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //showDialog();
+
 
     }
 

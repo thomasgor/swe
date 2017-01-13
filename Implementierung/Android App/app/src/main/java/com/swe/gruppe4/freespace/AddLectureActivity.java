@@ -64,13 +64,9 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lecture);
 
-        //Spinner dropdown = (Spinner)findViewById(R.id.spinner);
-        //String[] items = new String[]{"G101", "G102", "G103"};
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        //dropdown.setAdapter(adapter);
         findViewsById();
         final RestConnection verb = new RestConnection(this);
-        //final RestConnection verb = new RestConnection(this);
+
 
 
         final ArrayList<Raum> raumliste = verb.raumGet();
@@ -113,20 +109,8 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
         saveLecture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //EditText edittext = (TextView) convertView.findViewById(R.id.editText2);
-                //String name = (String) textview.getText();
-                //textview = (TextView) convertView.findViewById(R.id.DateEditText);
-                //Date date = textview.getText();
+
                 try {
-                    SimpleDateFormat df = dateFormatter;
-                    java.util.Date fromDate;
-
-                    fromDate = df.parse(fromDateEtxt.getText().toString());
-                    Long longFromDate = fromDate.getTime();
-
-                    df = new SimpleDateFormat("hh:mm",Locale.GERMANY);
-                    //java.util.Date toTime;
-                    //toTime = df.parse(toTimeEtxt.getText().toString());
 
                     String combiFromDate = fromDateEtxt.getText().toString() + " " + fromTimeEtxt.getText().toString();
                     SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm",Locale.GERMANY);
@@ -134,11 +118,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
                     Date longFromTime = dfCombi.parse(combiFromDate);
 
-                    //Long longToTime = toTime.getTime() + longFromDate;
 
-                    //java.util.Date fromTime;
-                    //toTime = df.parse(fromTimeEtxt.getText().toString());
-                    //Long longFromTime = toTime.getTime() + longFromDate;
                     String combiToDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
 
                     Log.d(AddLectureActivity.class.getSimpleName(), "CombiToDate: " + combiToDate);
@@ -187,9 +167,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
 
 
-                    //Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
-                    //verb.lecturePost(veranstaltungsName, longFromTime,longToTime,selectedRoom);
-                    //onBackPressed();
+
                 }catch(java.text.ParseException e)
                 {
                     // Auto-generated catch block
@@ -198,7 +176,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
 
 
 
-                //Toast.makeText(getApplicationContext(),"Raum ist zu der ausgewählten Zeit schon blockiert", Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -235,12 +213,7 @@ public class AddLectureActivity extends BaseActivity implements View.OnClickList
                 .intoImageView(profileImage);
 
 
-        //drawer.setVisibility(View.GONE);
-        //Log.d("Matthias", "LockDrawer");
-        //super.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        //drawer.removeDrawerListener(toggle);
-        //toggle.setDrawerIndicatorEnabled(false);
-        //toggle.syncState();
+
         setDateTimeField();
 
     }
