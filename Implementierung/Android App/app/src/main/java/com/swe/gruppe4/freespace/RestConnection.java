@@ -188,6 +188,8 @@ public class RestConnection {
 	                if(!httpMethod.equals(HTTP_GET) && !httpMethod.equals(HTTP_DELETE)) {
                         conn.setRequestProperty("Content-Type", "application/json");
 		            }
+                    conn.setConnectTimeout(20000);
+                    conn.setReadTimeout(20000);
 
                     if(!Objects.equals(outputJson, "")) {
                         OutputStream os = conn.getOutputStream();
@@ -239,7 +241,7 @@ public class RestConnection {
         RestCon connn = new RestCon();
         try {
             res = connn.execute(outputJson).get();
-        }catch (Exception e)
+        }catch (Exception ignored)
         {}
 
 
