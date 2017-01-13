@@ -63,21 +63,30 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
         //String[] items = new String[]{"G101", "G102", "G103"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //dropdown.setAdapter(adapter);
-
+        final int id = getIntent().getIntExtra("Id", 0);
        // VerbindungDUMMY verb = new VerbindungDUMMY();
         RestConnection verb = new RestConnection(this);
 
         final ArrayList<Raum> raumliste = verb.raumGet();
-
+        Veranstaltung veranstaltung = verb.lectureGet(id);
+        Raum raumZuletzt = veranstaltung.getRaum();
 
         List<String> spinnerArray =  new ArrayList<>();
+        int spinnerPosCounter = 0;
+        int spinnerPos = 0;
         for(Raum raum: raumliste){
             spinnerArray.add(raum.getRaumname());
+            if(raumZuletzt.getId() == raum.getId()){
+                spinnerPos = spinnerPosCounter;
+            }
+            spinnerPosCounter++;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         final Spinner sItems = (Spinner) findViewById(R.id.spinner);
         sItems.setAdapter(adapter);
+
+        sItems.setSelection(spinnerPos);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,7 +120,7 @@ public class LectureEditActivity extends BaseActivity implements View.OnClickLis
                     //toTime = df.parse(toTimeEtxt.getText().toString());
 
                     String combiFromDate = fromDateEtxt.getText().toString() + " " + toTimeEtxt.getText().toString();
-                    SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm");
+                    SimpleDateFormat dfCombi = new SimpleDateFormat("EEE dd.MM.yyyy HH:mm",Locale.GERMANY);
 
 
 
