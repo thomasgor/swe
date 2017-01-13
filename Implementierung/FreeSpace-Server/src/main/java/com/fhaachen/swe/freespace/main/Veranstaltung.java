@@ -90,7 +90,7 @@ public class Veranstaltung extends Datenbank {
                 return false;
             }*/
 
-            if(! ((von < von1 && bis <= von) || (von >= bis1 && bis >=bis1))){
+            if(! ((von < von1 && bis <= von1) || (von >= bis1 && bis >=bis1))){
                 return false;
             }
         }
