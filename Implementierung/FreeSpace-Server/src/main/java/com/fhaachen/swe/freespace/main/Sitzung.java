@@ -2,6 +2,7 @@ package com.fhaachen.swe.freespace.main;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.JsonHelper;
+import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.annotations.IdName;
 import org.javalite.activejdbc.annotations.Table;
 
@@ -426,5 +427,25 @@ public class Sitzung extends Datenbank {
         disconnect();
         return false;
     }
+
+    /**
+     * Überprüft ob abgelaufene Sitzungen vorhanden sind und löscht diese
+     */
+    public static void deleteExpiredSitzungen(){
+        connect();
+        try{
+            long curTime = System.currentTimeMillis();
+            LazyList<Sitzung> list = Sitzung.find("endzeit < ?", (curTime/1000L));
+
+            for (Sitzung s: list) {
+                deleteSitzungFromDB(s.get("benutzer").toString());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+
 
 }
