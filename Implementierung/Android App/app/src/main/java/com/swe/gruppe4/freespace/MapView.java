@@ -247,7 +247,7 @@ public class MapView extends ImageView {
                 context.startActivity(intent);
             }
 
-            if (x > GetDipsFromPixel(250) && x < GetDipsFromPixel(335) && y > GetDipsFromPixel(200) && y < getBottom()-GetDipsFromPixel(480)) {
+            if (x > getLeft()+(int)(getRight()/1.31) && x < getRight() && y > GetDipsFromPixel(200) && y < getBottom()-GetDipsFromPixel(480)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
                 intent.putExtra("id", 3);
                 context.startActivity(intent);
@@ -269,7 +269,7 @@ public class MapView extends ImageView {
                 context.startActivity(intent);
             }
 
-            if (x > GetDipsFromPixel(250) && x < GetDipsFromPixel(330) && y > GetDipsFromPixel(525) && y < getBottom()-GetDipsFromPixel(150)) {
+            if (x > getLeft()+(int)(getRight()/1.31) && x < getRight() && y > GetDipsFromPixel(525) && y < getBottom()-GetDipsFromPixel(150)) {
                 Intent intent = new Intent(context, RoomDetailsActivity.class);
                 intent.putExtra("id", 4);
                 context.startActivity(intent);
