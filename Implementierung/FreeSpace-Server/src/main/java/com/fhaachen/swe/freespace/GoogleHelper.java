@@ -134,7 +134,7 @@ public class GoogleHelper {
                 LazyList<Veranstaltung> listV = Veranstaltung.find("notifySent=?", false);
                 for (Veranstaltung v: listV) {
                     long begin = Long.parseLong(v.get("von").toString(),10);
-                    if (begin > (curTime/1000L)
+                    if (begin > ((curTime - min1)/1000L)
                             && begin < ((curTime + min5) / 1000L)) {
                         LazyList<Sitzung> listS = Sitzung.find("raum=?", v.get("raum"));
                         for (Sitzung s: listS) {
