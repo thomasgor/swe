@@ -107,7 +107,7 @@
     <string name="profile_pic">Profilbild</string>
     <string name="title_activity_room">Räume suchen</string>
     <string name="rooms_filter">Raumfilter</string>
-    <string name="empty_rooms">Nur Leere Räume</string>
+    <string name="empty_rooms">leere Räume</string>
     <string name="filter_friends">Räume mit Freunden</string>
     <string name="clickable_tags">Tags</string>
     <string name="title_activity_filter_tags">Tags filtern</string>
