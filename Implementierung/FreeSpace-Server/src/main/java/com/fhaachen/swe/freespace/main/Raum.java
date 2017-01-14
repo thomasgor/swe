@@ -188,7 +188,7 @@ public class Raum extends Datenbank {
                 raumMap.put("status","grün");
             }
         }
-
+        // nicht schlimm hier gab es leider
         raumMap.put("foto",Server.URL + "raum/" + raumMap.get("id") +  "/foto");
         return raumMap;
     }
