@@ -2,6 +2,7 @@ package com.fhaachen.swe.freespace.filter;
 
 import com.fhaachen.swe.freespace.Antwort;
 import com.fhaachen.swe.freespace.main.Benutzer;
+import com.fhaachen.swe.freespace.main.Sitzung;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class AuthFilter implements ContainerRequestFilter {
 
 
     public void filter(ContainerRequestContext filterContext){
+        Sitzung.deleteExpiredSitzungen();
         User user = authenticate(filterContext);
         filterContext.setSecurityContext(new Authorizer(user));
     }
