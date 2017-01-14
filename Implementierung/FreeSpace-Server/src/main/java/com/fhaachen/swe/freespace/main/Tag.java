@@ -114,6 +114,13 @@ public class Tag extends Datenbank {
             LazyList<Raum> raum = Raum.find("tag = ?", Integer.parseInt(tagID));
             for (Raum element: raum) {
                 element.set("tag", null).saveIt();
+
+                Sitzung s = Sitzung.first("raum = ? AND hasTag = 1",element.get("id"));
+
+                if(s!=null){
+                    s.set("hasTag",0).saveIt();
+                }
+
             }
             tag.deleteCascade();
             antwort = tag.toJson(true);
@@ -174,6 +181,12 @@ public class Tag extends Datenbank {
                     for (Raum element : raum) {
                         System.out.println("Raume bei Tag " + i);
                         element.set("tag", null).saveIt();
+
+                        Sitzung s = Sitzung.first("raum = ? AND hasTag = 1",element.get("id"));
+
+                        if(s!=null){
+                            s.set("hasTag",0).saveIt();
+                        }
                     }
 
                     System.out.println("Lösche endgültig Tag:" + i);
@@ -212,6 +225,5 @@ public class Tag extends Datenbank {
         disconnect();
         return true;
     }
-
 
 }

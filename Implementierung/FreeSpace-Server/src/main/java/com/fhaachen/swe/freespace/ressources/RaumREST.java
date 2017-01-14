@@ -109,7 +109,7 @@ public class RaumREST {
                 // User hat keine Berechtigung tag zu setzen
                 if (!isAllowed) {
                     //Überliefert dennoch das Raumobjekt
-                    System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
+                    //System.out.println("User hat keine Berechtigung: aber eigentlicher raum wird zurückgegeben");
                     String s = Raum.getRaumdetails(id);
                     return Response.status(Response.Status.FORBIDDEN).entity(s).build();
                 }
@@ -157,7 +157,7 @@ public class RaumREST {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
             byte[] imageData = baos.toByteArray();
-            System.out.println(Server.BASE_URI);
+            //System.out.println(Server.BASE_URI);
 
 
           return Response.ok(imageData, "image/png").build();

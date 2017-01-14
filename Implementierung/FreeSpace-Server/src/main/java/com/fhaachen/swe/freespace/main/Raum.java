@@ -86,17 +86,17 @@ public class Raum extends Datenbank {
             if(raum != null) {
                 String json = raum.toJson(true);
                 Map raumMap = JsonHelper.toMap(json);
-                System.out.println("completeRaumDetails");
+               // System.out.println("completeRaumDetails");
                 raumMap = completeRaumDetails(raumMap);
                 if(raumMap == null){
-                    System.out.println("RaumMap ist null");
+                    //System.out.println("RaumMap ist null");
                 }
 
                 result = JsonHelper.getJsonStringFromMap(raumMap);
                 result = includeBenutzerInRaumdetails(result);
                 result = includeRaumFoto(result);
             } else{
-                System.out.println("Raum wurde nicht gefunden");
+                //System.out.println("Raum wurde nicht gefunden");
             }
 
 
@@ -126,15 +126,10 @@ public class Raum extends Datenbank {
             System.out.println(e.toString());
             return null;
         }
+
         disconnect();
-        String json = raum.toJson(true);
+        String json = getRaumdetails(raumID);
 
-        //lade Details nach..
-        //Map raumMap = JsonHelper.toMap(json);
-        //raumMap = completeRaumDetails(raumMap);
-
-        json = getRaumdetails(raumID);
-        //System.out.println(" Das ist mein JsonString: " + json);
         return json;
     }
 
@@ -147,8 +142,8 @@ public class Raum extends Datenbank {
         String raumID = raumMap.get("id").toString();
 
         int teilnehmer_anz = Sitzung.getRaumteilnehmer_anz(raumID);
-        if(teilnehmer_anz == 0)
-            System.out.println("Teilnehmer_anz ist null: " + raumID);
+      /*  if(teilnehmer_anz == 0)
+            System.out.println("Teilnehmer_anz ist null: " + raumID); */
 
         raumMap.put("teilnehmer_anz",teilnehmer_anz);
 
@@ -176,6 +171,13 @@ public class Raum extends Datenbank {
 
         if(aktiveVeranstaltung){
             raumMap.put("status","grau");
+            String tagGeblocktJSON  = "{\"id\": \"0\", \"name\": \"Geblockt\"}";
+            Map tagGeblockMap = JsonHelper.toMap(tagGeblocktJSON);
+            raumMap.put("tag", tagGeblockMap);
+
+            Raum raum = Raum.findById(raumID);
+            raum.set("tag", null);
+            raum.saveIt();
         }else{
 
             if(auslastung >= 80)
@@ -186,7 +188,7 @@ public class Raum extends Datenbank {
                 raumMap.put("status","grün");
             }
         }
-
+        // nicht schlimm hier gab es leider
         raumMap.put("foto",Server.URL + "raum/" + raumMap.get("id") +  "/foto");
         return raumMap;
     }

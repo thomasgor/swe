@@ -110,7 +110,7 @@ public class Benutzer extends Datenbank{
 
         if(istBenutzer(benutzerID)){
             connect();
-            System.out.println("Benutzer mit der id="+benutzerID+" ist schon vorhanden");
+            //System.out.println("Benutzer mit der id="+benutzerID+" ist schon vorhanden");
             Benutzer b = Benutzer.findById(benutzerID);
             result = b.toJson(true);
         }else{
@@ -132,9 +132,9 @@ public class Benutzer extends Datenbank{
 
             try {
                 neu.insert();
-                //result = neu.toJson(true, "email", "foto", "id", "token", "tokenFCM", "vorname", "istPush", "istAnonym", "istProfessor");
+                neu.refresh();
                 result = neu.toJson(true);
-                System.out.println("postBenutzer: Neuer Benutzer angelegt "+ result);
+                //System.out.println("postBenutzer: Neuer Benutzer angelegt "+ result);
             }catch(Exception e){
                 System.out.println(e);
             }
