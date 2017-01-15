@@ -22,14 +22,14 @@ import com.swe.gruppe4.freespace.Objektklassen.*;
 
 /**
  * Created by Kiesa on 30.04.2016.
- * this is a custom adapter that contains/ manages PrivateContacts (friends)
+ * Adapterklasse un Freundschaftsanfragen anzuzeigen und zu verwalten
  */
 class FriendListAdapter extends ArrayAdapter<Freundschaft> {
 
     private ArrayList<Freundschaft> friendInfoList = new ArrayList<Freundschaft>();
     Context con;
     /**
-     *  add PrivateContact object  to the adapter
+     *  Freundschaft in die Liste eintragen
      */
     public void add(Freundschaft friend) {
         super.add(friend);
@@ -40,7 +40,11 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
 
 
 
-
+    /**
+     *  Einzelne Freundschaft abfragen
+     *  @Param: index
+     *  @Return Freundschaft
+     */
     public Freundschaft getItem(int index) {
         return this.friendInfoList.get(index);
     }
@@ -84,7 +88,11 @@ class FriendListAdapter extends ArrayAdapter<Freundschaft> {
         return convertView;
     }
 
-
+    /**
+     *  Einzelne Freundschaft abfragen
+     *  @Param v
+     *  @Param ben
+     */
     private void showDialogDelete(View v, final Benutzer ben){
                 AlertDialog.Builder build = new AlertDialog.Builder(v.getRootView().getContext());
                 build.setCancelable(false);

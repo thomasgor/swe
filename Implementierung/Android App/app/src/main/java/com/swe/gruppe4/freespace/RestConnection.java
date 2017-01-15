@@ -161,6 +161,16 @@ public class RestConnection {
         return res;
     }
 
+    /**
+     * Diese Methode wird dazu verwendet, um eine HTTP Request an den Server zu senden und die Antwort weiter zu leiten
+     * @param restRessource
+     * @param httpMethod
+     * @param outputJson
+     * @param value
+     * @param expectResponseJson
+     * @param isAuthorized
+     * @return String
+     */
     private String doRestRequest(final String restRessource, final String httpMethod, final String outputJson, final String value, final boolean expectResponseJson, final boolean isAuthorized) {
         String res = "";
         //showProgressDialog();
@@ -251,343 +261,13 @@ public class RestConnection {
         return res;
     }
 
-    private String restRequest(final String restRessource, final String httpMethod, final String input) {
-        String res = "";
-        class RestCon extends AsyncTask<String, Integer, String> {
-            String resp;
 
-            protected String doInBackground(String... params) {
-                String response = "false";
-                publishProgress(0);
-                try {
-                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource + "/");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    String userPass = id + ":" + token;
-                    String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
-                    conn.setRequestProperty("Authorization", "Basic " + encoding);
-                    conn.setRequestMethod(httpMethod);
-                    conn.setChunkedStreamingMode(0);
-                    conn.setRequestProperty("Content-Type", "application/json");
 
-                    if(httpMethod != HTTP_GET) {
-                        OutputStream os = conn.getOutputStream();
 
-                        if (!Objects.equals(input, "")) {
-                            byte[] inputJsonBytes = input.getBytes("UTF-8");
-                            os.write(inputJsonBytes);
-
-                        }
-                        os.flush();
-                        os.close();
-                    }
-                    else
-                    conn.connect();
-
-                    //Log.d("edu", "restRequest! versendet");
-                    int responseCode = conn.getResponseCode();
-                    Log.d("edu", "restRequest! ResponseCode: " + responseCode);
-                    Log.d("myTag3", "" + responseCode);
-                    SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
-                    if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0) {
-                        InputStream in = new BufferedInputStream(conn.getInputStream());
-                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-                        in.close();
-                    } else {
-                        //showErrorMessage(responseCode);
-                    }
-                    conn.disconnect();
-
-
-                } catch (IOException e) {
-                    Log.d("myTag20", "fail");
-                    Log.d("edu", "EXCEPTION IN restRequest!");
-                    e.printStackTrace();
-                }
-                Log.d("myTag2", response);
-                //Log.d("edu", "das ist der Response: " + response);
-                return response;
-
-            }
-            protected void onProgressUpdate(Integer... progress) {
-                //showProgressDialog();
-            }
-
-            protected void onPostExecute(String result) {
-                hideProgressDialog();
-                resp = result;
-
-
-            }
-        }
-        RestCon connn = new RestCon();
-        try {
-            res = connn.execute(input).get();
-        }catch (Exception e)
-        {}
-
-        return res;
-    }
-
-    private String restRequest(final String restRessource, final String httpMethod, final String input, final String idn) {
-        String res = "";
-        class RestCon extends AsyncTask<String, Integer, String> {
-            String resp;
-
-            protected String doInBackground(String... params) {
-                String response = "false";
-                publishProgress(0);
-                try {
-
-                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource + "/" + idn);
-
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    String userPass = id + ":" + token;
-                    String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
-                    conn.setRequestProperty("Authorization", "Basic " + encoding);
-                    conn.setRequestMethod(httpMethod);
-                    conn.setChunkedStreamingMode(0);
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    Log.d("myTag3", "now aftersetRequestMethod");
-                    Log.d("edu", "RestRequest a");
-
-                    if(httpMethod != HTTP_GET && httpMethod != HTTP_DELETE) {
-                        OutputStream os = conn.getOutputStream();
-
-                        if (!Objects.equals(input, "")) {
-                            byte[] inputJsonBytes = input.getBytes("UTF-8");
-                            os.write(inputJsonBytes);
-
-                        }
-                        os.flush();
-                        os.close();
-                    }
-                    else
-                        conn.connect();
-
-                    /*
-                    OutputStream os = conn.getOutputStream();
-
-                    Log.d("myTag5", "now before if");
-                    if (!Objects.equals(input, "")) {
-                        byte[] inputJsonBytes = input.getBytes("UTF-8");
-                        os.write(inputJsonBytes);
-                        Log.d("myTag6", "now in if");
-                    }
-                    os.flush();
-                    os.close();
-                    */
-
-                    int responseCode = conn.getResponseCode();
-                    Log.d("edu", "RestRequest Response Code: " + responseCode);
-                    Log.d("myTag3", "" + responseCode);
-                    SparseIntArray acceptableCodes = acceptableCodesID(restRessource, httpMethod);
-
-                    if (acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0 && responseCode != 400) {
-                        InputStream in = new BufferedInputStream(conn.getInputStream());
-                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-                        in.close();
-                    } else {
-                        //showErrorMessage(responseCode);
-                    }
-                    conn.disconnect();
-
-
-                } catch (IOException e) {
-                    Log.d("myTag20", "fail");
-                    Log.d("edu", "EXCEPTIOn in RestRequest");
-                    e.printStackTrace();
-                }
-                Log.d("myTag2", response);
-
-                return response;
-
-            }
-            protected void onProgressUpdate(Integer... progress) {
-                //showProgressDialog();
-            }
-
-            protected void onPostExecute(String result) {
-                hideProgressDialog();
-                resp = result;
-
-
-            }
-        }
-        RestCon connn = new RestCon();
-        try {
-            res = connn.execute(input).get();
-        }catch (Exception e)
-        {}
-
-        return res;
-    }
-
-    private String restRequest(final String restRessource, final String httpMethod, final String input, final int idn) {
-        String res = "";
-        class RestCon extends AsyncTask<String,Integer,String> {
-            String resp;
-
-            protected String doInBackground(String... params) {
-                String response = "false";
-                publishProgress(0);
-                try {
-                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + restRessource +"/" + idn);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    String userPass = id+":"+token;
-                    String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
-                    conn.setRequestProperty("Authorization", "Basic " + encoding);
-                    conn.setRequestMethod(httpMethod);
-                    conn.setChunkedStreamingMode(0);
-                    Log.d("myTag3","now aftersetRequestMethod");
-                    conn.setRequestProperty("Content-Type","application/json");
-                    //OutputStream os = conn.getOutputStream();
-                    if(httpMethod != HTTP_GET) {
-                        OutputStream os = conn.getOutputStream();
-
-                        if (!Objects.equals(input, "")) {
-                            byte[] inputJsonBytes = input.getBytes("UTF-8");
-                            os.write(inputJsonBytes);
-
-                        }
-                        os.flush();
-                        os.close();
-                    }
-                    else
-                        conn.connect();
-                    //conn.connect();
-                    Log.d("myTag5","now before if");
-
-                    /*
-                    if(!Objects.equals(params[0], "")){
-                        byte[] inputJsonBytes = params[0].getBytes("UTF-8");
-                        os.write(inputJsonBytes);
-                    }
-                    os.flush();
-                    os.close();
-                    */
-
-                    int responseCode = conn.getResponseCode();
-                    SparseIntArray acceptableCodes = acceptableCodesID(restRessource,httpMethod);
-                    if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
-                        InputStream in = new BufferedInputStream(conn.getInputStream());
-                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-                        in.close();
-                    } else {
-                        //showErrorMessage(responseCode);
-                    }
-                    conn.disconnect();
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Log.d("myTag2",response);
-                return response;
-
-            }
-
-            protected void onProgressUpdate(Integer... progress) {
-                //showProgressDialog();
-            }
-
-            protected void onPostExecute(String result) {
-                hideProgressDialog();
-                resp = result;
-
-
-            }
-
-        }
-
-        RestCon connn = new RestCon();
-        try {
-            res = connn.execute(input).get();
-        }catch (Exception e)
-        {}
-
-        return res;
-
-
-    }
-
-    private String restPOSTBenutzer(final String input) {
-        String res = "";
-
-        class RestCon extends AsyncTask<String,Integer,String> {
-             String resp;
-
-            protected String doInBackground(String... params) {
-                String response = "false";
-                publishProgress(0);
-
-                try {
-                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + BENUTZER +"/");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    //String userPass = ""+":"+"";
-                    //byte[] encoding = Base64.decode(userPass, Base64.DEFAULT);
-                    //conn.setRequestProperty("Authorization", "Basic " + Arrays.toString(encoding));
-                    conn.setRequestMethod(HTTP_POST);
-                    conn.setChunkedStreamingMode(0);
-                    conn.setRequestProperty("Content-Type","application/json");
-                    OutputStream os = conn.getOutputStream();
-                    Log.d("myTag", "conn aufgebaut");
-                    if(!Objects.equals(input, "")){
-                        byte[] inputJsonBytes = input.getBytes("UTF-8");
-                        os.write(inputJsonBytes);
-                    }
-                    os.flush();
-                    os.close();
-
-                    int responseCode = conn.getResponseCode();
-                    Log.d("myTag3",""+ responseCode);
-                    SparseIntArray acceptableCodes = acceptableCodes(BENUTZER,HTTP_POST);
-                    if(acceptableCodes != null && acceptableCodes.indexOfKey(responseCode) >= 0){
-                        InputStream in = new BufferedInputStream(conn.getInputStream());
-                        response = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-                        in.close();
-                    } else {
-                        //showErrorMessage(responseCode);
-                    }
-                    conn.disconnect();
-
-
-                } catch (IOException e) {
-                    Log.d("myTag20","fail");
-                    e.printStackTrace();
-                }
-
-                Log.d("myTag2",response);
-                return response;
-
-            }
-
-            protected void onProgressUpdate(Integer... progress) {
-                showProgressDialog();
-            }
-
-            protected void onPostExecute(String result) {
-                hideProgressDialog();
-                resp = result;
-
-
-            }
-
-        }
-
-        RestCon connn = new RestCon();
-        try {
-            res = connn.execute(input).get();
-        }catch (Exception e)
-        {}
-
-        return res;
-
-
-    }
-
-
-
+    /**
+     * Diese Methode wird dazu verwendet, eine Fehlermeldung anzuzeigen, falls etwas schief geht
+     * @param responseCode
+     */
     private void showErrorMessage(final int responseCode) {
 
         new AlertDialog.Builder(context)
@@ -747,7 +427,8 @@ public class RestConnection {
     }
 
     /**
-     * Die folgenden Methoden werden für die REST-Ressourcen Sitzung benutzt
+     * Diese Methode erfragt die aktuelle Sitzung vom Server
+     * @return Sitzung
      */
     public Sitzung sitzungGet(){
         Log.d("edu", "sitzungGet Request..");
@@ -763,6 +444,12 @@ public class RestConnection {
 
 
     }
+
+    /**
+     * Diese Methode sagt dem Server, dass es eine neue Sitzung gibt
+     * @param raumID
+     * @return Sitzung
+     */
     public Sitzung sitzungPost(int raumID){
         String jSon = builder.buildPOSTsitzungJson(raumID);
 
@@ -781,6 +468,11 @@ public class RestConnection {
 
     }
 
+    /**
+     * Diese Methode verlängert die aktuelle Sitzung
+     * @param id
+     * @return Sitzung
+     */
     public Sitzung sitzungPut(String id){
         Log.d("edu", "sitzungPut Request..");
         //String antwortJSon = restRequest(SITZUNG, HTTP_PUT, "", id);
@@ -788,64 +480,20 @@ public class RestConnection {
         Log.d("edu", "sitzungPut Response: " + antwortJSon);
         return new Sitzung(antwortJSon);
     }
-
+    /**
+     * Diese Methode löscht die aktuelle Sitzung vom Server
+     * @param id
+     */
     public void sitzungDelete(final String id){
 
         Log.d("edu", "sitzungDelete Request..");
-
-        /*class RestCon extends AsyncTask<String, Integer, String> {
-            String resp;
-
-            protected String doInBackground(String... params) {
-                String response = "false";
-                publishProgress(0);
-                try {
-                    java.net.URL url = new java.net.URL("http://" + hostname + ":" + port + "/" + SITZUNG + "/" + id);
-                    Log.d("edu", "doRestRequest URL: " + url.toString());
-
-                    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-                    String userPass = id + ":" + token;
-                    String encoding = Base64.encodeToString(userPass.getBytes(), Base64.DEFAULT);
-                    httpCon.setRequestProperty("Authorization", "Basic " + encoding);
-                    //httpCon.setDoOutput(true);
-                    //httpCon.setRequestProperty(
-                    //        "Content-Type", "application/x-www-form-urlencoded" );
-                    httpCon.setRequestMethod("DELETE");
-                    httpCon.connect();
-
-
-                    int responseCode = httpCon.getResponseCode();
-                    lastStatusCode = responseCode;
-                    Log.d("edu","doRestRequest" + HTTP_DELETE +" Response: " + responseCode);
-
-
-
-                } catch (IOException e) {
-                    Log.d("edu", "EXCEPTION IN doRestRequest!");
-                    e.printStackTrace();
-                }
-
-                return response;
-
-            }
-            protected void onProgressUpdate(Integer... progress) {
-                //showProgressDialog();
-            }
-
-            protected void onPostExecute(String result) {
-                hideProgressDialog();
-                resp = result;
-
-
-            }
-        }
-
-        RestCon con = new RestCon();
-        con.execute("");*/
-        //String antwortJSon = restRequest(SITZUNG, HTTP_DELETE, "", id);
         String antwortJSon = doRestRequest(SITZUNG, HTTP_DELETE, "", id, false, true);
         Log.d("edu", "sitzungDelete Response: " + antwortJSon);
     }
+    /**
+     * Diese Methode erfragt alle Freunde des aktuellen benutzers vom Server
+     * @return ArrayList<Freundschaft>
+     */
 
     public ArrayList<Freundschaft> freundschaftGet() {
         Log.d("edu", "FreundschaftGet(liste) Request..");
@@ -856,7 +504,10 @@ public class RestConnection {
     }
 
 
-
+    /**
+     * Diese Methode stellt eine neue Freundschaftsanfrage
+     * @param email
+     */
     public void freundschaftPost(String email) {
         String JSon = builder.buildPOSTfreundschaftJson(email);
 
@@ -865,7 +516,10 @@ public class RestConnection {
         String antwortJSon = doRestRequest(FREUNDSCHAFT, HTTP_POST, JSon, "", false, true);
         Log.d("edu", "freundschaftPost Response: " + antwortJSon);
     }
-
+    /**
+     * Diese Methode beantwortet eine Freundschaftsanfrage positiv
+     * @param benutzer
+     */
     public void freundschaftPut(Benutzer benutzer){
 
         Log.d("edu", "freundschaftPut Request..");
@@ -873,6 +527,11 @@ public class RestConnection {
         String antwortJSon = doRestRequest(FREUNDSCHAFT, HTTP_PUT, "", benutzer.getId(), false, true);
         Log.d("edu", "freundschaftPut Response: " + antwortJSon);
     }
+
+    /**
+     * Diese Methode löscht eine Freundschaft
+     * @param benutzer
+     */
 
     public void freundschaftDelete(Benutzer benutzer){
         Log.d("edu", "freundschaftDelete Request..");
@@ -883,7 +542,8 @@ public class RestConnection {
     }
 
     /**
-     * Die folgenden Methoden werden für die REST-Ressourcen Tag benutzt
+     * Diese Methode erfragt alle Tags vom Server
+     * @return ArrayList<Tag>
      */
 
     public ArrayList<Tag> tagGet() {
@@ -896,7 +556,8 @@ public class RestConnection {
     }
 
     /**
-     * Die folgenden Methoden werden für die REST-Ressourcen Raum benutzt
+     * Diese Methode erfragt alle Räume vom Server
+     * @return ArrayList<Raum>
      */
 
     public ArrayList<Raum> raumGet() {
@@ -910,7 +571,9 @@ public class RestConnection {
 
 
     /**
-     * Die folgenden Methoden werden für die REST-Ressourcen Raum(id) benutzt
+     * Diese Methode erfragt einen speziellen Raum
+     * @param id
+     * @return Raum
      */
     public Raum raumGet(int id) {
         Log.d("edu", "raumGet(id) Request..");
@@ -924,6 +587,13 @@ public class RestConnection {
         }
 
     }
+
+    /**
+     * Diese Methode setzt einen Tag in einem Raum
+     * @param tagID
+     * @param raumID
+     * @return Raum
+     */
     public Raum raumPut(int tagID, int raumID){
         String jSon = builder.buildPUTraumJson(tagID);
 
@@ -940,6 +610,11 @@ public class RestConnection {
         String antwortJSon = doRestRequest(RAUM, HTTP_GET, "", String.valueOf(raumId) + "/foto", true, true);
         return antwortJSon; // Bild ULR?
     }
+
+    /**
+     * Diese Methode erfragt alle Veranstaltungen des Benutzers vom Server
+     * @return ArrayList<Veranstaltung>
+     */
     public ArrayList<Veranstaltung> lecturesGet() {
 
         Log.d("edu", "lectureGet Request...");
@@ -952,7 +627,11 @@ public class RestConnection {
     }
 
 
-
+    /**
+     * Diese Methode erfragt eine spezielle Veranstaltung
+     * @param id
+     * @return Veranstaltung
+     */
     public Veranstaltung lectureGet(int id){
 
         Log.d("edu", "lectureGet(id) Request...");
@@ -963,7 +642,14 @@ public class RestConnection {
 
     }
 
-
+    /**
+     * Diese Methode erstellt auf dem Server eine neue Veranstaltung
+     * @param name
+     * @param von
+     * @param bis
+     * @param raum
+     * @return boolean
+     */
     public boolean lecturePost(String name, long von, long bis, Raum raum){
         String jSon = builder.buildPOSTveranstaltungJson(name, von, bis, raum);
 
@@ -977,7 +663,15 @@ public class RestConnection {
         return true;
 
     }
-
+    /**
+     * Diese Methode bearbeitet eine vorhandene Veranstaltung
+     * @param id
+     * @param name
+     * @param von
+     * @param bis
+     * @param raum
+     * @return boolean
+     */
     public boolean lecturePut(int id, String name, long von, long bis, Raum raum){
         String jSon = builder.buildPUTveranstaltungJson(name, von, bis, raum);
 
@@ -991,7 +685,10 @@ public class RestConnection {
         return true;
 
     }
-
+    /**
+     * Diese Methode löscht eine Veranstaltung
+     * @param id
+     */
     public void lectureDelete(int id){
 
         Log.d("edu", "lectureDelete Request... with id:" + id);
@@ -999,6 +696,14 @@ public class RestConnection {
         String antwortJSon = doRestRequest(VERANSTALTUNG, HTTP_DELETE, "", String.valueOf(id), false, true);
         Log.d("edu", "lectureDelete Response: " + antwortJSon);
     }
+
+    /**
+     * Diese Methode ändert die Einstellungen des Benutzers
+     * @param PW
+     * @param isAnonym
+     * @param isPush
+     * @return Benutzer
+     */
 
     public Benutzer benutzerPut (String PW, int isAnonym, int isPush){
         String jSON = builder.buildPUTbenutzerJson(PW, isAnonym, isPush);
@@ -1011,6 +716,10 @@ public class RestConnection {
         return new Benutzer(antwortJSon);
 
     }
+    /**
+     * Diese Methode senden den FCM Token an den Server
+     * @param token
+     */
 
     public void benutzerPut (String token){
         JSONObject json = new JSONObject();
@@ -1027,6 +736,15 @@ public class RestConnection {
 
     }
 
+    /**
+     * Diese Methode erstellt einen neuen Benutzer auf dem Server
+     * @param idn
+     * @param email
+     * @param name
+     * @param vorname
+     * @param fotoURL
+     */
+
     public void benutzerPost (String idn, String email, String name, String vorname, String fotoURL) {
         String jSon = builder.buildPOSTbenutzerJson(idn, email, name, vorname, fotoURL);
 
@@ -1042,12 +760,10 @@ public class RestConnection {
 
     }
 
-    public Karte karteGet (int start, int ziel){
 
-        return null;
-    }
-
-
+    /**
+     * Diese Methode zeigt einen warte Dialog
+     */
     private void showProgressDialog() {
         if(mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(context);
@@ -1066,6 +782,12 @@ public class RestConnection {
         }
     }
 
+    /**
+     * Diese Methode erfragt einen Weg zwischen zwei Räumen
+     * @param start
+     * @param ende
+     * @return ArrayList<String>
+     */
     public ArrayList<String> wegGet(String start, String ende) {
         String antwortJSon = doRestRequest(WEG, HTTP_GET, "",  (start+"/"+ende), true, true);
         if(antwortJSon == "false") { // kein raum mit der id gefunden :code 400
@@ -1075,6 +797,7 @@ public class RestConnection {
         }
 
     }
+
 
     public ArrayList<RoomEnterance> raumEingangGet() {
         Karte roomEnterance = new Karte();

@@ -247,8 +247,8 @@ public class JsonStringBuilder {
     /**
      * Diese Methode wird dazu verwendet, ein Datum aus einem Json String zu extrahieren
      * @param jsonString
-     * @param
-     * @return
+     * @param   metaData
+     * @return  String
      */
     public String getFromJson(String jsonString, String metaData)
     {
@@ -263,6 +263,12 @@ public class JsonStringBuilder {
         }
         return value;
     }
+
+    /**
+     * Diese Methode wird dazu verwendet, eine Freundschaftsliste aus einem Json String zu extrahieren
+     * @param jsonString
+     * @return ArrayList<Freundschaft>
+     */
     public ArrayList getFreundschaftFromJson(String jsonString) {
         ArrayList<Freundschaft> list = new ArrayList<Freundschaft>();
         //Log.d("edu","in freundschaftvonjson");
@@ -283,7 +289,11 @@ public class JsonStringBuilder {
         }
         return list;
 
-
+        /**
+         * Diese Methode wird dazu verwendet, eine Tagliste aus einem Json String zu extrahieren
+         * @param jsonString
+         * @return ArrayList<Tag>
+         */
     }
     public ArrayList getTagFromJson(String jsonString) {
         ArrayList<Tag> list = new ArrayList<Tag>();
@@ -321,6 +331,11 @@ public class JsonStringBuilder {
     */
 
     //jsonString muss ein JsonArray als String sein, kein JsonObjekt! / Raum OHNE Benutzer!
+    /**
+     * Diese Methode wird dazu verwendet, eine Raumliste aus einem Json String zu extrahieren
+     * @param jsonString
+     * @return ArrayList<Raum>
+     */
     public ArrayList getRaumListFromJson(String jsonString) {
         ArrayList<Raum> list = new ArrayList<Raum>();
         //Log.d("edu", "in getRaumFromJson" + jsonString);
@@ -364,7 +379,11 @@ public class JsonStringBuilder {
         }
         return list;
     }
-
+    /**
+     * Diese Methode wird dazu verwendet, eine Veranstaltungsliste aus einem Json String zu extrahieren
+     * @param jsonString
+     * @return ArrayList<Veranstaltung>
+     */
     public ArrayList getVeranstaltungFromJson(String jsonString) {
         ArrayList<Veranstaltung> list = new ArrayList<Veranstaltung>();
         try {
@@ -383,7 +402,11 @@ public class JsonStringBuilder {
 
 
     }
-
+    /**
+     * Diese Methode wird dazu verwendet, eine Benutzerliste aus einem Json String zu extrahieren
+     * @param jsonString
+     * @return ArrayList<Benutzer>
+     */
     public ArrayList getBenutzerFromJson(String jsonString) {
         ArrayList<Benutzer> list = new ArrayList<Benutzer>();
         try {
@@ -403,6 +426,11 @@ public class JsonStringBuilder {
 
     }
 
+    /**
+     * Diese Methode wird dazu verwendet, eine Wegliste aus einem Json String zu extrahieren
+     * @param jsonString
+     * @return ArrayList<String>
+     */
     public ArrayList getWegListFromJson(String jsonString) {
         ArrayList<String> list = new ArrayList<String>();
         //Log.d("edu", "in getRaumFromJson" + jsonString);

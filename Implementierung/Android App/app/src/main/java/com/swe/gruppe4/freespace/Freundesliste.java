@@ -58,6 +58,7 @@ public class Freundesliste extends BaseActivity
             TextView tw = (TextView) findViewById(R.id.freundschaftsanfragen);
             tw.setVisibility(View.VISIBLE);
         }
+
         friendView.setClickable(true);
         friendView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -69,6 +70,7 @@ public class Freundesliste extends BaseActivity
                 startActivity(intent);
             }
         });
+        //Benutzer hinzufügen Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +87,9 @@ public class Freundesliste extends BaseActivity
     }
 
 
-
+    /**
+     * Diese Methode wird dazu verwendet, um einen neuen Dialog für das hinzufügen eines neuen Freundes anzuzeigen
+     */
     private void showDialogAdd(){
         AlertDialog.Builder build = new AlertDialog.Builder(Freundesliste.this);
         build.setCancelable(false);
@@ -108,9 +112,7 @@ public class Freundesliste extends BaseActivity
         alert1.show();
     }
 
-    public void update(){
-        recreate();
-    }
+
 
 
 }
