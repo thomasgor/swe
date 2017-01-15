@@ -19,6 +19,17 @@ import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 import java.util.ArrayList;
 
+
+/**
+ * <p>Überschrift: Struktur von TagSetActivity</p>
+ * <p>Beschreibung: Diese Activity dient dazu, Tags auszuwählen, um der momentan aktiven Sitzung einen Tag zuzuweisen.
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
+ *
+ */
 public class TagSetActivity extends AppCompatActivity {
     private ListView tagView;
     private ArrayList<Tag> tagList;
@@ -89,6 +100,11 @@ public class TagSetActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Funktion für den Zurückbutton in der oberen Ecke.
+     *
+     * @param menuItem gedrückter Knopf
+     * @return super.onOptionsItemSelected(menuItem)*/
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {
@@ -101,6 +117,11 @@ public class TagSetActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Funktion für das Setzen eines Tags. Simuliert RadioGroup
+     *
+     * @param v gedrückter Knopf
+     * @return super.onOptionsItemSelected(menuItem)*/
     public void onClickRadioButton(View v) {
         View vMain = ((View) v.getParent());
         int newIndex = ((ViewGroup) vMain.getParent()).indexOfChild(vMain);
@@ -113,6 +134,10 @@ public class TagSetActivity extends AppCompatActivity {
         listIndex = newIndex;
     }
 
+    /**
+     * Setzt 0 als gedrückten Tag, um Abbruch anzuzeigen
+     *
+     */
     @Override
     public void onBackPressed(){
         Intent result = new Intent();

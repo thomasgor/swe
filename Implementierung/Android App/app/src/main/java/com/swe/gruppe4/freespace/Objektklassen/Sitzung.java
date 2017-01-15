@@ -7,7 +7,14 @@ import org.json.JSONObject;
 import org.json.JSONException;
 
 /**
- * Created by Merlin on 22.11.2016.
+ * <p>Überschrift: Struktur von Sitzung</p>
+ * <p>Beschreibung: Diese Klasse dient dazu, Sitzungsobjekte zu verarbeiten
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
+ *
  */
 
 public class Sitzung implements Serializable{
@@ -16,6 +23,10 @@ public class Sitzung implements Serializable{
     private boolean myTag;
     private long endzeit;
 
+    /**
+     * Nur zur Erstellung von Dummyobjekten
+     * @deprecated Sitzung(jsonSitzung) benutzen
+     */
     public Sitzung(String id, Raum raum, boolean myTag, long endzeit) {
         this.id = id;
         this.raum = raum;
@@ -23,6 +34,10 @@ public class Sitzung implements Serializable{
         this.endzeit = endzeit;
     }
 
+    /**
+     * Nur zur Erstellung von Dummyobjekten
+     * @deprecated Sitzung(jsonSitzung) benutzen
+     */
     public Sitzung(int id, Raum raum, boolean myTag, long endzeit) {
         this.id = String.valueOf(id);
         this.raum = raum;
@@ -30,6 +45,11 @@ public class Sitzung implements Serializable{
         this.endzeit = endzeit;
     }
 
+    /**
+     * Erstellt ein Sitzungsobjekt aus einem JSONString
+     *
+     * @param jsonSitzung JSON-String des Sitzungsobjekts
+     */
     public Sitzung(String jsonSitzung) {
         try {
             JSONObject jsonObj = new JSONObject(jsonSitzung);

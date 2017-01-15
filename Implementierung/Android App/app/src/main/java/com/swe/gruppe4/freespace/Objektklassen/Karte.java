@@ -4,16 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * <p>Überschrift: Struktur von Karte </p>
- * <p>Beschreibung:
+ * <p>Überschrift: Struktur von Karte</p>
+ * <p>Beschreibung: Diese Klasse dient dazu, Kartenobjekte zu Verarbeiten
  * </p>
- * <p>Copyright: Merlin Copyright (c) 2016</p>
- * <p>Organisation: FH Aachen, FB05 </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
  *
  * @author Merlin
- * @version 1
- *          Created on 22.11.2016.
+ * @version 1.0
+ *
+ * @deprecated
  */
+
+@Deprecated
 public class Karte implements Serializable {
     private static ArrayList<RoomEnterance> rooms;
 

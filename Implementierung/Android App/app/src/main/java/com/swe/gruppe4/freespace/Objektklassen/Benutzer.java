@@ -7,6 +7,13 @@ import org.json.JSONObject;
 import org.json.JSONException;
 
 /**
+ * <p>Überschrift: Struktur von Benutzer</p>
+ * <p>Beschreibung: Diese Klasse dient dazu, Benutzerobjekte zu Verarbeiten
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
  *
  */
 
@@ -21,6 +28,12 @@ public class Benutzer implements Serializable {
     private int istAnonym;
     private int istPush;
 
+    /**
+     * Nur zur Erstellung von DummyObjekten gedacht
+     *
+     * @deprecated Benutzer(String jsonBenutzer, [int oder long]) benutzen
+     */
+    @Deprecated
     public Benutzer(long id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym, int istPush) {
         this.id = String.valueOf(id);
         this.email = email;
@@ -33,6 +46,12 @@ public class Benutzer implements Serializable {
         this.istPush = istPush;
     }
 
+    /**
+     * Nur zur Erstellung von DummyObjekten gedacht
+     *
+     * @deprecated jsonBenutzer benutzen
+     */
+    @Deprecated
     public Benutzer(String id, String email, String name, String vorname, String fotoURL, String token, int isProfessor, int istAnonym, int istPush) {
         this.id = id;
         this.email = email;
@@ -45,6 +64,10 @@ public class Benutzer implements Serializable {
         this.istPush = istPush;
     }
 
+    /**
+     * Erstellt ein Benutzerobjekt aus einem JSON-String
+     *
+     * @param jsonBenutzer JSON-String eines Benutzerobjekts*/
     public Benutzer(String jsonBenutzer) {
         try {
             JSONObject jsonObj = new JSONObject(jsonBenutzer);
@@ -64,6 +87,12 @@ public class Benutzer implements Serializable {
         }
     }
 
+    /**
+     * Erstellt ein Benutzerobjekt aus einem JSON-String, um ihn in Freundschaften anzuzeigen
+     *
+     * @param jsonBenutzer JSON-String eines Benutzerobjekts
+     * @param nurFürFreundschaften FLAG um diesen Konstrukter aufzurufen
+     * */
     public Benutzer(String jsonBenutzer, int nurFürFreundschaften) {
         try {
             JSONObject jsonObj = new JSONObject(jsonBenutzer);
@@ -80,6 +109,12 @@ public class Benutzer implements Serializable {
         }
     }
 
+    /**
+     * Erstellt ein Benutzerobjekt aus einem JSON-String, um ihn in Veranstaltungen zu setzen
+     *
+     * @param jsonBenutzer JSON-String eines Benutzerobjekts
+     * @param nurFürVeranstaltungen FLAG um diesen Konstrukter aufzurufen
+     * */
     public Benutzer(String jsonBenutzer, long nurFürVeranstaltungen) {
 
 

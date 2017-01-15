@@ -5,18 +5,25 @@ import android.util.Log;
 import java.io.Serializable;
 import org.json.JSONObject;
 import org.json.JSONException;
+
 /**
- * @author Merlin
- * @version 1.0
- * Tag beschreibt die aktuelle Funktion eines Raumes. Er kann von Professoren gebucht sein
+ * <p>Überschrift: Struktur von Tag</p>
+ * <p>Beschreibung: Tag beschreibt die aktuelle Funktion eines Raumes. Er kann von Professoren gebucht sein
  * oder ein Student kann einen TAG für einen Raum setzten und so beschreiben wofür der Raum
  * genutzt wird. Z.B. Ruhe, Präsentation usw.
  * Enthält nur Attribute mit Gettern und Settern
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
+ *
  */
 
 public class Tag implements Serializable {
     private int id;
     private String name;
+
 
     public Tag(int id, String name) {
         /**

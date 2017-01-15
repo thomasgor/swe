@@ -7,7 +7,13 @@ import org.json.JSONObject;
 import org.json.JSONException;
 
 /**
- * Created by Merlin on 22.11.2016.
+ * <p>Überschrift: Struktur von Freundschaft</p>
+ * <p>Beschreibung: Diese Klasse dient dazu, Freundschaftsobjekte zu Verarbeiten
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
  *
  */
 
@@ -16,12 +22,21 @@ public class Freundschaft implements Serializable{
     private boolean status;
     private Raum raum;
 
+    /**
+     * Nur zur Erstellung von DummyObjekten gedacht
+     *
+     * @deprecated jsonBenutzer benutzen
+     */
     public Freundschaft(Benutzer benutzer, boolean status, Raum raum) {
         this.benutzer = benutzer;
         this.status = status;
         this.raum = raum;
     }
 
+    /**
+     * Erstellt ein Benutzerobjekt aus einem JSON-String
+     *
+     * @param jsonFreundschaft JSON-String eines Benutzerobjekts*/
     public Freundschaft(String jsonFreundschaft) {
         try {
             JSONObject jsonObj = new JSONObject(jsonFreundschaft);
@@ -35,7 +50,7 @@ public class Freundschaft implements Serializable{
                 this.status = false;
             }
 
-            if(status == true) {
+            if(status) {
                 this.raum = new Raum(jsonObj.getString("raum"),false);
             }
             else

@@ -40,6 +40,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+
+/**
+ * <p>Überschrift: Struktur von ActiveSessionActivity</p>
+ * <p>Beschreibung: Diese Activity dient dazu, die aktive Sitzung anzuzeigen.
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
+ *
+ */
 public class ActiveSessionActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -141,10 +152,18 @@ public class ActiveSessionActivity extends BaseActivity
 
     }
 
+    /**
+     * Wird benutzt, um zu gucken ob die Liste an der obersten Position steht. Einsatz ist Schattenwurf ab API 21
+     *
+     * @return Boolean ob die Liste an der obersten Position steht*/
     private boolean listIsAtTop() {
         return listPeopleInRoomView.getChildCount() == 0 || listPeopleInRoomView.getChildAt(0).getTop() == 0;
     }
 
+
+    /**
+     * Verarbeitet die Daten und setzt Strings an die dafür vorgesehenen Stellen
+     * */
     private void setData(){
         raumName = (TextView) findViewById(R.id.txt_room_number);
         raumName.setText(getString(R.string.room_number, raum.getRaumname()));
@@ -224,6 +243,10 @@ public class ActiveSessionActivity extends BaseActivity
         leute.setText(getString(R.string.people_in_room_cnt,crnt,max,getResources().getQuantityString(R.plurals.people_in_room_cnt_anon,crnt-nichtAnonym,crnt-nichtAnonym)));
     }
 
+
+    /**
+     * Callback für gesetzten Tag in TagSetActivity
+     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){

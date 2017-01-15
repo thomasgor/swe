@@ -9,10 +9,14 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 /**
+ * <p>Überschrift: Struktur von Raum</p>
+ * <p>Beschreibung: Diese Klasse dient dazu, Raumobjekte zu verarbeiten
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
  * @author Merlin
  * @version 1.0
- * Stellt einen Raum dar, der für Veranstaltung oder nur den Studenten genutzt werden kann.
- * Enthält nur Attribute mit Gettern und Settern
+ *
  */
 
 public class Raum implements Serializable{
@@ -39,6 +43,11 @@ public class Raum implements Serializable{
     private Tag tag;
     private Benutzer[] benutzer;
 
+    /**
+     * Nur zur Erstellung von DummyObjekten
+     *
+     * @deprecated Raum(String jsonRaum, boolean hasUserList) benutzen
+     * */
     public Raum(int id, String raumname, int teilnehmer_max, int teilnehmer_aktuell, String fotoURL, Tag tag, Benutzer[] benutzer, String status) {
         this.id = id;
         this.raumname = raumname;
@@ -49,6 +58,13 @@ public class Raum implements Serializable{
         this.benutzer = benutzer;
         this.status = status;
     }
+
+    /**
+     * erstellt ein Raumobjekt aus einem JSONString
+     *
+     * @param jsonRaum JSONString des Raumobjekts
+     * @param hasUserList Flag ob Userlist mitgesendet wird
+     */
     public Raum(String jsonRaum, boolean hasUserList) {
         try {
             JSONObject jsonObj = new JSONObject(jsonRaum);

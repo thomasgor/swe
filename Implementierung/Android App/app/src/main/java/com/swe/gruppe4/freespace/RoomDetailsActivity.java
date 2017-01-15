@@ -29,9 +29,14 @@ import com.swe.gruppe4.freespace.Objektklassen.Raum;
 import com.swe.gruppe4.freespace.Objektklassen.Tag;
 
 /**
- * @author
- * last time modified: 23.12.2016 from Eduard Mantler
- * <p>Zeigt die Raumdetails an</p>
+ * <p>Überschrift: Struktur von RoomDetailsActivity</p>
+ * <p>Beschreibung: Diese Activity dient dazu, die Raumdetails anzuzeigen.
+ * </p>
+ * <p>Organisation: FH Aachen, FB05, SWE Gruppe 4 </p>
+ *
+ * @author Merlin
+ * @version 1.0
+ *
  */
 public class RoomDetailsActivity extends AppCompatActivity {
 
@@ -102,10 +107,17 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Wird benutzt, um zu gucken ob die Liste an der obersten Position steht. Einsatz ist Schattenwurf ab API 21
+     *
+     * @return Boolean ob die Liste an der obersten Position steht*/
     private boolean listIsAtTop() {
         return listPeopleInRoomView.getChildCount() == 0 || listPeopleInRoomView.getChildAt(0).getTop() == 0;
     }
 
+    /**
+     * Verarbeitet die Daten und setzt Strings an die dafür vorgesehenen Stellen
+     * */
     private void setData(){
         raumName = (TextView) findViewById(R.id.txt_room_number);
 
@@ -190,6 +202,12 @@ public class RoomDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Funktion für den Zurückbutton in der oberen Ecke.
+     *
+     * @param menuItem gedrückter Knopf
+     * @return super.onOptionsItemSelected(menuItem)*/
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem)
     {

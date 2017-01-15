@@ -3,16 +3,18 @@ package com.swe.gruppe4.freespace.Objektklassen;
 import java.io.Serializable;
 
 /**
- * <p>Überschrift: Struktur von VerbindungDUMMY </p>
- * <p>Beschreibung:
+ * <p>Überschrift: Struktur von Verbindung </p>
+ * <p>Beschreibung: Speichert Objekte zur Verbindung
  * </p>
- * <p>Copyright: Merlin Copyright (c) 2016</p>
  * <p>Organisation: FH Aachen, FB05 </p>
  *
  * @author Merlin
  * @version 1.0
- *          Created on 22.11.2016.
+ *
+ * @deprecated  In der aktuellen Version durch statische Attribute in der Klasse RestConnection ersetzt
  */
+
+@Deprecated
 public final class Verbindung implements Serializable{
     private static long id;
     private static String token;
