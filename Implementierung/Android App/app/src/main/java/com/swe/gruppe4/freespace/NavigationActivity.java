@@ -15,6 +15,15 @@ import com.swe.gruppe4.freespace.Objektklassen.RoomEnterance;
 
 import java.util.ArrayList;
 
+
+/**
+ * Dies ist die Navigations Activity die nur mit einem Start und Ziel gestarten werden kann
+ * Die start variablen werden ausgelesen und an die MapView übergeben zum zeichnen der Router auf der Karte
+ *
+ * @author Kestutis Janavicius
+ * @version 1.0
+ */
+
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener  {
     private MapView mapView;
