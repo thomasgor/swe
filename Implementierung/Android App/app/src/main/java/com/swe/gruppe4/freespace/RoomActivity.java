@@ -298,6 +298,11 @@ public class RoomActivity extends BaseActivity
         return friendListRoom;
     }
 
+    /**
+     * Sortierte die Räume alphanumerisch
+     * @param raumList unsortierte Raumliste
+     * @return sortierte Raumliste
+     */
     private ArrayList<Raum> getRoomsInAlphanumericOrder(ArrayList<Raum> raumList) {
         ArrayList<Raum> tmpList = raumList;
         Collections.sort(tmpList, new RaumComparator());
@@ -360,6 +365,12 @@ public class RoomActivity extends BaseActivity
         return tmpList;
     }
 
+    /**
+     * Entfernt bei der Navigation den Startpunkt um bei der Liste der Zielräume den Startpunkt nicht auswählen zu können.
+     * Sonst kann Start und Ziel identisch sein
+     * @param roomList Liste mit Startpunkt
+     * @return Liste ohne Startpunkt
+     */
     public ArrayList<Raum> removeStartRoom(ArrayList<Raum> roomList) {
         ArrayList<Raum> tmpList = new ArrayList<>();
         int startroomID = MainActivity.startingPointId;
